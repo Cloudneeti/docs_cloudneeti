@@ -3,6 +3,6 @@ theme: jekyll-theme-slate
 name: Cloudneeti Documentation
 markdown: kramdown
 highlighter: rouge
-#baseurl: /docs-cloudneeti
+#baseurl: /docs_cloudneeti
 
 
