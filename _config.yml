@@ -1,1 +1,5 @@
 theme: jekyll-theme-cayman
+name: Cloudneeti Documentation
+markdown: redcarpet
+highlighter: true
+baseurl: /docs-cloudneeti
