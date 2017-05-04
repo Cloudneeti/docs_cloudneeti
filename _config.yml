@@ -1,4 +1,4 @@
-theme: jekyll-theme-cayman
+theme: jekyll-theme-slate
 name: Cloudneeti Documentation
 markdown: kramdown
 highlighter: rouge
