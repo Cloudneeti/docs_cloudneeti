@@ -9,9 +9,7 @@ image-attribution: Ajay C
 
 # Getting Started with CloudNeeti VM for Azure Marketplace
 
-This article describes how to Automate Governance, Compliance, Reliability and Risk Monitoring for an enterprise using Azure
-
-To deploy CloudNeeti VM from the Azure Marketplace:
+This article describes how to Automate Governance, Compliance, Reliability and Risk Monitoring for an enterprise using Azure. To deploy CloudNeeti VM from the Azure Marketplace:
 
 ## Purchase CloudNeeti from Azure Marketplace
 1. Log in to the  [Microsoft Azure portal](https://portal.azure.com/).
@@ -50,15 +48,15 @@ To deploy CloudNeeti VM from the Azure Marketplace:
 > Azure Active Directory application permissions must be configured manually;
 > In the near future, we will ship a few automated scripts to do these
 
-0. CloudNeeti uses AD Application for requesting consent accessing your Azure Subscription resources. To create an Active Directory Application. Refer to documentation [Integrating applications with Azure Active Directory](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-integrating-applications)
-1.  In the [Azure Portal](https://portal.azure.com/), select **App
+1. CloudNeeti uses AD Application for requesting consent accessing your Azure Subscription resources. To create an Active Directory Application. Refer to documentation [Integrating applications with Azure Active Directory](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-integrating-applications)
+2.  In the [Azure Portal](https://portal.azure.com/), select **App
     Registrations**.
-2.  Select the application you created. It will be listed with your selected
+3.  Select the application you created. It will be listed with your selected
     `$suffix` with the name **Azure PCI PAAS Sample**.
-3.  Click **Required Permissions**.
-4.  Click **+Add**.
-5.  Click **Select an API**.
-6.  In this step you will modify **Windows Azure Active Directory**, **Microsoft
+4.  Click **Required Permissions**.
+5.  Click **+Add**.
+6.  Click **Select an API**.
+7.  In this step you will modify **Windows Azure Active Directory**, **Microsoft
     Graph**, **Windows Azure Service Management API**, and **Azure Key Vault.**
 
 >   **NOTE**: If **Azure Key Vault** is not listed in your **App Registration** list, you will need to manually
@@ -171,11 +169,6 @@ To deploy CloudNeeti VM from the Azure Marketplace:
  
 - Note application ID and authentication key (password), which you require to enter for registration to CloudNeeti
 - Update **Reply URL** with DNS name created above                           &lt;DNSname&gt;.&lt;region&gt;.cloudapp.azure.com. 
-- Add API access under required permissions
-  - Microsoft Graph
-  - Windows Azure Service Management API
-  - Azure.ActiveDirectory
-  - Key Vault
 - To access resources in your subscription, you must assign the application to a role refer [Assign application to role](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal#assign-application-to-role)
 
 
