@@ -51,8 +51,7 @@ This article describes how to Automate Governance, Compliance, Reliability and R
 1. CloudNeeti uses AD Application for requesting consent accessing your Azure Subscription resources. To create an Active Directory Application. Refer to documentation [Integrating applications with Azure Active Directory](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-integrating-applications)
 2.  In the [Azure Portal](https://portal.azure.com/), select **App
     Registrations**.
-3.  Select the application you created. It will be listed with your selected
-    `$suffix` with the name **Azure PCI PAAS Sample**.
+3.  Select the application you created.
 4.  Click **Required Permissions**.
 5.  Click **+Add**.
 6.  Click **Select an API**.
