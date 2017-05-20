@@ -1,8 +1,0 @@
-encoding: iso-8859-1
-theme: jekyll-theme-slate
-name: Cloudneeti Documentation
-markdown: kramdown
-highlighter: rouge
-#baseurl: /docs_cloudneeti
-
-
