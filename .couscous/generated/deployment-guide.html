@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cloudneeti Documentation Pages</title>
+    <meta name="description" content="Couscous! Put your documentation in a website!">
+
+    <link href="http://docs.cloudneeti.com/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://docs.cloudneeti.com/bower_components/fontawesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://docs.cloudneeti.com/css/prettify.tomorrow-night-eighties.css" rel="stylesheet">
+    <link href="http://docs.cloudneeti.com/css/all.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+    <link rel="icon" type="image/png" href="logo/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="logo/favicon-16x16.png" sizes="16x16" />
+
+    <!-- Google webmasters verification -->
+    <meta name="google-site-verification" content="" /> <-- TODO add cloudneeti google site verification code -->
+
+</head>
+
+<body class="">
+
+    <div id="menu" class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <img src="/images/cloudneeti-logo-wide(815px by 290px).png" height="70" width="200" >
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="http://docs.cloudneeti.com/deployment-guide.html">Get started</a></li>
+                    <li><a href="http://docs.cloudneeti.com/deployment-guide.html">Install & Configure</a></li>
+                    <li>
+                        <a href="http://www.cloudneeti.com" target="_blank">
+                            <i class="fa fa-home"></i> Product Portal
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://azuremarketplace.microsoft.com/en-us/marketplace/apps/cloudneeti.cloudneeti_enterpise?tab=Overview" target="_blank">
+                            <i class="fa fa-shopping-cart"></i> Deploy from Marketplace
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="container">
+            <div class="row">
+
+                <nav id="sidebar" class="col-sm-3 col-lg-2" role="navigation">
+
+                    <ul class="nav nav-pills nav-stacked">
+                                                    <li class="">
+                                <a href="http://docs.cloudneeti.com/deployment-guide.html">
+                                    Get started
+                                </a>
+                            </li>
+                                                    <li class="">
+                                <a href="http://docs.cloudneeti.com/deployment-guide.html">
+                                    Installation Guide
+                                </a>
+                            </li>
+                                                    <li class="">
+                                <a href="http://docs.cloudneeti.com/configuration.html">
+                                    Configuration
+                                </a>
+                            </li>
+                                                    <li class="">
+                                <a href="http://docs.cloudneeti.com/release-summary.html">
+                                    Release Summary
+                                </a>
+                            </li>
+                                                    <li class="">
+                                <a href="http://docs.cloudneeti.com/faqs.html">
+                                    FAQs
+                                </a>
+                            </li>
+                                            </ul>
+
+                </nav>
+
+                <section class="documentation col-sm-offset-3 col-lg-offset-3 col-sm-9 col-lg-10">
+                    <h1 id="getting-started-with-cloudneeti-vm-for-azure-marketplace">Getting Started with CloudNeeti VM for Azure Marketplace</h1>
+<p>This article describes how to Automate Governance, Compliance, Reliability and Risk Monitoring for an enterprise using Azure</p>
+<p>To deploy CloudNeeti VM from the Azure Marketplace:</p>
+<h2 id="purchase-cloudneeti-from-azure-marketplace">Purchase CloudNeeti from Azure Marketplace</h2>
+<ol>
+<li>Log in to the  <a href="https://portal.azure.com/">Microsoft Azure portal</a>.</li>
+<li>Click Marketplace or click Browse &gt; in the left side navigation, and select Marketplace from the list.</li>
+<li>In Click the Security + Identity blade and search for <code>CloudNeeti Enterprise</code>.</li>
+<li>Click CloudNeeti Enterprise</li>
+<li>In the CloudNeeti Enterprise blade, in Select a deployment model, select <code>Resource Manager</code>.</li>
+<li>Click Create. The Create virtual machine and Basics blades appear.</li>
+<li>
+<p>On the Basics blade, complete the following fields:</p>
+<ul>
+<li>Name: Type a descriptive name for your virtual machine.</li>
+<li>VM disk type: Select disk type SSD or HDD</li>
+<li>User name: Type a user name for logging in to your virtual machine</li>
+<li>Password: Enter password for logging in to your virtual machine</li>
+<li>Confirm password: Enter the same password for confirmation</li>
+<li>Subscription: Select the subscription under which to create your virtual machine</li>
+<li>Resource group: Specify the resource group to contain all your CloudNeeti VM resources. You can create a new resource group or select an existing resource group</li>
+<li>Location: Select an Azure region from the Location list</li>
+<li>Click OK</li>
+</ul>
+</li>
+<li>On the Choose a size blade, select a size and pricing tier for your virtual machine, and click Select.</li>
+<li>On the Settings blade, review the preconfigured values for each field, and click OK. Most fields have additional settings that are not displayed on the Settings  To see all settings, expand each field. after validation, review the Summary information, and then click OK.</li>
+<li>On the Purchase blade, review the offer details, Terms of use, privacy policy, and Azure Marketplace Terms and then click Purchase. The deployment is submitted</li>
+<li>Depending on the disk types and VM instance type, It might take approximately 8-20 minutes before your new virtual machine is running</li>
+<li>Update Network Security Group rules you must create rules that allow inbound for communication for the CloudNeeti application refer <a href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/nsg-quickstart-portal">Opening ports to a VM</a></li>
+<li>When installation is complete, we need to configure certain parameters to open the application, follow below mentioned steps
+<ul>
+<li>Go to left pane of <a href="https://portal.azure.com/">Microsoft Azure portal</a> click on Resource Group and find for resource group which is created above under your subscription</li>
+<li>Then go to virtual machine by clicking the value in Public IP address / DNS name label in the Settings blade set the DNS name. Note the DNS Name you specified it would be *&lt;DNSname&gt;.&lt;region&gt;.cloudapp.azure.com.<br />
+*it will be the Azure region / location which you have selected for creating VM</li>
+<li>In order to get an access to the CloudNeeti application you must set up an Azure Active Directory (AD) application and assign the required permissions to it Refer <a href="https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal">Azure Active Directory application</a></li>
+</ul></li>
+</ol>
+<h3 id="configuring-authentication-and-authorization-using--active-directory-application">Configuring Authentication and Authorization using  Active Directory Application</h3>
+<blockquote>
+<p>Azure Active Directory application permissions must be configured manually;
+In the near future, we will ship a few automated scripts to do these</p>
+</blockquote>
+<ol start="0">
+<li>CloudNeeti uses AD Application for requesting consent accessing your Azure Subscription resources. To create an Active Directory Application. Refer to documentation <a href="https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-integrating-applications">Integrating applications with Azure Active Directory</a></li>
+<li>In the <a href="https://portal.azure.com/">Azure Portal</a>, select <strong>App
+Registrations</strong>.</li>
+<li>Select the application you created. It will be listed with your selected
+<code>$suffix</code> with the name <strong>Azure PCI PAAS Sample</strong>.</li>
+<li>Click <strong>Required Permissions</strong>.</li>
+<li>Click <strong>+Add</strong>.</li>
+<li>Click <strong>Select an API</strong>.</li>
+<li>In this step you will modify <strong>Windows Azure Active Directory</strong>, <strong>Microsoft
+Graph</strong>, <strong>Windows Azure Service Management API</strong>, and <strong>Azure Key Vault.</strong></li>
+</ol>
+<blockquote>
+<p><strong>NOTE</strong>: If <strong>Azure Key Vault</strong> is not listed in your <strong>App Registration</strong> list, you will need to manually
+create a temporary key vault instance by selecting <strong>Key Vault</strong> in <a href="https://portal.azure.com/">Azure
+Portal</a>, select <strong>+Add</strong>, you can create a sample
+<strong>Resource group</strong>, and <strong>name</strong>. Once the Vault is created, you will be able to
+delete it. This action will force the app. API to register in the App
+Registration interface for the next step. Additional you can read the
+following <a href="https://blogs.technet.microsoft.com/kv/2016/09/17/accessing-key-vault-from-a-native-application/">guidance from this blog
+post</a> for additional guidance.</p>
+</blockquote>
+<p>The following sections will help you configure each <strong>App Registration</strong> permission sets.</p>
+<blockquote>
+<p><strong>NOTE</strong> the order of your API’s maybe different than listed in this documentation.</p>
+</blockquote>
+<ol>
+<li>
+<p>Select the <strong>Windows Azure Active Directory</strong> API</p>
+<ol>
+<li>
+<p>Select the following 2 application permissions</p>
+<ul>
+<li>
+<p><strong>Read and write directory data</strong></p>
+</li>
+<li><strong>Read directory data</strong></li>
+</ul>
+</li>
+<li>
+<p>Select the following 3 delegated permissions</p>
+<ul>
+<li>
+<p><strong>Read all groups</strong></p>
+</li>
+<li>
+<p><strong>Read directory data</strong></p>
+</li>
+<li><strong>Access the directory as the signed-in user</strong></li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>Click Select</p>
+</li>
+<li>
+<p>Select Done</p>
+</li>
+<li>
+<p>Click <strong>+Add</strong>.</p>
+</li>
+<li>
+<p>Select the <strong>Microsoft Graph</strong> API</p>
+<ol>
+<li>
+<p>Select the following 6 application permissions</p>
+<ul>
+<li>
+<p><strong>Read files in all site collections</strong></p>
+</li>
+<li>
+<p><strong>Read all groups</strong></p>
+</li>
+<li>
+<p><strong>Read directory data</strong></p>
+</li>
+<li>
+<p><strong>Read and write directory data</strong></p>
+</li>
+<li>
+<p><strong>Read all users’ full profiles</strong></p>
+</li>
+<li><strong>Read all identity risk event information</strong></li>
+</ul>
+</li>
+<li>
+<p>Select the following 7 delegated permissions</p>
+<ul>
+<li>
+<p><strong>Sign in and read user profiles</strong></p>
+</li>
+<li>
+<p><strong>Read all users’ basic profiles</strong></p>
+</li>
+<li>
+<p><strong>Read all users’ full profiles</strong></p>
+</li>
+<li>
+<p><strong>Read all groups</strong></p>
+</li>
+<li>
+<p><strong>Read directory data</strong></p>
+</li>
+<li>
+<p><strong>Read and write directory data</strong></p>
+</li>
+<li><strong>Access the directory as the signed in user</strong></li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>Click Select</p>
+</li>
+<li>
+<p>Select Done</p>
+</li>
+<li>
+<p>Click <strong>+Add</strong>.</p>
+</li>
+<li>
+<p>Select the <strong>Azure Key Vault</strong> API</p>
+<ol>
+<li>
+<p>Select no application permissions</p>
+</li>
+<li>
+<p>Select the following 1 delegated permission</p>
+<ul>
+<li><strong>Have full access to the Azure Key Vault service</strong></li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>Click Select</p>
+</li>
+<li>
+<p>Select Done</p>
+</li>
+<li>
+<p>Click <strong>+Add</strong></p>
+</li>
+<li>
+<p>Select the <strong>Windows Azure Service Management</strong> API</p>
+<ol>
+<li>
+<p>Select no application permissions</p>
+</li>
+<li>
+<p>Select the following 1 delegated permission</p>
+<ul>
+<li><strong>Access Azure Service Management as organization user</strong></li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>Click Select</p>
+</li>
+<li>Select Done</li>
+</ol>
+<blockquote>
+<p>If the configurations are successful, you will see a table of permissions
+similar to the following:</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th><strong>API</strong></th>
+<th><strong>Application permissions</strong></th>
+<th><strong>Delegated permissions</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows Azure Active Directory</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Microsoft Graph</td>
+<td>6</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Azure Key Vault</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Windows Azure Service Management</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Note application ID and authentication key (password), which you require to enter for registration to CloudNeeti</li>
+<li>Update <strong>Reply URL</strong> with DNS name created above                           &lt;DNSname&gt;.&lt;region&gt;.cloudapp.azure.com. </li>
+<li>Add API access under required permissions
+<ul>
+<li>Microsoft Graph</li>
+<li>Windows Azure Service Management API</li>
+<li>Azure.ActiveDirectory</li>
+<li>Key Vault</li>
+</ul></li>
+<li>To access resources in your subscription, you must assign the application to a role refer <a href="https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal#assign-application-to-role">Assign application to role</a></li>
+</ul>
+<h2 id="configure-cloudneeti-application">Configure CloudNeeti Application</h2>
+<ol>
+<li>After you finish these steps, you are ready with CloudNeeti Application, open a browser and go to <strong>:</strong> &lt;DNSname&gt;.&lt;region&gt;.cloudapp.azure.com</li>
+</ol>
+                </section>
+
+            </div>
+        </div>
+
+    
+            <footer>
+            <div class="container">
+                <p>
+                    Cloudneeti documentaion pages.
+                </p>
+            </div>
+        </footer>
+    
+
+    
+        <script src="http://docs.cloudneeti.com/bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="http://docs.cloudneeti.com/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="http://docs.cloudneeti.com/bower_components/google-code-prettify/src/prettify.js"></script>
+
+        <script>
+            $(function() {
+                $("section h1").wrap('<div class="page-header" />');
+                $("pre").addClass('prettyprint');
+                prettyPrint();
+            });
+        </script>
+
+        <!-- Piwik -->
+        <script type="text/javascript">
+            var _paq = _paq || [];
+            _paq.push(['trackPageView']);
+            _paq.push(['enableLinkTracking']);
+            (function() {
+                var u=(("https:" == document.location.protocol) ? "https" : "http") + "://mnapoli.piwikpro.com/";
+                _paq.push(['setTrackerUrl', u+'piwik.php']);
+                _paq.push(['setSiteId', 2]);
+                var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript';
+                g.defer=true; g.async=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+            })();
+        </script>
+        <noscript><p><img src="http://mnapoli.piwikpro.com/piwik.php?idsite=2" style="border:0;" alt="" /></p></noscript>
+        <!-- End Piwik Code -->
+    
+</body>
+</html>
