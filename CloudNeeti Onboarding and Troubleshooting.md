@@ -1,10 +1,12 @@
 ﻿# CloudNeeti Onboarding and Troubleshooting
 
 **Introduction** : **Cloudneeti** is a governance cohort, bringing together an integrated approach across various disciplines of governance. With some simple configurations, Cloudneeti can help you pull information from applications / systems deployed on Azure and inform you through various notifications, dashboards and reports about –
-a. Compliance against industry standards such as PCI DSS, HIPAA, CIS Security Benchmark 
-b. Optimizing your Spend on the cloud subscription (are you over-subscribed or under-subscribed)
-c. Reliability of your cloud environments (efficacy of backups, downtime alerts)
-d. Reducing Risk by detecting and alerting non-compliant configurations 
+
+1. Compliance against industry standards such as PCI DSS, HIPAA, CIS Security Benchmark 
+2. Optimizing your Spend on the cloud subscription (are you over-subscribed or under-subscribed)
+3. Reliability of your cloud environments (efficacy of backups, downtime alerts)
+4. Reducing Risk by detecting and alerting non-compliant configurations
+ 
 
 
 ## Onboarding Azure Subscription to CloudNeeti
@@ -26,7 +28,7 @@ a.	Enter the Domain Name and Tenant ID.
     * To find the Domain name and Tenant ID, Login to the Azure Portal, choose your Azure AD tenant by selecting your account in the top right corner of the page 
     * Then click on Azure Active Directory from left pan of the portal and click on properties to get the Domain and Tenant ID
     
-        ![    ![Domain and Tenant Id](Guide/Domain%20and%20Tenant%20ID.PNG)](images/Domain%20and%20Tenant%20ID.PNG)
+![    ![Domain and Tenant Id](Guide/Domain%20and%20Tenant%20ID.PNG)](images/Domain%20and%20Tenant%20ID.PNG)
 
     
 b.	Enter the Subscription id 
