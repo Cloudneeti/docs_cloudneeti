@@ -24,18 +24,21 @@ To onboard an Azure subscription to your CloudNeeti Account
 
 ![Setup Subscription](images/Setup%20Subscription.PNG)
 
-a.	Enter the Domain Name and Tenant ID. 
+* Enter the Domain Name and Tenant ID. 
+
     * To find the Domain name and Tenant ID, Login to the Azure Portal, choose your Azure AD tenant by selecting your account in the top right corner of the page 
     * Then click on Azure Active Directory from left pan of the portal and click on properties to get the Domain and Tenant ID
+
     
 ![    ![Domain and Tenant Id](Guide/Domain%20and%20Tenant%20ID.PNG)](images/Domain%20and%20Tenant%20ID.PNG)
 
     
-b.	Enter the Subscription id 
-c.	Select the Current offer from drop down list of our active offers
-d.	Enter Azure Active Directory application id and password which you have configured during installation of CloudNeeti
-e.	Enter the email id for notification
-f.	**Click Save and Continue** button.
+* Enter the Subscription id 
+* Select the Current offer from drop down list of our active offers
+* Enter Azure Active Directory application id and password which you have configured during installation of CloudNeeti
+* Enter the email id for notification
+* **Click Save and Continue** button.
+
 
 **After Step 2**, you will be redirected via a sign-in request to the authentication endpoint in Azure AD.  Once you signed in, Azure AD returns a sign-in response through the application, which contains claims about the user and Azure AD that are required by the application to validate the token.
 
