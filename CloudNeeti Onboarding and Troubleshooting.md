@@ -22,7 +22,7 @@ To onboard an Azure subscription to your CloudNeeti Account
 
 **STEP 2:** Next step of the Wizard will ask you to enter Subscription details for which you would want CloudNeeti to monitor and get alerted on your security and compliance posture of the entire environment, all fields are mandatory.
 
-![![Setup Subscription](Guide/Setup%20Subscription.PNG)](images/Introduction.PNG)
+![Setup Subscription](images/Setup%20Subscription.PNG)
 
 a.	Enter the Domain Name and Tenant ID. 
     * To find the Domain name and Tenant ID, Login to the Azure Portal, choose your Azure AD tenant by selecting your account in the top right corner of the page 
