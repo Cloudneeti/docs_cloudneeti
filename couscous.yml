@@ -29,8 +29,11 @@ menu:
             text: Installation Guide
             relativeUrl: deployment-guide.html
         configuration:
-            text: Configuration
+            text: Configuration Guide
             relativeUrl: configuration.html
+        troubleshooting:
+            text: Troubleshooting
+            relativeUrl: troubleshooting.html
         templates:
             text: Release Summary
             relativeUrl: release-summary.html

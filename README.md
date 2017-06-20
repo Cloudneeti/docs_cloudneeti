@@ -60,10 +60,24 @@ We use Couscous generates a [GitHub pages](http://pages.github.com/) website fro
     ```
 
 ## 4. Run couscous from the bash window
-  
-```bash
-couscous preview
-```
+
+You might have to Change directory  mount the folder to the 
+
+    ```bash
+    cd /mnt/c/Users/
+
+    couscous preview
+    ```  
+    
+Check out your changes
+
+
+## 4. Deploy to gh_pages
+
+    ```bash
+
+    couscous deploy
+    ```
 
 	
 

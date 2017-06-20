@@ -8,11 +8,15 @@
 
     <title>Cloudneeti Documentation Pages</title>
     <meta name="description" content="Couscous! Put your documentation in a website!">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="http://docs.cloudneeti.com/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://docs.cloudneeti.com/bower_components/fontawesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="http://docs.cloudneeti.com/css/prettify.tomorrow-night-eighties.css" rel="stylesheet">
     <link href="http://docs.cloudneeti.com/css/all.min.css" rel="stylesheet">
+    
+    <!-- W3 cards -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 
     <!-- Custom Fonts -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -34,7 +38,7 @@
     <div id="menu" class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <img src="/images/cloudneeti-logo-wide(815px by 290px).png" height="70" width="200" >
+                <img src="/images/cloudneeti-logo-wide.png" height="70" width="200" >
                 <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -61,43 +65,51 @@
     </div>
 
     
-        <div class="container">
-            <div class="row">
+        <div class="w3-sidebar w3-card-2 w3-bar-block" style="left:10px;width:20%;height:95%;" >
+                        
+                <ul class="nav nav-pills nav-stacked">
+                                            <p />
+                        <li class="">
+                            <a href="http://docs.cloudneeti.com/deployment-guide.html" class="w3-button w3-gray w3-hover-orange" style="width:95%;text-align:left;left:5px">
+                                Get started
+                            </a>
+                        </li>
+                                            <p />
+                        <li class="">
+                            <a href="http://docs.cloudneeti.com/deployment-guide.html" class="w3-button w3-gray w3-hover-orange" style="width:95%;text-align:left;left:5px">
+                                Installation Guide
+                            </a>
+                        </li>
+                                            <p />
+                        <li class="">
+                            <a href="http://docs.cloudneeti.com/configuration.html" class="w3-button w3-gray w3-hover-orange" style="width:95%;text-align:left;left:5px">
+                                Configuration Guide
+                            </a>
+                        </li>
+                                            <p />
+                        <li class="">
+                            <a href="http://docs.cloudneeti.com/troubleshooting.html" class="w3-button w3-gray w3-hover-orange" style="width:95%;text-align:left;left:5px">
+                                Troubleshooting
+                            </a>
+                        </li>
+                                            <p />
+                        <li class="">
+                            <a href="http://docs.cloudneeti.com/release-summary.html" class="w3-button w3-gray w3-hover-orange" style="width:95%;text-align:left;left:5px">
+                                Release Summary
+                            </a>
+                        </li>
+                                            <p />
+                        <li class="">
+                            <a href="http://docs.cloudneeti.com/faqs.html" class="w3-button w3-gray w3-hover-orange" style="width:95%;text-align:left;left:5px">
+                                FAQs
+                            </a>
+                        </li>
+                                    </ul>
 
-                <nav id="sidebar" class="col-sm-3 col-lg-2" role="navigation">
+        </div>
 
-                    <ul class="nav nav-pills nav-stacked">
-                                                    <li class="">
-                                <a href="http://docs.cloudneeti.com/deployment-guide.html">
-                                    Get started
-                                </a>
-                            </li>
-                                                    <li class="">
-                                <a href="http://docs.cloudneeti.com/deployment-guide.html">
-                                    Installation Guide
-                                </a>
-                            </li>
-                                                    <li class="">
-                                <a href="http://docs.cloudneeti.com/configuration.html">
-                                    Configuration
-                                </a>
-                            </li>
-                                                    <li class="">
-                                <a href="http://docs.cloudneeti.com/release-summary.html">
-                                    Release Summary
-                                </a>
-                            </li>
-                                                    <li class="">
-                                <a href="http://docs.cloudneeti.com/faqs.html">
-                                    FAQs
-                                </a>
-                            </li>
-                                            </ul>
-
-                </nav>
-
-                <section class="documentation col-sm-offset-3 col-lg-offset-3 col-sm-9 col-lg-10">
-                    <h1 id="google-code-prettify">Google Code Prettify</h1>
+        <section class="documentation col-sm-offset-3 col-lg-offset-3 col-sm-9 col-lg-10" style="overflow:scroll" >
+            <h1 id="google-code-prettify">Google Code Prettify</h1>
 <p>Direct port of svn into git from <a href="http://google-code-prettify.googlecode.com/svn/trunk/">http://google-code-prettify.googlecode.com/svn/trunk/</a></p>
 <h2 id="install">Install</h2>
 <p>via <a href="http://twitter.github.com/bower/">Bower</a></p>
@@ -130,10 +142,8 @@ curl.config({
     prettyPrint();
 })();</code></pre>
 <p>More information can be found in the original <a href="http://google-code-prettify.googlecode.com/svn/trunk/README.html">README.html</a></p>
-                </section>
+        </section>
 
-            </div>
-        </div>
 
     
             <footer>

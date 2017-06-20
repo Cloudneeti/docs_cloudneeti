@@ -1,10 +1,7 @@
 ---
 layout: default
 title: Installation & Deployment Guide
-image: ./images/deployment-guide-Icon.png
-instructions-attribution: Deployment Instructions
-instructions-attribution-link: https://azuremarketplace.microsoft.com/en-us/marketplace/apps/cloudneeti.cloudneeti_enterpise?tab=Overview
-image-attribution: Ajay C
+author: Ajay C
 ---
 
 # Getting Started with CloudNeeti VM for Azure Marketplace
@@ -52,7 +49,8 @@ To deploy CloudNeeti VM from the Azure Marketplace:
 > Azure Active Directory application permissions must be configured manually;
 > In the near future, we will ship a few automated scripts to do these
 
-0. CloudNeeti uses AD Application for requesting consent accessing your Azure Subscription resources. To create an Active Directory Application. Refer to documentation [Integrating applications with Azure Active Directory](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-integrating-applications)
+CloudNeeti uses AD Application for requesting consent accessing your Azure Subscription resources. To create an Active Directory Application. Refer to documentation [Integrating applications with Azure Active Directory](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-integrating-applications)  
+
 1.  In the [Azure Portal](https://portal.azure.com/), select **App
     Registrations**.
 2.  Select the application you created. It will be listed with your selected
@@ -178,7 +176,9 @@ To deploy CloudNeeti VM from the Azure Marketplace:
   - Windows Azure Service Management API
   - Azure.ActiveDirectory
   - Key Vault
-- To access resources in your subscription, you must assign the application to a role refer [Assign application to role](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal#assign-application-to-role)
+
+## Authorize Application ID to access your Subscription resources
+To access resources in your subscription, you must assign the application to a role refer **[Assign application to role](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal#assign-application-to-role)**
 
 
 ## Configure CloudNeeti Application 
