@@ -4,17 +4,23 @@ layout: home
 
 We use Couscous generates a [GitHub pages](http://pages.github.com/) website from your markdown documentation.
 
+# Contribution Guide
+
+1. Add new documentation markdown files to the root directory
+2. Images path will be to the root of the website (/images/<yourimage.png>)
+3. All files names should be lowercase and no spaces
+4. Image file names should be .png and **NOT** .PNG
 
 
-# Steps to run Couscous on Windows 10
+## Steps to run Couscous on Windows 10
 
-## 1. Install bash on Windows 10
+### 1. Install bash on Windows 10
 [Bash on Windows article](http://www.windowscentral.com/how-install-bash-shell-command-line-windows-10)
 
-## 2. Get couscous working on bash shell
+### 2. Get couscous working on bash shell
 [Getting Started](http://couscous.io/docs/getting-started.html)
 
-## 3. Install PHP7x using Bash on Windows
+### 3. Install PHP7x using Bash on Windows
 
 1. Install Pre-requisites > On bash prompt
 
@@ -59,25 +65,25 @@ We use Couscous generates a [GitHub pages](http://pages.github.com/) website fro
     sudo ln -s /usr/bin/nodejs /usr/bin/node
     ```
 
-## 4. Run couscous from the bash window
+### 4. Run couscous from the bash window
 
-You might have to Change directory  mount the folder to the 
+You might have to Change directory  mount the folder to the
+	
+```bash
+cd /mnt/c/<path_to_docs_cloudneeti>
+couscous preview
+```
 
-    ```bash
-    cd /mnt/c/Users/
-
-    couscous preview
-    ```  
-    
-Check out your changes
+Verify your changes on the browser. Most likely the URL would be http://127.0.0.1:8000/deployment-guide.html
 
 
-## 4. Deploy to gh_pages
+### 4. Deploy to gh_pages
 
-    ```bash
+The following command will push the generated files to gh_pages branch
 
-    couscous deploy
-    ```
+```bash
+couscous deploy
+```
 
 	
 
