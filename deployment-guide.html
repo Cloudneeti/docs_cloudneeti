@@ -8,11 +8,15 @@
 
     <title>Cloudneeti Documentation Pages</title>
     <meta name="description" content="Couscous! Put your documentation in a website!">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="http://docs.cloudneeti.com/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://docs.cloudneeti.com/bower_components/fontawesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="http://docs.cloudneeti.com/css/prettify.tomorrow-night-eighties.css" rel="stylesheet">
     <link href="http://docs.cloudneeti.com/css/all.min.css" rel="stylesheet">
+    
+    <!-- W3 cards -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 
     <!-- Custom Fonts -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -34,7 +38,7 @@
     <div id="menu" class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <img src="/images/cloudneeti-logo-wide(815px by 290px).png" height="70" width="200" >
+                <img src="/images/cloudneeti-logo-wide.png" height="70" width="200" >
                 <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -61,43 +65,51 @@
     </div>
 
     
-        <div class="container">
-            <div class="row">
+        <div class="w3-sidebar w3-card-2 w3-bar-block" style="left:10px;width:20%;height:95%;" >
+                        
+                <ul class="nav nav-pills nav-stacked">
+                                            <p />
+                        <li class="">
+                            <a href="http://docs.cloudneeti.com/deployment-guide.html" class="w3-button w3-gray w3-hover-orange" style="width:95%;text-align:left;left:5px">
+                                Get started
+                            </a>
+                        </li>
+                                            <p />
+                        <li class="">
+                            <a href="http://docs.cloudneeti.com/deployment-guide.html" class="w3-button w3-gray w3-hover-orange" style="width:95%;text-align:left;left:5px">
+                                Installation Guide
+                            </a>
+                        </li>
+                                            <p />
+                        <li class="">
+                            <a href="http://docs.cloudneeti.com/configuration.html" class="w3-button w3-gray w3-hover-orange" style="width:95%;text-align:left;left:5px">
+                                Configuration Guide
+                            </a>
+                        </li>
+                                            <p />
+                        <li class="">
+                            <a href="http://docs.cloudneeti.com/troubleshooting.html" class="w3-button w3-gray w3-hover-orange" style="width:95%;text-align:left;left:5px">
+                                Troubleshooting
+                            </a>
+                        </li>
+                                            <p />
+                        <li class="">
+                            <a href="http://docs.cloudneeti.com/release-summary.html" class="w3-button w3-gray w3-hover-orange" style="width:95%;text-align:left;left:5px">
+                                Release Summary
+                            </a>
+                        </li>
+                                            <p />
+                        <li class="">
+                            <a href="http://docs.cloudneeti.com/faqs.html" class="w3-button w3-gray w3-hover-orange" style="width:95%;text-align:left;left:5px">
+                                FAQs
+                            </a>
+                        </li>
+                                    </ul>
 
-                <nav id="sidebar" class="col-sm-3 col-lg-2" role="navigation">
+        </div>
 
-                    <ul class="nav nav-pills nav-stacked">
-                                                    <li class="">
-                                <a href="http://docs.cloudneeti.com/deployment-guide.html">
-                                    Get started
-                                </a>
-                            </li>
-                                                    <li class="">
-                                <a href="http://docs.cloudneeti.com/deployment-guide.html">
-                                    Installation Guide
-                                </a>
-                            </li>
-                                                    <li class="">
-                                <a href="http://docs.cloudneeti.com/configuration.html">
-                                    Configuration
-                                </a>
-                            </li>
-                                                    <li class="">
-                                <a href="http://docs.cloudneeti.com/release-summary.html">
-                                    Release Summary
-                                </a>
-                            </li>
-                                                    <li class="">
-                                <a href="http://docs.cloudneeti.com/faqs.html">
-                                    FAQs
-                                </a>
-                            </li>
-                                            </ul>
-
-                </nav>
-
-                <section class="documentation col-sm-offset-3 col-lg-offset-3 col-sm-9 col-lg-10">
-                    <h1 id="getting-started-with-cloudneeti-vm-for-azure-marketplace">Getting Started with CloudNeeti VM for Azure Marketplace</h1>
+        <section class="documentation col-sm-offset-3 col-lg-offset-3 col-sm-9 col-lg-10" style="overflow:scroll" >
+            <h1 id="getting-started-with-cloudneeti-vm-for-azure-marketplace">Getting Started with CloudNeeti VM for Azure Marketplace</h1>
 <p>This article describes how to Automate Governance, Compliance, Reliability and Risk Monitoring for an enterprise using Azure</p>
 <p>To deploy CloudNeeti VM from the Azure Marketplace:</p>
 <h2 id="purchase-cloudneeti-from-azure-marketplace">Purchase CloudNeeti from Azure Marketplace</h2>
@@ -111,14 +123,14 @@
 <li>
 <p>On the Basics blade, complete the following fields:</p>
 <ul>
-<li>Name: Type a descriptive name for your virtual machine.</li>
-<li>VM disk type: Select disk type SSD or HDD</li>
-<li>User name: Type a user name for logging in to your virtual machine</li>
-<li>Password: Enter password for logging in to your virtual machine</li>
-<li>Confirm password: Enter the same password for confirmation</li>
-<li>Subscription: Select the subscription under which to create your virtual machine</li>
-<li>Resource group: Specify the resource group to contain all your CloudNeeti VM resources. You can create a new resource group or select an existing resource group</li>
-<li>Location: Select an Azure region from the Location list</li>
+<li><code>Name</code>: Type a descriptive name for your virtual machine.</li>
+<li><code>VM disk type</code>: Select disk type SSD or HDD</li>
+<li><code>User name</code>: Type a user name for logging in to your virtual machine</li>
+<li><code>Password</code>: Enter password for logging in to your virtual machine</li>
+<li><code>Confirm password</code>: Enter the same password for confirmation</li>
+<li><code>Subscription</code>: Select the subscription under which to create your virtual machine</li>
+<li><code>Resource group</code>: Specify the resource group to contain all your CloudNeeti VM resources. You can create a new resource group or select an existing resource group</li>
+<li><code>Location</code>: Select an Azure region from the Location list</li>
 <li>Click OK</li>
 </ul>
 </li>
@@ -140,8 +152,8 @@
 <p>Azure Active Directory application permissions must be configured manually;
 In the near future, we will ship a few automated scripts to do these</p>
 </blockquote>
-<ol start="0">
-<li>CloudNeeti uses AD Application for requesting consent accessing your Azure Subscription resources. To create an Active Directory Application. Refer to documentation <a href="https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-integrating-applications">Integrating applications with Azure Active Directory</a></li>
+<p>CloudNeeti uses AD Application for requesting consent accessing your Azure Subscription resources. To create an Active Directory Application. Refer to documentation <a href="https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-integrating-applications">Integrating applications with Azure Active Directory</a>  </p>
+<ol>
 <li>In the <a href="https://portal.azure.com/">Azure Portal</a>, select <strong>App
 Registrations</strong>.</li>
 <li>Select the application you created. It will be listed with your selected
@@ -348,16 +360,15 @@ similar to the following:</p>
 <li>Azure.ActiveDirectory</li>
 <li>Key Vault</li>
 </ul></li>
-<li>To access resources in your subscription, you must assign the application to a role refer <a href="https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal#assign-application-to-role">Assign application to role</a></li>
 </ul>
+<h2 id="authorize-application-id-to-access-your-subscription-resources">Authorize Application ID to access your Subscription resources</h2>
+<p>To access resources in your subscription, you must assign the application to a role refer <strong><a href="https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal#assign-application-to-role">Assign application to role</a></strong></p>
 <h2 id="configure-cloudneeti-application">Configure CloudNeeti Application</h2>
 <ol>
 <li>After you finish these steps, you are ready with CloudNeeti Application, open a browser and go to <strong>:</strong> &lt;DNSname&gt;.&lt;region&gt;.cloudapp.azure.com</li>
 </ol>
-                </section>
+        </section>
 
-            </div>
-        </div>
 
     
             <footer>

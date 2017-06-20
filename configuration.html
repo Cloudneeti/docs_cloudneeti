@@ -109,41 +109,61 @@
         </div>
 
         <section class="documentation col-sm-offset-3 col-lg-offset-3 col-sm-9 col-lg-10" style="overflow:scroll" >
-            <h1 id="jquery">jQuery</h1>
-<blockquote>
-<p>jQuery is a fast, small, and feature-rich JavaScript library.</p>
-</blockquote>
-<p>For information on how to get started and how to use jQuery, please see <a href="http://api.jquery.com/">jQuery's documentation</a>.
-For source files and issues, please visit the <a href="https://github.com/jquery/jquery">jQuery repo</a>.</p>
-<p>If upgrading, please see the <a href="https://blog.jquery.com/2017/03/20/jquery-3-2-1-now-available/">blog post for 3.2.1</a>. This includes notable differences from the previous version and a more readable changelog.</p>
-<h2 id="including-jquery">Including jQuery</h2>
-<p>Below are some of the most common ways to include jQuery.</p>
-<h3 id="browser">Browser</h3>
-<h4 id="script-tag">Script tag</h4>
-<pre><code class="language-html">&lt;script src="https://code.jquery.com/jquery-3.2.1.min.js"&gt;&lt;/script&gt;</code></pre>
-<h4 id="babel">Babel</h4>
-<p><a href="http://babeljs.io/">Babel</a> is a next generation JavaScript compiler. One of the features is the ability to use ES6/ES2015 modules now, even though browsers do not yet support this feature natively.</p>
-<pre><code class="language-js">import $ from "jquery";</code></pre>
-<h4 id="browserifywebpack">Browserify/Webpack</h4>
-<p>There are several ways to use <a href="http://browserify.org/">Browserify</a> and <a href="https://webpack.github.io/">Webpack</a>. For more information on using these tools, please refer to the corresponding project's documention. In the script, including jQuery will usually look like this...</p>
-<pre><code class="language-js">var $ = require("jquery");</code></pre>
-<h4 id="amd-asynchronous-module-definition">AMD (Asynchronous Module Definition)</h4>
-<p>AMD is a module format built for the browser. For more information, we recommend <a href="http://requirejs.org/docs/whyamd.html">require.js' documentation</a>.</p>
-<pre><code class="language-js">define(["jquery"], function($) {
-
-});</code></pre>
-<h3 id="node">Node</h3>
-<p>To include jQuery in <a href="nodejs.org">Node</a>, first install with npm.</p>
-<pre><code class="language-sh">npm install jquery</code></pre>
-<p>For jQuery to work in Node, a window with a document is required. Since no such window exists natively in Node, one can be mocked by tools such as <a href="https://github.com/tmpvar/jsdom">jsdom</a>. This can be useful for testing purposes.</p>
-<pre><code class="language-js">require("jsdom").env("", function(err, window) {
-    if (err) {
-        console.error(err);
-        return;
-    }
-
-    var $ = require("jquery")(window);
-});</code></pre>
+            <p>﻿</p>
+<h1 id="configuration-and-user-guide">Configuration and User Guide</h1>
+<p><strong>Introduction</strong> : <strong>Cloudneeti</strong> is a governance cohort, bringing together an integrated approach across various disciplines of governance. With some simple configurations, Cloudneeti can help you pull information from applications / systems deployed on Azure and inform you through various notifications, dashboards and reports about –</p>
+<ol>
+<li>Compliance against industry standards such as PCI DSS 3.2, HIPAA, CIS Security Benchmark, NIST CSF, GDPR. </li>
+<li>Optimizing your Spend on the cloud subscription (are you over-subscribed or under-subscribed)</li>
+<li>Reliability of your cloud environments (efficacy of backups, downtime alerts)</li>
+<li>Reducing Risk by detecting and alerting non-compliant configurations</li>
+</ol>
+<h2 id="onboarding-azure-subscriptions-to-cloudneeti">Onboarding Azure Subscriptions to CloudNeeti</h2>
+<p>To onboard an Azure subscription to your CloudNeeti product</p>
+<p><strong>Click on Get Started</strong>  <strong>--&gt;</strong> Wizard Screen will appear:</p>
+<p><img src="/images/GetStarted.png" alt="Get Started" /></p>
+<h3 id="step-1">Step 1:</h3>
+<p>The first step of the Wizard contains introductory information, read Pre-Requisites, Instructions, Terms of Use, Privacy Policy and <strong>Click on Continue</strong> button</p>
+<p><img src="/images/Introduction.png" alt="Introduction" /></p>
+<h3 id="step-2">STEP 2:</h3>
+<p>Next step of the Wizard will ask you to enter Subscription details for which you would want CloudNeeti to monitor and get alerted on your security and compliance posture of the entire environment, all fields are mandatory.</p>
+<p><img src="/images/SetupSubscription.png" alt="Setup Subscription" /></p>
+<ul>
+<li>
+<p>Enter the Domain Name and Tenant ID. </p>
+<ul>
+<li>To find the Domain name and Tenant ID, Login to the Azure Portal, choose your Azure AD tenant by selecting your account in the top right corner of the page </li>
+<li>Then click on Azure Active Directory from left pan of the portal and click on properties to get the Domain and Tenant ID</li>
+</ul>
+</li>
+</ul>
+<p><img src="/images/DomainAndTenantID.png" alt="    ![Domain and Tenant Id](/images/DomainAndTenantID.png)" /></p>
+<ul>
+<li>Enter the Subscription id </li>
+<li>Select the Current offer from drop down list of our active offers</li>
+<li>Enter Azure Active Directory application id and password which you have configured during installation of CloudNeeti</li>
+<li>Enter the email id for notification</li>
+<li><strong>Click Save and Continue</strong> button.</li>
+</ul>
+<p><strong>After Step 2</strong>, you will be redirected via a sign-in request to the authentication endpoint in Azure AD.  Once you signed in, Azure AD returns a sign-in response through the application, which contains claims about the user and Azure AD that are required by the application to validate the token.</p>
+<p><img src="/images/SignIn-2.png" alt="Sign in" /></p>
+<p>If authentication is successful, you will be taken to the third step of the wizard.</p>
+<h3 id="step-3">STEP 3:</h3>
+<p>Next step of the Wizard will allow you to Enable or Disable Policies/Rules around governance monitoring</p>
+<p><img src="/images/EnableDisable.png" alt="Enable-Disable" /></p>
+<p>Select down arrow/+ sign to expand the list of policies/rules you would want to enable or disable, select respective check box and <strong>Click Save and Continue</strong> button.</p>
+<p><img src="/images/EnableDisable-1.png" alt="Enable-Disable1" /></p>
+<h3 id="step-4">STEP 4:</h3>
+<p>Next step is to setup the schedule for scan interval/frequency. Select frequency and next run time then <strong>Click Save and Continue</strong> button.</p>
+<p><img src="/images/SetSchedule.png" alt="Schedule" /></p>
+<h3 id="step-5">STEP 5:</h3>
+<p>Last step from the wizard is to invite users by selecting check box from the list of users with the VM link to the CloudNeeti application informing that, CloudNeeti application has been installed and they can now access it.</p>
+<p><strong>Click on Finish button.</strong></p>
+<p><img src="/images/InviteUsers.png" alt="Invite Users" /></p>
+<p>After completion of above steps successfully, you will be redirected to the status page. </p>
+<p><img src="/images/StatusPage.png" alt="Status" /></p>
+<p>Once all services are completed you will be automatically redirected to the Subscription Dashboard. </p>
+<p><img src="/images/SubscriptionDashboard.png" alt="Dashboard" /></p>
         </section>
 
 
