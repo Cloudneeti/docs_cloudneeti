@@ -1,0 +1,40 @@
+template:
+    directory: website
+
+exclude:
+    - vendor
+    - bin
+    - tests
+
+scripts:
+    before:
+        - lessc --clean-css website/less/main.less website/css/all.min.css
+
+baseUrl: http://docs.cloudneeti.com
+cname: docs.cloudneeti.com
+
+# Used to link to the GitHub project
+github:
+    user: avyanconsultingcorp
+    repo: docs-cloudneeti
+
+branch: gh-pages
+
+menu:
+    items:
+        getting-started:
+            text: Get started
+            relativeUrl: deployment-guide.html
+        documentation:
+            text: Installation Guide
+            relativeUrl: deployment-guide.html
+        configuration:
+            text: Configuration
+            relativeUrl: configuration.html
+        templates:
+            text: Release Summary
+            relativeUrl: release-summary.html
+        faqs:
+            text: FAQs
+            relativeUrl: faqs.html
+        

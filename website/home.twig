@@ -1,0 +1,219 @@
+{% extends "default.twig" %}
+
+{% set bodyClass = 'home' %}
+
+{% block content %}
+
+    <header>
+        <div class="container">
+            <div class="intro-text">
+                <div class="intro-lead-in">This is Couscous</div>
+                <div class="intro-heading">Couscous is good.</div>
+                <a href="#wat" class="page-scroll btn btn-xl">What?</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="wat">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Put your documentation online</h2>
+                    <h3 class="section-subheading text-muted">
+                        Couscous turns Markdown documentation into beautiful websites.
+                        It's <a href="https://pages.github.com/">GitHub Pages</a> on steroids.
+                    </h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="timeline">
+                        <li>
+                            <div class="timeline-image">
+                                <h4>
+                                    <br/>
+                                    README.md
+                                </h4>
+                            </div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4>Step 1</h4>
+                                    <h4 class="subheading">Write documentation</h4>
+                                </div>
+                                <div class="timeline-body">
+                                    <p class="text-muted">
+                                        Write your documentation in Markdown inside your repository,
+                                        versioned with your code. Couscous will turn those Markdown
+                                        files to HTML.
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="timeline-inverted">
+                            <div class="timeline-image">
+                                <img class="img-circle img-responsive" src="img/timeline/laptop.jpg" alt="">
+                            </div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4>Step 2</h4>
+                                    <h4 class="subheading">Preview</h4>
+                                </div>
+                                <div class="timeline-body">
+                                    <p class="text-muted">
+                                        <code>couscous preview</code> will render the website
+                                        on your machine. Tweak the default template, fix some typos
+                                        and the changes will be reflected in real time.
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="timeline-image">
+                                <img class="img-circle img-responsive" src="img/timeline/deploy.jpg" alt="">
+                            </div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4>Step 3</h4>
+                                    <h4 class="subheading">Publish</h4>
+                                </div>
+                                <div class="timeline-body">
+                                    <p class="text-muted">
+                                        <code>couscous deploy</code> will publish your website
+                                        on the <em>gh-pages</em> Git branch. GitHub will automatically
+                                        put it online and host it for you.
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="timeline-inverted">
+                            <div class="timeline-image">
+                                <img class="img-circle img-responsive" src="img/timeline/profit.jpg" alt="">
+                            </div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4>Step 4</h4>
+                                    <h4 class="subheading">Profit</h4>
+                                </div>
+                                <div class="timeline-body">
+                                    <p class="text-muted">
+                                        Your website is online, just sit back and relax.
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-light-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Why?</h2>
+                    <h3 class="section-subheading text-muted">
+                        Why another static website generator?
+                    </h3>
+                </div>
+                <div class="col-md-6 col-md-offset-3">
+                    <p>
+                        Couscous is different from other static websites generators like
+                        <a href="https://sculpin.io/">Sculpin</a>
+                        or <a href="http://jekyllrb.com/">Jekyll</a>.
+                        These are generic static websites generator, sometimes meant for blogs,
+                        and using them to put documentation online is clunky.
+                        They also all require a specific directory layout which is
+                        incompatible with how we usually store documentation alongside our code.
+                    </p>
+                    <p>
+                        Couscous is built for <strong>simplicity</strong>.
+                    </p>
+                    <p>
+                        It has no requirement on your directory layout, it takes
+                        a single command to preview the website and a single one to
+                        deploy to GitHub pages.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Curious?</h2>
+                    <h3 class="section-subheading text-muted">
+                        Try it out in one of your projects.
+                    </h3>
+                </div>
+                <div class="col-md-6 col-md-offset-3">
+                    <p>
+                        Simply run:
+                    </p>
+                    <pre trim><code>curl -OS http://couscous.io/couscous.phar
+php couscous.phar preview</code></pre>
+                    <p><strong>Please note that as Github is using a DDOS protection system, if using CURL fails, just manually download the phar file.</strong></p>
+                    <p>
+                        The website should be running at
+                        <a href="http://localhost:8000/">http://localhost:8000/</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% include 'home-portfolio.twig' %}
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Features</h2>
+                    <h3 class="section-subheading text-muted">
+                        For those who like feature lists:
+                    </h3>
+                </div>
+                <div class="col-md-3 col-md-offset-3 text-center">
+                    <p>
+                        <a href="http://en.wikipedia.org/wiki/Markdown_Extra">Markdown Extra</a> support
+                    </p>
+                    <p>
+                        Fenced code blocks
+                    </p>
+                    <p>
+                        <a href="http://bower.io/">Bower</a> support
+                    </p>
+                    <p>
+                        Responsive default templates
+                    </p>
+                </div>
+                <div class="col-md-3 text-center">
+                    <p>
+                        <a href="http://twig.sensiolabs.org/">Twig</a> templates
+                    </p>
+                    <p>
+                        YAML configuration
+                    </p>
+                    <p>
+                        Custom before/after scripts
+                    </p>
+                    <p>
+                        Syntax highlighting
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ baseUrl }}/js/classie.js"></script>
+    <script src="{{ baseUrl }}/js/animated-menu.js"></script>
+{% endblock %}

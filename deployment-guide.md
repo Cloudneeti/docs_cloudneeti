@@ -21,15 +21,17 @@ To deploy CloudNeeti VM from the Azure Marketplace:
 5. In the CloudNeeti Enterprise blade, in Select a deployment model, select `Resource Manager`.
 6. Click Create. The Create virtual machine and Basics blades appear.
 7. On the Basics blade, complete the following fields:
-    * Name: Type a descriptive name for your virtual machine.
-    * VM disk type: Select disk type SSD or HDD
-    * User name: Type a user name for logging in to your virtual machine
-    * Password: Enter password for logging in to your virtual machine
-    * Confirm password: Enter the same password for confirmation
-    * Subscription: Select the subscription under which to create your virtual machine
-    * Resource group: Specify the resource group to contain all your CloudNeeti VM resources. You can create a new resource group or select an existing resource group
-    * Location: Select an Azure region from the Location list
+
+    * `Name`: Type a descriptive name for your virtual machine.
+    * `VM disk type`: Select disk type SSD or HDD
+    * `User name`: Type a user name for logging in to your virtual machine
+    * `Password`: Enter password for logging in to your virtual machine
+    * `Confirm password`: Enter the same password for confirmation
+    * `Subscription`: Select the subscription under which to create your virtual machine
+    * `Resource group`: Specify the resource group to contain all your CloudNeeti VM resources. You can create a new resource group or select an existing resource group
+    * `Location`: Select an Azure region from the Location list
     * Click OK
+
 
 8. On the Choose a size blade, select a size and pricing tier for your virtual machine, and click Select.
 9. On the Settings blade, review the preconfigured values for each field, and click OK. Most fields have additional settings that are not displayed on the Settings  To see all settings, expand each field. after validation, review the Summary information, and then click OK.
