@@ -3,7 +3,7 @@
 
 **Introduction** : **Cloudneeti** is a governance cohort, bringing together an integrated approach across various disciplines of governance. With some simple configurations, Cloudneeti can help you pull information from applications / systems deployed on Azure and inform you through various notifications, dashboards and reports about –
 
-1. Compliance against industry standards such as PCI DSS 3.2, HIPAA, CIS Security Benchmark, NIST CSF, GDPR. 
+1. Compliance against industry standards such as PCI DSS 3.2, HIPAA, Cyber Security Foundations, Security Benchmark, NIST CSF, GDPR. 
 2. Optimizing your Spend on the cloud subscription (are you over-subscribed or under-subscribed)
 3. Reliability of your cloud environments (efficacy of backups, downtime alerts)
 4. Reducing Risk by detecting and alerting non-compliant configurations

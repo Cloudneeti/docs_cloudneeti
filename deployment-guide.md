@@ -2,6 +2,7 @@
 layout: default
 title: Installation & Deployment Guide
 author: Ajay C
+modified by: Julian A
 ---
 
 # Getting Started with CloudNeeti VM for Azure Marketplace
@@ -10,8 +11,10 @@ This article describes how to Automate Governance, Compliance, Reliability and R
 
 To deploy CloudNeeti VM from the Azure Marketplace:
 
+**Note**: User logging into Azure Portal must have Global admin role to make the necessary configuration changes.
+
 ## Purchase CloudNeeti from Azure Marketplace
-1. Log in to the  [Microsoft Azure portal](https://portal.azure.com/).
+1. Log in to the  [Microsoft Azure portal](https://portal.azure.com/). 
 2. Click Marketplace or click Browse &gt; in the left side navigation, and select Marketplace from the list.
 3. In Click the Security + Identity blade and search for `CloudNeeti Enterprise`.
 4. Click CloudNeeti Enterprise
@@ -37,7 +40,7 @@ To deploy CloudNeeti VM from the Azure Marketplace:
 12. Update Network Security Group rules you must create rules that allow inbound for communication for the CloudNeeti application refer [Opening ports to a VM](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/nsg-quickstart-portal)
 13. When installation is complete, we need to configure certain parameters to open the application, follow below mentioned steps
     * Go to left pane of [Microsoft Azure portal](https://portal.azure.com/) click on Resource Group and find for resource group which is created above under your subscription
-    * Then go to virtual machine by clicking the value in Public IP address / DNS name label in the Settings blade set the DNS name. Note the DNS Name you specified it would be \*&lt;DNSname&gt;.&lt;region&gt;.cloudapp.azure.com.  
+    * Then select the resource name against the the resource type "Public IP address" and go to the configuration settings of Public IP address resource type. Update the  DNS name label in the configuration blade. Note the DNS Name you specified it would be \*&lt;DNSname&gt;.&lt;region&gt;.cloudapp.azure.com.  
      \*it will be the Azure region / location which you have selected for creating VM
     * In order to get an access to the CloudNeeti application you must set up an Azure Active Directory (AD) application and assign the required permissions to it Refer [Azure Active Directory application](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal)
     
@@ -46,31 +49,49 @@ To deploy CloudNeeti VM from the Azure Marketplace:
 
 
 
-> Azure Active Directory application permissions must be configured manually;
-> In the near future, we will ship a few automated scripts to do these
-
 CloudNeeti uses AD Application for requesting consent accessing your Azure Subscription resources. To create an Active Directory Application. Refer to documentation [Integrating applications with Azure Active Directory](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-integrating-applications)  
 
+
+#### Create an Active Directory Application
 1.  In the [Azure Portal](https://portal.azure.com/), select **App
     Registrations**.
-2.  Select the application you created. It will be listed with your selected
-    `$suffix` with the name **Azure PCI PAAS Sample**.
-3.  Click **Required Permissions**.
-4.  Click **+Add**.
-5.  Click **Select an API**.
-6.  In this step you will modify **Windows Azure Active Directory**, **Microsoft
-    Graph**, **Windows Azure Service Management API**, and **Azure Key Vault.**
+2.  Click on New application registration button.
+    Enter the Name for example "Cloudneeti"
+    Select the Application Type as "Web App/API"
+    Enter the Sign-on URL as "&lt;DNSname&gt;.&lt;region&gt;.cloudapp.azure.com."
+3. Click **Create**.
+4. Click on the registered application "Cloudneeti"
+5. Click **Settings**
+6. Click **Reply URL**
+7. Enter **Reply URL** with DNS name created above                           &lt;DNSname&gt;.&lt;region&gt;.cloudapp.azure.com/Account/Signon
+8. Click **Save**
 
->   **NOTE**: If **Azure Key Vault** is not listed in your **App Registration** list, you will need to manually
->   create a temporary key vault instance by selecting **Key Vault** in [Azure
->   Portal](https://portal.azure.com/), select **+Add**, you can create a sample
->   **Resource group**, and **name**. Once the Vault is created, you will be able to
->   delete it. This action will force the app. API to register in the App
->   Registration interface for the next step. Additional you can read the
->   following [guidance from this blog
->   post](https://blogs.technet.microsoft.com/kv/2016/09/17/accessing-key-vault-from-a-native-application/) for additional guidance.
+#### Authorize Application ID to access your Subscription resources
+ 
+1. In the [Azure Portal](https://portal.azure.com/), select **App
+    Registrations**.
+2.  In App Registration blade, Click on the newly registered application if you had given the name "Cloudneeti" then click on the same.
+3.  Click **Settings**
+4.  Click **Keys**
+5.  Enter a new description, Select a Expires value from the drop down and Click **Save**
+6.  The key value is generated, Copy the same for your record.
+7.  To access resources in your subscription, you must assign the application to a role refer **[Assign application to role](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal#assign-application-to-role)**
+
+You can do both the steps i.e. Create an Active Directory Application using automated script and Authorize Application ID to access your Subscription resources using automated scripts shared at **[Automation Script for Application Registration and Authorize Access to Subscription ](https://cnstgartifactsacc.blob.core.windows.net/cloudneeti-deployment-artifacts/scripts/Create-ServicePrincipal.ps1?sv=2016-05-31&si=testdrive-accesspolicy-100years&sr=b&sig=7yp0Xr2lzWrker%2BzGXzP4LsOD19qpH6PCgdeOz4xVG8%3D)**
+
+#### Azure Active Directory application permissions must be configured manually
 
  The following sections will help you configure each **App Registration** permission sets.
+1.  In the [Azure Portal](https://portal.azure.com/), select **App
+    Registrations**.
+2.  In App Registration blade, Click on the newly registered application if you had given the name "Cloudneeti" then click on the same.
+3.  Click **Settings**
+4.  Click **Required Permissions**
+5.  Click **+Add**.
+6.  Click **Select an API**.
+7.  In this step you will modify **Windows Azure Active Directory**, **Microsoft Graph**, **Windows Azure Service Management API**
+
+
  >**NOTE** the order of your API’s maybe different than listed in this documentation.
 
 1.  Select the **Windows Azure Active Directory** API
@@ -131,23 +152,9 @@ CloudNeeti uses AD Application for requesting consent accessing your Azure Subsc
 
 7.  Select Done
 
-8.  Click **+Add**.
-
-9.  Select the **Azure Key Vault** API
-
-    1.  Select no application permissions
-
-    2.  Select the following 1 delegated permission
-
-        -   **Have full access to the Azure Key Vault service**
-
-10. Click Select
-
-11. Select Done
-
 12. Click **+Add**
 
-13. Select the **Windows Azure Service Management** API
+13. Select the **Windows Azure Service Management API**
 
     1.  Select no application permissions
 
@@ -166,19 +173,12 @@ CloudNeeti uses AD Application for requesting consent accessing your Azure Subsc
 |----------------------------------|-----------------------------|---------------------------|
 | Windows Azure Active Directory   | 2                           | 3                         |
 | Microsoft Graph                  | 6                           | 7                         |
-| Azure Key Vault                  | 0                           | 1                         |
 | Windows Azure Service Management | 0                           | 1                         |
  
-- Note application ID and authentication key (password), which you require to enter for registration to CloudNeeti
-- Update **Reply URL** with DNS name created above                           &lt;DNSname&gt;.&lt;region&gt;.cloudapp.azure.com. 
-- Add API access under required permissions
-  - Microsoft Graph
-  - Windows Azure Service Management API
-  - Azure.ActiveDirectory
-  - Key Vault
 
-## Authorize Application ID to access your Subscription resources
-To access resources in your subscription, you must assign the application to a role refer **[Assign application to role](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal#assign-application-to-role)**
+  
+
+
 
 
 ## Configure CloudNeeti Application 
