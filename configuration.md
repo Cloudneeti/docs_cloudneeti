@@ -44,10 +44,6 @@ Next step of the Wizard will ask you to enter Subscription details for which you
 * **Click Save and Continue** button.
 
 
-**After Step 2**, you will be redirected via a sign-in request to the authentication endpoint in Azure AD.  Once you signed in, Azure AD returns a sign-in response through the application, which contains claims about the user and Azure AD that are required by the application to validate the token.
-
-![Sign in](/images/SignIn-2.png)
-
 If authentication is successful, you will be taken to the third step of the wizard.
 
 ### STEP 3:

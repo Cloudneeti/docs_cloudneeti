@@ -169,11 +169,11 @@ You can do both the steps i.e. Create an Active Directory Application using auto
 >   If the configurations are successful, you will see a table of permissions
 >   similar to the following:
 
-| **API**                          | **Application permissions** | **Delegated permissions** |
-|----------------------------------|-----------------------------|---------------------------|
-| Windows Azure Active Directory   | 2                           | 3                         |
-| Microsoft Graph                  | 6                           | 7                         |
-| Windows Azure Service Management | 0                           | 1                         |
+| **API**                             | **Application permissions** | **Delegated permissions** |
+|-------------------------------------|-----------------------------|---------------------------|
+| Windows Azure Active Directory      | 2                           | 3                         |
+| Microsoft Graph                     | 6                           | 7                         |
+| Windows Azure Service Management    | 0                           | 1                         |
  
 
   
