@@ -77,7 +77,7 @@ CloudNeeti uses AD Application for requesting consent accessing your Azure Subsc
 6.  The key value is generated, Copy the same for your record.
 7.  To access resources in your subscription, you must assign the application to a role refer **[Assign application to role](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal#assign-application-to-role)**
 
-You can do both the steps i.e. Create an Active Directory Application using automated script and Authorize Application ID to access your Subscription resources using automated scripts shared at **[Automation Script for Application Registration and Authorize Access to Subscription ](https://cnstgartifactsacc.blob.core.windows.net/cloudneeti-deployment-artifacts/scripts/Create-ServicePrincipal.ps1?sv=2016-05-31&si=testdrive-accesspolicy-100years&sr=b&sig=7yp0Xr2lzWrker%2BzGXzP4LsOD19qpH6PCgdeOz4xVG8%3D)**
+You can do both the steps i.e. Create an Active Directory Application using automated script and Authorize Application ID to access your Subscription resources using automated scripts shared at **[Automation Script for Application Registration and Authorize Access to Subscription ](https://github.com/AvyanConsultingCorp/Cloudneeti-Public-Repository/blob/master/PowershellScripts/Create-ServicePrincipal.ps1)**
 
 #### Azure Active Directory application permissions must be configured manually
 
