@@ -5,20 +5,20 @@ author: Ajay C
 modified by: Julian A
 ---
 
-# Getting Started with CloudNeeti VM for Azure Marketplace
+# Getting Started with Cloudneeti VM for Azure Marketplace
 
 This article describes how to Automate Governance, Compliance, Reliability and Risk Monitoring for an enterprise using Azure
 
-To deploy CloudNeeti VM from the Azure Marketplace:
+To deploy Cloudneeti VM from the Azure Marketplace:
 
 **Note**: User logging into Azure Portal must have Global admin role to make the necessary configuration changes.
 
-## Purchase CloudNeeti from Azure Marketplace
+## Purchase Cloudneeti from Azure Marketplace
 1. Log in to the  [Microsoft Azure portal](https://portal.azure.com/). 
 2. Click Marketplace or click Browse &gt; in the left side navigation, and select Marketplace from the list.
-3. In Click the Security + Identity blade and search for `CloudNeeti Enterprise`.
-4. Click CloudNeeti Enterprise
-5. In the CloudNeeti Enterprise blade, in Select a deployment model, select `Resource Manager`.
+3. In Click the Security + Identity blade and search for `Cloudneeti Enterprise`.
+4. Click Cloudneeti Enterprise
+5. In the Cloudneeti Enterprise blade, in Select a deployment model, select `Resource Manager`.
 6. Click Create. The Create virtual machine and Basics blades appear.
 7. On the Basics blade, complete the following fields:
 
@@ -28,7 +28,7 @@ To deploy CloudNeeti VM from the Azure Marketplace:
     * `Password`: Enter password for logging in to your virtual machine
     * `Confirm password`: Enter the same password for confirmation
     * `Subscription`: Select the subscription under which to create your virtual machine
-    * `Resource group`: Specify the resource group to contain all your CloudNeeti VM resources. You can create a new resource group or select an existing resource group
+    * `Resource group`: Specify the resource group to contain all your Cloudneeti VM resources. You can create a new resource group or select an existing resource group
     * `Location`: Select an Azure region from the Location list
     * Click OK
 
@@ -37,19 +37,19 @@ To deploy CloudNeeti VM from the Azure Marketplace:
 9. On the Settings blade, review the preconfigured values for each field, and click OK. Most fields have additional settings that are not displayed on the Settings  To see all settings, expand each field. after validation, review the Summary information, and then click OK.
 10. On the Purchase blade, review the offer details, Terms of use, privacy policy, and Azure Marketplace Terms and then click Purchase. The deployment is submitted
 11. Depending on the disk types and VM instance type, It might take approximately 8-20 minutes before your new virtual machine is running
-12. Update Network Security Group rules you must create rules that allow inbound for communication for the CloudNeeti application refer [Opening ports to a VM](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/nsg-quickstart-portal)
+12. Update Network Security Group rules you must create rules that allow inbound for communication for the Cloudneeti application refer [Opening ports to a VM](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/nsg-quickstart-portal)
 13. When installation is complete, we need to configure certain parameters to open the application, follow below mentioned steps
     * Go to left pane of [Microsoft Azure portal](https://portal.azure.com/) click on Resource Group and find for resource group which is created above under your subscription
     * Then select the resource name against the the resource type "Public IP address" and go to the configuration settings of Public IP address resource type. Update the  DNS name label in the configuration blade. Note the DNS Name you specified it would be \*&lt;DNSname&gt;.&lt;region&gt;.cloudapp.azure.com.  
      \*it will be the Azure region / location which you have selected for creating VM
-    * In order to get an access to the CloudNeeti application you must set up an Azure Active Directory (AD) application and assign the required permissions to it Refer [Azure Active Directory application](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal)
+    * In order to get an access to the Cloudneeti application you must set up an Azure Active Directory (AD) application and assign the required permissions to it Refer [Azure Active Directory application](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal)
     
      
 ### Configuring Authentication and Authorization using  Active Directory Application
 
 
 
-CloudNeeti uses AD Application for requesting consent accessing your Azure Subscription resources. To create an Active Directory Application. Refer to documentation [Integrating applications with Azure Active Directory](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-integrating-applications)  
+Cloudneeti uses AD Application for requesting consent accessing your Azure Subscription resources. To create an Active Directory Application. Refer to documentation [Integrating applications with Azure Active Directory](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-integrating-applications)  
 
 
 #### Create an Active Directory Application
@@ -181,9 +181,9 @@ You can do both the steps i.e. Create an Active Directory Application using auto
 
 
 
-## Configure CloudNeeti Application 
+## Configure Cloudneeti Application 
 
-1. After you finish these steps, you are ready with CloudNeeti Application, open a browser and go to **:** &lt;DNSname&gt;.&lt;region&gt;.cloudapp.azure.com
+1. After you finish these steps, you are ready with Cloudneeti Application, open a browser and go to **:** &lt;DNSname&gt;.&lt;region&gt;.cloudapp.azure.com
 
 
 

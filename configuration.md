@@ -10,9 +10,9 @@
  
 
 
-## Onboarding Azure Subscriptions to CloudNeeti
+## Onboarding Azure Subscriptions to Cloudneeti
 
-To onboard an Azure subscription to your CloudNeeti product
+To onboard an Azure subscription to your Cloudneeti product
 
 **Click on Get Started**  **-->** Wizard Screen will appear:
 
@@ -24,7 +24,7 @@ The first step of the Wizard contains introductory information, read Pre-Requisi
 ![Introduction](/images/Introduction.png)
 
 ### STEP 2:
-Next step of the Wizard will ask you to enter Subscription details for which you would want CloudNeeti to monitor and get alerted on your security and compliance posture of the entire environment, all fields are mandatory.
+Next step of the Wizard will ask you to enter Subscription details for which you would want Cloudneeti to monitor and get alerted on your security and compliance posture of the entire environment, all fields are mandatory.
 
 ![Setup Subscription](/images/SetupSubscription.png)
 
@@ -39,7 +39,7 @@ Next step of the Wizard will ask you to enter Subscription details for which you
     
 * Enter the Subscription id 
 * Select the Current offer from drop down list of our active offers
-* Enter Azure Active Directory application id and password which you have configured during installation of CloudNeeti
+* Enter Azure Active Directory application id and password which you have configured during installation of Cloudneeti
 * Enter the email id for notification
 * **Click Save and Continue** button.
 
@@ -61,7 +61,7 @@ Next step is to setup the schedule for scan interval/frequency. Select frequency
 ![Schedule](/images/SetSchedule.png)
 
 ### STEP 5:
-Last step from the wizard is to invite users by selecting check box from the list of users with the VM link to the CloudNeeti application informing that, CloudNeeti application has been installed and they can now access it.
+Last step from the wizard is to invite users by selecting check box from the list of users with the VM link to the Cloudneeti application informing that, Cloudneeti application has been installed and they can now access it.
 
 **Click on Finish button.**
 
