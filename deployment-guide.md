@@ -82,7 +82,8 @@ You can do both the steps i.e. Create an Active Directory Application using auto
 
 ### Run Create-ServicePrincipal.ps1
 
-```Create-ServicePrincipal.ps1
+```powershell
+
 <#
 Powershell Version : 5.0
 Pre-requisites to run this script -
@@ -305,7 +306,10 @@ catch {
     Throw $_
 }
 
+
 ```
+
+
 
 
 #### Azure Active Directory application permissions must be configured manually
