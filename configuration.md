@@ -8,7 +8,22 @@
 3. Reliability of your cloud environments (efficacy of backups, downtime alerts)
 4. Reducing Risk by detecting and alerting non-compliant configurations
  
+## Types of User Roles
+* License Administrator - can do the following activities
+* Subscription Administrator
+* Subscription Reader
 
+|   | License Administrator  | Subscription Administrator  | Subscription Reader  |
+|---|:---:|:---:|:---:|
+| View Dashboard  | :white_check_mark:  |  :white_check_mark:  | :white_check_mark:  |
+| Add License Administrator  | :white_check_mark:  |  :x:  | :x:  |
+| Add Tenant | :white_check_mark:  |  :x:  | :x:  |
+| Edit Tenant  |  :white_check_mark:  |  :x:  | :x:  |
+| Delete Tenant  |  :white_check_mark:  |  :x:  | :x:  |
+| Add Subscription  | :white_check_mark:  |  :x:  | :x:  |
+| Edit Subscription  | :white_check_mark:  |  :x:  | :x:  |
+| Delete Subscription  | :white_check_mark:  |  :x:  | :x:  |
+| Configure Subscription  | :white_check_mark:  |  :white_check_mark:   | :x:  |
 
 ## Onboarding Azure Subscriptions to Cloudneeti
 
@@ -39,27 +54,22 @@ Once the Tenant details are save, portal displays "Sign-in to connect your Azure
    
 * Microsoft Account - Enter your Domain Name which was entered by you while entering the Tenant and click on **Go** Button. Then enter your Microsoft Live Id credentials for Authentication.
 
-### Step 3:
- As you are the first person for entering the Tenant details, you will be assigned the role of "License Administrator". You can add another License Administrator and to do so follow the menu Settings => Add License Administrator => Add New
- ![Add License Administrator](images/AddLicenseAdministrator.png)
- This step could be followed at any time as per requirement and can be skipped for now.
- 
 
-### Step 4:
+### Step 3:
 The first step of the Wizard contains introductory information, read Pre-Requisites, Instructions, Terms of Use, Privacy Policy and **Click on Continue** button
 
 ![Introduction](images/Introduction.png)
 
-### STEP 5:
+### STEP 4:
 Next step of the Wizard will ask you to enter Subscription details for which you would want Cloudneeti to monitor and get alerted on your security and compliance posture of the entire environment, all fields are mandatory.
 
 ![Setup Subscription](images/SetupSubscription.png)
-* Select the Tenant Id
-* Enter the Subscription id 
+* Select at-least one Tenant Id 
+* Enter correct Subscription id for proceeding to the next step
 * **Click Save and Continue** button.
 
 
-### STEP 6:
+### STEP 5:
 Next step of the Wizard will allow you to Enable or Disable Policies/Rules around governance monitoring
 
 ![Enable-Disable](images/EnableDisable.png)
@@ -68,7 +78,7 @@ Select down arrow/+ sign to expand the list of policies/rules you would want to 
 
 ![Enable-Disable1](images/EnableDisable-1.png)
 
-### STEP 7:
+### STEP 6:
 Next step of the Wizard will allow you to configure the Reports and Notifications. 
 
 In this step we are taking Azure Storage Account and key which will used for storing the Benchmark Reports (Word Document). You can download the latest report from the portal by accessing Benchmark Dashboards. For accessing all the previous reports, you can access it from the storage account.
@@ -80,12 +90,12 @@ In this step we are taking Azure Storage Account and key which will used for sto
 * Notification Email IDs - enter comma separated email Ids who should receive the notification emails.
 * **Click Save and Continue** button.
 
-### STEP 8:
+### STEP 7:
 Next step is to setup the schedule for scan interval/frequency. Select frequency and next run time then **Click Save and Continue** button.
 
 ![Schedule](images/SetSchedule.png)
 
-### STEP 9:
+### STEP 8:
 Last step from the wizard is to invite users by selecting check box from the list of users with the VM link to the Cloudneeti application informing that, Cloudneeti application has been installed and they can now access it.
 
 **Click on Finish button.**
@@ -100,22 +110,10 @@ Once all services are completed you will be automatically redirected to the Subs
 
 ![Dashboard](images/SubscriptionDashboard.png)
 
-## Types of User Roles
-* License Administrator - can do the following activities
-* Subscription Administrator
-* Subscription Reader
-
-|   | License Administrator  | Subscription Administrator  | Subscription Reader  |
-|---|:---:|:---:|:---:|
-| View Dashboard  | :white_check_mark:  |  :white_check_mark:  | :white_check_mark:  |
-| Add License Administrator  | :white_check_mark:  |  :x:  | :x:  |
-| Add Tenant | :white_check_mark:  |  :x:  | :x:  |
-| Edit Tenant  |  :white_check_mark:  |  :x:  | :x:  |
-| Delete Tenant  |  :white_check_mark:  |  :x:  | :x:  |
-| Add Subscription  | :white_check_mark:  |  :x:  | :x:  |
-| Edit Subscription  | :white_check_mark:  |  :x:  | :x:  |
-| Delete Subscription  | :white_check_mark:  |  :x:  | :x:  |
-| Configure Subscription  | :white_check_mark:  |  :white_check_mark:   | :x:  |
 
 
+### Steps for adding License Administrator:
+ As you are the first person for entering the Tenant details, you will be assigned the role of "License Administrator". You can add another License Administrator and to do so follow the menu Settings => Add License Administrator => Add New
+ ![Add License Administrator](images/AddLicenseAdministrator.png)
+ This step could be followed at any time as per requirement and can be skipped for now.
 
