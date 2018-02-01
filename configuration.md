@@ -40,9 +40,12 @@ After clicking on Get started, portal displays "Create Tenant" page for entering
 * Enter the Domain Name and Tenant ID. 
 
     * To find the Domain name and Tenant ID, Login to the Azure Portal, choose your Azure AD tenant by selecting your account in the top right corner of the page 
-    * Then click on Azure Active Directory from left pan of the portal and click on properties to get the Domain and Tenant ID
+    * Then click on Azure Active Directory from left pan of the portal and click on properties to get Tenant ID
 
-![    ![Domain and Tenant Id](images/DomainAndTenantID.png)](images/DomainAndTenantID.png)
+![    ![Tenant Id](images/DomainAndTenantID.png)](images/DomainAndTenantID.png)
+* To get the Domain Name select Custom Domain Names and primary tick mark name is the Domain Name
+
+![ ![Domain Name](images/DomainName.png)](images/DomainName.png)
 
 * Enter Azure Active Directory application id and password which you have configured during installation of Cloudneeti
 * **Click Create** button for adding the Tenant details.
