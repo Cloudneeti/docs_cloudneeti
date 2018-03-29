@@ -34,7 +34,7 @@ To onboard an Azure subscription to your Cloudneeti product
 ![Get Started](images/GetStarted.png)
 
 ### Step 1:
-After clicking on Get started, portal displays "Create Tenant" page for entering the information related to Azure Tenant.
+After clicking on Get started, portal displays "Register your Azure Active Directory Tenant" page for entering the information related to Azure Tenant.
 ![Create Tenant](images/CreateTenant.png)
 
 * Enter the Domain Name and Tenant ID. 
@@ -51,7 +51,7 @@ After clicking on Get started, portal displays "Create Tenant" page for entering
 * **Click Create** button for adding the Tenant details.
 
 ### Step 2:
-Once the Tenant details are save, portal displays "Sign-in to connect your Azure Subscription" and provides two option for connecting as follows
+Once the Tenant details are saved, portal displays "Sign-in to connect your Azure Subscription" and provides two option for connecting as follows
 ![Sign-in to connect your Azure Subscription](images/SignInToConnect.png)
 * Work or School Account - Use your Work Account Credentials for Authentication.
    
