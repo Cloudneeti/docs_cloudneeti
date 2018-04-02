@@ -47,7 +47,7 @@ After clicking on Get started, portal displays "Register your Azure Active Direc
 
 ![ ![Domain Name](images/DomainName.png)](images/DomainName.png)
 
-* Enter Azure Active Directory application id and password which you have configured during installation of Cloudneeti
+* Enter Azure Active Directory application id and password which you have configured during configuration of Cloudneeti
 * **Click Create** button for adding the Tenant details.
 
 ### Step 2:
