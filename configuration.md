@@ -41,8 +41,11 @@ After clicking on Get started, portal displays "Register your Azure Active Direc
 
     * To find the Domain name and Tenant ID, Login to the Azure Portal, choose your Azure AD tenant by selecting your account in the top  right corner of the page 
     * Then click on Azure Active Directory from left pan of the portal and click on properties to get Tenant ID
+    
   ![Tenant Id](images/DomainAndTenantID.png)
+  
 * To get the Domain Name select Custom Domain Names and primary tick mark name is the Domain Name
+
   ![Domain Name](images/DomainNameDetail.png)
 
 * Enter Azure Active Directory application id and password which you have configured during configuration of Cloudneeti
