@@ -42,10 +42,10 @@ After clicking on Get started, portal displays "Register your Azure Active Direc
     * To find the Domain name and Tenant ID, Login to the Azure Portal, choose your Azure AD tenant by selecting your account in the top right corner of the page 
     * Then click on Azure Active Directory from left pan of the portal and click on properties to get Tenant ID
 
-![    ![Tenant Id](images/DomainAndTenantID.png)](images/DomainAndTenantID.png)
+  ![Tenant Id](images/DomainAndTenantID.png)
 * To get the Domain Name select Custom Domain Names and primary tick mark name is the Domain Name
 
-![ ![Domain Name](images/DomainName.png)](images/DomainName.png)
+![Domain Name](images/DomainNameDetail.png)
 
 * Enter Azure Active Directory application id and password which you have configured during configuration of Cloudneeti
 * **Click Create** button for adding the Tenant details.
@@ -61,7 +61,7 @@ Once the Tenant details are saved, portal displays "Sign-in to connect your Azur
 ### Step 3:
 The first step of the Wizard contains introductory information, read Pre-Requisites, Instructions, Terms of Use, Privacy Policy and **Click on Continue** button
 
-![Introduction](images/Introduction.png)
+![Introduction](images/IntroductionStep.png)
 
 ### STEP 4:
 Next step of the Wizard will ask you to enter Subscription details for which you would want Cloudneeti to monitor and get alerted on your security and compliance posture of the entire environment, all fields are mandatory.
