@@ -104,10 +104,10 @@ Which will create new storage account. Open your storage account blade and then 
 In this step, enter Azure Storage account name and key which will used for storing the Benchmark Reports (Word Document). You can download the latest report from the portal by accessing Benchmark Dashboards. For accessing all the previous reports, you can access it from the storage account.
 
 ![Reports and Notifications](images/ReportsAndNotifications.png)
-* Data Retention - provide the number of days, the reports need to be preserved. Editing data retention is enabled only for License type of Enterprise or MSP. For others it taken automatically as per the License type.
-* Storage Account Name - enter the storage account name where reports need to be stored.
-* Storage Account Key - enter storage account key
-* Notification Email IDs - enter comma separated email Ids who should receive the notification emails.
+* Data Retention - Provide the number of days, the reports need to be preserved. Editing data retention is enabled only for License type of Enterprise or MSP. For others it taken auto-populated as per the License type.
+* Storage Account Name - Enter the storage account name where reports need to be stored.
+* Storage Account Key - Enter storage account key
+* Notification Email IDs - Enter comma separated email Ids who should receive the notification emails.
 * **Click Save and Continue** button.
 
 ### STEP 7:
