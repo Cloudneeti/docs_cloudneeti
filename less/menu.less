@@ -60,7 +60,10 @@
     background-color: darken(@brand-primary, 10%);
   }
 }
-
+.sidebar-menu{  margin-top: 2%;position: fixed;}
+@media(max-width:768px) {
+  .sidebar-menu{  margin-top: 2%;position: relative;}
+}
 @media(min-width:768px) {
   .home {
     .navbar-default {
