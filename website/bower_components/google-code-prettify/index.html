@@ -66,46 +66,62 @@
 
         <div class="row">
         <div class="sidebar-menu col-md-2" >
-                        
                 <ul class="nav nav-pills nav-stacked">
-                                            <p />
-                        <li class="">
-                            <a href="https://docs.cloudneeti.com/deployment-guide.html" class="w3-button w3-gray w3-hover-orange" style="width:100%;text-align:left;left:5px">
-                                Get started
-                            </a>
+                                            <li class="">
+                            <button class="w3-button w3-gray w3-hover-orange dropdown-btn" style="width:100%;text-align:left;left:5px;margin-top: 5px;">Get started
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <div class="dropdown-container">
+                            <a href="https://docs.cloudneeti.com/deployment-guide.html">Get started <i class="fa fa-caret-down"></i> Marketplace</a>
+                            <a href="https://docs.cloudneeti.com/saas/deployment-guide.html">Get started <i class="fa fa-caret-down"></i> Saas</a>
+                            </div>
                         </li>
-                                            <p />
-                        <li class="">
-                            <a href="https://docs.cloudneeti.com/deployment-guide.html" class="w3-button w3-gray w3-hover-orange" style="width:100%;text-align:left;left:5px">
-                                Installation Guide
-                            </a>
+                                            <li class="">
+                            <button class="w3-button w3-gray w3-hover-orange dropdown-btn" style="width:100%;text-align:left;left:5px;margin-top: 5px;">Installation Guide
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <div class="dropdown-container">
+                            <a href="https://docs.cloudneeti.com/deployment-guide.html">Installation Guide <i class="fa fa-caret-down"></i> Marketplace</a>
+                            <a href="https://docs.cloudneeti.com/saas/deployment-guide.html">Installation Guide <i class="fa fa-caret-down"></i> Saas</a>
+                            </div>
                         </li>
-                                            <p />
-                        <li class="">
-                            <a href="https://docs.cloudneeti.com/configuration.html" class="w3-button w3-gray w3-hover-orange" style="width:100%;text-align:left;left:5px">
-                                Configuration Guide
-                            </a>
+                                            <li class="">
+                            <button class="w3-button w3-gray w3-hover-orange dropdown-btn" style="width:100%;text-align:left;left:5px;margin-top: 5px;">Configuration Guide
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <div class="dropdown-container">
+                            <a href="https://docs.cloudneeti.com/configuration.html">Configuration Guide <i class="fa fa-caret-down"></i> Marketplace</a>
+                            <a href="https://docs.cloudneeti.com/saas/configuration.html">Configuration Guide <i class="fa fa-caret-down"></i> Saas</a>
+                            </div>
                         </li>
-                                            <p />
-                        <li class="">
-                            <a href="https://docs.cloudneeti.com/troubleshooting.html" class="w3-button w3-gray w3-hover-orange" style="width:100%;text-align:left;left:5px">
-                                Troubleshooting
-                            </a>
+                                            <li class="">
+                            <button class="w3-button w3-gray w3-hover-orange dropdown-btn" style="width:100%;text-align:left;left:5px;margin-top: 5px;">Troubleshooting
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <div class="dropdown-container">
+                            <a href="https://docs.cloudneeti.com/troubleshooting.html">Troubleshooting <i class="fa fa-caret-down"></i> Marketplace</a>
+                            <a href="https://docs.cloudneeti.com/saas/troubleshooting.html">Troubleshooting <i class="fa fa-caret-down"></i> Saas</a>
+                            </div>
                         </li>
-                                            <p />
-                        <li class="">
-                            <a href="https://docs.cloudneeti.com/release-summary.html" class="w3-button w3-gray w3-hover-orange" style="width:100%;text-align:left;left:5px">
-                                Release Summary
-                            </a>
+                                            <li class="">
+                            <button class="w3-button w3-gray w3-hover-orange dropdown-btn" style="width:100%;text-align:left;left:5px;margin-top: 5px;">Release Summary
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <div class="dropdown-container">
+                            <a href="https://docs.cloudneeti.com/release-summary.html">Release Summary <i class="fa fa-caret-down"></i> Marketplace</a>
+                            <a href="https://docs.cloudneeti.com/saas/release-summary.html">Release Summary <i class="fa fa-caret-down"></i> Saas</a>
+                            </div>
                         </li>
-                                            <p />
-                        <li class="">
-                            <a href="https://docs.cloudneeti.com/faqs.html" class="w3-button w3-gray w3-hover-orange" style="width:100%;text-align:left;left:5px">
-                                FAQs
-                            </a>
+                                            <li class="">
+                            <button class="w3-button w3-gray w3-hover-orange dropdown-btn" style="width:100%;text-align:left;left:5px;margin-top: 5px;">FAQs
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <div class="dropdown-container">
+                            <a href="https://docs.cloudneeti.com/faqs.html">FAQs <i class="fa fa-caret-down"></i> Marketplace</a>
+                            <a href="https://docs.cloudneeti.com/saas/faqs.html">FAQs <i class="fa fa-caret-down"></i> Saas</a>
+                            </div>
                         </li>
                                     </ul>
-
         </div>
 
         <section class="main-content col-sm-10 col-lg-10">
@@ -167,7 +183,22 @@ curl.config({
                 prettyPrint();
             });
         </script>
+        <script>
+        var dropdown = document.getElementsByClassName("dropdown-btn");
+        var i;
 
+        for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var dropdownContent = this.nextElementSibling;
+            if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
+            } else {
+                dropdownContent.style.display = "block";
+            }
+        });
+        }
+        </script>
         <!-- Piwik -->
         <script type="text/javascript">
             var _paq = _paq || [];
