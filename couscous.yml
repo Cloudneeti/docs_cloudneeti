@@ -10,7 +10,7 @@ scripts:
     before:
         - lessc --clean-css website/less/main.less website/css/all.min.css
 
-baseUrl: http://docs.cloudneeti.com
+baseUrl: https://docs.cloudneeti.com
 cname: docs.cloudneeti.com
 
 # Used to link to the GitHub project

@@ -1,5 +1,5 @@
 ﻿
-# Configuration and User Guide 
+# Saas Configuration and User Guide 
 
 **Introduction** : **Cloudneeti** is a governance cohort, bringing together an integrated approach across various disciplines of governance. With some simple configurations, Cloudneeti can help you pull information from applications / systems deployed on Azure and inform you through various notifications, dashboards and reports about –
 
@@ -34,24 +34,25 @@ To onboard an Azure subscription to your Cloudneeti product
 ![Get Started](images/GetStarted.png)
 
 ### Step 1:
-After clicking on Get started, portal displays "Create Tenant" page for entering the information related to Azure Tenant.
+After clicking on Get started, portal displays "Register your Azure Active Directory Tenant" page for entering the information related to Azure Tenant.
 ![Create Tenant](images/CreateTenant.png)
 
 * Enter the Domain Name and Tenant ID. 
 
-    * To find the Domain name and Tenant ID, Login to the Azure Portal, choose your Azure AD tenant by selecting your account in the top right corner of the page 
+    * To find the Domain name and Tenant ID, Login to the Azure Portal, choose your Azure AD tenant by selecting your account in the top  right corner of the page 
     * Then click on Azure Active Directory from left pan of the portal and click on properties to get Tenant ID
-
-![    ![Tenant Id](images/DomainAndTenantID.png)](images/DomainAndTenantID.png)
+    
+  ![Tenant Id](images/DomainAndTenantID.png)
+  
 * To get the Domain Name select Custom Domain Names and primary tick mark name is the Domain Name
 
-![ ![Domain Name](images/DomainName.png)](images/DomainName.png)
+  ![Domain Name](images/DomainNameDetail.png)
 
-* Enter Azure Active Directory application id and password which you have configured during installation of Cloudneeti
+* Enter Azure Active Directory application id and password which you have configured during configuration of Cloudneeti
 * **Click Create** button for adding the Tenant details.
 
 ### Step 2:
-Once the Tenant details are save, portal displays "Sign-in to connect your Azure Subscription" and provides two option for connecting as follows
+Once the Tenant details are saved, portal displays "Sign-in to connect your Azure Subscription" and provides two option for connecting as follows
 ![Sign-in to connect your Azure Subscription](images/SignInToConnect.png)
 * Work or School Account - Use your Work Account Credentials for Authentication.
    
@@ -61,7 +62,7 @@ Once the Tenant details are save, portal displays "Sign-in to connect your Azure
 ### Step 3:
 The first step of the Wizard contains introductory information, read Pre-Requisites, Instructions, Terms of Use, Privacy Policy and **Click on Continue** button
 
-![Introduction](images/Introduction.png)
+![Introduction](images/IntroductionStep.png)
 
 ### STEP 4:
 Next step of the Wizard will ask you to enter Subscription details for which you would want Cloudneeti to monitor and get alerted on your security and compliance posture of the entire environment, all fields are mandatory.
@@ -103,10 +104,10 @@ Which will create new storage account. Open your storage account blade and then 
 In this step, enter Azure Storage account name and key which will used for storing the Benchmark Reports (Word Document). You can download the latest report from the portal by accessing Benchmark Dashboards. For accessing all the previous reports, you can access it from the storage account.
 
 ![Reports and Notifications](images/ReportsAndNotifications.png)
-* Data Retention - provide the number of days, the reports need to be preserved. Editing data retention is enabled only for License type of Enterprise or MSP. For others it taken automatically as per the License type.
-* Storage Account Name - enter the storage account name where reports need to be stored.
-* Storage Account Key - enter storage account key
-* Notification Email IDs - enter comma separated email Ids who should receive the notification emails.
+* Data Retention - Provide the number of days, the reports need to be preserved. Editing data retention is enabled only for License type of Enterprise or MSP. For others it taken auto-populated as per the License type.
+* Storage Account Name - Enter the storage account name where reports need to be stored.
+* Storage Account Key - Enter storage account key
+* Notification Email IDs - Enter comma separated email Ids who should receive the notification emails.
 * **Click Save and Continue** button.
 
 ### STEP 7:
