@@ -3,8 +3,16 @@
 .navbar {
   font-size: 14px;
 }
+.sidebar-menu {
+  margin-top: 2%;
+  position: fixed;
+}
+.main-content {
+  margin-left: 16%;
+  padding-top: 0;
+}
 .navbar-nav {
-    margin: 7.5px -15px!important;
+  margin: 7.5px -15px!important;
 }
 .navbar-default {
   background-color: @gray-darkest;
@@ -60,10 +68,7 @@
     background-color: darken(@brand-primary, 10%);
   }
 }
-.sidebar-menu{  margin-top: 2%;position: fixed;}
-@media(max-width:768px) {
-  .sidebar-menu{  margin-top: 2%;position: relative;}
-}
+
 @media(min-width:768px) {
   .home {
     .navbar-default {
