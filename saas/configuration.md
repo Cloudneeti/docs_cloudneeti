@@ -1,139 +1,128 @@
 ﻿
-# Saas Configuration and User Guide 
+# SaaS Configuration and User Guide 
 
-**Introduction** : **Cloudneeti** is a governance cohort, bringing together an integrated approach across various disciplines of governance. With some simple configurations, Cloudneeti can help you pull information from applications / systems deployed on Azure and inform you through various notifications, dashboards and reports about –
+**Introduction** : **Cloudneeti**  offers continuous infrastructure security and compliance monitoring. It provides a clear evidence about actual implementation of controls and the information required for compliance audits.
 
-1. Compliance against industry standards such as PCI DSS 3.2, HIPAA, Cyber Security Foundations, Security Benchmark, NIST CSF, GDPR. 
-2. Optimizing your Spend on the cloud subscription (are you over-subscribed or under-subscribed)
-3. Reliability of your cloud environments (efficacy of backups, downtime alerts)
-4. Reducing Risk by detecting and alerting non-compliant configurations
+
+1. Dashboard of the cybersecurity and compliance posture against industry standards such as PCI DSS 3.2, HIPAA, Cyber Security Foundations, Security Benchmark, NIST CSF, GDPR 
+2. Compliance evidence for key industry benchmarks 
+3. Continuous Monitoring to detect deviations from standards 
+4. Remediation guidance for discovered vulnerabilities 
+5. Azure usage visibility across the entire organization
+
+
+## Onboard an Azure subscription
+
+Follow these steps to onboard an Azure account to Cloudneeti. 
+
+**Step-1** : Before you configure the Cloudneeti on to your Azure Subscription, you need an active Azure AD account in the Global Administrator role<br />
+1.1  Login into the [Azure Portal](https://portal.azure.com/), with User with Global Admin Role
+
+**Step-2** : Create an Active Directory Application
+
+2.1	In the [Azure Portal](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal), click Azure Active Directory in the sidebar then select App Registrations<br />
+2.2	Click on New application registration button. Enter the Name for example "Cloudneeti" Select the Application Type as "Web App/API" Enter the Sign-on URL as provided . e.g. "http://cloudneeti.azurewebsites.net"<br />
+2.3	Click Create <br />
+2.4	Click on the registered application "Cloudneeti" <br />
+2.5	Click Settings <br />
+2.6	Click Reply URL <br />
+2.7	Enter Reply URL with DNS name created above. e.g. "http://cloudneeti.azurewebsites.net/Account/SignIn" <br />
+2.8	Click Save <br />
+
+For Auto Deployment Refer the script : [Create AD Application](https://github.com/AvyanConsultingCorp/docs_cloudneeti/blob/gh-pages/Scripts/Create-ServicePrincipal.ps1) 
+
+**Step-3** : Configure Azure Active Directory application permissions <br />
+3.1 In Settings Preview, click Required permissions <br />
+3.2 Click +Add & Select an API : In this step you will modify  <br />
+    * Windows Azure Active Directory <br />
+    * Microsoft Graph <br />
+    * Windows Azure Service Management API <br />
+    * Key Vault API <br />
+3.3 Select the **Windows Azure Active Directory** API  <br />
+ 3.3.1.	Select the following application permissions <br /> 
+ * Manage apps that this app creates or owns  <br />
+ * Read and write devices  <br /> 
+ * Read and write domains  <br /> 
+ * Read all hidden memberships  <br />
+ * Read directory data  <br />
  
-## Types of User Roles
-* License Administrator - can do the following activities
-* Subscription Administrator
-* Subscription Reader
+3.3.2.	Select the following delegated permissions <br /> 
+* Read all groups
+* Read hidden memberships
+* Access the directory as the signed-in user
+* Read hidden memberships
+* Sign in and read user profile
+* Read all users' basic profiles
+* Read all users' full profiles
+* Read Directory data
 
-|   | License Administrator  | Subscription Administrator  | Subscription Reader  |
-|---|:---:|:---:|:---:|
-| View Dashboard  | :white_check_mark:  |  :white_check_mark:  | :white_check_mark:  |
-| Add License Administrator  | :white_check_mark:  |  :x:  | :x:  |
-| Add Tenant | :white_check_mark:  |  :x:  | :x:  |
-| Edit Tenant  |  :white_check_mark:  |  :x:  | :x:  |
-| Delete Tenant  |  :white_check_mark:  |  :x:  | :x:  |
-| Add Subscription  | :white_check_mark:  |  :x:  | :x:  |
-| Edit Subscription  | :white_check_mark:  |  :x:  | :x:  |
-| Delete Subscription  | :white_check_mark:  |  :x:  | :x:  |
-| Configure Subscription  | :white_check_mark:  |  :white_check_mark:   | :x:  |
+3.4 Select the **Microsoft Graph** API  <br />
+ 3.4.1.	Select the following application permissions <br /> 
+* 	Read all usage reports
+* 	Read all hidden memberships
+* 	Read all groups
+* 	Read directory data
+* 	Read and write directory data
+* 	Read all users' full profiles
+* 	Read and write all users' full profiles
+* 	Read all identity risk event information
+* 	Read and write files in all site collections
+* 	Read files in all site collections
 
-## Onboarding Azure Subscriptions to Cloudneeti
-
-To onboard an Azure subscription to your Cloudneeti product
-
-**Click on Get Started**  **-->** Wizard Screen will appear:
-
-![Get Started](images/GetStarted.png)
-
-### Step 1:
-After clicking on Get started, portal displays "Register your Azure Active Directory Tenant" page for entering the information related to Azure Tenant.
-![Create Tenant](images/CreateTenant.png)
-
-* Enter the Domain Name and Tenant ID. 
-
-    * To find the Domain name and Tenant ID, Login to the Azure Portal, choose your Azure AD tenant by selecting your account in the top  right corner of the page 
-    * Then click on Azure Active Directory from left pan of the portal and click on properties to get Tenant ID
-    
-  ![Tenant Id](images/DomainAndTenantID.png)
-  
-* To get the Domain Name select Custom Domain Names and primary tick mark name is the Domain Name
-
-  ![Domain Name](images/DomainNameDetail.png)
-
-* Enter Azure Active Directory application id and password which you have configured during configuration of Cloudneeti
-* **Click Create** button for adding the Tenant details.
-
-### Step 2:
-Once the Tenant details are saved, portal displays "Sign-in to connect your Azure Subscription" and provides two option for connecting as follows
-![Sign-in to connect your Azure Subscription](images/SignInToConnect.png)
-* Work or School Account - Use your Work Account Credentials for Authentication.
-   
-* Microsoft Account - Enter your Domain Name which was entered by you while entering the Tenant and click on **Go** Button. Then enter your Microsoft Live Id credentials for Authentication.
+3.4.2.	Select the following delegated permissions <br /> 
+* 	Read and write user and shared contacts
+* 	Read user and shared contacts
+* 	Sign in and read user profile
+* 	Read and write access to user profile
+* 	Read all users' basic profiles
+* 	Read and write all groups
+* 	Access directory as the signed in user
+* 	Read user contacts
+* 	Read user files
+* 	Sign users in
+* 	Access user's data anytime
+* 	View users' email address
+* 	View users' basic profile
+* 	Read identity risk event information
+* 	Read all usage reports
+* 	Read all users' full profiles
+* 	Read and write all users' full profiles
+* 	Read all groups
+* 	Read directory data
+* 	Read and write directory data
 
 
-### Step 3:
-The first step of the Wizard contains introductory information, read Pre-Requisites, Instructions, Terms of Use, Privacy Policy and **Click on Continue** button
+3.5 Select the **Windows Azure Service Management** API  <br />
+ 3.5.1.	Application permissions are not needed  <br /> 
 
-![Introduction](images/IntroductionStep.png)
+3.5.2.	Select the following delegated permissions <br /> 
+* 	Access Azure Service Management as organization user
 
-### STEP 4:
-Next step of the Wizard will ask you to enter Subscription details for which you would want Cloudneeti to monitor and get alerted on your security and compliance posture of the entire environment, all fields are mandatory.
+3.6 Select the **Windows Azure Service Management** API  <br />
+ 3.6.1.	Application permissions are not needed  <br /> 
 
-![Setup Subscription](images/SetupSubscription.png)
-* Select at-least one Tenant Id 
-* Enter correct Subscription id for proceeding to the next step
-* **Click Save and Continue** button.
+3.6.2.	Select the following delegated permissions <br /> 
+* 		Have full access to the Azure Key Vault service
 
-
-### STEP 5:
-Next step of the Wizard will allow you to Enable or Disable Policies/Rules around governance monitoring
-
-![Enable-Disable](images/EnableDisable.png)
-
-Select down arrow/+ sign to expand the list of policies/rules you would want to enable or disable, select respective check box and **Click Save and Continue** button.
-
-![Enable-Disable1](images/EnableDisable-1.png)
-
-### STEP 6:
-Next step of the Wizard will allow you to configure the Reports and Notifications. 
-
-You can use existing Azure Storage account or can create new one. For creating new Storage account, select More Services in Azure portal and search for Storage accounts and open the blade.
-
-![StorageAccount-1](images/StorageAccount-1.png)
-
-Click on Add, for adding new Storage account.
-
-![StorageAccount-2](images/StorageAccount-2.png)
-
-Enter valid storage account Name and select the subscription. Select existing resource group or create new resource group. You can modify other options as per the requirement and finally click on the create Button. 
-
-![StorageAccount-3](images/StorageAccount-3.png)![StorageAccount-4](images/StorageAccount-4.png)
-
-Which will create new storage account. Open your storage account blade and then you can copy storage account name and key1 by clicking on Access Keys.
-
-![StorageAccount-5](images/StorageAccount-5.png)
-
-In this step, enter Azure Storage account name and key which will used for storing the Benchmark Reports (Word Document). You can download the latest report from the portal by accessing Benchmark Dashboards. For accessing all the previous reports, you can access it from the storage account.
-
-![Reports and Notifications](images/ReportsAndNotifications.png)
-* Data Retention - Provide the number of days, the reports need to be preserved. Editing data retention is enabled only for License type of Enterprise or MSP. For others it taken auto-populated as per the License type.
-* Storage Account Name - Enter the storage account name where reports need to be stored.
-* Storage Account Key - Enter storage account key
-* Notification Email IDs - Enter comma separated email Ids who should receive the notification emails.
-* **Click Save and Continue** button.
-
-### STEP 7:
-Next step is to setup the schedule for scan interval/frequency. Select frequency and next run time then **Click Save and Continue** button.
-
-![Schedule](images/SetSchedule.png)
-
-### STEP 8:
-Last step from the wizard is to invite users by selecting check box from the list of users with the VM link to the Cloudneeti application informing that, Cloudneeti application has been installed and they can now access it.
-
-**Click on Finish button.**
-
-![Invite Users](images/InviteUsers.png)
-
-After completion of above steps successfully, you will be redirected to the status page. 
-
-![Status](images/StatusPage.png)
-
-Once all services are completed you will be automatically redirected to the Subscription Dashboard. 
-
-![Dashboard](images/SubscriptionDashboard.png)
+**Step-4** : Grant Permissions to enable the configurations
+* Click on Grant Permissions to enable the configurations
 
 
+**Step-5** : Generate the Application Key
+* In App Registration blade, Click on the newly registered application if you had given the name "Cloudneeti" then click on the same
+* Click Settings
+* Click Keys
+* Enter a new description, Select a Expires value from the drop down and Click Save
+* The key value is generated, Copy the same for your record along with Application ID
 
-### Steps for adding License Administrator:
- As you are the first person for entering the Tenant details, you will be assigned the role of "License Administrator". You can add another License Administrator and to do so follow the menu Settings => Add License Administrator => Add New
- ![Add License Administrator](images/AddLicenseAdministrator.png)
- This step could be followed at any time as per requirement and can be skipped for now.
+**Step-6** : Authorize Application ID to access your Azure Subscription resources
+
+* In the Azure Portal.
+* Select All services and Subscriptions
+* Select the particular subscription to assign the application to.
+* Select Access control (IAM).
+* Select Add.
+* To allow the application to call Azure API, select the Reader role. By default, Azure AD applications aren't displayed in the available options. To find your application, search for the name. If you had given the name "Cloudneeti” then search for same and select it.
+* Select Save to finish assigning the role.
+
 
