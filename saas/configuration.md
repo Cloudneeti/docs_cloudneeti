@@ -21,15 +21,14 @@ Follow these steps to onboard an Azure account to Cloudneeti.
 **Step-2** : Create an Active Directory Application
 
 2.1	In the [Azure Portal](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal), click Azure Active Directory in the sidebar then select App Registrations<br />
-2.2	Click on New application registration button. Enter the Name for example "Cloudneeti" Select the Application Type as "Web App/API" Enter the Sign-on URL as provided . e.g. "http://cloudneeti.azurewebsites.net"<br />
+2.2	Click on New application registration button. Enter the Name for example "Cloudneeti" Select the Application Type as "Web App/API" Enter the Sign-on URL as provided . e.g. "http://DNSname.region.cloudapp.azure.com"<br />
 2.3	Click Create <br />
 2.4	Click on the registered application "Cloudneeti" <br />
 2.5	Click Settings <br />
 2.6	Click Reply URL <br />
-2.7	Enter Reply URL with DNS name created above. e.g. "http://cloudneeti.azurewebsites.net/Account/SignIn" <br />
+2.7	Enter Reply URL with DNS name created above. e.g. "http://DNSname.region.cloudapp.azure.com/Account/Signon/Account/SignIn" <br />
 2.8	Click Save <br />
-
-For Auto Deployment Refer the script : [Create AD Application](https://github.com/AvyanConsultingCorp/docs_cloudneeti/blob/gh-pages/Scripts/Create-ServicePrincipal.ps1) 
+* Note : For Auto Deployment download the script : [`Create AD Application`](https://github.com/AvyanConsultingCorp/docs_cloudneeti/blob/master/scripts/Create-ServicePrincipal.ps1). You can find the instructions  [`here`](create-service-principal.html).
 
 **Step-3** : Configure Azure Active Directory application permissions <br />
 3.1 In Settings Preview, click Required permissions <br />
@@ -124,5 +123,5 @@ For Auto Deployment Refer the script : [Create AD Application](https://github.co
 * Select Add.
 * To allow the application to call Azure API, select the Reader role. By default, Azure AD applications aren't displayed in the available options. To find your application, search for the name. If you had given the name "Cloudneeti” then search for same and select it.
 * Select Save to finish assigning the role.
-
+* Role assignment is automated by [`Assign-RolesToServicePrincipal.ps1`](https://github.com/AvyanConsultingCorp/docs_cloudneeti/blob/master/script/Assign-RolesToServicePrincipal.ps1) script. You can follow the instructions given in [`link`](assign-roles-to-sp.html).
 
