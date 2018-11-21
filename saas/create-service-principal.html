@@ -125,133 +125,87 @@
         </div>
 
         <section class="main-content col-sm-10 col-lg-10">
-            <p>﻿</p>
-<h1 id="saas-configuration-and-user-guide">SaaS Configuration and User Guide</h1>
-<p><strong>Introduction</strong> : <strong>Cloudneeti</strong>  offers continuous infrastructure security and compliance monitoring. It provides a clear evidence about actual implementation of controls and the information required for compliance audits.</p>
-<ol>
-<li>Dashboard of the cybersecurity and compliance posture against industry standards such as PCI DSS 3.2, HIPAA, Cyber Security Foundations, Security Benchmark, NIST CSF, GDPR </li>
-<li>Compliance evidence for key industry benchmarks </li>
-<li>Continuous Monitoring to detect deviations from standards </li>
-<li>Remediation guidance for discovered vulnerabilities </li>
-<li>Azure usage visibility across the entire organization</li>
-</ol>
-<h2 id="onboard-an-azure-subscription">Onboard an Azure subscription</h2>
-<p>Follow these steps to onboard an Azure account to Cloudneeti. </p>
-<p><strong>Step-1</strong> : Before you configure the Cloudneeti on to your Azure Subscription, you need an active Azure AD account in the Global Administrator role<br />
-1.1  Login into the <a href="https://portal.azure.com/">Azure Portal</a>, with User with Global Admin Role</p>
-<p><strong>Step-2</strong> : Create an Active Directory Application</p>
-<p>2.1 In the <a href="https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal">Azure Portal</a>, click Azure Active Directory in the sidebar then select App Registrations<br />
-2.2 Click on New application registration button. Enter the Name for example &quot;Cloudneeti&quot; Select the Application Type as &quot;Web App/API&quot; Enter the Sign-on URL as provided . e.g. &quot;<a href="http://DNSname.region.cloudapp.azure.com">http://DNSname.region.cloudapp.azure.com</a>&quot;<br />
-2.3 Click Create <br />
-2.4 Click on the registered application &quot;Cloudneeti&quot; <br />
-2.5 Click Settings <br />
-2.6 Click Reply URL <br />
-2.7 Enter Reply URL with DNS name created above. e.g. &quot;<a href="http://DNSname.region.cloudapp.azure.com/Account/Signon/Account/SignIn">http://DNSname.region.cloudapp.azure.com/Account/Signon/Account/SignIn</a>&quot; <br />
-2.8 Click Save <br /></p>
+            <h1 id="create-service-prinicipal">Create Service Prinicipal</h1>
+<h2><strong>Prerequisite:</strong></h2>
 <ul>
-<li>Note : For Auto Deployment download the script : <a href="https://github.com/AvyanConsultingCorp/docs_cloudneeti/blob/master/scripts/Create-ServicePrincipal.ps1"><code>Create AD Application</code></a>. You can find the instructions  <a href="create-service-principal.html"><code>here</code></a>.</li>
+<li>Open PowerShell as administrator (right click on PowerShell and select run as administrator)</li>
+<li>Download the <strong>Create-ServicePrincipal</strong> script from <a href="https://github.com/AvyanConsultingCorp/docs_cloudneeti/blob/master/scripts/Create-ServicePrincipal.ps1"><code>here</code></a></li>
+<li>
+<p><strong>PowerShell version should be 5 or above</strong>
+To check PowerShell version type <code>$PSVersionTable.PSVersion</code> in PowerShell and you will find PowerShell version, below example version is 5.1.17134.228.
+<img src="../images/PSVersiontable.png" alt="PSVersiontable.png" />
+If PowerShell version is lower than 5 then follow link <a href="https://docs.microsoft.com/en-us/powershell/scripting/setup/installing-windows-powershell?view=powershell-6">https://docs.microsoft.com/en-us/powershell/scripting/setup/installing-windows-powershell?view=powershell-6</a></p>
+</li>
+<li><strong>AzureAD module installed</strong>
+To check Azure AD version type <code>Get-InstalledModule -Name azureAD</code> in PowerShell window
+<img src="../images/get-module.png" alt="get-module.png" />
+If version is lower or not installed, type command <code>Install-Module -Name AzureAD -MinimumVersion 2.0.0.131</code> in PowerShell window</li>
 </ul>
-<p><strong>Step-3</strong> : Configure Azure Active Directory application permissions <br />
-3.1 In Settings Preview, click Required permissions <br />
-3.2 Click +Add &amp; Select an API : In this step you will modify  <br /></p>
+<p><strong>Note:</strong></p>
+<ol>
+<li>Part 1 describes, if service principal with name <strong>Cloudneeti-Data-Collector</strong> was never created in Azure Active Directory &gt; App Registration</li>
+<li>Part 2 describes, if service principal with name <strong>Cloudneeti-Data-Collector</strong> exists in Azure Active Directory &gt; App Registration</li>
+</ol>
+<h2><strong>Part1</strong></h2>
+<h3 id="follow-steps-given-below-to-create-service-principal">Follow steps given below to create service principal</h3>
+<ol>
+<li>Open PowerShell in <strong>administrator</strong> mode</li>
+<li>Move to the path where <code>Create-ServicePrincipal.PS1</code> file is kept (e.d “cd C:\ )</li>
+<li>Run file named <strong>Create-ServicePrincipal.ps1</strong> (e.g <code>.\Create-ServicePrincipal.ps1</code>)
+Parameters will be </li>
+<li><strong>azureActiveDirectoryTenantId</strong> : Directory ID is Tenant ID and can be found in Azure Active Directory</li>
+<li><strong>replyURL</strong> : URL where authentication response need to be sent e.g. &quot;DNSname.region.cloudapp.azure.com/Account/Signon&quot;</li>
+<li><strong>expirationPeriod</strong> : expiration period of secret key</li>
+</ol>
+<p><strong>Note:</strong>
+You can also add number of years for the life of key should live, by simply adding parameter <code>-expirationPeriod</code> followed by number by default key life is 1 year
+e.g:
+<img src="../images/script-command.png" alt="script-command" />
+It takes following parameters</p>
 <ul>
-<li>Windows Azure Active Directory <br /></li>
-<li>Microsoft Graph <br /></li>
-<li>Windows Azure Service Management API <br /></li>
-<li>Key Vault API <br />
-3.3 Select the <strong>Windows Azure Active Directory</strong> API  <br />
-3.3.1. Select the following application permissions <br /> 
+<li><code>azureActiveDirectoryTenantId</code> : Azure Active Directory Id</li>
+<li><code>replyUrl</code>: Reply URL like <code>DomainName/Account/Signon</code></li>
+<li><code>expirationPeriod</code>: Number of years for which the secret key will be valid eg. 1
+error: 
 <ul>
-<li>Manage apps that this app creates or owns  <br /></li>
-<li>Read and write devices  <br /> </li>
-<li>Read and write domains  <br /> </li>
-<li>Read all hidden memberships  <br /></li>
-<li>Read directory data  <br /></li>
+<li>If you get error like: <code>&lt;script&gt;.ps1</code> is not digitally signed.  The script will not execute on the system.”
+Run command <code>Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass</code> in your PowerShell window and try again</li>
+<li>If you get error “The term <code>Install-Module</code> is not recognized” install PowerShell version 5 or greater, link shared in prerequisite of this document </li>
 </ul></li>
 </ul>
-<p>3.3.2.  Select the following delegated permissions <br /> </p>
-<ul>
-<li>Read all groups</li>
-<li>Read hidden memberships</li>
-<li>Access the directory as the signed-in user</li>
-<li>Read hidden memberships</li>
-<li>Sign in and read user profile</li>
-<li>Read all users' basic profiles</li>
-<li>Read all users' full profiles</li>
-<li>Read Directory data</li>
-</ul>
-<p>3.4 Select the <strong>Microsoft Graph</strong> API  <br />
-3.4.1. Select the following application permissions <br /> </p>
-<ul>
-<li> Read all usage reports</li>
-<li> Read all hidden memberships</li>
-<li> Read all groups</li>
-<li> Read directory data</li>
-<li> Read and write directory data</li>
-<li> Read all users' full profiles</li>
-<li> Read and write all users' full profiles</li>
-<li> Read all identity risk event information</li>
-<li> Read and write files in all site collections</li>
-<li> Read files in all site collections</li>
-</ul>
-<p>3.4.2.  Select the following delegated permissions <br /> </p>
-<ul>
-<li> Read and write user and shared contacts</li>
-<li> Read user and shared contacts</li>
-<li> Sign in and read user profile</li>
-<li> Read and write access to user profile</li>
-<li> Read all users' basic profiles</li>
-<li> Read and write all groups</li>
-<li> Access directory as the signed in user</li>
-<li> Read user contacts</li>
-<li> Read user files</li>
-<li> Sign users in</li>
-<li> Access user's data anytime</li>
-<li> View users' email address</li>
-<li> View users' basic profile</li>
-<li> Read identity risk event information</li>
-<li> Read all usage reports</li>
-<li> Read all users' full profiles</li>
-<li> Read and write all users' full profiles</li>
-<li> Read all groups</li>
-<li> Read directory data</li>
-<li> Read and write directory data</li>
-</ul>
-<p>3.5 Select the <strong>Windows Azure Service Management</strong> API  <br />
-3.5.1. Application permissions are not needed  <br /> </p>
-<p>3.5.2.  Select the following delegated permissions <br /> </p>
-<ul>
-<li> Access Azure Service Management as organization user</li>
-</ul>
-<p>3.6 Select the <strong>Windows Azure Service Management</strong> API  <br />
-3.6.1. Application permissions are not needed  <br /> </p>
-<p>3.6.2.  Select the following delegated permissions <br /> </p>
-<ul>
-<li>    Have full access to the Azure Key Vault service</li>
-</ul>
-<p><strong>Step-4</strong> : Grant Permissions to enable the configurations</p>
-<ul>
-<li>Click on Grant Permissions to enable the configurations</li>
-</ul>
-<p><strong>Step-5</strong> : Generate the Application Key</p>
-<ul>
-<li>In App Registration blade, Click on the newly registered application if you had given the name &quot;Cloudneeti&quot; then click on the same</li>
-<li>Click Settings</li>
-<li>Click Keys</li>
-<li>Enter a new description, Select a Expires value from the drop down and Click Save</li>
-<li>The key value is generated, Copy the same for your record along with Application ID</li>
-</ul>
-<p><strong>Step-6</strong> : Authorize Application ID to access your Azure Subscription resources</p>
-<ul>
-<li>In the Azure Portal.</li>
-<li>Select All services and Subscriptions</li>
-<li>Select the particular subscription to assign the application to.</li>
-<li>Select Access control (IAM).</li>
-<li>Select Add.</li>
-<li>To allow the application to call Azure API, select the Reader role. By default, Azure AD applications aren't displayed in the available options. To find your application, search for the name. If you had given the name &quot;Cloudneeti” then search for same and select it.</li>
-<li>Select Save to finish assigning the role.</li>
-<li>Role assignment is automated by <a href="https://github.com/AvyanConsultingCorp/docs_cloudneeti/blob/master/script/Assign-RolesToServicePrincipal.ps1"><code>Assign-RolesToServicePrincipal.ps1</code></a> script. You can follow the instructions given in <a href="assign-roles-to-sp.html"><code>link</code></a>.</li>
-</ul>
+<ol start="4">
+<li>Login screen will be prompted
+<img src="../images/login.png" alt="login.png" />
+<strong>Note:</strong> Credentials used should have AD role as ‘Global Admin’</li>
+<li>Service principal is created, save ‘ApplicationName’ , ‘ApplicationId’, ‘Password Key Description’ and ‘Password Key’</li>
+</ol>
+<p>Find count of 'Application Permissions' and 'Delegated Permissions' with respect to 'API'
+<img src="../images/app-permissions.png" alt="app-permissions.png" /></p>
+<ol start="6">
+<li>
+<p>To verify, Login to Azure portal &gt; Azure Active Directory &gt; App registrations
+<img src="../images/azure-ad-portal.png" alt="azure-ad-portal.png" /></p>
+</li>
+<li>Search for service principal with respective name
+<img src="../images/app-registrations.png" alt="app-registrations.png" /></li>
+<li>
+<p>In Settings check Reply URLs and Required permissions
+<img src="../images/app-view.png" alt="app-view.png" /></p>
+</li>
+<li>To grant permission, in settings &gt; required permissions &gt; click on Grant permissions then ok
+Refer below images
+<img src="../images/required-permissions.png" alt="required-permissions.png" />
+To grant permissions listed above click on Grant permission.
+<img src="../images/grant-permissions.png" alt="grant-permissions.png" /></li>
+<li>Service principal created successfully </li>
+</ol>
+<h2><strong>Part 2</strong></h2>
+<ol>
+<li>If service principal with respective name already exists then script will ask you whether you want to create new key for the existing or not
+<img src="../images/key-prompt.png" alt="prompt" /></li>
+<li>Enter your choice, if you enter ‘yes’, new key will be created, save the details i.e ApplicationName’ , ‘ApplicationId’, ‘Password Key Description’ and ‘Password Key’
+<img src="../images/key-credentials.png" alt="credentials" /></li>
+</ol>
         </section>
     </div>
 
