@@ -154,7 +154,7 @@ If version is lower or not installed, type command <code>Install-Module -Name Az
 <li>Run file named <strong>Create-ServicePrincipal.ps1</strong> (e.g <code>.\Create-ServicePrincipal.ps1</code>)
 Parameters will be </li>
 <li><strong>azureActiveDirectoryTenantId</strong> : Directory ID is Tenant ID and can be found in Azure Active Directory</li>
-<li><strong>replyURL</strong> : URL where authentication response need to be sent e.g. &quot;DNSname.region.cloudapp.azure.com/Account/Signon&quot;</li>
+<li><strong>replyURL</strong> : URL where authentication response need to be sent e.g. &quot;DNSname.region.cloudapp.azure.com/Account/Signin&quot;</li>
 <li><strong>expirationPeriod</strong> : expiration period of secret key</li>
 </ol>
 <p><strong>Note:</strong>
@@ -164,7 +164,7 @@ e.g:
 It takes following parameters</p>
 <ul>
 <li><code>azureActiveDirectoryTenantId</code> : Azure Active Directory Id</li>
-<li><code>replyUrl</code>: Reply URL like <code>DomainName/Account/Signon</code></li>
+<li><code>replyUrl</code>: Reply URL like <code>DomainName/Account/SignIn</code></li>
 <li><code>expirationPeriod</code>: Number of years for which the secret key will be valid eg. 1
 error: 
 <ul>
