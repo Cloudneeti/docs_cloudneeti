@@ -26,7 +26,7 @@ Follow these steps to onboard an Azure account to Cloudneeti.
 2.4	Click on the registered application "Cloudneeti" <br />
 2.5	Click Settings <br />
 2.6	Click Reply URL <br />
-2.7	Enter Reply URL with DNS name created above. e.g. "http://DNSname.region.cloudapp.azure.com/Account/Signon/Account/SignIn" <br />
+2.7	Enter Reply URL with DNS name created above. e.g. "http://DNSname.region.cloudapp.azure.com/Account/SignIn" <br />
 2.8	Click Save <br />
 * Note : For Auto Deployment download the script : [`Create AD Application`](https://github.com/AvyanConsultingCorp/docs_cloudneeti/blob/master/scripts/Create-ServicePrincipal.ps1). You can find the instructions  [`here`](create-service-principal.html).
 
@@ -40,8 +40,6 @@ Follow these steps to onboard an Azure account to Cloudneeti.
 3.3 Select the **Windows Azure Active Directory** API  <br />
  3.3.1.	Select the following application permissions <br /> 
  * Manage apps that this app creates or owns  <br />
- * Read and write devices  <br /> 
- * Read and write domains  <br /> 
  * Read all hidden memberships  <br />
  * Read directory data  <br />
  
@@ -57,51 +55,43 @@ Follow these steps to onboard an Azure account to Cloudneeti.
 
 3.4 Select the **Microsoft Graph** API  <br />
  3.4.1.	Select the following application permissions <br /> 
-* 	Read all usage reports
-* 	Read all hidden memberships
-* 	Read all groups
-* 	Read directory data
-* 	Read and write directory data
-* 	Read all users' full profiles
-* 	Read and write all users' full profiles
-* 	Read all identity risk event information
-* 	Read and write files in all site collections
-* 	Read files in all site collections
+* 	Read all usage reports
+* 	Read all hidden memberships
+* 	Read all groups
+* 	Read directory data
+* 	Read all users' full profiles
+* 	Read all identity risk event information
+* 	Read files in all site collections
 
 3.4.2.	Select the following delegated permissions <br /> 
-* 	Read and write user and shared contacts
-* 	Read user and shared contacts
-* 	Sign in and read user profile
-* 	Read and write access to user profile
-* 	Read all users' basic profiles
-* 	Read and write all groups
-* 	Access directory as the signed in user
-* 	Read user contacts
-* 	Read user files
-* 	Sign users in
-* 	Access user's data anytime
-* 	View users' email address
-* 	View users' basic profile
-* 	Read identity risk event information
-* 	Read all usage reports
-* 	Read all users' full profiles
-* 	Read and write all users' full profiles
-* 	Read all groups
-* 	Read directory data
-* 	Read and write directory data
+* 	Read user and shared contacts
+* 	Sign in and read user profile
+* 	Read all users' basic profiles
+* 	Access directory as the signed in user
+* 	Read user contacts
+* 	Read user files
+* 	Sign users in
+* 	Access user's data anytime
+* 	View users' email address
+* 	View users' basic profile
+* 	Read identity risk event information
+* 	Read all usage reports
+* 	Read all users' full profiles
+* 	Read all groups
+* 	Read directory data
 
 
 3.5 Select the **Windows Azure Service Management** API  <br />
  3.5.1.	Application permissions are not needed  <br /> 
 
 3.5.2.	Select the following delegated permissions <br /> 
-* 	Access Azure Service Management as organization user
+* 	Access Azure Service Management as organization user
 
 3.6 Select the **Windows Azure Service Management** API  <br />
  3.6.1.	Application permissions are not needed  <br /> 
 
 3.6.2.	Select the following delegated permissions <br /> 
-* 		Have full access to the Azure Key Vault service
+* 		Have full access to the Azure Key Vault service
 
 **Step-4** : Grant Permissions to enable the configurations
 * Click on Grant Permissions to enable the configurations
@@ -123,5 +113,5 @@ Follow these steps to onboard an Azure account to Cloudneeti.
 * Select Add.
 * To allow the application to call Azure API, select the Reader role. By default, Azure AD applications aren't displayed in the available options. To find your application, search for the name. If you had given the name "Cloudneeti” then search for same and select it.
 * Select Save to finish assigning the role.
-* Role assignment is automated by [`Assign-RolesToServicePrincipal.ps1`](https://github.com/AvyanConsultingCorp/docs_cloudneeti/blob/master/script/Assign-RolesToServicePrincipal.ps1) script. You can follow the instructions given in [`link`](assign-roles-to-sp.html).
+* Role assignment is automated by [`Assign-RolesToServicePrincipal.ps1`](https://github.com/AvyanConsultingCorp/docs_cloudneeti/blob/master/scripts/Assign-RolesToServicePrincipal.ps1) script. You can follow the instructions given in [`link`](assign-roles-to-sp.html).
 

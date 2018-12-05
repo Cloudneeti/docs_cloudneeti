@@ -26,7 +26,7 @@ If version is lower or not installed, type command `Install-Module -Name AzureAD
 3.	Run file named **Create-ServicePrincipal.ps1** (e.g `.\Create-ServicePrincipal.ps1`)
 Parameters will be 
 1.	**azureActiveDirectoryTenantId** : Directory ID is Tenant ID and can be found in Azure Active Directory
-2.	**replyURL** : URL where authentication response need to be sent e.g. "DNSname.region.cloudapp.azure.com/Account/Signon"
+2.	**replyURL** : URL where authentication response need to be sent e.g. "DNSname.region.cloudapp.azure.com/Account/Signin"
 3.  **expirationPeriod** : expiration period of secret key
  
 **Note:**
@@ -35,7 +35,7 @@ e.g:
  ![script-command](../images/script-command.png)
  It takes following parameters
  - `azureActiveDirectoryTenantId` : Azure Active Directory Id
- - `replyUrl`: Reply URL like `DomainName/Account/Signon`
+ - `replyUrl`: Reply URL like `DomainName/Account/SignIn`
  - `expirationPeriod`: Number of years for which the secret key will be valid eg. 1
 error: 
 - If you get error like: `<script>.ps1` is not digitally signed.  The script will not execute on the system.”

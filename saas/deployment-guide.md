@@ -63,7 +63,7 @@ Cloudneeti uses AD Application for requesting consent accessing your Azure Subsc
 4. Click on the registered application "Cloudneeti"
 5. Click **Settings**
 6. Click **Reply URL**
-7. Enter **Reply URL** with DNS name created above                           &lt;DNSname&gt;.&lt;region&gt;.cloudapp.azure.com/Account/Signon
+7. Enter **Reply URL** with DNS name created above                           &lt;DNSname&gt;.&lt;region&gt;.cloudapp.azure.com/Account/SignIn
 8. Click **Save**
 
 #### Authorize Application ID to access your Subscription resources
