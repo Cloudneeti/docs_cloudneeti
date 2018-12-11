@@ -106,20 +106,10 @@ $requiredAccess = @"
        {  
           "name":"AzureActiveDirectory",
           "resourceAppId":"00000002-0000-0000-c000-000000000000",
-          "rules":[  
-             {  
-                "name":"Read and write devices",
-                "id":"1138cb37-bd11-4084-a2b7-9f71582aeddb",
-                "type":"Role"
-             },
+          "rules":[
              {  
                 "name":"Read directory data",
                 "id":"5778995a-e1bf-45b8-affa-663a9f3f4d04",
-                "type":"Role"
-             },
-             {  
-                "name":"Read and write domains",
-                "id":"abefe9df-d5a9-41c6-a60b-27b38eac3efb",
                 "type":"Role"
              },
              {  
@@ -324,6 +314,11 @@ $requiredAccess = @"
              {  
                 "name":"Read all groups",
                 "id":"5f8c59db-677d-491f-a6b8-5f174b11ec1d",
+                "type":"Scope"
+             },
+             {  
+                "name":"Read user devices",
+                "id":"11d4cd79-5ba5-460f-803f-e22c8ab85ccd",
                 "type":"Scope"
              }
           ]
