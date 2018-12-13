@@ -35,8 +35,6 @@ Follow these steps to onboard an Azure account to Cloudneeti.
 3.2 Click +Add & Select an API : In this step you will modify  <br />
     * Windows Azure Active Directory <br />
     * Microsoft Graph <br />
-    * Windows Azure Service Management API <br />
-    * Key Vault API <br />
 3.3 Select the **Windows Azure Active Directory** API  <br />
  3.3.1.	Select the following application permissions <br /> 
  * Manage apps that this app creates or owns  <br />
@@ -44,54 +42,22 @@ Follow these steps to onboard an Azure account to Cloudneeti.
  * Read directory data  <br />
  
 3.3.2.	Select the following delegated permissions <br /> 
-* Read all groups
-* Read hidden memberships
 * Access the directory as the signed-in user
 * Read hidden memberships
-* Sign in and read user profile
-* Read all users' basic profiles
-* Read all users' full profiles
 * Read Directory data
 
 3.4 Select the **Microsoft Graph** API  <br />
  3.4.1.	Select the following application permissions <br /> 
 * 	Read all usage reports
+* 	Read all identity risky user information
 * 	Read all hidden memberships
-* 	Read all groups
 * 	Read directory data
-* 	Read all users' full profiles
-* 	Read all identity risk event information
-* 	Read files in all site collections
+*   Read all groups
+*   Read all users' full profiles
+*   Read all identity risk event information
 
 3.4.2.	Select the following delegated permissions <br /> 
-* 	Read user and shared contacts
-* 	Sign in and read user profile
-* 	Read all users' basic profiles
-* 	Access directory as the signed in user
-* 	Read user contacts
-* 	Read user files
-* 	Sign users in
-* 	Access user's data anytime
-* 	View users' email address
-* 	View users' basic profile
-* 	Read identity risk event information
-* 	Read all usage reports
-* 	Read all users' full profiles
-* 	Read all groups
-* 	Read directory data
-
-
-3.5 Select the **Windows Azure Service Management** API  <br />
- 3.5.1.	Application permissions are not needed  <br /> 
-
-3.5.2.	Select the following delegated permissions <br /> 
-* 	Access Azure Service Management as organization user
-
-3.6 Select the **Windows Azure Service Management** API  <br />
- 3.6.1.	Application permissions are not needed  <br /> 
-
-3.6.2.	Select the following delegated permissions <br /> 
-* 		Have full access to the Azure Key Vault service
+* 	Read user devices
 
 **Step-4** : Grant Permissions to enable the configurations
 * Click on Grant Permissions to enable the configurations

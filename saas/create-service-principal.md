@@ -48,8 +48,8 @@ Run command `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass` in your
 5.	Service principal is created, save ‘ApplicationName’ , ‘ApplicationId’, ‘Password Key Description’ and ‘Password Key’
  
 
-Find count of 'Application Permissions' and 'Delegated Permissions' with respect to 'API'
- ![app-permissions.png](../images/app-permissions.png)
+    Find count of 'Application Permissions' and 'Delegated Permissions' with respect to 'API'
+ ![permission-table.png](../images/permission-table.png)
 
 6.	To verify, Login to Azure portal > Azure Active Directory > App registrations
  ![azure-ad-portal.png](../images/azure-ad-portal.png)
