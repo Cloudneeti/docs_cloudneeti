@@ -113,19 +113,14 @@ $requiredAccess = @"
                 "type":"Role"
              },
              {  
-                "name":"Sign in and read user profile",
-                "id":"311a71cc-e848-46a1-bdf8-97ff7156d8e6",
-                "type":"Scope"
+                "name":"Manage apps that this app creates or owns",
+                "id":"824c81eb-e3f8-4ee6-8f6d-de7f50d565b7",
+                "type":"Role"
              },
              {  
-                "name":"Read all users basic profiles",
-                "id":"cba73afc-7f69-4d86-8450-4978e04ecd1a",
-                "type":"Scope"
-             },
-             {  
-                "name":"Read all users full profiles",
-                "id":"c582532d-9d9e-43bd-a97c-2667a28ce295",
-                "type":"Scope"
+                "name":"Read all hidden memberships",
+                "id":"9728c0c4-a06b-4e0e-8d1b-3d694e8ec207",
+                "type":"Role"
              },
              {  
                 "name":"Access the directory as the signed-in user",
@@ -138,11 +133,6 @@ $requiredAccess = @"
                 "type":"Scope"
              },
              {  
-                "name":"Read all groups",
-                "id":"6234d376-f627-4f0f-90e0-dff25c5211a3",
-                "type":"Scope"
-             },
-             {  
                 "name":"Read directory data",
                 "id":"5778995a-e1bf-45b8-affa-663a9f3f4d04",
                 "type":"Scope"
@@ -150,55 +140,22 @@ $requiredAccess = @"
           ]
        },
        {  
-          "name":"WindowsAzureServiceManagement",
-          "resourceAppId":"797f4846-ba00-4fd7-ba43-dac1f8f63013",
-          "rules":{  
-             "name":"Access Azure Service Management as organization users (preview)",
-             "id":"41094075-9dad-400e-a0bd-54e686782033",
-             "type":"Scope"
-          }
-       },
-       {  
-          "name":"AzureKeyVault",
-          "resourceAppId":"cfa8b339-82a2-471a-a3c9-0fc0be7a4093",
-          "rules":{  
-             "name":"Have full access to the Azure Key Vault service",
-             "id":"f53da476-18e3-4152-8e01-aec403e6edc0",
-             "type":"Scope"
-          }
-       },
-       {  
           "name":"microsoftGraph",
           "resourceAppId":"00000003-0000-0000-c000-000000000000",
           "rules":[  
-             {  
-                "name":"Read all identity risky user information",
-                "id":"dc5007c0-2d7d-4c42-879c-2dab87571379",
-                "type":"Role"
-             },
              {  
                 "name":"Read all usage reports",
                 "id":"230c1aed-a721-4c5d-9cb4-a90514e508ef",
                 "type":"Role"
              },
              {  
-                "name":"Read all audit log data",
-                "id":"b0afded3-3588-46d8-8b3d-9842eff778da",
-                "type":"Role"
-             },
-             {  
-                "name":"Read your organization?s security events",
-                "id":"bf394140-e372-4bf9-a898-299cfc7564e5",
-                "type":"Role"
-             },
-             {  
-                "name":"Read all user mailbox settings",
-                "id":"40f97065-369a-49f4-947c-6a255697ae91",
-                "type":"Role"
-             },
-             {  
                 "name":"Read all hidden memberships",
                 "id":"658aa5d8-239f-45c4-aa12-864f4fc7e490",
+                "type":"Role"
+             },
+             {  
+                "name":"Read all groups",
+                "id":"5b567255-7703-4780-807c-7be8301ae99b",
                 "type":"Role"
              },
              {  
@@ -217,104 +174,9 @@ $requiredAccess = @"
                 "type":"Role"
              },
              {  
-                "name":"Read all groups",
-                "id":"5b567255-7703-4780-807c-7be8301ae99b",
+                "name":"Read all identity risky user information",
+                "id":"dc5007c0-2d7d-4c42-879c-2dab87571379",
                 "type":"Role"
-             },
-             {  
-                "name":"Read identity risky user information",
-                "id":"d04bb851-cb7c-4146-97c7-ca3e71baf56c",
-                "type":"Scope"
-             },
-             {  
-                "name":"Read your organization's policies",
-                "id":"572fea84-0151-49b2-9301-11cb16974376",
-                "type":"Scope"
-             },
-             {  
-                "name":"Read audit log data",
-                "id":"e4c9e354-4dc5-45b8-9e7c-e1393b0b1a20",
-                "type":"Scope"
-             },
-             {  
-                "name":"Read your organization?s security events",
-                "id":"64733abd-851e-478a-bffb-e47a14b18235",
-                "type":"Scope"
-             },
-             {  
-                "name":"Read user mailbox settings",
-                "id":"87f447af-9fa4-4c32-9dfa-4a57a73d18ce",
-                "type":"Scope"
-             },
-             {  
-                "name":"Read all usage reports",
-                "id":"02e97553-ed7b-43d0-ab3c-f8bace0d040c",
-                "type":"Scope"
-             },
-             {  
-                "name":"Sign in and read user profile",
-                "id":"e1fe6dd8-ba31-4d61-89e7-88639da4683d",
-                "type":"Scope"
-             },
-             {  
-                "name":"Read all users' basic profiles",
-                "id":"b340eb25-3456-403f-be2f-af7a0d370277",
-                "type":"Scope"
-             },
-             {  
-                "name":"Read all users' full profiles",
-                "id":"a154be20-db9c-4678-8ab7-66f6cc099a59",
-                "type":"Scope"
-             },
-             {  
-                "name":"Read directory data",
-                "id":"06da0dbc-49e2-44d2-8312-53f166ab848a",
-                "type":"Scope"
-             },
-             {  
-                "name":"Access directory as the signed in user",
-                "id":"0e263e50-5827-48a4-b97c-d940288653c7",
-                "type":"Scope"
-             },
-             {  
-                "name":"Read user contacts ",
-                "id":"ff74d97f-43af-4b68-9f2a-b77ee6968c5d",
-                "type":"Scope"
-             },
-             {  
-                "name":"Sign users in",
-                "id":"37f7f235-527c-4136-accd-4a02d197296e",
-                "type":"Scope"
-             },
-             {  
-                "name":"Access user's data anytime",
-                "id":"7427e0e9-2fba-42fe-b0c0-848c9e6a8182",
-                "type":"Scope"
-             },
-             {  
-                "name":"View users' email address",
-                "id":"64a6cdd6-aab1-4aaf-94b8-3cc8405e90d0",
-                "type":"Scope"
-             },
-             {  
-                "name":"View users' basic profile",
-                "id":"14dad69e-099b-42c9-810b-d002981feec1",
-                "type":"Scope"
-             },
-             {  
-                "name":"Read identity risk event information",
-                "id":"8f6a01e7-0391-4ee5-aa22-a3af122cef27",
-                "type":"Scope"
-             },
-             {  
-                "name":"Read user and shared contacts",
-                "id":"242b9d9e-ed24-4d09-9a52-f43769beb9d4",
-                "type":"Scope"
-             },
-             {  
-                "name":"Read all groups",
-                "id":"5f8c59db-677d-491f-a6b8-5f174b11ec1d",
-                "type":"Scope"
              },
              {  
                 "name":"Read user devices",
@@ -322,72 +184,6 @@ $requiredAccess = @"
                 "type":"Scope"
              }
           ]
-       },
-       {  
-          "name":"Office365ExchangeOnline",
-          "resourceAppId":"00000002-0000-0ff1-ce00-000000000000",
-          "rules":[  
-             {  
-                "name":"Read all users' full profiles",
-                "id":"eb665d05-7f76-4d1b-b176-1cfc814e668d",
-                "type":"Scope"
-             },
-             {  
-                "name":"Read all users' basic profiles",
-                "id":"9b005f11-86f0-45f7-8c27-4fff5d849916",
-                "type":"Scope"
-             },
-             {  
-                "name":"Read user profiles",
-                "id":"6223a6d3-53ef-4f8f-982a-895b39483c61",
-                "type":"Scope"
-             },
-             {  
-                "name":"Read all users' basic profiles",
-                "id":"6222dbab-a24c-4210-9d91-2f47cf565614",
-                "type":"Scope"
-             }
-          ]
-       },
-       {  
-          "name":"Office365ManagementAPIs",
-          "resourceAppId":"c5393580-f805-4401-95e8-94b7a6ef2fc2",
-          "rules":[  
-             {  
-                "name":"Read activity reports for your organization",
-                "id":"825c9d21-ba03-4e97-8007-83f020ff8c0f",
-                "type":"Scope"
-             },
-             {  
-                "name":"Read threat intelligence data for your organization",
-                "id":"69784729-33e3-471d-b130-744ce05343e5",
-                "type":"Scope"
-             },
-             {  
-                "name":"Read activity reports for your organization",
-                "id":"b3b78c39-cb1d-4d17-820a-25d9196a800e",
-                "type":"Scope"
-             },
-             {  
-                "name":"Read activity data for your organization",
-                "id":"594c1fb6-4f81-4475-ae41-0c394909246c",
-                "type":"Scope"
-             },
-             {  
-                "name":"Read service health information for your organization",
-                "id":"e2cea78f-e743-4d8f-a16a-75b629a038ae",
-                "type":"Scope"
-             }
-          ]
-       },
-       {  
-          "name":"Office365SharePointOnline",
-          "resourceAppId":"00000003-0000-0ff1-ce00-000000000000",
-          "rules":{  
-             "name":"Read user profiles",
-             "id":"0cea5a30-f6f8-42b5-87a0-84cc26822e02",
-             "type":"Scope"
-          }
        }
     ]
  }
