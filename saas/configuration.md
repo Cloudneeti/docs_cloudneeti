@@ -36,28 +36,32 @@ Follow these steps to onboard an Azure account to Cloudneeti.
     * Windows Azure Active Directory <br />
     * Microsoft Graph <br />
 3.3 Select the **Windows Azure Active Directory** API  <br />
- 3.3.1.	Select the following application permissions <br /> 
- * Manage apps that this app creates or owns  <br />
- * Read all hidden memberships  <br />
- * Read directory data  <br />
+
+- 3.3.1.	Select the following application permissions <br /> 
+    * Manage apps that this app creates or owns  <br />
+    * Read all hidden memberships  <br />
+    * Read directory data  <br />
  
-3.3.2.	Select the following delegated permissions <br /> 
-* Access the directory as the signed-in user
-* Read hidden memberships
-* Read Directory data
+- 3.3.2.	Select the following delegated permissions <br /> 
+    * Access the directory as the signed-in user
+    * Read hidden memberships
+    * Read Directory data
 
 3.4 Select the **Microsoft Graph** API  <br />
- 3.4.1.	Select the following application permissions <br /> 
-* 	Read all usage reports
-* 	Read all identity risky user information
-* 	Read all hidden memberships
-* 	Read directory data
-*   Read all groups
-*   Read all users' full profiles
-*   Read all identity risk event information
 
-3.4.2.	Select the following delegated permissions <br /> 
-* 	Read user devices
+- 3.4.1.	Select the following application permissions <br /> 
+    * 	Read all usage reports
+    * 	Read all identity risky user information
+    * 	Read all hidden memberships
+    * 	Read directory data
+    * 	Read all groups
+    * 	Read all users' full profiles
+    * 	Read all identity risk event information
+    * 	Read directory data
+    
+
+- 3.4.2.	Select the following delegated permissions <br /> 
+    * 	Read user devices
 
 **Step-4** : Grant Permissions to enable the configurations
 * Click on Grant Permissions to enable the configurations
