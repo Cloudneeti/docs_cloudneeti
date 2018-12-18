@@ -57,7 +57,6 @@ Follow these steps to onboard an Azure account to Cloudneeti.
     * 	Read all groups
     * 	Read all users' full profiles
     * 	Read all identity risk event information
-    * 	Read directory data
     
 
 - 3.4.2.	Select the following delegated permissions <br /> 
