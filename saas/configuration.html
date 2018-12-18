@@ -152,27 +152,33 @@
 <li>Note : For Auto Deployment download the script : <a href="https://github.com/AvyanConsultingCorp/docs_cloudneeti/blob/master/scripts/Create-ServicePrincipal.ps1"><code>Create AD Application</code></a>. You can find the instructions  <a href="create-service-principal.html"><code>here</code></a>.</li>
 </ul>
 <p><strong>Step-3</strong> : Configure Azure Active Directory application permissions <br />
-3.1 In Settings Preview, click Required permissions <br />
-3.2 Click +Add &amp; Select an API : In this step you will modify  <br /></p>
+3.1 In Settings Preview, click Required permissions <br /></p>
+<p>3.2 Click +Add &amp; Select an API : In this step you will modify  <br /></p>
 <ul>
 <li>Windows Azure Active Directory <br /></li>
-<li>Microsoft Graph <br />
-3.3 Select the <strong>Windows Azure Active Directory</strong> API  <br />
-3.3.1. Select the following application permissions <br /> 
+<li>Microsoft Graph <br /></li>
+</ul>
+<p>3.3 Select the <strong>Windows Azure Active Directory</strong> API  <br /></p>
+<ul>
+<li>
+<p>3.3.1.    Select the following application permissions <br /> </p>
 <ul>
 <li>Manage apps that this app creates or owns  <br /></li>
 <li>Read all hidden memberships  <br /></li>
 <li>Read directory data  <br /></li>
-</ul></li>
 </ul>
-<p>3.3.2.  Select the following delegated permissions <br /> </p>
+</li>
+<li>3.3.2.    Select the following delegated permissions <br /> 
 <ul>
 <li>Access the directory as the signed-in user</li>
 <li>Read hidden memberships</li>
 <li>Read Directory data</li>
+</ul></li>
 </ul>
-<p>3.4 Select the <strong>Microsoft Graph</strong> API  <br />
-3.4.1. Select the following application permissions <br /> </p>
+<p>3.4 Select the <strong>Microsoft Graph</strong> API  <br /></p>
+<ul>
+<li>
+<p>3.4.1.    Select the following application permissions <br /> </p>
 <ul>
 <li>Read all usage reports</li>
 <li>Read all identity risky user information</li>
@@ -182,9 +188,11 @@
 <li>Read all users' full profiles</li>
 <li>Read all identity risk event information</li>
 </ul>
-<p>3.4.2.  Select the following delegated permissions <br /> </p>
+</li>
+<li>3.4.2.    Select the following delegated permissions <br /> 
 <ul>
 <li>Read user devices</li>
+</ul></li>
 </ul>
 <p><strong>Step-4</strong> : Grant Permissions to enable the configurations</p>
 <ul>
