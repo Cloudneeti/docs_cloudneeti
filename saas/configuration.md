@@ -32,9 +32,11 @@ Follow these steps to onboard an Azure account to Cloudneeti.
 
 **Step-3** : Configure Azure Active Directory application permissions <br />
 3.1 In Settings Preview, click Required permissions <br />
+
 3.2 Click +Add & Select an API : In this step you will modify  <br />
     * Windows Azure Active Directory <br />
     * Microsoft Graph <br />
+
 3.3 Select the **Windows Azure Active Directory** API  <br />
 
 - 3.3.1.	Select the following application permissions <br /> 
