@@ -127,7 +127,7 @@
         <section class="main-content col-sm-10 col-lg-10">
             <p>﻿</p>
 <h1 id="saas-configuration-and-user-guide">SaaS Configuration and User Guide</h1>
-<p><strong>Introduction</strong> : <strong>Cloudneeti</strong>  offers continuous infrastructure security and compliance monitoring. It provides a clear evidence about actual implementation of controls and the information required for compliance audits.</p>
+<p><strong>Introduction</strong> : <code>Cloudneeti</code>  offers continuous infrastructure security and compliance monitoring. It provides a clear evidence about actual implementation of controls and the information required for compliance audits.</p>
 <ol>
 <li>Dashboard of the cybersecurity and compliance posture against industry standards such as PCI DSS 3.2, HIPAA, Cyber Security Foundations, Security Benchmark, NIST CSF, GDPR </li>
 <li>Compliance evidence for key industry benchmarks </li>
@@ -145,40 +145,46 @@
 2.3 Click Create <br />
 2.4 Click on the registered application &quot;Cloudneeti&quot; <br />
 2.5 Click Settings <br />
-2.6 Click Reply URL <br />
-2.7 Enter Reply URL with DNS name created above. e.g. &quot;<a href="http://DNSname.region.cloudapp.azure.com/Account/SignIn">http://DNSname.region.cloudapp.azure.com/Account/SignIn</a>&quot; <br />
-2.8 Click Save <br /></p>
+2.6 Click Save <br /></p>
 <ul>
 <li>Note : For Auto Deployment download the script : <a href="https://github.com/AvyanConsultingCorp/docs_cloudneeti/blob/master/scripts/Create-ServicePrincipal.ps1"><code>Create AD Application</code></a>. You can find the instructions  <a href="create-service-principal.html"><code>here</code></a>.</li>
 </ul>
-<p><strong>Step-3</strong> : Configure Azure Active Directory application permissions <br />
-3.1 In Settings Preview, click Required permissions <br /></p>
-<p>3.2 Click +Add &amp; Select an API : In this step you will modify  <br /></p>
+<p><strong>Step-3</strong> : Generate the Application Key</p>
+<ul>
+<li>In App Registration blade, Click on the newly registered application if you had given the name &quot;Cloudneeti&quot; then click on the same</li>
+<li>Click Settings</li>
+<li>Click Keys</li>
+<li>Enter a new description, Select a Expires value from the drop down and Click Save</li>
+<li>The key value is generated, Copy the same for your record along with Application ID</li>
+</ul>
+<p><strong>Step-4</strong> : Configure Azure Active Directory application permissions <br />
+4.1 In Settings Preview, click Required permissions <br /></p>
+<p>4.2 Click +Add &amp; Select an API : In this step you will modify  <br /></p>
 <ul>
 <li>Windows Azure Active Directory <br /></li>
 <li>Microsoft Graph <br /></li>
 </ul>
-<p>3.3 Select the <strong>Windows Azure Active Directory</strong> API  <br /></p>
+<p>4.3 Select the <strong>Windows Azure Active Directory</strong> API  <br /></p>
 <ul>
 <li>
-<p>3.3.1.    Select the following application permissions <br /> </p>
+<p>4.3.1.    Select the following application permissions <br /> </p>
 <ul>
 <li>Manage apps that this app creates or owns  <br /></li>
 <li>Read all hidden memberships  <br /></li>
 <li>Read directory data  <br /></li>
 </ul>
 </li>
-<li>3.3.2.    Select the following delegated permissions <br /> 
+<li>4.3.2.    Select the following delegated permissions <br /> 
 <ul>
 <li>Access the directory as the signed-in user</li>
 <li>Read hidden memberships</li>
 <li>Read Directory data</li>
 </ul></li>
 </ul>
-<p>3.4 Select the <strong>Microsoft Graph</strong> API  <br /></p>
+<p>4.4 Select the <strong>Microsoft Graph</strong> API  <br /></p>
 <ul>
 <li>
-<p>3.4.1.    Select the following application permissions <br /> </p>
+<p>4.4.1.    Select the following application permissions <br /> </p>
 <ul>
 <li>Read all usage reports</li>
 <li>Read all identity risky user information</li>
@@ -189,22 +195,14 @@
 <li>Read all identity risk event information</li>
 </ul>
 </li>
-<li>3.4.2.    Select the following delegated permissions <br /> 
+<li>4.4.2.    Select the following delegated permissions <br /> 
 <ul>
 <li>Read user devices</li>
 </ul></li>
 </ul>
-<p><strong>Step-4</strong> : Grant Permissions to enable the configurations</p>
+<p><strong>Step-5</strong> : Grant Permissions to enable the configurations</p>
 <ul>
 <li>Click on Grant Permissions to enable the configurations</li>
-</ul>
-<p><strong>Step-5</strong> : Generate the Application Key</p>
-<ul>
-<li>In App Registration blade, Click on the newly registered application if you had given the name &quot;Cloudneeti&quot; then click on the same</li>
-<li>Click Settings</li>
-<li>Click Keys</li>
-<li>Enter a new description, Select a Expires value from the drop down and Click Save</li>
-<li>The key value is generated, Copy the same for your record along with Application ID</li>
 </ul>
 <p><strong>Step-6</strong> : Authorize Application ID to access your Azure Subscription resources</p>
 <ul>
