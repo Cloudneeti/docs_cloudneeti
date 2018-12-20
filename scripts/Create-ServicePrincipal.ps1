@@ -1,10 +1,10 @@
 <#
 .SYNOPSIS
-    Create service principal and assign permission required for Cloudneeti applications
+    Create service principal and assign permission required for Cloudneeti application.
     
 .DESCRIPTION
 	This script creates an Active Directory Application, Service Principal and setup the permission required for Cloudneeti application.
-    This script requires activeDirectoryId as a mandatory input.
+        The script requires activeDirectoryId as a mandatory input.
  
 .NOTES
     Version:        1.0
@@ -38,7 +38,7 @@
 .INPUTS
 	azureActiveDirectoryId [Mandatory]:- Azure Active Directory Id (aka TenantId)
 
-       servicePrincipalName [Optional]:- It is the display name for your app, must be unique in your directory (Azure AD Application name)
+        servicePrincipalName [Optional]:- It is the display name for your app, must be unique in your directory (Azure AD Application name)
                                       Default: CloudneetiDataCollector
 
 	expirationPeriod [Optional]:- Service principal key will get expire after this duration.
@@ -50,9 +50,8 @@
 	ApplicationId:- Active Directory application Id
 	Password Key Description:- Key Name
 	Password Key:- Key Value
-    Password Key Expiration Duration:- Key Expiry Duration 
-
-    PermissionTable:- 'Application Permissions' and 'Delegated Permissions' count with respect to 'API'
+   	Password Key Expiration Duration:- Key Expiry Duration 
+        PermissionTable:- 'Application Permissions' and 'Delegated Permissions' count with respect to 'API'
 
 #>
 
