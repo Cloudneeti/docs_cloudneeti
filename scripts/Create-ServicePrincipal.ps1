@@ -4,7 +4,7 @@
     
 .DESCRIPTION
 	This script creates an Active Directory Application, Service Principal and setup the permission required for Cloudneeti application.
-    This script requires activeDirectoryId and replyUrl as a mandatory input.
+    This script requires activeDirectoryId as a mandatory input.
  
 .NOTES
     Version:        1.0
@@ -27,20 +27,18 @@
 
 .EXAMPLE
     1. Creates a service principal.
-    	.\Create-ServicePrincipal.ps1 -activeDirectoryId xxxxxxx-xxxx-xxxx-xxxx-xxxxxxx -replyURL <URL> 
+    	.\Create-ServicePrincipal.ps1 -activeDirectoryId xxxxxxx-xxxx-xxxx-xxxx-xxxxxxx 
 
-    2. Creates a Service Principal with service principal name.
-		.\Create-ServicePrincipal.ps1 -activeDirectoryId xxxxxxx-xxxx-xxxx-xxxx-xxxxxxx -replyURL <URL> -servicePrincipalName <CloudneetiDataCollector>
+    2. Creates a Service Principal with service principal Name.
+		.\Create-ServicePrincipal.ps1 -activeDirectoryId xxxxxxx-xxxx-xxxx-xxxx-xxxxxxx -servicePrincipalName <CloudneetiDataCollector>
 
     3. Creates a Service Principal with the expiry date.
-		.\Create-ServicePrincipal.ps1 -activeDirectoryId xxxxxxx-xxxx-xxxx-xxxx-xxxxxxx -replyURL <URL> -expirationPeriod <1year, 2year, NeverExpires>
+		.\Create-ServicePrincipal.ps1 -activeDirectoryId xxxxxxx-xxxx-xxxx-xxxx-xxxxxxx -expirationPeriod <1year, 2year, NeverExpires>
 
 .INPUTS
 	azureActiveDirectoryId [Mandatory]:- Azure Active Directory Id (aka TenantId)
 
-    replyURLs [Mandatory]:- Cloudneeti application URL, where the response will be sent after login
-
-    servicePrincipalName [Optional]:- Service Principal name
+       servicePrincipalName [Optional]:- It is the display name for your app, must be unique in your directory (Azure AD Application name)
                                       Default: CloudneetiDataCollector
 
 	expirationPeriod [Optional]:- Service principal key will get expire after this duration.
@@ -71,15 +69,6 @@ param
 		Position=1
 	)][guid] $azureActiveDirectoryId = $(Read-Host -prompt "Enter Azure Active Directory Id: "),
 
-
-    # Reply URL
-	[ValidateScript( {$_ -notmatch 'https://+' -and $_ -notmatch 'http://+' -and $_ -match '[a-zA-Z0-9]+'})]
-    [ValidateNotNullOrEmpty()]
-    [Parameter(
-        Mandatory = $False, 
-        HelpMessage="Enter Cloudneeti Reply URL", 
-        Position=2
-    )][string] $replyURL = $(Read-Host -prompt "Enter Cloudneeti Reply URL: "),
 
     # Service Principal Name
 	[Parameter(
@@ -257,16 +246,15 @@ $servicePrincipal = Get-AzureADServicePrincipal -SearchString $servicePrincipalN
  
 If([string]::IsNullOrEmpty($servicePrincipal))
 {
-
+    
 	$aadHomePage = 'https://' + $servicePrincipalName + '.com'
-	$urls = @("https://$replyURL","https://$replyURL/Account/SignIn")
-
+	
     try
     {
         # Creating AAD Application and Service Principal
 	    Write-Host "Creating service principal $servicePrincipalName..."
 	 
-	    $adApp = New-AzureADApplication -DisplayName $servicePrincipalName -HomePage $aadHomePage -IdentifierUris $aadHomePage -ReplyUrls $urls	
+	    $adApp = New-AzureADApplication -DisplayName $servicePrincipalName -HomePage $aadHomePage -IdentifierUris $aadHomePage	
 	    $keyIdentifier = "CloudneetiKey-" + -join ((48..57) + (97..122) | Get-Random -Count 5 | % {[char]$_})
 	
         $keyExpiry = $keyExpirationPeriod[$expirationPeriod]
