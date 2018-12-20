@@ -1,7 +1,7 @@
 ﻿
 # SaaS Configuration and User Guide 
 
-**Introduction** : **Cloudneeti**  offers continuous infrastructure security and compliance monitoring. It provides a clear evidence about actual implementation of controls and the information required for compliance audits.
+**Introduction** : `Cloudneeti`  offers continuous infrastructure security and compliance monitoring. It provides a clear evidence about actual implementation of controls and the information required for compliance audits.
 
 
 1. Dashboard of the cybersecurity and compliance posture against industry standards such as PCI DSS 3.2, HIPAA, Cyber Security Foundations, Security Benchmark, NIST CSF, GDPR 
@@ -25,33 +25,38 @@ Follow these steps to onboard an Azure account to Cloudneeti.
 2.3	Click Create <br />
 2.4	Click on the registered application "Cloudneeti" <br />
 2.5	Click Settings <br />
-2.6	Click Reply URL <br />
-2.7	Enter Reply URL with DNS name created above. e.g. "http://DNSname.region.cloudapp.azure.com/Account/SignIn" <br />
-2.8	Click Save <br />
+2.6	Click Save <br />
 * Note : For Auto Deployment download the script : [`Create AD Application`](https://github.com/AvyanConsultingCorp/docs_cloudneeti/blob/master/scripts/Create-ServicePrincipal.ps1). You can find the instructions  [`here`](create-service-principal.html).
 
-**Step-3** : Configure Azure Active Directory application permissions <br />
-3.1 In Settings Preview, click Required permissions <br />
+**Step-3** : Generate the Application Key
+* In App Registration blade, Click on the newly registered application if you had given the name "Cloudneeti" then click on the same
+* Click Settings
+* Click Keys
+* Enter a new description, Select a Expires value from the drop down and Click Save
+* The key value is generated, Copy the same for your record along with Application ID
 
-3.2 Click +Add & Select an API : In this step you will modify  <br />
-    * Windows Azure Active Directory <br />
-    * Microsoft Graph <br />
+**Step-4** : Configure Azure Active Directory application permissions <br />
+4.1 In Settings Preview, click Required permissions <br />
 
-3.3 Select the **Windows Azure Active Directory** API  <br />
+4.2 Click +Add & Select an API : In this step you will modify  <br />
+-    Windows Azure Active Directory <br />
+-    Microsoft Graph <br />
 
-- 3.3.1.	Select the following application permissions <br /> 
+4.3 Select the **Windows Azure Active Directory** API  <br />
+
+- 4.3.1.	Select the following application permissions <br /> 
     * Manage apps that this app creates or owns  <br />
     * Read all hidden memberships  <br />
     * Read directory data  <br />
  
-- 3.3.2.	Select the following delegated permissions <br /> 
+- 4.3.2.	Select the following delegated permissions <br /> 
     * Access the directory as the signed-in user
     * Read hidden memberships
     * Read Directory data
 
-3.4 Select the **Microsoft Graph** API  <br />
+4.4 Select the **Microsoft Graph** API  <br />
 
-- 3.4.1.	Select the following application permissions <br /> 
+- 4.4.1.	Select the following application permissions <br /> 
     * 	Read all usage reports
     * 	Read all identity risky user information
     * 	Read all hidden memberships
@@ -61,19 +66,11 @@ Follow these steps to onboard an Azure account to Cloudneeti.
     * 	Read all identity risk event information
     
 
-- 3.4.2.	Select the following delegated permissions <br /> 
+- 4.4.2.	Select the following delegated permissions <br /> 
     * 	Read user devices
 
-**Step-4** : Grant Permissions to enable the configurations
+**Step-5** : Grant Permissions to enable the configurations
 * Click on Grant Permissions to enable the configurations
-
-
-**Step-5** : Generate the Application Key
-* In App Registration blade, Click on the newly registered application if you had given the name "Cloudneeti" then click on the same
-* Click Settings
-* Click Keys
-* Enter a new description, Select a Expires value from the drop down and Click Save
-* The key value is generated, Copy the same for your record along with Application ID
 
 **Step-6** : Authorize Application ID to access your Azure Subscription resources
 

@@ -26,8 +26,7 @@ If version is lower or not installed, type command `Install-Module -Name AzureAD
 3.	Run file named **Create-ServicePrincipal.ps1** (e.g `.\Create-ServicePrincipal.ps1`)
 Parameters will be 
 1.	**azureActiveDirectoryTenantId** : Directory ID is Tenant ID and can be found in Azure Active Directory
-2.	**replyURL** : URL where authentication response need to be sent e.g. "DNSname.region.cloudapp.azure.com/Account/Signin"
-3.  **expirationPeriod** : expiration period of secret key
+2.	**expirationPeriod** : expiration period of secret key
  
 **Note:**
  You can also add number of years for the life of key should live, by simply adding parameter `-expirationPeriod` followed by number by default key life is 1 year
@@ -35,7 +34,6 @@ e.g:
  ![script-command](../images/script-command.png)
  It takes following parameters
  - `azureActiveDirectoryTenantId` : Azure Active Directory Id
- - `replyUrl`: Reply URL like `DomainName/Account/SignIn`
  - `expirationPeriod`: Number of years for which the secret key will be valid eg. 1
 error: 
 - If you get error like: `<script>.ps1` is not digitally signed.  The script will not execute on the system.”
@@ -56,7 +54,7 @@ Run command `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass` in your
 
 7.	Search for service principal with respective name
  ![app-registrations.png](../images/app-registrations.png)
-8.	In Settings check Reply URLs and Required permissions
+8.	In Settings check Required permissions
  ![app-view.png](../images/app-view.png)
 
 9.	To grant permission, in settings > required permissions > click on Grant permissions then ok
