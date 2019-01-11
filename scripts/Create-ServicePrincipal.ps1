@@ -170,6 +170,11 @@ $requiredAccess = @"
                 "name":"Read user devices",
                 "id":"11d4cd79-5ba5-460f-803f-e22c8ab85ccd",
                 "type":"Scope"
+             },
+             {  
+                "name":"Read your organization?s security events",
+                "id":"bf394140-e372-4bf9-a898-299cfc7564e5",
+                "type":"Role"
              }
           ]
        }
