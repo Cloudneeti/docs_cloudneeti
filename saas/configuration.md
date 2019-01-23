@@ -80,7 +80,7 @@ Follow these steps to onboard an Azure account to Cloudneeti.
 * Select the particular subscription to assign the application to.
 * Select Access control (IAM).
 * Select Add.
-* To allow the application to call Azure API, select the Reader role. By default, Azure AD applications aren't displayed in the available options. To find your application, search for the name. If you had given the name "Cloudneeti” then search for same and select it.
+* To allow the application to call Azure API, assign the Reader and Backup Reader role. By default, Azure AD applications aren't displayed in the available options. To find your application, search for the name. If you had given the name "Cloudneeti” then search for same and select it.
 * Select Save to finish assigning the role.
 * Role assignment is automated by [`Assign-RolesToServicePrincipal.ps1`](https://github.com/AvyanConsultingCorp/docs_cloudneeti/blob/master/scripts/Assign-RolesToServicePrincipal.ps1) script. You can follow the instructions given in [`link`](assign-roles-to-sp.html).
 
