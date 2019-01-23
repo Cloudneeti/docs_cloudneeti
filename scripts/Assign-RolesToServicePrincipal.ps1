@@ -71,7 +71,6 @@ param
     )][string] $servicePrincipalName = "CloudneetiDataCollector", 
 
     # Service Principal Access Role
-    [ValidateSet("Reader")]
     [Parameter(
         Mandatory = $false,
         HelpMessage = "Enter Service Principal access role (Reader)",
