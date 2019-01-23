@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Assign Cloudneeti Data Collector service principal with "Reader" role to Azure Subscriptions.
+    Assign Cloudneeti Data Collector service principal with "Reader" and "Backup Reader" role to Azure Subscriptions.
 .DESCRIPTION
     This script helps AzureRM subscription owner to grant Cloudneeti Data Collector service principal with "Reader" permission to Azure Subscriptions.
 
@@ -35,8 +35,8 @@
     servicePrincipalName [Optional]:- Service Principal name
                                       Default: CloudneetiDataCollector
 
-	servicePrincipalRole [Optional] :- Service principal access Role
-                                       Default: Reader
+	servicePrincipalRoles [Optional] :- Service principal access Role
+                                       Default: Reader, Backup Reader
 
 .OUTPUTS	
     OperationStatus:- Table of operation status (Success/Failed)
@@ -49,34 +49,34 @@ param
 
     # Active Directory Id
     [ValidateNotNullOrEmpty()]
-	[Parameter(
-		Mandatory=$False,
-		HelpMessage="Enter Azure Active Directory Id",
-		Position=1
-	)][guid] $azureActiveDirectoryId = $(Read-Host -prompt "Enter Azure Active Directory Id: "),
+    [Parameter(
+        Mandatory = $False,
+        HelpMessage = "Enter Azure Active Directory Id",
+        Position = 1
+    )][guid] $azureActiveDirectoryId = $(Read-Host -prompt "Enter Azure Active Directory Id: "),
 
     # Number of Subscriptions
     [ValidateNotNullOrEmpty()]
-	[Parameter(
-		Mandatory=$False,
-		HelpMessage="Enter count of Azure subscriptions to which you need Cloudneeti data collector access",
-		Position=1
-	)][int] $numberOfSubscription = $(Read-Host -prompt "Enter count of Azure subscriptions to which you need Cloudneeti data collector access: "),
+    [Parameter(
+        Mandatory = $False,
+        HelpMessage = "Enter count of Azure subscriptions to which you need Cloudneeti data collector access",
+        Position = 1
+    )][int] $numberOfSubscription = $(Read-Host -prompt "Enter count of Azure subscriptions to which you need Cloudneeti data collector access: "),
 
     # Service Principal Name
-	[Parameter(
+    [Parameter(
         Mandatory = $false,
-        HelpMessage="Enter Service Principal Name, Default is set to CloudneetiDataCollector",
-        Position=2
+        HelpMessage = "Enter Service Principal Name, Default is set to CloudneetiDataCollector",
+        Position = 2
     )][string] $servicePrincipalName = "CloudneetiDataCollector", 
 
     # Service Principal Access Role
     [ValidateSet("Reader")]
-	[Parameter(
+    [Parameter(
         Mandatory = $false,
-        HelpMessage="Enter Service Principal access role (Reader)",
-        Position=3
-    )][string] $servicePrincipalRole = "Reader"
+        HelpMessage = "Enter Service Principal access role (Reader)",
+        Position = 3
+    )][string[]] $servicePrincipalRole = @("Reader", "Backup Reader")
 
 )
 
@@ -94,7 +94,6 @@ else {
     exit
 }
 
-
 # Login to Azure Account
 Write-Host "Connecting to Azure Account..."
 Write-Host "You will be redirected to login screen. Login using Azure subscription owner account to proceed..."
@@ -105,21 +104,19 @@ try {
     Write-Host "Connection to Azure Account established successfully." -ForegroundColor "Green"
 }
 catch {
-	Write-Host "Error Details: $_" -ForegroundColor Red
-	Write-Host "Error occurred during connecting Azure account. Please try again!!" -ForegroundColor Red
-	exit
+    Write-Host "Error Details: $_" -ForegroundColor Red
+    Write-Host "Error occurred during connecting Azure account. Please try again!!" -ForegroundColor Red
+    exit
 }
-
 
 # Check Cloudneeti Service Principal Exists or Not
 $servicePrincipal = Get-AzureRmADServicePrincipal -DisplayName $servicePrincipalName
 
-If([string]::IsNullOrEmpty($servicePrincipal))
-{
+If ([string]::IsNullOrEmpty($servicePrincipal)) {
     Write-Host "$servicePrincipalName service principal doesn't exist in the Azure Active Directory. `nCreate Cloudneeti Data Collector Service principal using Create-ServicePrincipal.ps1 script and re-run the script!!" -ForegroundColor Red
     # Disconnect from Azure Account
-	Write-Host "Disconnecting from Azure account."
-	Disconnect-AzureRmAccount
+    Write-Host "Disconnecting from Azure account."
+    Disconnect-AzureRmAccount
     exit
 }
 Else {
@@ -128,7 +125,7 @@ Else {
     Write-Host "Enter $numberOfSubscription subscriptions Ids"
     $subscriptions = @()
 
-    for($i=1; $i -le $numberOfSubscription; $i++){
+    for ($i = 1; $i -le $numberOfSubscription; $i++) {
         do {
             try {
                 $validSubscriptionId = $true
@@ -147,9 +144,9 @@ Else {
     $operationStatus = @()
 
     # Assigning Reader Permission to subscriptions one by one
-    foreach($subscriptionId in $subscriptions){
+    foreach ($subscriptionId in $subscriptions) {
         # Operation Status 
-        $operationStatusEntry = "" | select "SubscriptionId", "Status", "Details" 
+        $operationStatusEntry = "" | Select-Object "SubscriptionId", "Status", "Details" 
         
         # Set Subscription Context
         Write-Host "`nSelecting $subscriptionId subscription..."
@@ -169,36 +166,37 @@ Else {
 
         # Check Cloudneeti Service Principal has the access on $subscriptionId or not
         Write-Host "Checking Cloudneeti Service Principal has the reader access to $subscriptionId."
-                        
-        $SPRole = Get-AzureRmRoleAssignment -RoleDefinitionName $servicePrincipalRole -Scope "/subscriptions/$subscriptionId" -ObjectId $servicePrincipal.id.guid 
-        if(-not ([string]::IsNullOrEmpty($SPRole))){
+         
+        foreach ($role in $servicePrincipalRole) {              
+            $SPRole = Get-AzureRmRoleAssignment -RoleDefinitionName $role -Scope "/subscriptions/$subscriptionId" -ObjectId $servicePrincipal.id.guid 
+            if (-not ([string]::IsNullOrEmpty($SPRole))) {
 
-            Write-Host "$servicePrincipalName has access to subscription $subscriptionId" -ForegroundColor Yellow          
+                Write-Host "$servicePrincipalName has access to subscription $subscriptionId as $role" -ForegroundColor Yellow          
             
-            $operationStatusEntry.SubscriptionId = $subscriptionId
-            $operationStatusEntry.Status = "Success"
-            $operationStatusEntry.Details = "$servicePrincipalName has access to subscription"
-
-        } 
-        else{
-            try {
-                Write-Host "$servicePrincipalName does not has access to subscription $subscriptionId" -ForegroundColor Yellow
-
-                Write-Host "Assigning $servicePrincipalRole role to $servicePrincipalName on subscription $subscriptionId..."
-                New-AzureRmRoleAssignment -RoleDefinitionName $servicePrincipalRole -ApplicationId $servicePrincipal.ApplicationId.Guid -Scope "/subscriptions/$subscriptionId"
-                Write-Host "Assigned $servicePrincipalRole role to $servicePrincipalName on subscription $subscriptionId successfully." -ForegroundColor Green
-
                 $operationStatusEntry.SubscriptionId = $subscriptionId
                 $operationStatusEntry.Status = "Success"
-                $operationStatusEntry.Details = "$servicePrincipalName added as $servicePrincipalRole to subscription"
-            }
-            catch {
-                Write-Host "$userEmailId doesn't have Owner permission to assign $servicePrincipalName" -ForegroundColor Red
-                $operationStatusEntry.SubscriptionId = $subscriptionId
-                $operationStatusEntry.Status = "Failed"
-                $operationStatusEntry.Details = "$userEmailId doesn't have Onwer permission to assign $servicePrincipalName"
-            }
+                $operationStatusEntry.Details = "$servicePrincipalName has access to subscription as $role"
 
+            } 
+            else {
+                try {
+                    Write-Host "$servicePrincipalName does not has access to subscription $subscriptionId as $role" -ForegroundColor Yellow
+
+                    Write-Host "Assigning $role role to $servicePrincipalName on subscription $subscriptionId..."
+                    New-AzureRmRoleAssignment -RoleDefinitionName $role -ApplicationId $servicePrincipal.ApplicationId.Guid -Scope "/subscriptions/$subscriptionId"
+                    Write-Host "Assigned $role role to $servicePrincipalName on subscription $subscriptionId successfully." -ForegroundColor Green
+
+                    $operationStatusEntry.SubscriptionId = $subscriptionId
+                    $operationStatusEntry.Status = "Success"
+                    $operationStatusEntry.Details = "$servicePrincipalName added as $role to subscription"
+                }
+                catch {
+                    Write-Host "$userEmailId doesn't have Owner permission to assign $servicePrincipalName" -ForegroundColor Red
+                    $operationStatusEntry.SubscriptionId = $subscriptionId
+                    $operationStatusEntry.Status = "Failed"
+                    $operationStatusEntry.Details = "$userEmailId doesn't have Onwer permission to assign $servicePrincipalName"
+                }
+            }
         }
 
         $operationStatus += $operationStatusEntry
