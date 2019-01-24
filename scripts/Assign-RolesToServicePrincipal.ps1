@@ -174,7 +174,7 @@ Else {
             
                 $operationStatusEntry.SubscriptionId = $subscriptionId
                 $operationStatusEntry.Status = "Success"
-                $operationStatusEntry.Details = "$servicePrincipalName has access to subscription as $role"
+                $operationStatusEntry.Details = "$servicePrincipalName has access to subscription."
 
             } 
             else {
