@@ -10,9 +10,7 @@
     Version:        1.0
     Author:         Cloudneeti
     Creation Date:  08/11/2018
-
     # PREREQUISITE
-
     * Windows PowerShell version 5 and above
         1. To check PowerShell version type "$PSVersionTable.PSVersion" in PowerShell and you will find PowerShell version,
 	    2. To Install powershell follow link https://docs.microsoft.com/en-us/powershell/scripting/setup/installing-windows-powershell?view=powershell-6
@@ -21,30 +19,22 @@
 	    1. To check Azure AD version type "Get-InstalledModule -Name azureAD" in PowerShell window
 	    2. You can Install the required modules by executing below command.
     		Install-Module -Name AzureAD -MinimumVersion 2.0.0.131
-
     * Account permissions
-		The script must be executed with Global AD Administrator account
-
+		The script must be executed with Global AD Administrator or Application administrator account
 .EXAMPLE
     1. Creates a service principal.
     	.\Create-ServicePrincipal.ps1 -activeDirectoryId xxxxxxx-xxxx-xxxx-xxxx-xxxxxxx 
-
     2. Creates a Service Principal with service principal Name.
 		.\Create-ServicePrincipal.ps1 -activeDirectoryId xxxxxxx-xxxx-xxxx-xxxx-xxxxxxx -servicePrincipalName <CloudneetiDataCollector>
-
     3. Creates a Service Principal with the expiry date.
 		.\Create-ServicePrincipal.ps1 -activeDirectoryId xxxxxxx-xxxx-xxxx-xxxx-xxxxxxx -expirationPeriod <1year, 2year, NeverExpires>
-
 .INPUTS
 	azureActiveDirectoryId [Mandatory]:- Azure Active Directory Id (aka TenantId)
-
         servicePrincipalName [Optional]:- It is the display name for your app, must be unique in your directory (Azure AD Application name)
                                       Default: CloudneetiDataCollector
-
 	expirationPeriod [Optional]:- Service principal key will get expire after this duration.
                                    Default: 1 year
                                    Available Values: 1year, 2year, NeverExpires
-
 .OUTPUTS	
 	ApplicationName:- Active Directory application Name
 	ApplicationId:- Active Directory application Id
@@ -52,7 +42,6 @@
 	Password Key:- Key Value
    	Password Key Expiration Duration:- Key Expiry Duration 
         PermissionTable:- 'Application Permissions' and 'Delegated Permissions' count with respect to 'API'
-
 #>
 
 
@@ -204,7 +193,7 @@ else {
 
 # Login to Azure Active Directory
 Write-Host "Connecting to Azure Active Directory..."
-Write-Host "You will be redirected to login screen. Login using Global AD administrator account to proceed..."
+Write-Host "You will be redirected to login screen. Login using Global AD administrator or Application administrator account to proceed..."
 try {
     Start-Sleep 2
     $userEmailID = (Connect-AzureAD -TenantId $azureActiveDirectoryId).Account.Id
@@ -217,28 +206,43 @@ catch {
 }
 
 
-# Check if login user is global Admin
-Write-Host "Checking Logged In user $userEmailID is Global AD Administrator or not..."
-try {
-	$isGlobalAdmin = $false
-	$memberUser = $userEmailID
-	$guestUser = $($userEmailID -replace '@','_') + "#EXT*"
+# Check if login user is global Admin or Application administrator
+Write-Host "Checking Logged In user $userEmailID is Global AD Administrator or Application administrator or not..."
 
-    $role = Get-AzureADDirectoryRole | Where-Object {$_.displayName -eq 'Company Administrator'}
+   $isGlobalAdmin = $false
+   $isApplicationAdmin = $false
+	$memberUser = $userEmailID
+   $guestUser = $($userEmailID -replace '@','_') + "#EXT*"
+#check if user is global Administrator
+try {
+   $role = Get-AzureADDirectoryRole | Where-Object {$_.displayName -eq 'Company Administrator'}
 	Get-AzureADDirectoryRoleMember -ObjectId $role.ObjectId | ForEach-Object {
 		if($_.UserPrincipalName -like $memberUser -or $_.UserPrincipalName -like $guestUser)
 		{
 			 $isGlobalAdmin = $true
-			 Write-Host "Logged in User $userEmailID is global AD administrator" -ForegroundColor "Green"
+			 Write-Host "Logged in User $userEmailID is global AD administrator " -ForegroundColor "Green"
+		}
+   }
+}
+catch {
+    $isGlobalAdmin = $false
+}
+#check if user is Application Administrator
+try{
+   $roleAppAdmin = Get-AzureADDirectoryRole | Where-Object {$_.displayName -eq 'Application Administrator'}
+   Get-AzureADDirectoryRoleMember -ObjectId $roleAppAdmin.ObjectId | ForEach-Object {
+		if($_.UserPrincipalName -like $memberUser -or $_.UserPrincipalName -like $guestUser)
+		{
+         $isApplicationAdmin = $true
+			 Write-Host "Logged in User $userEmailID is Application administrator" -ForegroundColor "Green"
 		}
 	}
- }
- catch {
-    $isGlobalAdmin = $false
- }
-
- if(!$isGlobalAdmin){
-	Write-Host "Logged in user $userEmailID is not global AD administrator, Please re-run the script using global AD administrator account"
+}
+catch {
+    $isApplicationAdmin = $false
+}
+ if((!$isGlobalAdmin) -and (!$isApplicationAdmin)){
+	Write-Host "Logged in user $userEmailID is not global AD administrator or Application administrator, Please re-run the script using global AD administrator or Application administrator account"
 	# Disconnect from Azure AD 
 	Write-Host "Disconnecting from Azure Active Directory."
 	Disconnect-AzureAD
