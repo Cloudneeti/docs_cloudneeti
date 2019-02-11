@@ -1,10 +1,9 @@
 <#
 .SYNOPSIS
-    Script to on-board M365 account for powershell policy collection inside Cloudneeti.
+    Script to on-board M365 account for powershell policy data collection inside Cloudneeti.
     
 .DESCRIPTION
-    This script creates an automation account for running the M365 policies and export result to Cloudneeti using API.
-    
+    This script creates an automation account for running the M365 policies and export result to Cloudneeti using API. The automation runbook execute once per day and export data to cloudneeti
  
 .NOTES
     Version:        1.0
@@ -311,13 +310,15 @@ else{
 
 
 # Creating variable in Azure automation
+$BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($CloudneetiAPIKey)            
+$CloudneetiAPIKeyEncrypt = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)
 $VariableObject = @{    
                     "CloudneetiContractId"=$CloudneetiContractId;
                     "CloudneetiAccountId"=$CloudneetiAccountId; 
                     "OfficeDomain" = $OfficeDomain;
                     "CloudneetiEnvironment" = $CloudneetiEnvironment 
                     "OfficeTenantId" = $OfficeTenantId
-                    "CloudneetiAPIKey" = $CloudneetiAPIKey
+                    "CloudneetiAPIKey" = $CloudneetiAPIKeyEncrypt
                     "CloudneetiAPIURL" = $CloudneetiAPIURL
 }
 
@@ -330,15 +331,29 @@ foreach ($Variable in $VariableObject.GetEnumerator()){
     }
     else{
         if($ExistingVariable -ne $null){
-            Write-Host "Updating variable value of" $Variable.Name -ForegroundColor Yellow
-            Set-AzureRmAutomationVariable -AutomationAccountName $AutomationAccountName -Name $Variable.Name -Encrypted $False -Value $Variable.Value -ResourceGroupName $ResourceGroupName
-            Write-Host $Variable.Name "variable successfully updated" -ForegroundColor Green
+            if($Variable.Name -eq "CloudneetiAPIKey"){
+                    Write-Host "Updating variable value of" $Variable.Name -ForegroundColor Yellow
+                    Set-AzureRmAutomationVariable -AutomationAccountName $AutomationAccountName -Name $Variable.Name -Encrypted $true -Value $Variable.Value -ResourceGroupName $ResourceGroupName
+                    Write-Host $Variable.Name "variable successfully updated" -ForegroundColor Green
+            }
+            else {
+                    Write-Host "Updating variable value of" $Variable.Name -ForegroundColor Yellow
+                    Set-AzureRmAutomationVariable -AutomationAccountName $AutomationAccountName -Name $Variable.Name -Encrypted $False -Value $Variable.Value -ResourceGroupName $ResourceGroupName
+                    Write-Host $Variable.Name "variable successfully updated" -ForegroundColor Green
+            }
         }
         else
         {
-            Write-Host "Creating variable " $Variable.Name -ForegroundColor Yellow
-            New-AzureRmAutomationVariable -AutomationAccountName $AutomationAccountName -Name $Variable.Name -Encrypted $False -Value $Variable.Value -ResourceGroupName $ResourceGroupName
-            Write-Host $Variable.Name "variable successfully created" -ForegroundColor Green            
+            if($Variable.Name -eq "CloudneetiAPIKey"){
+                Write-Host "Creating variable " $Variable.Name -ForegroundColor Yellow
+                New-AzureRmAutomationVariable -AutomationAccountName $AutomationAccountName -Name $Variable.Name -Encrypted $true -Value $Variable.Value -ResourceGroupName $ResourceGroupName
+                Write-Host $Variable.Name "variable successfully created" -ForegroundColor Green
+            }
+            else{
+                    Write-Host "Creating variable " $Variable.Name -ForegroundColor Yellow
+                    New-AzureRmAutomationVariable -AutomationAccountName $AutomationAccountName -Name $Variable.Name -Encrypted $False -Value $Variable.Value -ResourceGroupName $ResourceGroupName
+                    Write-Host $Variable.Name "variable successfully created" -ForegroundColor Green   
+            }         
         }
     }
 }
