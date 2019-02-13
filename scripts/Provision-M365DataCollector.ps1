@@ -100,12 +100,12 @@ param
 
     # Data Collector version
     [Parameter(Mandatory = $False,
-        HelpMessage="Cloudneeti M365 Data Collector Artifacts Version",
+        HelpMessage="Cloudneeti M365 Data Collector Version",
 		Position=9
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $DataCollectorVersion = "1.0",
+    $DataCollectorVersion = $(Read-Host -prompt "Enter Cloudneeti M365 Data  Collector Artifacts Version: "),
 
     # Office Domain name
     [ValidateScript( {$_ -notmatch 'https://+' -and $_ -notmatch 'http://+'})]
@@ -191,10 +191,12 @@ $Tags = @{"Service"="Cloudneeti-M365-Data-Collection"}
 
 # Cloudneeti API URL
 $CloudneetiAPIEndpoints = @{
-	dev="https://devapi.cloudneeti-devops.com";
+    dev="https://devapi.cloudneeti-devops.com";
     test="https://testapi.cloudneeti-devops.com";
     trial="https://trialapi.cloudneeti-devops.com";
+    qa="https://qaapi.cloudneeti-devops.com";
 }
+
 $CloudneetiAPIURL = $CloudneetiAPIEndpoints[$CloudneetiEnvironment.ToLower()]
 
 # Checking current azure rm context to deploy Azure automation
