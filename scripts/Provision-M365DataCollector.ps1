@@ -3,7 +3,7 @@
     Script to on-board M365 account for powershell policy data collection inside Cloudneeti.
     
 .DESCRIPTION
-    This script creates an automation account for running the M365 policies and export result to Cloudneeti using API. The automation runbook execute once per day and export data to cloudneeti
+    This script creates an automation account, Runbook, Schedule for execution and required variables & credentials for running the M365 policies. The automation runbook execute once per day and export data to cloudneeti using Cloudneeti API.
  
 .NOTES
     Version:        1.0
@@ -14,12 +14,25 @@
     * <TBA>
 
 .EXAMPLE
+    Upload script to Azure CloudShell and execute below command:-
+    .\Provision-M365DataCollector.ps1 -CloudneetiLicenseId <Cloudneeti Contract Id> -CloudneetiAccountId <Cloudneeti Account Id> -CloudneetiEnvironment <Cloudneeti Environment> -ADApplicationId <Cloudneeti data  collector service principal Id> -ArtifactsName <Cloudneeti M365 data collector artifacts name> -DataCollectorVersion <optional> <version of artifacts> -OfficeDomain <Office Domain Name>  -OfficeTenantId <Office tenant Id> -OfficeAdminId <Office Administrator user Id> -AzureSubscriptionId <Subscription Id to deploy automation account> -DataCollectorName <optional> <Automation account name> -Location <optional> <Region to deploy automation account>
+
+    Then script execution will prompt for below secrets:
+        - Cloudneeti API Key
+        - Cloudneeti Data Collector Service Principal Secret
+        - Cloudneeti M365 Data  Collector Artifacts Storage Access Key
+        - Office Administator Password
+
 
 .INPUTS
 
 .OUTPUTS
 
 .NOTES
+    - User should have contract with Cloudneeti 
+    - Office Admin should have MFA disabled
+    - This script can be execute only on Azure CloudShell
+    - Office administrator should have "Enterprise E5" office license
 #>
 
 [CmdletBinding()]
@@ -28,12 +41,12 @@ param
 
     # Cloudneeti contract Id
     [Parameter(Mandatory = $False,
-        HelpMessage="Cloudneeti Contract Id",
+        HelpMessage="Cloudneeti License Id",
         Position=1
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $CloudneetiContractId = $(Read-Host -prompt "Enter Cloudneeti Contract Id: "),
+    $CloudneetiLicenseId = $(Read-Host -prompt "Enter Cloudneeti License Id"),
 
     # Cloudneeti account Id
     [Parameter(Mandatory = $False,
@@ -42,7 +55,7 @@ param
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $CloudneetiAccountId = $(Read-Host -prompt "Enter Cloudneeti Account Id: "),
+    $CloudneetiAccountId = $(Read-Host -prompt "Enter Cloudneeti Account Id"),
 
     # Cloudneeti API key
     [Parameter(Mandatory = $False,
@@ -51,7 +64,7 @@ param
     )]
     [ValidateNotNullOrEmpty()]
     [secureString]
-    $CloudneetiAPIKey = $(Read-Host -prompt "Enter Cloudneeti API Key: " -AsSecureString),
+    $CloudneetiAPIKey = $(Read-Host -prompt "Enter Cloudneeti API Key" -AsSecureString),
 
     # Cloudneeti Environment
     [Parameter(Mandatory = $False,
@@ -60,34 +73,34 @@ param
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $CloudneetiEnvironment = $(Read-Host -prompt "Enter Cloudneeti Environment: "),
+    $CloudneetiEnvironment = $(Read-Host -prompt "Enter Cloudneeti Environment"),
 
     # Cloudneeti Service principal id
     [Parameter(Mandatory = $False,
         HelpMessage="Cloudneeti Data collector Service Principal Id",
-		Position=5
+	Position=5
     )]
     [ValidateNotNullOrEmpty()]
     [String]
-    $ADApplicationId = $(Read-Host -prompt "Enter Cloudneeti Data Collector Service Principal Id: "),
+    $ADApplicationId = $(Read-Host -prompt "Enter Cloudneeti Data Collector Service Principal Id"),
 
     # Enter service principal secret
     [Parameter(Mandatory = $False,
         HelpMessage="Cloudneeti Data collector Service Principal password",
-		Position=6
+	Position=6
     )]
     [ValidateNotNullOrEmpty()]
     [SecureString]
-    $ADApplicationSecret =$(Read-Host -prompt "Enter Cloudneeti Data Collector Service Principal Secret: " -AsSecureString),
+    $ADApplicationSecret =$(Read-Host -prompt "Enter Cloudneeti Data Collector Service Principal Secret" -AsSecureString),
 
     # Cloudneeti Artifacts Storage Name
     [Parameter(Mandatory = $False,
         HelpMessage="Cloudneeti M365 Data Collector Artifact Name",
-		Position=7
+	Position=7
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $ArtifactsName = $(Read-Host -prompt "Enter Cloudneeti M365 Data Collector Artifacts Storage Name: "),
+    $ArtifactsName = $(Read-Host -prompt "Enter Cloudneeti M365 Data Collector Artifacts Storage Name"),
 
     # Cloudneeti artifacts access key
     [Parameter(Mandatory = $False,
@@ -96,75 +109,75 @@ param
     )]
     [ValidateNotNullOrEmpty()]
     [secureString]
-    $ArtifactsAccessKey = $(Read-Host -prompt "Enter Cloudneeti M365 Data  Collector Artifacts Storage Access Key: " -AsSecureString),
+    $ArtifactsAccessKey = $(Read-Host -prompt "Enter Cloudneeti M365 Data Collector Artifacts Storage Access Key" -AsSecureString),
 
     # Data Collector version
     [Parameter(Mandatory = $False,
         HelpMessage="Cloudneeti M365 Data Collector Version",
-		Position=9
+	Position=9
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $DataCollectorVersion = $(Read-Host -prompt "Enter Cloudneeti M365 Data  Collector Artifacts Version: "),
+    $DataCollectorVersion = $(Read-Host -prompt "Enter Cloudneeti M365 Data Collector Version"),
 
     # Office Domain name
     [ValidateScript( {$_ -notmatch 'https://+' -and $_ -notmatch 'http://+'})]
     [Parameter(Mandatory = $False,
-        HelpMessage="Office Domain Name: ",
-		Position=10
+        HelpMessage="Office 365 Domain Name: ",
+	Position=10
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $OfficeDomain = $(Read-Host -prompt "Enter Office Domain Name: "),
+    $OfficeDomain = $(Read-Host -prompt "Enter Office 365 Domain Name"),
 
     # Office Tenant ID
     [Parameter(Mandatory = $False,
-        HelpMessage="Office Tenant Id",
-		Position=11
+        HelpMessage="Office 365 Tenant Id",
+	Position=11
     )]
     [ValidateNotNullOrEmpty()]
     [guid]
-    $OfficeTenantId = $(Read-Host -prompt "Enter Office Tenant Id: "),
+    $OfficeTenantId = $(Read-Host -prompt "Enter Office 365 Tenant Id"),
 
     # Office Admin username
     [ValidateScript( {$_ -match '^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,7})$' })]
     [Parameter(Mandatory = $False,
-        HelpMessage="Office Administator Id",
-		Position=12
+        HelpMessage="Office 365 Administator Id",
+	Position=12
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $OfficeAdminId = $(Read-Host -prompt "Enter Office Administator Id: "),
+    $OfficeAdminId = $(Read-Host -prompt "Enter Office 365 Administator Id"),
 
     # Office Admin password
     [Parameter(Mandatory = $False,
-        HelpMessage="Office Administator password",
-		Position=13
+        HelpMessage="Office 365 Administator password",
+	Position=13
     )]
     [ValidateNotNullOrEmpty()]
     [SecureString]
-    $OfficeAdminPassword = $(Read-Host -prompt "Enter Office Administator Password: " -AsSecureString),
+    $OfficeAdminPassword = $(Read-Host -prompt "Enter Office 365 Administator Password" -AsSecureString),
 
     # Subscription Id for automation account creation
     [Parameter(Mandatory = $False,
-        HelpMessage="Azure Subscription Id for M365 data collector resources provisioning",
+        HelpMessage="Azure Subscription Id for office 365 data collector resources provisioning",
         Position=14
     )]
     [ValidateNotNullOrEmpty()]
     [guid]
-    $SubscriptionId = $(Read-Host -prompt "Enter Subscription Id where M365 data collector resouces will be created: "),
+    $AzureSubscriptionId = $(Read-Host -prompt "Enter Azure Subscription Id where office 365 data collector resouces will be created"),
 
     # Resource group name for Cloudneeti Resouces
     [Parameter(Mandatory = $False,
-        HelpMessage="M365 Data Collector Name"
+        HelpMessage="Office 365 Data Collector Name"
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $DataCollectorName = "cloundneeti-m365-datacollector",
+    $DataCollectorName = "cloundneeti-office 365-datacollector",
 
     # Data collector resource location
     [Parameter(Mandatory = $False,
-        HelpMessage="Location for Cloudneeti M365 data collector resources",
+        HelpMessage="Location for Cloudneeti office 365 data collector resources",
         Position=16
     )]
     [ValidateNotNullOrEmpty()]
@@ -196,24 +209,23 @@ $CloudneetiAPIEndpoints = @{
     trial="https://trialapi.cloudneeti-devops.com";
     qa="https://qaapi.cloudneeti-devops.com";
 }
-
 $CloudneetiAPIURL = $CloudneetiAPIEndpoints[$CloudneetiEnvironment.ToLower()]
 
 # Checking current azure rm context to deploy Azure automation
 $AzureContextSubscriptionId = (Get-AzureRmContext).Subscription.Id
 
-If ($AzureContextSubscriptionId -ne $SubscriptionId){
-    Write-Host "You are not logged in to subscription" $SubscriptionId 
+If ($AzureContextSubscriptionId -ne $AzureSubscriptionId){
+    Write-Host "You are not logged in to subscription" $AzureSubscriptionId 
     Try{
-        Write-Host "Trying to switch powershell context to subscription" $SubscriptionId
+        Write-Host "Trying to switch powershell context to subscription" $AzureSubscriptionId
         $AllAvailableSubscriptions = (Get-AzureRmSubscription).Id
-        if ($AllAvailableSubscriptions -contains $SubscriptionId)
+        if ($AllAvailableSubscriptions -contains $AzureSubscriptionId)
         {
-            Set-AzureRmContext -SubscriptionId $SubscriptionId
-            Write-Host "Successfully context switched to subscription" $SubscriptionId
+            Set-AzureRmContext -SubscriptionId $AzureSubscriptionId
+            Write-Host "Successfully context switched to subscription" $AzureSubscriptionId
         }
         else{
-            Write-Host "Looks like the" $SubscriptionId "is not present in current powershell context or you dont have access"
+            Write-Host "Looks like the" $AzureSubscriptionId "is not present in current powershell context or you dont have access"
         }
     }
     catch [Exception]{
@@ -315,7 +327,7 @@ else{
 $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($CloudneetiAPIKey)            
 $CloudneetiAPIKeyEncrypt = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)
 $VariableObject = @{    
-                    "CloudneetiContractId"=$CloudneetiContractId;
+                    "CloudneetiContractId"=$CloudneetiLicenseId;
                     "CloudneetiAccountId"=$CloudneetiAccountId; 
                     "OfficeDomain" = $OfficeDomain;
                     "CloudneetiEnvironment" = $CloudneetiEnvironment 
