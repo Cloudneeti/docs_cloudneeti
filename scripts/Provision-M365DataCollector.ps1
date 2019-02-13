@@ -173,7 +173,7 @@ param
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $DataCollectorName = "cloundneeti-office 365-datacollector",
+    $DataCollectorName = "cloundneeti-office-365-datacollector",
 
     # Data collector resource location
     [Parameter(Mandatory = $False,
