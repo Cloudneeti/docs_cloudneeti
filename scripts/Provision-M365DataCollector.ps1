@@ -105,7 +105,7 @@ param
     # Enter service principal secret
     [Parameter(Mandatory = $False,
         HelpMessage="Cloudneeti Data collector Service Principal password",
-		Position=6
+	Position=6
     )]
     [ValidateNotNullOrEmpty()]
     [SecureString]
@@ -114,7 +114,7 @@ param
     # Cloudneeti Artifacts Storage Name
     [Parameter(Mandatory = $False,
         HelpMessage="Cloudneeti office 365 Data Collector Artifact Name",
-		Position=7
+	Position=7
     )]
     [ValidateNotNullOrEmpty()]
     [string]
@@ -142,7 +142,7 @@ param
     [ValidateScript( {$_ -notmatch 'https://+' -and $_ -notmatch 'http://+'})]
     [Parameter(Mandatory = $False,
         HelpMessage="Office 365 Domain Name: ",
-		Position=10
+	Position=10
     )]
     [ValidateNotNullOrEmpty()]
     [string]
@@ -151,7 +151,7 @@ param
     # Office Tenant ID
     [Parameter(Mandatory = $False,
         HelpMessage="Office 365 Tenant Id",
-		Position=11
+	Position=11
     )]
     [ValidateNotNullOrEmpty()]
     [guid]
@@ -161,7 +161,7 @@ param
     [ValidateScript( {$_ -match '^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,7})$' })]
     [Parameter(Mandatory = $False,
         HelpMessage="Office 365 Administator Id",
-		Position=12
+	Position=12
     )]
     [ValidateNotNullOrEmpty()]
     [string]
@@ -170,7 +170,7 @@ param
     # Office Admin password
     [Parameter(Mandatory = $False,
         HelpMessage="Office 365 Administator password",
-		Position=13
+	Position=13
     )]
     [ValidateNotNullOrEmpty()]
     [SecureString]
