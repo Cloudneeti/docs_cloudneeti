@@ -1,9 +1,9 @@
 <#
 .SYNOPSIS
-    Script to on-board M365 account for powershell policy data collection inside Cloudneeti.
+    Script to on-board Office 365 account for PowerShell policy data collection inside Cloudneeti.
     
 .DESCRIPTION
-    This script creates an automation account, Runbook, Schedule for execution and required variables & credentials for running the M365 policies. The automation runbook execute once per day and export data to cloudneeti using Cloudneeti API.
+     This script creates an automation account, Runbook, Schedule for execution and required variables & credentials for running the M365 policies. The automation runbook executes once per day and export data to cloudneeti using Cloudneeti API.
  
 .NOTES
     Version:        1.0
@@ -15,24 +15,42 @@
 
 .EXAMPLE
     Upload script to Azure CloudShell and execute below command:-
-    .\Provision-M365DataCollector.ps1 -CloudneetiLicenseId <Cloudneeti Contract Id> -CloudneetiAccountId <Cloudneeti Account Id> -CloudneetiEnvironment <Cloudneeti Environment> -ADApplicationId <Cloudneeti data  collector service principal Id> -ArtifactsName <Cloudneeti M365 data collector artifacts name> -DataCollectorVersion <optional> <version of artifacts> -OfficeDomain <Office Domain Name>  -OfficeTenantId <Office tenant Id> -OfficeAdminId <Office Administrator user Id> -AzureSubscriptionId <Subscription Id to deploy automation account> -DataCollectorName <optional> <Automation account name> -Location <optional> <Region to deploy automation account>
+    .\Provision-M365DataCollector.ps1
 
     Then script execution will prompt for below secrets:
-        - Cloudneeti API Key
-        - Cloudneeti Data Collector Service Principal Secret
-        - Cloudneeti M365 Data  Collector Artifacts Storage Access Key
-        - Office Administator Password
-
+        - Cloudneeti License Id
+        - Cloudneeti Account Id
+        - Cloudneeti Environment
+        - Cloudneeti Office 365 Data Collector Artifacts Storage Name
+        - Cloudneeti Office 365 Data Collector Artifacts Storage Access Key
+        - Cloudneeti Office 365 Data Collector Version
+        - Office 365 Domain Name
+        - Office 365 Tenant Id
+        - Office 365 Administator Id
+        - Office 365 Administator Password
+        - Azure Subscription Id where office 365 data collector resouces will be created
 
 .INPUTS
+    Below is the list of inputs to the script:-
+        - Cloudneeti License Id <Find in "Manage Licenses" of Cloudneeti Settings>
+        - Cloudneeti Account Id <Find in "Manage Accounts" of Cloudneeti Settings>
+        - Cloudneeti Environment <Cloudneeti Environment>
+        - Cloudneeti Office 365 Data Collector Artifacts Storage Name <Contact Cloudneeti team>
+        - Cloudneeti Office 365 Data Collector Artifacts Storage Access Key <Contact Cloudneeti team>
+        - Cloudneeti Office 365 Data Collector Version <Contact Cloudneeti team>
+        - Office 365 Domain Name <Office 365 domian name>
+        - Office 365 Tenant Id <Tenant Id of Office 365>
+        - Office 365 Administator Id <Office 365 Global Administrator Id>
+        - Office 365 Administator Password <Office 365 Administrator password>
+        - Azure Subscription Id where office 365 data collector resouces will be created <Azure Subscription Id where office 365 data collector resouces will be created> 
 
 .OUTPUTS
 
 .NOTES
-    - User should have contract with Cloudneeti 
-    - Office Admin should have MFA disabled
-    - This script can be execute only on Azure CloudShell
-    - Office administrator should have "Enterprise E5" office license
+        - The user should have a contract with Cloudneeti 
+        - Office Admin should have MFA disabled
+        - This script should be executed only on Azure CloudShell.
+        - Office administrator should have "Enterprise E5" office license
 #>
 
 [CmdletBinding()]
@@ -78,7 +96,7 @@ param
     # Cloudneeti Service principal id
     [Parameter(Mandatory = $False,
         HelpMessage="Cloudneeti Data collector Service Principal Id",
-	Position=5
+		Position=5
     )]
     [ValidateNotNullOrEmpty()]
     [String]
@@ -87,7 +105,7 @@ param
     # Enter service principal secret
     [Parameter(Mandatory = $False,
         HelpMessage="Cloudneeti Data collector Service Principal password",
-	Position=6
+		Position=6
     )]
     [ValidateNotNullOrEmpty()]
     [SecureString]
@@ -95,36 +113,36 @@ param
 
     # Cloudneeti Artifacts Storage Name
     [Parameter(Mandatory = $False,
-        HelpMessage="Cloudneeti M365 Data Collector Artifact Name",
-	Position=7
+        HelpMessage="Cloudneeti office 365 Data Collector Artifact Name",
+		Position=7
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $ArtifactsName = $(Read-Host -prompt "Enter Cloudneeti M365 Data Collector Artifacts Storage Name"),
+    $ArtifactsName = $(Read-Host -prompt "Enter Cloudneeti office 365 Data Collector Artifacts Storage Name"),
 
     # Cloudneeti artifacts access key
     [Parameter(Mandatory = $False,
-        HelpMessage="Cloudneeti M365 Data Collector Artifacts Acccess Key",
+        HelpMessage="Cloudneeti office 365 Data Collector Artifacts Acccess Key",
         Position=8
     )]
     [ValidateNotNullOrEmpty()]
     [secureString]
-    $ArtifactsAccessKey = $(Read-Host -prompt "Enter Cloudneeti M365 Data Collector Artifacts Storage Access Key" -AsSecureString),
+    $ArtifactsAccessKey = $(Read-Host -prompt "Enter Cloudneeti office 365 Data Collector Artifacts Storage Access Key" -AsSecureString),
 
     # Data Collector version
     [Parameter(Mandatory = $False,
-        HelpMessage="Cloudneeti M365 Data Collector Version",
-	Position=9
+        HelpMessage="Cloudneeti office 365 Data Collector Artifacts Version",
+		Position=9
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $DataCollectorVersion = $(Read-Host -prompt "Enter Cloudneeti M365 Data Collector Version"),
+    $DataCollectorVersion = $(Read-Host -prompt "Enter Cloudneeti Office 365 Data Collector Version"),
 
     # Office Domain name
     [ValidateScript( {$_ -notmatch 'https://+' -and $_ -notmatch 'http://+'})]
     [Parameter(Mandatory = $False,
         HelpMessage="Office 365 Domain Name: ",
-	Position=10
+		Position=10
     )]
     [ValidateNotNullOrEmpty()]
     [string]
@@ -133,7 +151,7 @@ param
     # Office Tenant ID
     [Parameter(Mandatory = $False,
         HelpMessage="Office 365 Tenant Id",
-	Position=11
+		Position=11
     )]
     [ValidateNotNullOrEmpty()]
     [guid]
@@ -143,7 +161,7 @@ param
     [ValidateScript( {$_ -match '^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,7})$' })]
     [Parameter(Mandatory = $False,
         HelpMessage="Office 365 Administator Id",
-	Position=12
+		Position=12
     )]
     [ValidateNotNullOrEmpty()]
     [string]
@@ -152,7 +170,7 @@ param
     # Office Admin password
     [Parameter(Mandatory = $False,
         HelpMessage="Office 365 Administator password",
-	Position=13
+		Position=13
     )]
     [ValidateNotNullOrEmpty()]
     [SecureString]
@@ -173,7 +191,7 @@ param
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $DataCollectorName = "cloundneeti-office-365-datacollector",
+    $DataCollectorName  = $(Read-Host -prompt "Enter office 365 data collector resouces name"),
 
     # Data collector resource location
     [Parameter(Mandatory = $False,
@@ -191,23 +209,20 @@ $WarningPreference = 'SilentlyContinue'
 
 # Resource names declaration
 $AutomationAccountName = "$DataCollectorName"
-
-$AutomationAccountName
-
 $ResourceGroupName = "$DataCollectorName-rg"
 $ScriptPrefix = "M365DataCollector"
 $ContianerName = "m365-datacollection-script"
 $RunbookScriptName = "$ScriptPrefix-$DataCollectorVersion.ps1"
 $RunbookName = "$ScriptPrefix-$DataCollectorVersion"
 $path = "./runbooks"
-$Tags = @{"Service"="Cloudneeti-M365-Data-Collection"}
+$Tags = @{"Service"="Cloudneeti-Office365-Data-Collection"}
 
 # Cloudneeti API URL
 $CloudneetiAPIEndpoints = @{
-    dev="https://devapi.cloudneeti-devops.com";
-    test="https://testapi.cloudneeti-devops.com";
-    trial="https://trialapi.cloudneeti-devops.com";
+	dev="https://devapi.cloudneeti-devops.com";
+    trial="https://trialapi.cloudneeti.com";
     qa="https://qaapi.cloudneeti-devops.com";
+    prod="https://api.cloudneeti-devops.com"
 }
 $CloudneetiAPIURL = $CloudneetiAPIEndpoints[$CloudneetiEnvironment.ToLower()]
 
@@ -233,7 +248,7 @@ If ($AzureContextSubscriptionId -ne $AzureSubscriptionId){
     }
 }
 
-Write-host "Fetching M365 scanning script to create Azure automation runbook..." -ForegroundColor Yellow
+Write-host "Fetching Office 365 scanning script to create Azure automation runbook..." -ForegroundColor Yellow
 # Download cis m365 scan script to push in to Azure automation runbook
 $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($ArtifactsAccessKey)            
 $ArtifactsKey = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR) 
@@ -243,7 +258,7 @@ $PackageContext = New-AzureStorageContext -ConnectionString $CNConnectionString
 New-Item -ItemType Directory -Force -Path $path | Out-Null
 
 Get-AzureStorageBlobContent -Container $ContianerName -Blob $RunbookScriptName -Destination "./runbooks/" -Context $PackageContext -Force | Out-Null
-Write-Host "M365 scanning script successfully fetched and ready to push in automation runbook" -ForegroundColor Green
+Write-Host "Office 365 scanning script successfully fetched and ready to push in automation runbook" -ForegroundColor Green
 
 
 $RequiredModules = @"
@@ -264,6 +279,14 @@ $RequiredModules = @"
     ]
 }
 "@
+
+# Azure Automation account check for exists or not
+$AllAutomationAccountList = Get-AzureRmAutomationAccount | Select AutomationAccountName
+if($AllAutomationAccountList.AutomationAccountName -contains $AutomationAccountName){
+    Write-Host "Data collector is already exist with name:" $AutomationAccountName -ForegroundColor Magenta
+    Write-Host "Please choose different name and Re-run the this script" -ForegroundColor Yellow
+    break
+} 
 
 # Resource Group creation
 Write-host "Creating Resource Group for data collector resources" -ForegroundColor Yellow
