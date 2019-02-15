@@ -96,11 +96,11 @@ param
     # Cloudneeti Service principal id
     [Parameter(Mandatory = $False,
         HelpMessage="Cloudneeti Data collector Service Principal Id",
-		Position=5
+	Position=5
     )]
     [ValidateNotNullOrEmpty()]
     [String]
-    $ADApplicationId = $(Read-Host -prompt "Enter Cloudneeti Data Collector Service Principal Id"),
+    $ServicePrincipalId = $(Read-Host -prompt "Enter Cloudneeti Data Collector Service Principal Id"),
 
     # Enter service principal secret
     [Parameter(Mandatory = $False,
@@ -109,7 +109,7 @@ param
     )]
     [ValidateNotNullOrEmpty()]
     [SecureString]
-    $ADApplicationSecret =$(Read-Host -prompt "Enter Cloudneeti Data Collector Service Principal Secret" -AsSecureString),
+    $ServicePrincipalSecret =$(Read-Host -prompt "Enter Cloudneeti Data Collector Service Principal Secret" -AsSecureString),
 
     # Cloudneeti Artifacts Storage Name
     [Parameter(Mandatory = $False,
@@ -132,7 +132,7 @@ param
     # Data Collector version
     [Parameter(Mandatory = $False,
         HelpMessage="Cloudneeti office 365 Data Collector Artifacts Version",
-		Position=9
+	Position=9
     )]
     [ValidateNotNullOrEmpty()]
     [string]
@@ -191,7 +191,7 @@ param
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $DataCollectorName  = $(Read-Host -prompt "Enter office 365 data collector resouces name"),
+    $DataCollectorName  = $(Read-Host -prompt "Enter office 365 data collector name"),
 
     # Data collector resource location
     [Parameter(Mandatory = $False,
@@ -220,9 +220,9 @@ $Tags = @{"Service"="Cloudneeti-Office365-Data-Collection"}
 # Cloudneeti API URL
 $CloudneetiAPIEndpoints = @{
 	dev="https://devapi.cloudneeti-devops.com";
-    trial="https://trialapi.cloudneeti.com";
-    qa="https://qaapi.cloudneeti-devops.com";
-    prod="https://api.cloudneeti-devops.com"
+    	trial="https://trialapi.cloudneeti.com";
+    	qa="https://qaapi.cloudneeti-devops.com";
+    	prod="https://api.cloudneeti-devops.com"
 }
 $CloudneetiAPIURL = $CloudneetiAPIEndpoints[$CloudneetiEnvironment.ToLower()]
 
@@ -240,12 +240,17 @@ If ($AzureContextSubscriptionId -ne $AzureSubscriptionId){
             Write-Host "Successfully context switched to subscription" $AzureSubscriptionId
         }
         else{
-            Write-Host "Looks like the" $AzureSubscriptionId "is not present in current powershell context or you dont have access"
+            $NotValidSubscription = 0
         }
     }
     catch [Exception]{
         Write-Output $_
     }
+}
+
+if($NotValidSubscription -eq 0) {
+    Write-Host "Looks like the" $AzureSubscriptionId "is not present in current powershell context or you dont have access" -ForegroundColor Red
+    break
 }
 
 Write-host "Fetching Office 365 scanning script to create Azure automation runbook..." -ForegroundColor Yellow
@@ -332,17 +337,17 @@ else{
 
 # Credential object creation
 Write-host "Creating secure credentials object for clinet service principal in Automation account" -ForegroundColor Yellow
-$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $ADApplicationId, $ADApplicationSecret
+$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $ServicePrincipalId, $ServicePrincipalSecret
 $CloudneetiCredentials = "CloudneetiCredentials"
 $ExistingCredentials = Get-AzureRmAutomationCredential -Name $CloudneetiCredentials -ResourceGroupName $ResourceGroupName -AutomationAccountName $AutomationAccountName -ErrorAction SilentlyContinue
 
 If ($ExistingCredentials -ne $null -and $ExistingCredentials.UserName -eq $OfficeAdminId){
         Set-AzureRmAutomationCredential -AutomationAccountName $AutomationAccountName -Name $CloudneetiCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
-        Write-Host $ADApplicationId "credential object already exist, Updated sucessfully" -ForegroundColor Green
+        Write-Host $ServicePrincipalId "credential object already exist, Updated sucessfully" -ForegroundColor Green
 }    
 else{
         New-AzureRmAutomationCredential -AutomationAccountName $AutomationAccountName -Name $CloudneetiCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
-        Write-Host $ADApplicationId "credentials object created successfully" -ForegroundColor Green
+        Write-Host $ServicePrincipalId "credentials object created successfully" -ForegroundColor Green
 }
 
 
