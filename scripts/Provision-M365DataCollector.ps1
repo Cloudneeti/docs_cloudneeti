@@ -132,7 +132,7 @@ param
     # Data Collector version
     [Parameter(Mandatory = $False,
         HelpMessage="Cloudneeti office 365 Data Collector Artifacts Version",
-	Position=9
+		Position=9
     )]
     [ValidateNotNullOrEmpty()]
     [string]
@@ -249,7 +249,7 @@ If ($AzureContextSubscriptionId -ne $AzureSubscriptionId){
 }
 
 if($NotValidSubscription -eq 0) {
-    Write-Host "Looks like the" $AzureSubscriptionId "is not present in current powershell context or you dont have access" -ForegroundColor Red
+    Write-Host "Looks like the" $AzureSubscriptionId "is not present in current powershell context or you don't have access" -ForegroundColor Red
     break
 }
 
@@ -288,8 +288,8 @@ $RequiredModules = @"
 # Azure Automation account check for exists or not
 $AllAutomationAccountList = Get-AzureRmAutomationAccount | Select AutomationAccountName
 if($AllAutomationAccountList.AutomationAccountName -contains $AutomationAccountName){
-    Write-Host "Data collector is already exist with name:" $AutomationAccountName -ForegroundColor Magenta
-    Write-Host "Please choose different name and Re-run the this script" -ForegroundColor Yellow
+    Write-Host "Data collector already exists with the name:" $AutomationAccountName -ForegroundColor Magenta
+    Write-Host "Please choose different name and Re-run this script" -ForegroundColor Yellow
     break
 } 
 
@@ -336,14 +336,14 @@ else{
 }
 
 # Credential object creation
-Write-host "Creating secure credentials object for clinet service principal in Automation account" -ForegroundColor Yellow
+Write-host "Creating secure credentials object for client service principal in Automation account" -ForegroundColor Yellow
 $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $ServicePrincipalId, $ServicePrincipalSecret
 $CloudneetiCredentials = "CloudneetiCredentials"
 $ExistingCredentials = Get-AzureRmAutomationCredential -Name $CloudneetiCredentials -ResourceGroupName $ResourceGroupName -AutomationAccountName $AutomationAccountName -ErrorAction SilentlyContinue
 
 If ($ExistingCredentials -ne $null -and $ExistingCredentials.UserName -eq $OfficeAdminId){
         Set-AzureRmAutomationCredential -AutomationAccountName $AutomationAccountName -Name $CloudneetiCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
-        Write-Host $ServicePrincipalId "credential object already exist, Updated sucessfully" -ForegroundColor Green
+        Write-Host $ServicePrincipalId "credential object already exists, Updated sucessfully" -ForegroundColor Green
 }    
 else{
         New-AzureRmAutomationCredential -AutomationAccountName $AutomationAccountName -Name $CloudneetiCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
@@ -369,7 +369,7 @@ foreach ($Variable in $VariableObject.GetEnumerator()){
     $ExistingVariable = Get-AzureRmAutomationVariable -AutomationAccountName $AutomationAccountName -Name $Variable.Name -ResourceGroupName $ResourceGroupName -ErrorAction SilentlyContinue
     If ($ExistingVariable -ne $null -and $ExistingVariable.Value -eq $Variable.Value)
     {
-      Write-Host $Variable.Name "variable already exist" -ForegroundColor Yellow
+      Write-Host $Variable.Name "variable already exists" -ForegroundColor Yellow
     }
     else{
         if($ExistingVariable -ne $null){
