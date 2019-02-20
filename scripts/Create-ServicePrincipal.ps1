@@ -20,7 +20,7 @@
 	    2. You can Install the required modules by executing below command.
     		Install-Module -Name AzureAD -MinimumVersion 2.0.0.131
     * Account permissions
-		The script must be executed with Global AD Administrator or Application administrator account
+		The script must be executed with user having role Global AD Administrator
 .EXAMPLE
     1. Creates a service principal.
     	.\Create-ServicePrincipal.ps1 -activeDirectoryId xxxxxxx-xxxx-xxxx-xxxx-xxxxxxx 
@@ -193,7 +193,7 @@ else {
 
 # Login to Azure Active Directory
 Write-Host "Connecting to Azure Active Directory..."
-Write-Host "You will be redirected to login screen. Login using Global AD administrator or Application administrator account to proceed..."
+Write-Host "You will be redirected to login screen. Login using Global AD administrator account to proceed..."
 try {
     Start-Sleep 2
     $userEmailID = (Connect-AzureAD -TenantId $azureActiveDirectoryId).Account.Id
@@ -206,8 +206,8 @@ catch {
 }
 
 
-# Check if login user is global Admin or Application administrator
-Write-Host "Checking Logged In user $userEmailID is Global AD Administrator or Application administrator or not..."
+# Check if login user is global Admin
+Write-Host "Checking Logged In user $userEmailID is Global AD Administrator or not..."
 
    $isGlobalAdmin = $false
    $isApplicationAdmin = $false
@@ -227,22 +227,9 @@ try {
 catch {
     $isGlobalAdmin = $false
 }
-#check if user is Application Administrator
-try{
-   $roleAppAdmin = Get-AzureADDirectoryRole | Where-Object {$_.displayName -eq 'Application Administrator'}
-   Get-AzureADDirectoryRoleMember -ObjectId $roleAppAdmin.ObjectId | ForEach-Object {
-		if($_.UserPrincipalName -like $memberUser -or $_.UserPrincipalName -like $guestUser)
-		{
-         $isApplicationAdmin = $true
-			 Write-Host "Logged in User $userEmailID is Application administrator" -ForegroundColor "Green"
-		}
-	}
-}
-catch {
-    $isApplicationAdmin = $false
-}
- if((!$isGlobalAdmin) -and (!$isApplicationAdmin)){
-	Write-Host "Logged in user $userEmailID is not global AD administrator or Application administrator, Please re-run the script using global AD administrator or Application administrator account"
+
+ if(!$isGlobalAdmin){
+	Write-Host "Logged in user $userEmailID is not global AD administrator , Please re-run the script using global AD administrator account"
 	# Disconnect from Azure AD 
 	Write-Host "Disconnecting from Azure Active Directory."
 	Disconnect-AzureAD
