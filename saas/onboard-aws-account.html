@@ -125,20 +125,153 @@
         </div>
 
         <section class="main-content col-sm-10 col-lg-10">
-            <p>﻿</p>
-<h1 id="saas-configuration-and-user-guide">SaaS Configuration and User Guide</h1>
-<p><strong>Introduction</strong> : <code>Cloudneeti</code>  offers continuous infrastructure security and compliance monitoring. It provides a clear evidence about actual implementation of controls and the information required for compliance audits.</p>
+            <h1 id="onboard-an-aws-account">Onboard an AWS account</h1>
+<ul>
+<li>Follow these steps to onboard an AWS account to Cloudneeti.</li>
+</ul>
+<h2><strong>Prerequisite:</strong></h2>
 <ol>
-<li>Dashboard of the cybersecurity and compliance posture against industry standards such as PCI DSS 3.2, HIPAA, Cyber Security Foundations, Security Benchmark, NIST CSF, GDPR </li>
-<li>Compliance evidence for key industry benchmarks </li>
-<li>Continuous Monitoring to detect deviations from standards </li>
-<li>Remediation guidance for discovered vulnerabilities </li>
-<li>Azure usage visibility across the entire organization</li>
+<li>
+<p>PowerShell : </p>
+<ol>
+<li>
+<p>Windows PowerShell version 5 and above</p>
+</li>
+<li>To check PowerShell version type &quot;\$PSVersionTable.PSVersion&quot; in
+PowerShell and you will find PowerShell version.</li>
 </ol>
-<h2 id="onboard-an-azure-subscription">Onboard an Azure subscription</h2>
-<p>Follow the <a href="onboard-azure-account.html"><code>link</code></a> to onboard an Azure account to Cloudneeti. </p>
-<h2 id="onboard-an-aws-subscription">Onboard an AWS subscription</h2>
-<p>Follow the <a href="onboard-aws-account.html"><code>link</code></a> to onboard an AWS account to Cloudneeti. </p>
+</li>
+</ol>
+<p><img src="../images/PSVersiontable.png" alt="PSVersiontable.png" /></p>
+<ul>
+<li>To install PowerShell follow the <a href="https://docs.microsoft.com/en-us/powershell/scripting/setup/installing-windows-powershell?view=powershell-6">link</a></li>
+</ul>
+<ol start="2">
+<li>
+<p>AWS cli</p>
+<p>2.1.  To check AWS cli is configured type aws on PowerShell.</p>
+<p>2.2.  To install AWS cli follow link
+<a href="https://docs.aws.amazon.com/cli/latest/userguide/install-windows.html">https://docs.aws.amazon.com/cli/latest/userguide/install-windows.html</a></p>
+</li>
+</ol>
+<p><img src="../images/aws-cli.png" alt="" /></p>
+<blockquote>
+<p>D:\AWS onboarding Deck\aws in PS.png</p>
+</blockquote>
+<ol start="3">
+<li>
+<p>npm: npm is a package manager for the JavaScript programming language and
+consists of a command line client.</p>
+<p>3.1.  To install npm follow the <a href="https://www.npmjs.com/get-npm">link</a></p>
+<p>3.2.  Serverless Framework: Serverless Framework is
+a <a href="https://nodejs.org/">Node.js</a> CLI tool </p>
+<p>3.2.1.  To check serverless is configured type serverless on Powershell</p>
+<p>3.2.2.  Install serverless framework using “npm install -g serverless”</p>
+</li>
+</ol>
+<p><img src="../images/serverless-architecture.png" alt="ServerlessArchitecture.png" /></p>
+<ol start="4">
+<li>
+<p>AWS root account access key id and secret : Before you configure the
+Cloudneeti on to your AWS account, you need an AWS root account access key
+id and secret.</p>
+<p>4.1.  Getting AWS account access key id and secret</p>
+<pre><code>4.1.1.  Sign into your [AWS
+    Account](https://www.amazon.com/ap/signin?openid.assoc_handle=aws&amp;openid.return_to=https%3A%2F%2Fportal.aws.amazon.com%2Fgp%2Faws%2Fdeveloper%2Fregistration%2Findex.html%3Fie%3DUTF8%26nc1%3Dh_ct&amp;openid.mode=checkid_setup&amp;openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&amp;openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&amp;openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&amp;action=&amp;disableCorpSignUp=&amp;clientContext=&amp;marketPlaceId=&amp;poolName=&amp;authCookies=&amp;pageId=aws.ssop&amp;siteState=awscustomer&amp;accountStatusPolicy=P1&amp;sso=&amp;openid.pape.preferred_auth_policies=MultifactorPhysical&amp;openid.pape.max_auth_age=3600&amp;openid.ns.pape=http%3A%2F%2Fspecs.openid.net%2Fextensions%2Fpape%2F1.0&amp;server=%2Fap%2Fsignin%3Fie%3DUTF8&amp;accountPoolAlias=&amp;forceMobileApp=0&amp;forceMobileLayout=0).
+
+4.1.2.  Click your name located on the top right navigation pane.
+
+4.1.3.  Select “My Security Credentials”. 
+
+4.1.4.  Access key id is under the section “Access keys for CLI, SDK, &amp; API
+    access”
+
+4.1.5.  If access key secret is not recorded for this id, please create a
+    new access key by clicking on “Create access key” button.</code></pre>
+</li>
+</ol>
+<p><img src="../images/access-creds.png" alt="AWS Portal - Access key id and secret.png" /></p>
+<p><strong>Steps:</strong></p>
+<ul>
+<li>
+<p>Create a Role to mark Cloudneeti's account as a trusted entity with the
+SecurityAudit access policy.</p>
+<ol>
+<li>
+<p>Download and save file “serverless.yml” file from link</p>
+</li>
+<li>
+<p>Open PowerShell as administrator (right click on PowerShell and select
+run as administrator)</p>
+</li>
+<li>
+<p>In PowerShell navigate to file location “serverless.yml” file is (e.g.
+“cd C:\”)</p>
+</li>
+<li>
+<p>Type “AWS configure” and enter AWS root account access key id, secrete
+access key and default region name. <strong>Give default output format as JSON
+only.</strong></p>
+</li>
+<li>
+<p>To add Cloudneeti data provisioning resource, execute the command
+“serverless deploy”</p>
+<p><img src="../images/role-script-output.png" alt="Add AWS Role Script Output.png" /></p>
+</li>
+<li>
+<p>A Role will be created in the customer's account to mark Cloudneeti's
+account as a trusted entity with the SecurityAudit access policy.</p>
+<ol>
+<li>
+<p>For details about SecurityAudit access policy, please refer below
+link:</p>
+<p><a href="https://console.aws.amazon.com/iam/home?region=us-east-2#/policies/arn:aws:iam::aws:policy/SecurityAudit$serviceLevelSummary">https://console.aws.amazon.com/iam/home?region=us-east-2#/policies/arn:aws:iam::aws:policy/SecurityAudit$serviceLevelSummary</a></p>
+</li>
+</ol>
+</li>
+<li>On Cloudneeti portal, navigate to Settings -> Manage Account</li>
+</ol>
+<p><img src="../images/manage-account.png" alt="ManageAccount.png" /></p>
+<p>7.1.  Click on Add Cloud Account button</p>
+<p>7.2.  Select appropriate license</p>
+<p>7.3.  Choose connector type as AWS and click on Continue</p>
+<p><img src="../images/connector-type.png" alt="Connector Type.png" /></p>
+<p>7.4.  Enter details Account Name, AWS Account Id and Role ARN</p>
+<ul>
+<li>
+<p>Getting AWS Account Id</p>
+<ol>
+<li>
+<p>Sign into your <a href="https://www.amazon.com/ap/signin?openid.assoc_handle=aws&amp;openid.return_to=https%3A%2F%2Fportal.aws.amazon.com%2Fgp%2Faws%2Fdeveloper%2Fregistration%2Findex.html%3Fie%3DUTF8%26nc1%3Dh_ct&amp;openid.mode=checkid_setup&amp;openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&amp;openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&amp;openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&amp;action=&amp;disableCorpSignUp=&amp;clientContext=&amp;marketPlaceId=&amp;poolName=&amp;authCookies=&amp;pageId=aws.ssop&amp;siteState=awscustomer&amp;accountStatusPolicy=P1&amp;sso=&amp;openid.pape.preferred_auth_policies=MultifactorPhysical&amp;openid.pape.max_auth_age=3600&amp;openid.ns.pape=http%3A%2F%2Fspecs.openid.net%2Fextensions%2Fpape%2F1.0&amp;server=%2Fap%2Fsignin%3Fie%3DUTF8&amp;accountPoolAlias=&amp;forceMobileApp=0&amp;forceMobileLayout=0">AWS Account</a>.</p>
+</li>
+<li>
+<p>Click your name located on the top right navigation pane.</p>
+</li>
+<li>
+<p>Select “My Account”. </p>
+</li>
+<li>Your AWS ID is the twelve-digit number located underneath the
+Account Settings section.</li>
+</ol>
+</li>
+<li>
+<p>Getting Roles ARN</p>
+<ol>
+<li>
+<p>Login to AWS <a href="https://console.aws.amazon.com/iam">IAM console</a></p>
+</li>
+<li>
+<p>Go to Roles and click on Cloudneeti-SecurityAudit role</p>
+</li>
+<li>You'll see the Role ARN. Copy it in the mentioned box.</li>
+</ol>
+</li>
+</ul>
+<ol start="8">
+<li>Activate the account and configure Data Collection by entering time and time zone.</li>
+</ol>
+</li>
+</ul>
         </section>
     </div>
 
