@@ -76,6 +76,13 @@
                             <div class="dropdown-container">
                             <a href="{{ item.absoluteUrl|default(baseUrl ~ '/' ~ item.relativeUrl) }}">{{ item.text|raw }} <i class="fa fa-caret-down"></i> Marketplace</a>
                             <a href="{{ item.absoluteUrl|default(baseUrl ~ '/saas/' ~ item.relativeUrl) }}">{{ item.text|raw }} <i class="fa fa-caret-down"></i> Saas</a>
+                            {% if item.text == 'Configuration Guide' %}
+                            <ul>
+                                <li><a href="#">Azure</a></li>
+                                <li><a href="#">Office 365</a></li>
+                                <li><a href="#">Aws</a></li>
+                            </ul>
+                            {% endif %}
                             </div>
                         </li>
                     {% endfor %}
