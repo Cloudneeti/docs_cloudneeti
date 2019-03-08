@@ -146,10 +146,13 @@ If ($ExistingRunbook -ne $RunbookName){
 
     # Remove older version of runbook
     if($NULL -ne $ExistingRunbook){
-        $RemoveRunbook = $ExistingRunbook -ne  $RunbookName
-        Write-host "Deprecating older version of runbook:" $ExistingRunbook
-        Remove-AzureRmAutomationRunbook -AutomationAccountName $AutomationAccountName -Name $RemoveRunbook -ResourceGroupName $ResourceGroupName -Force
-        Write-Host "Successfully deprecated older version of runbook"
+        $ExistingRunbook | ForEach-Object {
+            if($_ -ne $RunbookName){
+                Write-host "Deprecating older version of runbook:" $_
+                Remove-AzureRmAutomationRunbook -AutomationAccountName $AutomationAccountName -Name $_ -ResourceGroupName $ResourceGroupName -Force
+                Write-Host "Successfully deprecated older version of runbook"
+            }
+        }
     }
     
     # import PSH module in automation account
