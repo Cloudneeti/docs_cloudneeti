@@ -1,4 +1,6 @@
-## Onboard an Azure subscription
+
+
+# Onboard an Azure subscription
 
 Follow these steps to onboard an Azure account to Cloudneeti. 
 
