@@ -130,41 +130,34 @@
         </div>
 
         <section class="main-content col-sm-10 col-lg-10">
-            <h1 id="jquery">jQuery</h1>
-<blockquote>
-<p>jQuery is a fast, small, and feature-rich JavaScript library.</p>
-</blockquote>
-<p>For information on how to get started and how to use jQuery, please see <a href="http://api.jquery.com/">jQuery's documentation</a>.
-For source files and issues, please visit the <a href="https://github.com/jquery/jquery">jQuery repo</a>.</p>
-<p>If upgrading, please see the <a href="https://blog.jquery.com/2017/03/20/jquery-3.3.1-now-available/">blog post for 3.3.1</a>. This includes notable differences from the previous version and a more readable changelog.</p>
-<h2 id="including-jquery">Including jQuery</h2>
-<p>Below are some of the most common ways to include jQuery.</p>
-<h3 id="browser">Browser</h3>
-<h4 id="script-tag">Script tag</h4>
-<pre><code class="language-html">&lt;script src="https://code.jquery.com/jquery-3.3.1.min.js"&gt;&lt;/script&gt;</code></pre>
-<h4 id="babel">Babel</h4>
-<p><a href="http://babeljs.io/">Babel</a> is a next generation JavaScript compiler. One of the features is the ability to use ES6/ES2015 modules now, even though browsers do not yet support this feature natively.</p>
-<pre><code class="language-js">import $ from "jquery";</code></pre>
-<h4 id="browserifywebpack">Browserify/Webpack</h4>
-<p>There are several ways to use <a href="http://browserify.org/">Browserify</a> and <a href="https://webpack.github.io/">Webpack</a>. For more information on using these tools, please refer to the corresponding project's documention. In the script, including jQuery will usually look like this...</p>
-<pre><code class="language-js">var $ = require("jquery");</code></pre>
-<h4 id="amd-asynchronous-module-definition">AMD (Asynchronous Module Definition)</h4>
-<p>AMD is a module format built for the browser. For more information, we recommend <a href="http://requirejs.org/docs/whyamd.html">require.js' documentation</a>.</p>
-<pre><code class="language-js">define(["jquery"], function($) {
-
-});</code></pre>
-<h3 id="node">Node</h3>
-<p>To include jQuery in <a href="nodejs.org">Node</a>, first install with npm.</p>
-<pre><code class="language-sh">npm install jquery</code></pre>
-<p>For jQuery to work in Node, a window with a document is required. Since no such window exists natively in Node, one can be mocked by tools such as <a href="https://github.com/tmpvar/jsdom">jsdom</a>. This can be useful for testing purposes.</p>
-<pre><code class="language-js">require("jsdom").env("", function(err, window) {
-    if (err) {
-        console.error(err);
-        return;
-    }
-
-    var $ = require("jquery")(window);
-});</code></pre>
+            <h2><strong>Cloudneeti API key Generation Procedure</strong></h2>
+<p><strong>Step 1.</strong> Go to API portal and Sign up: <code>&lt;Environment&gt;portal.cloudneeti.com</code>
+Example: trialportal.cloudneeti.com
+<img src="../images/image-b1c2c920-2025-4c9c-a7ba-895b632c60d2.png" alt="image.png" /></p>
+<p>Fill the required fields in the sign-up form
+<img src="../images/image-c7ca80b1-2c6e-4476-814a-97919f7c4589.png" alt="image.png" /></p>
+<p>You will receive a confirmation mail for sign-up, Click on the confirmation link.</p>
+<p><img src="../images/image-22ab21c6-d78e-423f-a7c4-d2adfd436d76.png" alt="image.png" /></p>
+<p>The confirmation link will ask you for change password (info: You can use a password which used while signup)</p>
+<p><img src="../images/image-ecdf8a64-7eaf-4f9a-8809-651f26055eac.png" alt="image.png" /></p>
+<p>You are signed up successfully.
+<img src="../images/image-4f0ea984-5fb7-4025-8154-2eb095e08a08.png" alt="image.png" /></p>
+<p><strong>Step 2.</strong> Now click on the <strong>PRODUCTS</strong> tab &gt; <strong>Unlimited</strong> Option
+<img src="../images/image-af9abd38-9a06-4056-abe5-119c960ff86e.png" alt="image.png" /></p>
+<p>Click on <strong>Subscribe</strong> &amp; <strong>Confirm</strong>. (Note: This will notify to Cloudneeti team and Cloudneeti team will Active your subscription. Please wait for approval)
+<img src="../images/image-3fe425f0-0d2d-4808-aa7d-c15518f43674.png" alt="image.png" /></p>
+<p>Once Cloudneeti team activate your subscription, you will get notification thru and email.
+<img src="../images/image-c6fc22f8-7239-483e-bd8d-9a059c2f7715.png" alt="image.png" /></p>
+<p><strong>Step 3.</strong> Once you get the confirmation. Click on Username and select <strong>PROFILE</strong>
+Now, To get the Cloudneeti API key click on <strong>Show</strong>. It will show hidden value and just copy the API key
+<img src="../images/image-9bb33eba-fad7-4e4f-a198-6d07c5b19dd8.png" alt="image.png" /></p>
+<h2><strong>For Cloudneeti Team (To approve customer subscription request) [Not for Customer]</strong></h2>
+<ul>
+<li>Cloudneeti admin will receive an email for new subscription</li>
+<li>Go to API management resource group</li>
+<li>Click on <strong>Subscriptions</strong> option. Select <strong>Pending Approval</strong> &gt;&gt; Select Customer request &gt;&gt; options &gt;&gt; <strong>Active Subsctiption</strong>
+<img src="../images/image-0032ccdf-765c-4b8f-bf81-6e1846f6b5d1.png" alt="image.png" /></li>
+</ul>
         </section>
     </div>
 

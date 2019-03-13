@@ -130,41 +130,115 @@
         </div>
 
         <section class="main-content col-sm-10 col-lg-10">
-            <h1 id="jquery">jQuery</h1>
-<blockquote>
-<p>jQuery is a fast, small, and feature-rich JavaScript library.</p>
-</blockquote>
-<p>For information on how to get started and how to use jQuery, please see <a href="http://api.jquery.com/">jQuery's documentation</a>.
-For source files and issues, please visit the <a href="https://github.com/jquery/jquery">jQuery repo</a>.</p>
-<p>If upgrading, please see the <a href="https://blog.jquery.com/2017/03/20/jquery-3.3.1-now-available/">blog post for 3.3.1</a>. This includes notable differences from the previous version and a more readable changelog.</p>
-<h2 id="including-jquery">Including jQuery</h2>
-<p>Below are some of the most common ways to include jQuery.</p>
-<h3 id="browser">Browser</h3>
-<h4 id="script-tag">Script tag</h4>
-<pre><code class="language-html">&lt;script src="https://code.jquery.com/jquery-3.3.1.min.js"&gt;&lt;/script&gt;</code></pre>
-<h4 id="babel">Babel</h4>
-<p><a href="http://babeljs.io/">Babel</a> is a next generation JavaScript compiler. One of the features is the ability to use ES6/ES2015 modules now, even though browsers do not yet support this feature natively.</p>
-<pre><code class="language-js">import $ from "jquery";</code></pre>
-<h4 id="browserifywebpack">Browserify/Webpack</h4>
-<p>There are several ways to use <a href="http://browserify.org/">Browserify</a> and <a href="https://webpack.github.io/">Webpack</a>. For more information on using these tools, please refer to the corresponding project's documention. In the script, including jQuery will usually look like this...</p>
-<pre><code class="language-js">var $ = require("jquery");</code></pre>
-<h4 id="amd-asynchronous-module-definition">AMD (Asynchronous Module Definition)</h4>
-<p>AMD is a module format built for the browser. For more information, we recommend <a href="http://requirejs.org/docs/whyamd.html">require.js' documentation</a>.</p>
-<pre><code class="language-js">define(["jquery"], function($) {
+            <h2><strong>Pre-requisite:</strong></h2>
+<ul>
+<li>Must have Office 365 Account </li>
+<li>One Azure Subscription</li>
+<li>Office Admin should have Office 365 app password <strong>(<a href="./create-app-password.html">Use O365 App Password generation procedure</a>)</strong></li>
+<li>Office administrator should have &quot;Enterprise E5&quot; office license</li>
+<li>The user running M365 data collector on-boarding script should have a contributor or owner access on a Azure subscription </li>
+<li>The user should have Cloudneeti API keys <strong><a href="./api-key-generation.html">(Use Cloudneeti API key generation procedure)</a></strong></li>
+<li>M365 data collector on-boarding script should be executed only on Azure CloudShell.</li>
+</ul>
+<h4 id="keep-below-information-handy">Keep below information handy,</h4>
+<ul>
+<li>License Id</li>
+<li>Account Id </li>
+<li>Cloudneeti API Key</li>
+<li>Cloudneeti Environment (dev/demo/trial/prod)</li>
+<li>Cloudneeti Data Collector service principal Id(created at the time of account onboarding)</li>
+<li>Cloudneeti Data Collector service principal Secret (created at the time of account onboarding)</li>
+<li>Office Domain Name</li>
+<li>Office Tenant Id</li>
+<li>Office Administrator Id</li>
+<li>Office Office 365 App Password</li>
+<li>Azure Subscription Id (where data collector resources to be created)</li>
+<li>Data Collector Name </li>
+</ul>
+<h4><strong>Note:</strong> Follow below steps to get Cloudneeti Account Id and License Id:</h4>
+<ol>
+<li>
+<p>To Get <strong>Cloudneeti Account Id:</strong> </p>
+<ul>
+<li>Login to Cloudneeti dashboard (For example: &lt;&quot;Cloudneeti Environment&quot;&gt;.cloudneeti.com)</li>
+<li>Click on <strong>Settings</strong> option from left side pane and go to <strong>Manage Accounts</strong></li>
+<li>And copy Account Id
+<img src="../images/image-0f39f0cd-3ae8-406d-8f71-12393e61864f.png" alt="image.png" /></li>
+</ul>
+</li>
+<li>To Get <strong>Cloudneeti License Id:</strong> 
+<ul>
+<li>Login to Cloudneeti dashboard (For example: &lt;&quot;Cloudneeti Environment&quot;&gt;.cloudneeti.com)</li>
+<li>Click on <strong>Settings</strong> option from left side pane and go to <strong>Manage Licenses</strong></li>
+<li>And copy License Id with respect to account Id
+<img src="../images/image-fd9955ba-37dc-4903-97eb-1100775c4116.png" alt="image.png" />
+<h4 id="get-below-information-from-cloudneeti-team">Get Below information from Cloudneeti Team,</h4></li>
+<li>M365 data collector provisioning script</li>
+<li>M365 data collector artifacts storage name</li>
+<li>M365 data collector artifacts storage access key</li>
+</ul></li>
+</ol>
+<h2><strong>M365 data collector provisioning</strong></h2>
+<ol>
+<li>Login to Azure portal: <a href="https://portal.azure.com">https://portal.azure.com</a></li>
+<li>Switch to Azure active directory where you have a subscription with pre-requisite access.</li>
+<li>
+<p>Open CloudShell
+Click on Cloudshell icon on the navigation bar to open Cloudshell and Choose PowerShell from shell drop down</p>
+<IMG src="https://docs.microsoft.com/en-in/azure/cloud-shell/media/overview/overview-bash-pic.png" alt="Bash in Cloud Shell"/>
+</li>
+<li>Run below commands on CloudShell: 
+<pre><code>
+# Download Provisioning script
+wget https://raw.githubusercontent.com/AvyanConsultingCorp/docs_cloudneeti/master/scripts/Provision-M365DataCollector.ps1 -O Provision-M365DataCollector.ps1</code></pre></li>
+</ol>
+<h1 id="switch-to-the-user-directory">Switch to the User directory</h1>
+<p>cd $User</p>
+<pre><code>
+**Run provisioning script**</code></pre>
+<p>./Provision-M365DataCollector.ps1</p>
+<pre><code>Enter the requested information and script will provision the M365 data collector resources. (Below image for reference)
 
-});</code></pre>
-<h3 id="node">Node</h3>
-<p>To include jQuery in <a href="nodejs.org">Node</a>, first install with npm.</p>
-<pre><code class="language-sh">npm install jquery</code></pre>
-<p>For jQuery to work in Node, a window with a document is required. Since no such window exists natively in Node, one can be mocked by tools such as <a href="https://github.com/tmpvar/jsdom">jsdom</a>. This can be useful for testing purposes.</p>
-<pre><code class="language-js">require("jsdom").env("", function(err, window) {
-    if (err) {
-        console.error(err);
-        return;
-    }
+![image.png](../images/image-84462894-9e30-4d92-a030-2d07c0816c9d.png)
 
-    var $ = require("jquery")(window);
-});</code></pre>
+### **---OR---**
+**Run provisioning script with inline parameters**</code></pre>
+<p>./Provision-M365DataCollector.ps1 -CloudneetiLicenseId <Cloudneeti License Id> <code> -CloudneetiAccountId &lt;Cloudneeti Account Id&gt;</code>
+-CloudneetiEnvironment <Cloudneeti Environment> <code> -ServicePrincipalId &lt;Cloudneeti Data Collector Service Principal Id&gt;</code>
+-ArtifactsName &lt;Cloudneeti office 365 Data Collector Artifact Name&gt; <code> -DataCollectorVersion &lt;Cloudneeti Office 365 Data Collector Version&gt;</code>
+-OfficeDomain &lt;Office 365 Domain Name&gt; <code> -OfficeTenantId &lt;Office 365 Tenant Id&gt;</code>
+-OfficeAdminId &lt;Office 365 Administator Id&gt; <code> -AzureSubscriptionId &lt;Azure Subscription Id where office 365 data collector resouces will be created&gt;</code>
+-DataCollectorName &lt;Office 365 Data Collector Name&gt; `
+-Location <Default EastUs2> <Region> </p>
+<pre><code>
+**Then script execution will prompt you for below details:** (Enter requested information)
+- Enter Cloudneeti API Key:
+- Enter Cloudneeti Data Collector Service Principal Secret:
+- Enter Cloudneeti office 365 Data Collector Artifacts Storage Access Key:
+- Enter Office 365 App Password:
+
+## **Post On-boarding Steps:**
+
+#### Apply lock to prevent accidental deletion on Onboarding Resource Group
+1. Go to m365 data collector resource group
+2. Click on **Locks** under settings
+3. Press **Add** button to create resource lock
+4. Enter **Lock Name** and select **Lock Type** as Delete
+5. Press **OK** to save the lock
+
+   ![image.png](../images/image-c4bdfa9a-9797-4b29-ba5a-d902b8826cdb.png)
+
+#### Modify the automation account schedule 
+
+Set the automation account schedule before the Cloudneeti data collection schedule using the below steps,
+1. Go to M365 data collector resource group
+2. Select Automation account 
+3. Click on **Schedules** under **Shared Resources**
+4. Select Schedule
+   ![image.png](../images/image-c11021a9-949e-445d-91de-550f3ebd7364.png)
+
+5. Modify the schedule timings and press **Save** button
+   ![image.png](../images/image-0f05e4ab-85fb-491f-890a-659b672db7e6.png)</code></pre>
         </section>
     </div>
 
