@@ -1,0 +1,23 @@
+service: cloudneeti-aws
+
+provider:
+  name: aws
+  stage: customer-onboarding
+  role: CloudneetiRole
+
+resources:
+  Resources:
+    CloudneetiRole:
+      Type: AWS::IAM::Role
+      Properties:
+        RoleName: Cloudneeti-SecurityAudit
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Principal:
+                AWS:
+                  - "arn:aws:iam::079042248639:root"    # Add the Cloudneeti AWS Account ID
+              Action: sts:AssumeRole
+        ManagedPolicyArns:
+         - "arn:aws:iam::aws:policy/SecurityAudit"
