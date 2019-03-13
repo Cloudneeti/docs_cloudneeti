@@ -47,7 +47,7 @@
 
 1. Login to Azure portal: https://portal.azure.com
 2. Switch to Azure active directory where you have a subscription with pre-requisite access.
-3. Open CloudShell
+3. Open CloudShell,
 Click on Cloudshell icon on the navigation bar to open Cloudshell and Choose PowerShell from shell drop down
 <IMG src="https://docs.microsoft.com/en-in/azure/cloud-shell/media/overview/overview-bash-pic.png" alt="Bash in Cloud Shell"/>
 
