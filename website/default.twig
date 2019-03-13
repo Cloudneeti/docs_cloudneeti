@@ -48,7 +48,7 @@
             <div class="navbar-collapse collapse" id="navbar-main">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="{{ baseUrl }}/deployment-guide.html" style="color:#ff9900">Get started</a></li>
-                    <li><a href="{{ baseUrl }}/deployment-guide.html"style="color:#ff9900">Install & Configure</a></li>
+                    <li><a href="{{ baseUrl }}/deployment-guide.html"style="color:#ff9900">Install &amp; Configure</a></li>
                     <li>
                         <a href="http://www.cloudneeti.com" target="_blank" style="color:#ff9900">
                             <i class="fa fa-home"></i> Product Portal
@@ -78,9 +78,9 @@
                             <a href="{{ item.absoluteUrl|default(baseUrl ~ '/saas/' ~ item.relativeUrl) }}">{{ item.text|raw }} <i class="fa fa-caret-down"></i> Saas</a>
                             {% if item.text == 'Configuration Guide' %}
                             <ul>
-                                <li><a href="#">Azure</a></li>
-                                <li><a href="#">Office 365</a></li>
-                                <li><a href="#">Aws</a></li>
+                                <li><a href="{{ baseUrl }}/saas/onboard-azure-account.html">Azure</a></li>
+                                <li><a href="{{ baseUrl }}/saas/onboard-m365-account.html">Office 365</a></li>
+                                <li><a href="{{ baseUrl }}/saas/onboard-aws-account.html">AWS</a></li>
                             </ul>
                             {% endif %}
                             </div>

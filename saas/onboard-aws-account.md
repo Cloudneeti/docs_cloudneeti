@@ -70,7 +70,7 @@
 -  Create a Role to mark Cloudneeti's account as a trusted entity with the
     SecurityAudit access policy.
 
-    1.  Download and save file “serverless.yml” file from link
+    1.  Download and save file “serverless.yml” file from [link](https://github.com/AvyanConsultingCorp/docs_cloudneeti/blob/master/scripts/serverless.yml).
 
     2.  Open PowerShell as administrator (right click on PowerShell and select
         run as administrator)
