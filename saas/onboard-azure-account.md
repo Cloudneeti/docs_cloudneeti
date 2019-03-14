@@ -5,11 +5,11 @@
 Follow these steps to onboard an Azure account to Cloudneeti. 
 
 **Step-1** : Before you configure the Cloudneeti on to your Azure Subscription, you need an active Azure AD account in the Global Administrator role<br />
-1.1  Login into the [Azure Portal](https://portal.azure.com/), with User with Global Admin Role
+1.1  Login into the [`Azure Portal`](https://portal.azure.com/), with User with Global Admin Role
 
 **Step-2** : Create an Active Directory Application
 
-2.1	In the [Azure Portal](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal), click Azure Active Directory in the sidebar then select App Registrations<br />
+2.1	In the [`Azure Portal`](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal), click Azure Active Directory in the sidebar then select App Registrations<br />
 2.2	Click on New application registration button. Enter the Name for example "Cloudneeti" Select the Application Type as "Web App/API" Enter the Sign-on URL as provided . e.g. "http://DNSname.region.cloudapp.azure.com"<br />
 2.3	Click Create <br />
 2.4	Click on the registered application "Cloudneeti" <br />

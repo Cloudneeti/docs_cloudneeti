@@ -8,7 +8,7 @@
 - **PowerShell version should be 5 or above**
 To check PowerShell version type `$PSVersionTable.PSVersion` in PowerShell and you will find PowerShell version, below example version is 5.1.17134.228.
 ![PSVersiontable.png](../images/PSVersiontable.png)
-If PowerShell version is lower than 5 then follow link https://docs.microsoft.com/en-us/powershell/scripting/setup/installing-windows-powershell?view=powershell-6
+If PowerShell version is lower than 5 then follow link `https://docs.microsoft.com/en-us/powershell/scripting/setup/installing-windows-powershell?view=powershell-6`
 
 - **AzureAD module installed**
 To check Azure AD version type `Get-InstalledModule -Name azureAD` in PowerShell window

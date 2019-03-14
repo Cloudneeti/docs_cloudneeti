@@ -70,7 +70,7 @@
 -  Create a Role to mark Cloudneeti's account as a trusted entity with the
     SecurityAudit access policy.
 
-    1.  Download and save file “serverless.yml” file from [link](https://raw.githubusercontent.com/AvyanConsultingCorp/docs_cloudneeti/master/scripts/serverless.yml).
+    1.  Download and save file “serverless.yml” file from [`link`](https://raw.githubusercontent.com/AvyanConsultingCorp/docs_cloudneeti/master/scripts/serverless.yml).
 
     2.  Open PowerShell as administrator (right click on PowerShell and select
         run as administrator)
@@ -111,7 +111,7 @@
 
    -  Getting AWS Account Id
 
-        1.  Sign into your [AWS Account](https://www.amazon.com/ap/signin?openid.assoc_handle=aws&openid.return_to=https%3A%2F%2Fportal.aws.amazon.com%2Fgp%2Faws%2Fdeveloper%2Fregistration%2Findex.html%3Fie%3DUTF8%26nc1%3Dh_ct&openid.mode=checkid_setup&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&action=&disableCorpSignUp=&clientContext=&marketPlaceId=&poolName=&authCookies=&pageId=aws.ssop&siteState=awscustomer&accountStatusPolicy=P1&sso=&openid.pape.preferred_auth_policies=MultifactorPhysical&openid.pape.max_auth_age=3600&openid.ns.pape=http%3A%2F%2Fspecs.openid.net%2Fextensions%2Fpape%2F1.0&server=%2Fap%2Fsignin%3Fie%3DUTF8&accountPoolAlias=&forceMobileApp=0&forceMobileLayout=0).
+        1.  Sign into your [`AWS Account`](https://www.amazon.com/ap/signin?openid.assoc_handle=aws&openid.return_to=https%3A%2F%2Fportal.aws.amazon.com%2Fgp%2Faws%2Fdeveloper%2Fregistration%2Findex.html%3Fie%3DUTF8%26nc1%3Dh_ct&openid.mode=checkid_setup&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&action=&disableCorpSignUp=&clientContext=&marketPlaceId=&poolName=&authCookies=&pageId=aws.ssop&siteState=awscustomer&accountStatusPolicy=P1&sso=&openid.pape.preferred_auth_policies=MultifactorPhysical&openid.pape.max_auth_age=3600&openid.ns.pape=http%3A%2F%2Fspecs.openid.net%2Fextensions%2Fpape%2F1.0&server=%2Fap%2Fsignin%3Fie%3DUTF8&accountPoolAlias=&forceMobileApp=0&forceMobileLayout=0).
 
         2.  Click your name located on the top right navigation pane.
 
@@ -122,7 +122,7 @@
 
     -  Getting Roles ARN
 
-        1.  Login to AWS [IAM console](https://console.aws.amazon.com/iam)
+        1.  Login to AWS [`IAM console`](https://console.aws.amazon.com/iam)
 
         2.  Go to Roles and click on Cloudneeti-SecurityAudit role
 
