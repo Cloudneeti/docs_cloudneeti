@@ -31,13 +31,13 @@
     - Login to Cloudneeti dashboard (For example: <"Cloudneeti Environment">.cloudneeti.com)
     - Click on **Settings** option from left side pane and go to **Manage Accounts**
     - And copy Account Id
-![image.png](../images/image-0f39f0cd-3ae8-406d-8f71-12393e61864f.png)
+![image.png](../images/image-0f39f0cd.png)
 
 1. To Get **Cloudneeti License Id:** 
     - Login to Cloudneeti dashboard (For example: <"Cloudneeti Environment">.cloudneeti.com)
     - Click on **Settings** option from left side pane and go to **Manage Licenses**
     - And copy License Id with respect to account Id
-![image.png](../images/image-fd9955ba-37dc-4903-97eb-1100775c4116.png)
+![image.png](../images/image-fd9955ba.png)
 #### Get Below information from Cloudneeti Team,
 - M365 data collector provisioning script
 - M365 data collector artifacts storage name
@@ -68,7 +68,7 @@ cd $User
 Enter the requested information and script will provision the M365 data collector resources. (Below image for reference)
 
 
-![image.png](../images/image-84462894-9e30-4d92-a030-2d07c0816c9d.png)
+![image.png](../images/image-84462894.png)
 
 
 ### **---OR---**
@@ -102,7 +102,7 @@ Enter the requested information and script will provision the M365 data collecto
 4. Enter **Lock Name** and select **Lock Type** as Delete
 5. Press **OK** to save the lock
 
-   ![image.png](../images/image-c4bdfa9a-9797-4b29-ba5a-d902b8826cdb.png)
+   ![image.png](../images/image-c4bdfa9a.png)
 
 #### Modify the automation account schedule 
 
@@ -111,7 +111,10 @@ Set the automation account schedule before the Cloudneeti data collection schedu
 2. Select Automation account 
 3. Click on **Schedules** under **Shared Resources**
 4. Select Schedule
-   ![image.png](../images/image-c11021a9-949e-445d-91de-550f3ebd7364.png)
+   ![image.png](../images/image-c11021a9.png)
 
 5. Modify the schedule timings and press **Save** button
-   ![image.png](../images/image-0f05e4ab-85fb-491f-890a-659b672db7e6.png)
+   ![image.png](../images/image-0f05e4ab.png)
+
+### Upgrading M365 Data Collector
+To upgrade th M365 Data Collector follow the instructions provided in the [`link`](./m365-upgrade-datacollector.html).
