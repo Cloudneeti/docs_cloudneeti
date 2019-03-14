@@ -1,6 +1,6 @@
 
 
-# Onboard an Azure subscription
+# Onboard an Azure Account
 
 Follow these steps to onboard an Azure account to Cloudneeti. 
 
@@ -15,7 +15,7 @@ Follow these steps to onboard an Azure account to Cloudneeti.
 2.4	Click on the registered application "Cloudneeti" <br />
 2.5	Click Settings <br />
 2.6	Click Save <br />
-* Note : For Auto Deployment download the script : [`Create AD Application`](https://github.com/AvyanConsultingCorp/docs_cloudneeti/blob/master/scripts/Create-ServicePrincipal.ps1). You can find the instructions  [`here`](create-service-principal.html).
+* Note : For Auto Deployment download the script : [`Create AD Application`](https://raw.githubusercontent.com/AvyanConsultingCorp/docs_cloudneeti/master/scripts/Create-ServicePrincipal.ps1). You can find the instructions  [`here`](create-service-principal.html).
 
 **Step-3** : Generate the Application Key
 * In App Registration blade, Click on the newly registered application if you had given the name "Cloudneeti" then click on the same
@@ -71,5 +71,5 @@ Follow these steps to onboard an Azure account to Cloudneeti.
 * Select Add.
 * To allow the application to call Azure API, assign the Reader and Backup Reader role. By default, Azure AD applications aren't displayed in the available options. To find your application, search for the name. If you had given the name "Cloudneeti” then search for same and select it.
 * Select Save to finish assigning the role.
-* Role assignment is automated by [`Assign-RolesToServicePrincipal.ps1`](https://github.com/AvyanConsultingCorp/docs_cloudneeti/blob/master/scripts/Assign-RolesToServicePrincipal.ps1) script. You can follow the instructions given in [`link`](assign-roles-to-sp.html).
+* Role assignment is automated by [`Assign-RolesToServicePrincipal.ps1`](https://raw.githubusercontent.com/AvyanConsultingCorp/docs_cloudneeti/master/scripts/Assign-RolesToServicePrincipal.ps1) script. You can follow the instructions given in [`link`](assign-roles-to-sp.html).
 

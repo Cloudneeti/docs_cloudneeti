@@ -10,4 +10,11 @@
 4. Remediation guidance for discovered vulnerabilities 
 5. Azure usage visibility across the entire organization
 
+## Onboard an Azure Account
+Follow the [`link`](./onboard-azure-account.html) to onboard an Azure account to Cloudneeti. 
 
+## Onboard an AWS Account
+Follow the [`link`](./onboard-aws-account.html) to onboard an AWS account to Cloudneeti. 
+
+## Onboard an M365 Account
+Follow the [`link`](./onboard-m365-account.html) to onboard an M365 account to Cloudneeti. 
