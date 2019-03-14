@@ -135,10 +135,10 @@
 <ul>
 <li>Must have Office 365 Account </li>
 <li>One Azure Subscription</li>
-<li>Office Admin should have Office 365 app password <strong>(<a href="./create-app-password.html">Use O365 App Password generation procedure</a>)</strong></li>
+<li>Office Admin should have Office 365 app password <strong>(<a href="./create-app-password.html"><code>Use O365 App Password generation procedure</code></a>)</strong></li>
 <li>Office administrator should have &quot;Enterprise E5&quot; office license</li>
 <li>The user running M365 data collector on-boarding script should have a contributor or owner access on a Azure subscription </li>
-<li>The user should have Cloudneeti API keys <strong><a href="./api-key-generation.html">(Use Cloudneeti API key generation procedure)</a></strong></li>
+<li>The user should have Cloudneeti API keys <strong>(<a href="./api-key-generation.html"><code>Use Cloudneeti API key generation procedure</code></a>)</strong></li>
 <li>M365 data collector on-boarding script should be executed only on Azure CloudShell.</li>
 </ul>
 <h4 id="keep-below-information-handy">Keep below information handy,</h4>
@@ -164,7 +164,7 @@
 <li>Login to Cloudneeti dashboard (For example: &lt;&quot;Cloudneeti Environment&quot;&gt;.cloudneeti.com)</li>
 <li>Click on <strong>Settings</strong> option from left side pane and go to <strong>Manage Accounts</strong></li>
 <li>And copy Account Id
-<img src="../images/image-0f39f0cd-3ae8-406d-8f71-12393e61864f.png" alt="image.png" /></li>
+<img src="../images/image-0f39f0cd.png" alt="image.png" /></li>
 </ul>
 </li>
 <li>To Get <strong>Cloudneeti License Id:</strong> 
@@ -172,7 +172,7 @@
 <li>Login to Cloudneeti dashboard (For example: &lt;&quot;Cloudneeti Environment&quot;&gt;.cloudneeti.com)</li>
 <li>Click on <strong>Settings</strong> option from left side pane and go to <strong>Manage Licenses</strong></li>
 <li>And copy License Id with respect to account Id
-<img src="../images/image-fd9955ba-37dc-4903-97eb-1100775c4116.png" alt="image.png" />
+<img src="../images/image-fd9955ba.png" alt="image.png" />
 <h4 id="get-below-information-from-cloudneeti-team">Get Below information from Cloudneeti Team,</h4></li>
 <li>M365 data collector provisioning script</li>
 <li>M365 data collector artifacts storage name</li>
@@ -189,57 +189,63 @@ Click on Cloudshell icon on the navigation bar to open Cloudshell and Choose Pow
 <IMG src="https://docs.microsoft.com/en-in/azure/cloud-shell/media/overview/overview-bash-pic.png" alt="Bash in Cloud Shell"/>
 </li>
 <li>Run below commands on CloudShell: 
-<pre><code>
-# Download Provisioning script
-wget https://raw.githubusercontent.com/AvyanConsultingCorp/docs_cloudneeti/master/scripts/Provision-M365DataCollector.ps1 -O Provision-M365DataCollector.ps1</code></pre></li>
-</ol>
+<pre><code># Download Provisioning script
+wget https://raw.githubusercontent.com/AvyanConsultingCorp/docs_cloudneeti/master/scripts/Provision-M365DataCollector.ps1 -O Provision-M365DataCollector.ps1</code></pre>
 <h1 id="switch-to-the-user-directory">Switch to the User directory</h1>
-<p>cd $User</p>
-<pre><code>
-**Run provisioning script**</code></pre>
-<p>./Provision-M365DataCollector.ps1</p>
-<pre><code>Enter the requested information and script will provision the M365 data collector resources. (Below image for reference)
-
-![image.png](../images/image-84462894-9e30-4d92-a030-2d07c0816c9d.png)
-
-### **---OR---**
-**Run provisioning script with inline parameters**</code></pre>
-<p>./Provision-M365DataCollector.ps1 -CloudneetiLicenseId <Cloudneeti License Id> <code> -CloudneetiAccountId &lt;Cloudneeti Account Id&gt;</code>
--CloudneetiEnvironment <Cloudneeti Environment> <code> -ServicePrincipalId &lt;Cloudneeti Data Collector Service Principal Id&gt;</code>
--ArtifactsName &lt;Cloudneeti office 365 Data Collector Artifact Name&gt; <code> -DataCollectorVersion &lt;Cloudneeti Office 365 Data Collector Version&gt;</code>
--OfficeDomain &lt;Office 365 Domain Name&gt; <code> -OfficeTenantId &lt;Office 365 Tenant Id&gt;</code>
--OfficeAdminId &lt;Office 365 Administator Id&gt; <code> -AzureSubscriptionId &lt;Azure Subscription Id where office 365 data collector resouces will be created&gt;</code>
--DataCollectorName &lt;Office 365 Data Collector Name&gt; `
--Location <Default EastUs2> <Region> </p>
-<pre><code>
-**Then script execution will prompt you for below details:** (Enter requested information)
-- Enter Cloudneeti API Key:
-- Enter Cloudneeti Data Collector Service Principal Secret:
-- Enter Cloudneeti office 365 Data Collector Artifacts Storage Access Key:
-- Enter Office 365 App Password:
-
-## **Post On-boarding Steps:**
-
-#### Apply lock to prevent accidental deletion on Onboarding Resource Group
-1. Go to m365 data collector resource group
-2. Click on **Locks** under settings
-3. Press **Add** button to create resource lock
-4. Enter **Lock Name** and select **Lock Type** as Delete
-5. Press **OK** to save the lock
-
-   ![image.png](../images/image-c4bdfa9a-9797-4b29-ba5a-d902b8826cdb.png)
-
-#### Modify the automation account schedule 
-
-Set the automation account schedule before the Cloudneeti data collection schedule using the below steps,
-1. Go to M365 data collector resource group
-2. Select Automation account 
-3. Click on **Schedules** under **Shared Resources**
-4. Select Schedule
-   ![image.png](../images/image-c11021a9-949e-445d-91de-550f3ebd7364.png)
-
-5. Modify the schedule timings and press **Save** button
-   ![image.png](../images/image-0f05e4ab-85fb-491f-890a-659b672db7e6.png)</code></pre>
+<pre><code>cd $User</code></pre></li>
+</ol>
+<p><strong>Run provisioning script</strong></p>
+<pre><code>./Provision-M365DataCollector.ps1</code></pre>
+<p>Enter the requested information and script will provision the M365 data collector resources. (Below image for reference)</p>
+<p><img src="../images/image-84462894.png" alt="image.png" /></p>
+<h3><strong>---OR---</strong></h3>
+<p><strong>Run provisioning script with inline parameters</strong></p>
+<pre><code>./Provision-M365DataCollector.ps1 -CloudneetiLicenseId &lt;Cloudneeti License Id&gt; `
+                                  -CloudneetiAccountId &lt;Cloudneeti Account Id&gt; `
+                                  -CloudneetiEnvironment &lt;Cloudneeti Environment&gt; `
+                                  -ServicePrincipalId &lt;Cloudneeti Data Collector Service Principal Id&gt; `
+                                  -ArtifactsName &lt;Cloudneeti office 365 Data Collector Artifact Name&gt; `
+                                  -DataCollectorVersion &lt;Cloudneeti Office 365 Data Collector Version&gt; `
+                                  -OfficeDomain &lt;Office 365 Domain Name&gt; `
+                                  -OfficeTenantId &lt;Office 365 Tenant Id&gt; `
+                                  -OfficeAdminId &lt;Office 365 Administator Id&gt; `
+                                  -AzureSubscriptionId &lt;Azure Subscription Id where office 365 data collector resouces will be created&gt; `
+                                  -DataCollectorName &lt;Office 365 Data Collector Name&gt; `
+                                  -Location &lt;Default EastUs2&gt; &lt;Region&gt; </code></pre>
+<p><strong>Then script execution will prompt you for below details:</strong> (Enter requested information)</p>
+<ul>
+<li>Enter Cloudneeti API Key:</li>
+<li>Enter Cloudneeti Data Collector Service Principal Secret:</li>
+<li>Enter Cloudneeti office 365 Data Collector Artifacts Storage Access Key:</li>
+<li>Enter Office 365 App Password:</li>
+</ul>
+<h2><strong>Post On-boarding Steps:</strong></h2>
+<h4 id="apply-lock-to-prevent-accidental-deletion-on-onboarding-resource-group">Apply lock to prevent accidental deletion on Onboarding Resource Group</h4>
+<ol>
+<li>Go to m365 data collector resource group</li>
+<li>Click on <strong>Locks</strong> under settings</li>
+<li>Press <strong>Add</strong> button to create resource lock</li>
+<li>Enter <strong>Lock Name</strong> and select <strong>Lock Type</strong> as Delete</li>
+<li>
+<p>Press <strong>OK</strong> to save the lock</p>
+<p><img src="../images/image-c4bdfa9a.png" alt="image.png" /></p>
+</li>
+</ol>
+<h4 id="modify-the-automation-account-schedule">Modify the automation account schedule</h4>
+<p>Set the automation account schedule before the Cloudneeti data collection schedule using the below steps,</p>
+<ol>
+<li>Go to M365 data collector resource group</li>
+<li>Select Automation account </li>
+<li>Click on <strong>Schedules</strong> under <strong>Shared Resources</strong></li>
+<li>
+<p>Select Schedule
+<img src="../images/image-c11021a9.png" alt="image.png" /></p>
+</li>
+<li>Modify the schedule timings and press <strong>Save</strong> button
+<img src="../images/image-0f05e4ab.png" alt="image.png" /></li>
+</ol>
+<h3 id="upgrading-m365-data-collector">Upgrading M365 Data Collector</h3>
+<p>To upgrade th M365 Data Collector follow the instructions provided in the <a href="./m365-upgrade-datacollector.html"><code>link</code></a>.</p>
         </section>
     </div>
 

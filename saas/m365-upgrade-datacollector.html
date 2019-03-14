@@ -130,85 +130,112 @@
         </div>
 
         <section class="main-content col-sm-10 col-lg-10">
-            <h1 id="create-service-prinicipal">Create Service Prinicipal</h1>
-<h2><strong>Prerequisite:</strong></h2>
-<ul>
-<li>Open PowerShell as administrator (right click on PowerShell and select run as administrator)</li>
-<li>Download the <strong>Create-ServicePrincipal</strong> script from <a href="https://github.com/AvyanConsultingCorp/docs_cloudneeti/blob/master/scripts/Create-ServicePrincipal.ps1"><code>here</code></a></li>
-<li>
-<p><strong>PowerShell version should be 5 or above</strong>
-To check PowerShell version type <code>$PSVersionTable.PSVersion</code> in PowerShell and you will find PowerShell version, below example version is 5.1.17134.228.
-<img src="../images/PSVersiontable.png" alt="PSVersiontable.png" />
-If PowerShell version is lower than 5 then follow link <code>https://docs.microsoft.com/en-us/powershell/scripting/setup/installing-windows-powershell?view=powershell-6</code></p>
-</li>
-<li><strong>AzureAD module installed</strong>
-To check Azure AD version type <code>Get-InstalledModule -Name azureAD</code> in PowerShell window
-<img src="../images/get-module.png" alt="get-module.png" />
-If version is lower or not installed, type command <code>Install-Module -Name AzureAD -MinimumVersion 2.0.0.131</code> in PowerShell window</li>
-</ul>
-<p><strong>Note:</strong></p>
+            <p><strong>M365 Data Collector Upgrade</strong></p>
+<p><strong>Document contains below steps,</strong></p>
 <ol>
-<li>Part 1 describes, if service principal with name <strong>Cloudneeti-Data-Collector</strong> was never created in Azure Active Directory &gt; App Registration</li>
-<li>Part 2 describes, if service principal with name <strong>Cloudneeti-Data-Collector</strong> exists in Azure Active Directory &gt; App Registration</li>
+<li>
+<p>Generating APP password for office MFA enabled user</p>
+</li>
+<li>
+<p>Delete resource group lock</p>
+</li>
+<li>
+<p>Upgrade office 365 data collector to v 1.1</p>
+</li>
+<li>
+<p>Change app password in credential object</p>
+<p><strong>Pre-requisites:</strong></p>
+<p><strong>Step1: Generate APP Password</strong></p>
+<p>Check MFA of Office 365 Admin user is enabled and create app password.</p>
+</li>
+<li>
+<p>Sign in to Office 365.</p>
+</li>
+<li>
+<p>Choose My Account Settings button > Office 365 portal</p>
+</li>
+<li>Choose Security &amp; Privacy > Additional security verification, And Click
+on Create and manage app passwords option</li>
 </ol>
-<h2><strong>Part1</strong></h2>
-<h3 id="follow-steps-given-below-to-create-service-principal">Follow steps given below to create service principal</h3>
+<p><img src="../images/11436b841c80b331fb36ded4c6e4526e.png" alt="" /></p>
+<blockquote>
+<p>D:\SP Demo\MFA Account.png</p>
+</blockquote>
 <ol>
-<li>Open PowerShell in <strong>administrator</strong> mode</li>
-<li>Move to the path where <code>Create-ServicePrincipal.PS1</code> file is kept (e.d “cd C:\ )</li>
-<li>Run file named <strong>Create-ServicePrincipal.ps1</strong> (e.g <code>.\Create-ServicePrincipal.ps1</code>)
-Parameters will be </li>
-<li><strong>azureActiveDirectoryTenantId</strong> : Directory ID is Tenant ID and can be found in Azure Active Directory</li>
-<li><strong>expirationPeriod</strong> : expiration period of secret key</li>
+<li>At the top of the page, choose App Passwords. and choose to create to get an
+app password.</li>
 </ol>
-<p><strong>Note:</strong>
-You can also add number of years for the life of key should live, by simply adding parameter <code>-expirationPeriod</code> followed by number by default key life is 1 year
-e.g:
-<img src="../images/script-command.png" alt="script-command" />
-It takes following parameters</p>
-<ul>
-<li><code>azureActiveDirectoryTenantId</code> : Azure Active Directory Id</li>
-<li><code>expirationPeriod</code>: Number of years for which the secret key will be valid eg. 1
-error: 
-<ul>
-<li>If you get error like: <code>&lt;script&gt;.ps1</code> is not digitally signed.  The script will not execute on the system.”
-Run command <code>Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass</code> in your PowerShell window and try again</li>
-<li>If you get error “The term <code>Install-Module</code> is not recognized” install PowerShell version 5 or greater, link shared in prerequisite of this document </li>
-</ul></li>
-</ul>
-<ol start="4">
-<li>Login screen will be prompted
-<img src="../images/login.png" alt="login.png" />
-<strong>Note:</strong> Credentials used should have AD role as ‘Global Admin’</li>
-<li>
-<p>Service principal is created, save ‘ApplicationName’ , ‘ApplicationId’, ‘Password Key Description’ and ‘Password Key’</p>
-<p>Find count of 'Application Permissions' and 'Delegated Permissions' with respect to 'API'
-<img src="../images/permission-table.png" alt="permission-table.png" /></p>
-</li>
-<li>
-<p>To verify, Login to Azure portal &gt; Azure Active Directory &gt; App registrations
-<img src="../images/azure-ad-portal.png" alt="azure-ad-portal.png" /></p>
-</li>
-<li>Search for service principal with respective name
-<img src="../images/app-registrations.png" alt="app-registrations.png" /></li>
-<li>
-<p>In Settings check Required permissions
-<img src="../images/app-view.png" alt="app-view.png" /></p>
-</li>
-<li>To grant permission, in settings &gt; required permissions &gt; click on Grant permissions then ok
-Refer below images
-<img src="../images/required-permissions.png" alt="required-permissions.png" />
-To grant permissions listed above click on Grant permission.
-<img src="../images/grant-permissions.png" alt="grant-permissions.png" /></li>
-<li>Service principal created successfully </li>
-</ol>
-<h2><strong>Part 2</strong></h2>
+<p><img src="../images/112b86a836030d7c531eeed9df54bacd.png" alt="" /></p>
+<blockquote>
+<p>D:\SP Demo\MFA Account PWD.png</p>
+</blockquote>
 <ol>
-<li>If service principal with respective name already exists then script will ask you whether you want to create new key for the existing or not
-<img src="../images/key-prompt.png" alt="prompt" /></li>
-<li>Enter your choice, if you enter ‘yes’, new key will be created, save the details i.e ApplicationName’ , ‘ApplicationId’, ‘Password Key Description’ and ‘Password Key’
-<img src="../images/key-credentials.png" alt="credentials" /></li>
+<li>Choose copy password to clipboard save it for future use.</li>
 </ol>
+<p><img src="../images/6656e2c1dcf8b44f2b36fe244fa8f330.png" alt="" /></p>
+<blockquote>
+<p>D:\SP Demo\MFA Account PWD Store.png</p>
+</blockquote>
+<p><strong>Step 2: Delete Resource group lock (if applied)</strong></p>
+<p>Delete lock from M365 Data Collector resource group</p>
+<ol>
+<li>
+<p>On Azure portal go to Home -> Resource groups ->
+<em>\&lt;cloundneeti-office-365-datacollector-rg></em></p>
+</li>
+<li>Go to locks and delete the lock</li>
+</ol>
+<p><img src="../images/7d24dee6c6e4aba04a9ca1da82603181.png" alt="" /></p>
+<p><strong>Step 3: Upgrade M365 Data collector</strong></p>
+<p>Execute updated script to upgrade the M365 Data Collector</p>
+<ol>
+<li>On Azure portal, open cloudshell</li>
+</ol>
+<p><img src="../images/9f20a6803812a116394b6637f7a01173.png" alt="" /></p>
+<ol>
+<li>Select Powershell</li>
+</ol>
+<p><img src="../images/62e8e561f2333d76434921ac8d3ae2e0.png" alt="" /></p>
+<ol>
+<li>In cloud shell execute below command to download upgrade script</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>wget <a href="https://raw.githubusercontent.com/AvyanConsultingCorp/docs_cloudneeti/master/scripts/Upgrade-M365DataCollector.ps1%20-O%20Upgrade-M365DataCollector.ps1"><code>https://raw.githubusercontent.com/AvyanConsultingCorp/docs_cloudneeti/master/scripts/Upgrade-M365DataCollector.ps1 -O Upgrade-M365DataCollector.ps1</code></a></th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p><img src="../images/ad9644cac6b9945ab0aec40f3e1a648a.png" alt="" /></p>
+<ol>
+<li>Switch to user directory and execute below command to upgrade m365 data
+collector</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>cd \$user ./Upgrade-M365DataCollector.ps1 -ArtifactsName ` -DataCollectorVersion 1.1 ` -AzureSubscriptionId \&lt;subscriptionId_of_m365datacollector>` -DataCollectorName \&lt;Office 365 Data Collector Name> ` -Location \&lt;Region></th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p>Script will prompt Cloudneeti artifacts access key.</p>
+<p><strong>Step 4: Modify credential object in Automation account</strong></p>
+<p>Change password to Application Password</p>
+<ol>
+<li>
+<p>On Azure portal go to Automation account</p>
+</li>
+<li>
+<p>Click on “OfficeAdminCredentials”</p>
+</li>
+<li>Update password with App Password created in step 1</li>
+</ol>
+<p><img src="../images/d34a2ecc400b7b353ee173a04878e526.png" alt="" /></p>
+<p>Run the automation account to verify.</p>
         </section>
     </div>
 
