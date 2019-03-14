@@ -1,11 +1,8 @@
-
-
-
 ## **Pre-requisite:**
 
 - Must have Office 365 Account 
 - One Azure Subscription
-- Office Admin should have Office 365 app password **([Use O365 App Password generation procedure](./create-app-password.html))**
+- Office Admin should have Office 365 app password **([Use O365 App Password generation procedure]())**
 - Office administrator should have "Enterprise E5" office license
 - The user running M365 data collector on-boarding script should have a contributor or owner access on a Azure subscription 
 - The user should have Cloudneeti API keys **[(Use Cloudneeti API key generation procedure)](./api-key-generation.html)**
