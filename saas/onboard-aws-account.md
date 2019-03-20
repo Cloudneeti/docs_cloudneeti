@@ -11,7 +11,7 @@
 
     1.  Windows PowerShell version 5 and above
 
-    2.  To check PowerShell version type "\$PSVersionTable.PSVersion" in
+    2.  To check PowerShell version type `$PSVersionTable.PSVersion` in
         PowerShell and you will find PowerShell version.
 
 ![PSVersiontable.png](../images/PSVersiontable.png)

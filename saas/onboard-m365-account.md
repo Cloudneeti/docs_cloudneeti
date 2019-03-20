@@ -53,46 +53,35 @@ Click on Cloudshell icon on the navigation bar to open Cloudshell and Choose Pow
 <IMG src="https://docs.microsoft.com/en-in/azure/cloud-shell/media/overview/overview-bash-pic.png" alt="Bash in Cloud Shell"/>
 
 4. Run below commands on CloudShell: 
-```
-# Download Provisioning script
-wget https://raw.githubusercontent.com/AvyanConsultingCorp/docs_cloudneeti/master/scripts/Provision-M365DataCollector.ps1 -O Provision-M365DataCollector.ps1
-```
-# Switch to the User directory
-```
-cd $User
-```
-
-**Run provisioning script**
-```
-./Provision-M365DataCollector.ps1
-```
-Enter the requested information and script will provision the M365 data collector resources. (Below image for reference)
-
-
-![image.png](../images/image-84462894.png)
-
-
-### **---OR---**
-**Run provisioning script with inline parameters**
-```
-./Provision-M365DataCollector.ps1 -CloudneetiLicenseId <Cloudneeti License Id> `
-                                  -CloudneetiAccountId <Cloudneeti Account Id> `
-                                  -CloudneetiEnvironment <Cloudneeti Environment> `
-                                  -ServicePrincipalId <Cloudneeti Data Collector Service Principal Id> `
-                                  -ArtifactsName <Cloudneeti office 365 Data Collector Artifact Name> `
-                                  -DataCollectorVersion <Cloudneeti Office 365 Data Collector Version> `
-                                  -OfficeDomain <Office 365 Domain Name> `
-                                  -OfficeTenantId <Office 365 Tenant Id> `
-                                  -OfficeAdminId <Office 365 Administator Id> `
-                                  -AzureSubscriptionId <Azure Subscription Id where office 365 data collector resouces will be created> `
-                                  -DataCollectorName <Office 365 Data Collector Name> `
-                                  -Location <Default EastUs2> <Region> 
-```
-**Then script execution will prompt you for below details:** (Enter requested information)
-- Enter Cloudneeti API Key:
-- Enter Cloudneeti Data Collector Service Principal Secret:
-- Enter Cloudneeti office 365 Data Collector Artifacts Storage Access Key:
-- Enter Office 365 App Password:
+    ```
+    4.1. # Download Provisioning script
+    wget https://raw.githubusercontent.com/AvyanConsultingCorp/docs_cloudneeti/master/scripts/Provision-M365DataCollector.ps1 -O Provision-M365DataCollector.ps1
+    ```
+    4.2. Switch to the User directory
+    ```
+    cd $User
+    ```
+    4.3. Run provisioning script with inline parameters
+    ****
+    ```
+    ./Provision-M365DataCollector.ps1 -CloudneetiLicenseId <Cloudneeti License Id> `
+                                    -CloudneetiAccountId <Cloudneeti Account Id> `
+                                    -CloudneetiEnvironment <Cloudneeti Environment> `
+                                    -ServicePrincipalId <Cloudneeti Data Collector Service Principal Id> `
+                                    -ArtifactsName <Cloudneeti office 365 Data Collector Artifact Name> `
+                                    -DataCollectorVersion <Cloudneeti Office 365 Data Collector Version> `
+                                    -OfficeDomain <Office 365 Domain Name> `
+                                    -OfficeTenantId <Office 365 Tenant Id> `
+                                    -OfficeAdminId <Office 365 Administator Id> `
+                                    -AzureSubscriptionId <Azure Subscription Id where office 365 data collector resouces will be created> `
+                                    -DataCollectorName <Office 365 Data Collector Name> `
+                                    -Location <Default EastUs2> <Region> 
+    ```
+    4.4 Then script execution will prompt you for below details:** (Enter requested information)
+    - Enter Cloudneeti API Key:
+    - Enter Cloudneeti Data Collector Service Principal Secret:
+    - Enter Cloudneeti office 365 Data Collector Artifacts Storage Access Key:
+    - Enter Office 365 App Password:
 
 ## **Post On-boarding Steps:**
 
