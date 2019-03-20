@@ -25,7 +25,7 @@ If version is lower or not installed, type command `Install-Module -Name AzureAD
 2.	Move to the path where `Create-ServicePrincipal.PS1` file is kept (e.d “cd C:\ )
 3.	Run file named **Create-ServicePrincipal.ps1** (e.g `.\Create-ServicePrincipal.ps1`)
 Parameters will be 
-1.	**azureActiveDirectoryTenantId** : Directory ID is Tenant ID and can be found in Azure Active Directory
+1.	**azureActiveDirectoryId** : Directory ID is Tenant ID and can be found in Azure Active Directory
 2.	**expirationPeriod** : expiration period of secret key
  
 **Note:**
