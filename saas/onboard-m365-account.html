@@ -189,36 +189,32 @@ Click on Cloudshell icon on the navigation bar to open Cloudshell and Choose Pow
 <IMG src="https://docs.microsoft.com/en-in/azure/cloud-shell/media/overview/overview-bash-pic.png" alt="Bash in Cloud Shell"/>
 </li>
 <li>Run below commands on CloudShell: 
-<pre><code># Download Provisioning script
+<pre><code>4.1. # Download Provisioning script
 wget https://raw.githubusercontent.com/AvyanConsultingCorp/docs_cloudneeti/master/scripts/Provision-M365DataCollector.ps1 -O Provision-M365DataCollector.ps1</code></pre>
-<h1 id="switch-to-the-user-directory">Switch to the User directory</h1>
-<pre><code>cd $User</code></pre></li>
-</ol>
-<p><strong>Run provisioning script</strong></p>
-<pre><code>./Provision-M365DataCollector.ps1</code></pre>
-<p>Enter the requested information and script will provision the M365 data collector resources. (Below image for reference)</p>
-<p><img src="../images/image-84462894.png" alt="image.png" /></p>
-<h3><strong>---OR---</strong></h3>
-<p><strong>Run provisioning script with inline parameters</strong></p>
+<p>4.2. Switch to the User directory</p>
+<pre><code>cd $User</code></pre>
+<p>4.3. Run provisioning script with inline parameters</p>
+<hr />
 <pre><code>./Provision-M365DataCollector.ps1 -CloudneetiLicenseId &lt;Cloudneeti License Id&gt; `
-                                  -CloudneetiAccountId &lt;Cloudneeti Account Id&gt; `
-                                  -CloudneetiEnvironment &lt;Cloudneeti Environment&gt; `
-                                  -ServicePrincipalId &lt;Cloudneeti Data Collector Service Principal Id&gt; `
-                                  -ArtifactsName &lt;Cloudneeti office 365 Data Collector Artifact Name&gt; `
-                                  -DataCollectorVersion &lt;Cloudneeti Office 365 Data Collector Version&gt; `
-                                  -OfficeDomain &lt;Office 365 Domain Name&gt; `
-                                  -OfficeTenantId &lt;Office 365 Tenant Id&gt; `
-                                  -OfficeAdminId &lt;Office 365 Administator Id&gt; `
-                                  -AzureSubscriptionId &lt;Azure Subscription Id where office 365 data collector resouces will be created&gt; `
-                                  -DataCollectorName &lt;Office 365 Data Collector Name&gt; `
-                                  -Location &lt;Default EastUs2&gt; &lt;Region&gt; </code></pre>
-<p><strong>Then script execution will prompt you for below details:</strong> (Enter requested information)</p>
+                                -CloudneetiAccountId &lt;Cloudneeti Account Id&gt; `
+                                -CloudneetiEnvironment &lt;Cloudneeti Environment&gt; `
+                                -ServicePrincipalId &lt;Cloudneeti Data Collector Service Principal Id&gt; `
+                                -ArtifactsName &lt;Cloudneeti office 365 Data Collector Artifact Name&gt; `
+                                -DataCollectorVersion &lt;Cloudneeti Office 365 Data Collector Version&gt; `
+                                -OfficeDomain &lt;Office 365 Domain Name&gt; `
+                                -OfficeTenantId &lt;Office 365 Tenant Id&gt; `
+                                -OfficeAdminId &lt;Office 365 Administator Id&gt; `
+                                -AzureSubscriptionId &lt;Azure Subscription Id where office 365 data collector resouces will be created&gt; `
+                                -DataCollectorName &lt;Office 365 Data Collector Name&gt; `
+                                -Location &lt;Default EastUs2&gt; &lt;Region&gt; </code></pre>
+<p>4.4 Then script execution will prompt you for below details:** (Enter requested information)</p>
 <ul>
 <li>Enter Cloudneeti API Key:</li>
 <li>Enter Cloudneeti Data Collector Service Principal Secret:</li>
 <li>Enter Cloudneeti office 365 Data Collector Artifacts Storage Access Key:</li>
 <li>Enter Office 365 App Password:</li>
-</ul>
+</ul></li>
+</ol>
 <h2><strong>Post On-boarding Steps:</strong></h2>
 <h4 id="apply-lock-to-prevent-accidental-deletion-on-onboarding-resource-group">Apply lock to prevent accidental deletion on Onboarding Resource Group</h4>
 <ol>
