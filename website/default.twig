@@ -83,6 +83,12 @@
                                 <li><a href="{{ baseUrl }}/saas/onboard-aws-account.html">AWS</a></li>
                             </ul>
                             {% endif %}
+                            {% if item.text == 'Release Summary' %}
+                            <ul>
+                                <li><a href="{{ baseUrl }}/saas/trial-release-summary.html">Trial</a></li>
+                                <li><a href="{{ baseUrl }}/saas/prod-release-summary.html">Production</a></li>
+                            </ul>
+                            {% endif %}
                             </div>
                         </li>
                     {% endfor %}
