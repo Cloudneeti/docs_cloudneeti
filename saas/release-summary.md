@@ -1,3 +1,3 @@
 ﻿
-# Release Summery 
-![Comming Soon](img/comming-soon.png)
+# Release Summary 
+![Coming Soon](../images/coming-soon.png)

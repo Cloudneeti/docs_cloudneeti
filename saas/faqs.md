@@ -1,3 +1,3 @@
 ﻿
 # Frequently Asked Questions 
-![Comming Soon](img/comming-soon.png)
+![Coming Soon](../images/coming-soon.png)

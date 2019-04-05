@@ -1,3 +1,3 @@
 ﻿
 # Troubleshooting 
-![Comming Soon](img/comming-soon.png)
+![Coming Soon](img/coming-soon.png)
