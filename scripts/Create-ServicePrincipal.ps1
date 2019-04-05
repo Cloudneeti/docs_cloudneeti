@@ -185,8 +185,8 @@ if ($azureADModuleObj.Version.Major -ge 2 -or $azureADModuleObj.Version -ge 2) {
     Write-Host "Required AzureAD module already installed" -ForegroundColor "Green"
 }
 else {
-    Write-Host -Message "AzureAD module was found other than the required version 2. Run Below command to Install the AzureAD module and re-run the script"
-    Write-Host -Message "Install-Module -Name AzureAD -MinimumVersion 2.0.0.131" -ForegroundColor Yellow
+    Write-Host "AzureAD module was found other than the required version 2. Run Below command to Install the AzureAD module and re-run the script"
+    Write-Host "Install-Module -Name AzureAD -MinimumVersion 2.0.0.131" -ForegroundColor Yellow
     exit
 }
 
