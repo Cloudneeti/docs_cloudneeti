@@ -16,7 +16,7 @@
 
 ![PSVersiontable.png](../images/PSVersiontable.png)
 
--  To install PowerShell follow the [link](https://docs.microsoft.com/en-us/powershell/scripting/setup/installing-windows-powershell?view=powershell-6)
+-  To install PowerShell follow the [`link`](https://docs.microsoft.com/en-us/powershell/scripting/setup/installing-windows-powershell?view=powershell-6)
 
 
 2.  AWS cli
@@ -33,10 +33,10 @@
 3.  npm: npm is a package manager for the JavaScript programming language and
     consists of a command line client.
 
-    3.1.  To install npm follow the [link](https://www.npmjs.com/get-npm)
+    3.1.  To install npm follow the [`link`](https://www.npmjs.com/get-npm)
 
     3.2.  Serverless Framework: Serverless Framework is
-    a [Node.js](https://nodejs.org/) CLI tool 
+    a [`Node.js`](https://nodejs.org/) CLI tool 
 
     3.2.1.  To check serverless is configured type serverless on Powershell
 
@@ -70,7 +70,7 @@
 -  Create a Role to mark Cloudneeti's account as a trusted entity with the
     SecurityAudit access policy.
 
-    1.  Download and save file “serverless.yml” file from [`link`](https://raw.githubusercontent.com/AvyanConsultingCorp/docs_cloudneeti/master/scripts/serverless.yml).
+    1.  Click the -> [`link`](https://raw.githubusercontent.com/AvyanConsultingCorp/docs_cloudneeti/master/scripts/serverless.yml) and save its content in “serverless.yml” file.
 
     2.  Open PowerShell as administrator (right click on PowerShell and select
         run as administrator)
@@ -78,8 +78,8 @@
     3.  In PowerShell navigate to file location “serverless.yml” file is (e.g.
         “cd C:\\”)
 
-    4.  Type “AWS configure” and enter AWS root account access key id, secrete
-        access key and default region name. **Give default output format as JSON
+    4.  Type “aws configure” and enter Account access key id, secret
+        access key of an AWS IAM User (with Admin Access Permission) and default region name(eg. us-east-1). **Give default output format as json
         only.**
 
     5.  To add Cloudneeti data provisioning resource, execute the command
@@ -93,7 +93,7 @@
         1.  For details about SecurityAudit access policy, please refer below
             link:
 
-            <https://console.aws.amazon.com/iam/home?region=us-east-2#/policies/arn:aws:iam::aws:policy/SecurityAudit$serviceLevelSummary>
+            <a href='https://console.aws.amazon.com/iam/home?region=us-east-2#/policies/arn:aws:iam::aws:policy/SecurityAudit$serviceLevelSummary' target='_blank'>https://console.aws.amazon.com/iam/home?region=us-east-2#/policies/arn:aws:iam::aws:policy/SecurityAudit$serviceLevelSummary</a >
 
     7.  On Cloudneeti portal, navigate to Settings -\> Manage Account
 
@@ -107,7 +107,7 @@
 
     ![Connector Type.png](../images/connector-type.png)
 
-    7.4.  Enter details Account Name, AWS Account Id and Role ARN
+    7.4.  Enter details Account Name, AWS Account Id
 
    -  Getting AWS Account Id
 
@@ -119,13 +119,5 @@
 
         4.  Your AWS ID is the twelve-digit number located underneath the
             Account Settings section.
-
-    -  Getting Roles ARN
-
-        1.  Login to AWS [`IAM console`](https://console.aws.amazon.com/iam)
-
-        2.  Go to Roles and click on Cloudneeti-SecurityAudit role
-
-        3.  You'll see the Role ARN. Copy it in the mentioned box.
 
     8.  Activate the account and configure Data Collection by entering time and time zone.
