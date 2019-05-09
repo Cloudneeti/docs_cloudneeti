@@ -153,7 +153,7 @@ PowerShell and you will find PowerShell version.</li>
 </ol>
 <p><img src="../images/PSVersiontable.png" alt="PSVersiontable.png" /></p>
 <ul>
-<li>To install PowerShell follow the <a href="https://docs.microsoft.com/en-us/powershell/scripting/setup/installing-windows-powershell?view=powershell-6">link</a></li>
+<li>To install PowerShell follow the <a href="https://docs.microsoft.com/en-us/powershell/scripting/setup/installing-windows-powershell?view=powershell-6"><code>link</code></a></li>
 </ul>
 <ol start="2">
 <li>
@@ -171,9 +171,9 @@ PowerShell and you will find PowerShell version.</li>
 <li>
 <p>npm: npm is a package manager for the JavaScript programming language and
 consists of a command line client.</p>
-<p>3.1.  To install npm follow the <a href="https://www.npmjs.com/get-npm">link</a></p>
+<p>3.1.  To install npm follow the <a href="https://www.npmjs.com/get-npm"><code>link</code></a></p>
 <p>3.2.  Serverless Framework: Serverless Framework is
-a <a href="https://nodejs.org/">Node.js</a> CLI tool </p>
+a <a href="https://nodejs.org/"><code>Node.js</code></a> CLI tool </p>
 <p>3.2.1.  To check serverless is configured type serverless on Powershell</p>
 <p>3.2.2.  Install serverless framework using “npm install -g serverless”</p>
 </li>
@@ -207,7 +207,7 @@ id and secret.</p>
 SecurityAudit access policy.</p>
 <ol>
 <li>
-<p>Download and save file “serverless.yml” file from <a href="https://raw.githubusercontent.com/AvyanConsultingCorp/docs_cloudneeti/master/scripts/serverless.yml"><code>link</code></a>.</p>
+<p>Click the -&gt; <a href="https://raw.githubusercontent.com/AvyanConsultingCorp/docs_cloudneeti/master/scripts/serverless.yml"><code>link</code></a> and save its content in “serverless.yml” file.</p>
 </li>
 <li>
 <p>Open PowerShell as administrator (right click on PowerShell and select
@@ -218,9 +218,9 @@ run as administrator)</p>
 “cd C:\”)</p>
 </li>
 <li>
-<p>Type “AWS configure” and enter AWS root account access key id, secrete
-access key and default region name. <strong>Give default output format as JSON
-only.</strong></p>
+<p>Type “aws configure” and enter Account access key id, secret
+access key of an AWS IAM User (with Admin Access Permission) and default region name(eg. us-east-1). Give default output format as &quot;json&quot;
+only.</p>
 </li>
 <li>
 <p>To add Cloudneeti data provisioning resource, execute the command
@@ -234,7 +234,7 @@ account as a trusted entity with the SecurityAudit access policy.</p>
 <li>
 <p>For details about SecurityAudit access policy, please refer below
 link:</p>
-<p><a href="https://console.aws.amazon.com/iam/home?region=us-east-2#/policies/arn:aws:iam::aws:policy/SecurityAudit$serviceLevelSummary">https://console.aws.amazon.com/iam/home?region=us-east-2#/policies/arn:aws:iam::aws:policy/SecurityAudit$serviceLevelSummary</a></p>
+<p><a href='https://console.aws.amazon.com/iam/home?region=us-east-2#/policies/arn:aws:iam::aws:policy/SecurityAudit$serviceLevelSummary' target='_blank'><a href="https://console.aws.amazon.com/iam/home?region=us-east-2#/policies/arn:aws:iam::aws:policy/SecurityAudit$serviceLevelSummary">https://console.aws.amazon.com/iam/home?region=us-east-2#/policies/arn:aws:iam::aws:policy/SecurityAudit$serviceLevelSummary</a></a ></p>
 </li>
 </ol>
 </li>
@@ -245,7 +245,7 @@ link:</p>
 <p>7.2.  Select appropriate license</p>
 <p>7.3.  Choose connector type as AWS and click on Continue</p>
 <p><img src="../images/connector-type.png" alt="Connector Type.png" /></p>
-<p>7.4.  Enter details Account Name, AWS Account Id and Role ARN</p>
+<p>7.4.  Enter details Account Name, AWS Account Id</p>
 <ul>
 <li>
 <p>Getting AWS Account Id</p>
@@ -261,18 +261,6 @@ link:</p>
 </li>
 <li>Your AWS ID is the twelve-digit number located underneath the
 Account Settings section.</li>
-</ol>
-</li>
-<li>
-<p>Getting Roles ARN</p>
-<ol>
-<li>
-<p>Login to AWS <a href="https://console.aws.amazon.com/iam"><code>IAM console</code></a></p>
-</li>
-<li>
-<p>Go to Roles and click on Cloudneeti-SecurityAudit role</p>
-</li>
-<li>You'll see the Role ARN. Copy it in the mentioned box.</li>
 </ol>
 </li>
 </ul>
