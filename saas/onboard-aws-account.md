@@ -79,8 +79,8 @@
         “cd C:\\”)
 
     4.  Type “aws configure” and enter Account access key id, secret
-        access key of an AWS IAM User (with Admin Access Permission) and default region name(eg. us-east-1). **Give default output format as json
-        only.**
+        access key of an AWS IAM User (with Admin Access Permission) and default region name(eg. us-east-1). Give default output format as "json"
+        only.
 
     5.  To add Cloudneeti data provisioning resource, execute the command
         “serverless deploy”
