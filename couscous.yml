@@ -15,7 +15,7 @@ cname: docs.cloudneeti.com
 
 # Used to link to the GitHub project
 github:
-    user: avyanconsultingcorp
+    user: cloudneeti
     repo: docs-cloudneeti
 
 branch: gh-pages

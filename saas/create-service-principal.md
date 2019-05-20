@@ -4,7 +4,7 @@
 ## **Prerequisite:**
 
 - Open PowerShell as administrator (right click on PowerShell and select run as administrator)
-- Download the **Create-ServicePrincipal** script from [`here`](https://github.com/AvyanConsultingCorp/docs_cloudneeti/blob/master/scripts/Create-ServicePrincipal.ps1)
+- Download the **Create-ServicePrincipal** script from [`here`](https://github.com/Cloudneeti/docs_cloudneeti/blob/master/scripts/Create-ServicePrincipal.ps1)
 - **PowerShell version should be 5 or above**
 To check PowerShell version type `$PSVersionTable.PSVersion` in PowerShell and you will find PowerShell version, below example version is 5.1.17134.228.
 ![PSVersiontable.png](../images/PSVersiontable.png)

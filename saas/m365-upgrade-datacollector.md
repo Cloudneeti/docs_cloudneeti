@@ -65,7 +65,7 @@ Execute updated script to upgrade the M365 Data Collector
 
 1.  In cloud shell execute below command to download upgrade script
 
-| wget [`https://raw.githubusercontent.com/AvyanConsultingCorp/docs_cloudneeti/master/scripts/Upgrade-M365DataCollector.ps1 -O Upgrade-M365DataCollector.ps1`](https://raw.githubusercontent.com/AvyanConsultingCorp/docs_cloudneeti/master/scripts/Upgrade-M365DataCollector.ps1%20-O%20Upgrade-M365DataCollector.ps1) |
+| wget [`https://raw.githubusercontent.com/Cloudneeti/docs_cloudneeti/master/scripts/Upgrade-M365DataCollector.ps1 -O Upgrade-M365DataCollector.ps1`](https://raw.githubusercontent.com/Cloudneeti/docs_cloudneeti/master/scripts/Upgrade-M365DataCollector.ps1%20-O%20Upgrade-M365DataCollector.ps1) |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 
 

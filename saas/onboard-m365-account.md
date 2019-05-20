@@ -55,7 +55,7 @@ Click on Cloudshell icon on the navigation bar to open Cloudshell and Choose Pow
 4. Run below commands on CloudShell: 
     ```
     4.1. # Download Provisioning script
-    wget https://raw.githubusercontent.com/AvyanConsultingCorp/docs_cloudneeti/master/scripts/Provision-M365DataCollector.ps1 -O Provision-M365DataCollector.ps1
+    wget https://raw.githubusercontent.com/Cloudneeti/docs_cloudneeti/master/scripts/Provision-M365DataCollector.ps1 -O Provision-M365DataCollector.ps1
     ```
     4.2. Switch to the User directory
     ```
