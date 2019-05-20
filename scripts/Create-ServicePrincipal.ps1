@@ -199,7 +199,7 @@ try {
     $loginDetails = Connect-AzureAD -TenantId $azureActiveDirectoryId
     $userEmailID = $loginDetails.Account.Id
     $TenantDomain = $loginDetails.TenantDomain
-	Write-Host "Connection to Azure Active Directory established successfully." -ForegroundColor "Green"
+    Write-Host "Connection to Azure Active Directory established successfully." -ForegroundColor "Green"
 }
 catch {
 	Write-Host "Error Details: $_" -ForegroundColor Red
@@ -213,7 +213,7 @@ Write-Host "Checking Logged In user $userEmailID is Global AD Administrator or n
 
    $isGlobalAdmin = $false
    $isApplicationAdmin = $false
-	$memberUser = $userEmailID
+   $memberUser = $userEmailID
    $guestUser = $($userEmailID -replace '@','_') + "#EXT*"
 #check if user is global Administrator
 try {
@@ -326,10 +326,10 @@ If([string]::IsNullOrEmpty($servicePrincipal))
     Write-Host "-------------------------------------------"
     Write-Host "STEP 1: STORE SERVICE PRINCIPAL INFORMATION" 
     Write-Host "-------------------------------------------"
-	 Write-Host "ApplicationName : $servicePrincipalName" -ForegroundColor "Green"
-	 Write-Host "ApplicationId :" $adApp.AppId -ForegroundColor "Green"
-	 Write-Host "Password Key Description : $keyIdentifier" -ForegroundColor "Green"
-	 Write-Host "Password Key :" $passwordCreds.Value -ForegroundColor "Green"	
+    Write-Host "ApplicationName : $servicePrincipalName" -ForegroundColor "Green"
+    Write-Host "ApplicationId :" $adApp.AppId -ForegroundColor "Green"
+    Write-Host "Password Key Description : $keyIdentifier" -ForegroundColor "Green"
+    Write-Host "Password Key :" $passwordCreds.Value -ForegroundColor "Green"	
     Write-Host "Password Key Expiry Duration: $expirationPeriod" -ForegroundColor "Green"
     Write-Host "Azure Tenant Id :" $azureActiveDirectoryId -ForegroundColor "Green"
     Write-host "Azure Tenant Domain Name :" $TenantDomain `n -ForegroundColor "Green"
@@ -390,10 +390,10 @@ else
                 Write-Host "`n-----------------------------------"
                 Write-Host "STORE SERVICE PRINCIPAL INFORMATION"
                 Write-Host "-----------------------------------"
-	             Write-Host "ApplicationName : $servicePrincipalName" -ForegroundColor "Green"
-	             Write-Host "ApplicationId :" $adApp.AppId -ForegroundColor "Green"
-	             Write-Host "Password Key Description : $keyIdentifier" -ForegroundColor "Green"
-	             Write-Host "Password Key :" $passwordCreds.Value -ForegroundColor "Green"	
+	        Write-Host "ApplicationName : $servicePrincipalName" -ForegroundColor "Green"
+	        Write-Host "ApplicationId :" $adApp.AppId -ForegroundColor "Green"
+	        Write-Host "Password Key Description : $keyIdentifier" -ForegroundColor "Green"
+	        Write-Host "Password Key :" $passwordCreds.Value -ForegroundColor "Green"	
                 Write-Host "Password Key Expiry Duration: $expirationPeriod" -ForegroundColor "Green"
                 Write-Host "Azure Tenant Id :" $azureActiveDirectoryId -ForegroundColor "Green"
                 Write-host "Azure Tenant Domain Name :" $TenantDomain `n `n  -ForegroundColor "Green"
@@ -406,12 +406,9 @@ else
 
 				Write-Host "Refer to information generated while creating the $servicePrincipalName principal first time." -ForegroundColor Yellow
 				break
-
 			}
 			default{
-
 				Write-Host "You have entered invalid input, Please enter 'yes' or 'no' only"
-
 			}
 		}
 	}
