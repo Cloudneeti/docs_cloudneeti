@@ -196,7 +196,9 @@ Write-Host "Connecting to Azure Active Directory..."
 Write-Host "You will be redirected to login screen. Login using Global AD administrator account to proceed..."
 try {
     Start-Sleep 2
-    $userEmailID = (Connect-AzureAD -TenantId $azureActiveDirectoryId).Account.Id
+    $loginDetails = Connect-AzureAD -TenantId $azureActiveDirectoryId
+    $userEmailID = $loginDetails.Account.Id
+    $TenantDomain = $loginDetails.TenantDomain
 	Write-Host "Connection to Azure Active Directory established successfully." -ForegroundColor "Green"
 }
 catch {
@@ -324,11 +326,13 @@ If([string]::IsNullOrEmpty($servicePrincipal))
     Write-Host "-------------------------------------------"
     Write-Host "STEP 1: STORE SERVICE PRINCIPAL INFORMATION" 
     Write-Host "-------------------------------------------"
-	Write-Host "ApplicationName : $servicePrincipalName" -ForegroundColor "Green"
-	Write-Host "ApplicationId :" $adApp.AppId -ForegroundColor "Green"
-	Write-Host "Password Key Description : $keyIdentifier" -ForegroundColor "Green"
-	Write-Host "Password Key :" $passwordCreds.Value -ForegroundColor "Green"	
-    Write-Host "Password Key Expiry Duration: $expirationPeriod`n" -ForegroundColor "Green"
+	 Write-Host "ApplicationName : $servicePrincipalName" -ForegroundColor "Green"
+	 Write-Host "ApplicationId :" $adApp.AppId -ForegroundColor "Green"
+	 Write-Host "Password Key Description : $keyIdentifier" -ForegroundColor "Green"
+	 Write-Host "Password Key :" $passwordCreds.Value -ForegroundColor "Green"	
+    Write-Host "Password Key Expiry Duration: $expirationPeriod" -ForegroundColor "Green"
+    Write-Host "Azure Tenant Id :" $azureActiveDirectoryId -ForegroundColor "Green"
+    Write-host "Azure Tenant Domain Name :" $TenantDomain `n -ForegroundColor "Green"
 
     Write-Warning -Message "`nStore the above information in secure place. You won't be able to retrieve after you close the Powershell window."
 
@@ -386,11 +390,13 @@ else
                 Write-Host "`n-----------------------------------"
                 Write-Host "STORE SERVICE PRINCIPAL INFORMATION"
                 Write-Host "-----------------------------------"
-	            Write-Host "ApplicationName : $servicePrincipalName" -ForegroundColor "Green"
-	            Write-Host "ApplicationId :" $adApp.AppId -ForegroundColor "Green"
-	            Write-Host "Password Key Description : $keyIdentifier" -ForegroundColor "Green"
-	            Write-Host "Password Key :" $passwordCreds.Value -ForegroundColor "Green"	
-                Write-Host "Password Key Expiry Duration: $expirationPeriod `n`n" -ForegroundColor "Green"
+	             Write-Host "ApplicationName : $servicePrincipalName" -ForegroundColor "Green"
+	             Write-Host "ApplicationId :" $adApp.AppId -ForegroundColor "Green"
+	             Write-Host "Password Key Description : $keyIdentifier" -ForegroundColor "Green"
+	             Write-Host "Password Key :" $passwordCreds.Value -ForegroundColor "Green"	
+                Write-Host "Password Key Expiry Duration: $expirationPeriod" -ForegroundColor "Green"
+                Write-Host "Azure Tenant Id :" $azureActiveDirectoryId -ForegroundColor "Green"
+                Write-host "Azure Tenant Domain Name :" $TenantDomain `n `n  -ForegroundColor "Green"
                 
                 Write-Warning -Message "Store the above information in secure place. You won't be able to retrieve after you close the Powershell window."
 				break
