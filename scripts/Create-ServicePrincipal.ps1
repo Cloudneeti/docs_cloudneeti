@@ -304,7 +304,7 @@ If([string]::IsNullOrEmpty($servicePrincipal))
       Write-Host "1. Login to Azure Portal"
       Write-Host "2. Click on Azure Active Directory"
       Write-Host "3. Click on $servicePrincipalName service principal in 'App Registrations' section"
-      Write-Host "4. Click on settings and go to 'Required Permission'"
+      Write-Host "4. Go to 'API Permissions' and confirm Microsoft Graph permissions"
       Write-Host "5. Confirm the permissions count with below table."
 
       Write-Host "`nPermission Table"
