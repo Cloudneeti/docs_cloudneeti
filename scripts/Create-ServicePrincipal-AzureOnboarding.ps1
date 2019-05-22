@@ -27,7 +27,7 @@
     1. Creates a service principal.
         .\Create-ServicePrincipal-AzureOnboarding.ps1 -activeDirectoryId xxxxxxx-xxxx-xxxx-xxxx-xxxxxxx
     2. Creates a service principal with AD policies disabled.
-        .\Create-ServicePrincipal-AzureOnboarding.ps1 -activeDirectoryId xxxxxxx-xxxx-xxxx-xxxx-xxxxxxx -disableADPolicy
+        .\Create-ServicePrincipal-AzureOnboarding.ps1 -activeDirectoryId xxxxxxx-xxxx-xxxx-xxxx-xxxxxxx -disableADPolicies
     3. Creates a Service Principal with service principal Name.
         .\Create-ServicePrincipal-AzureOnboarding.ps1 -activeDirectoryId xxxxxxx-xxxx-xxxx-xxxx-xxxxxxx -servicePrincipalName <CloudneetiDataCollector>
     4. Creates a Service Principal with the expiry date.
