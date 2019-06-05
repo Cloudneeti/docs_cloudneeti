@@ -82,7 +82,7 @@ Write-host "Checking logged in user having required permissions(owner, user acce
 # Get Cloudneeti Policy Assignments
 Write-host "Getting Cloudneeti Remediation Policies assigned in subscription $subscriptionId"
 try {
-    $policyAssignments = Get-AzPolicyAssignment | Where-Object { ($_.Name -like "CN-*") -and ($_.Identity -ne $NULL) }
+    $policyAssignments = Get-AzPolicyAssignment | Where-Object { ($_.Name -like "CloudneetiControlNo-*") -and ($_.Identity -ne $NULL) }
     Write-Host "Successfully got the Cloudneeti Remediation Policies" -ForegroundColor Green
 }
 catch [Exception] {
