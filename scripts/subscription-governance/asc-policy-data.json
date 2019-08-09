@@ -84,7 +84,7 @@
                         "value": "AuditIfNotExists"
                     },
                     "diagnosticsLogsInBatchAccountRetentionDays": {
-                        "value": "364"
+                        "value": "365"
                     },
                     "metricAlertsInBatchAccountMonitoringEffect": {
                         "value": "AuditIfNotExists"
@@ -99,19 +99,19 @@
                         "value": "AuditIfNotExists"
                     },
                     "diagnosticsLogsInDataLakeAnalyticsRetentionDays": {
-                        "value": "364"
+                        "value": "365"
                     },
                     "diagnosticsLogsInDataLakeStoreMonitoringEffect": {
                         "value": "AuditIfNotExists"
                     },
                     "diagnosticsLogsInDataLakeStoreRetentionDays": {
-                        "value": "364"
+                        "value": "365"
                     },
                     "diagnosticsLogsInEventHubMonitoringEffect": {
                         "value": "AuditIfNotExists"
                     },
                     "diagnosticsLogsInEventHubRetentionDays": {
-                        "value": "364"
+                        "value": "365"
                     },
                     "diagnosticsLogsInKeyVaultMonitoringEffect": {
                         "value": "AuditIfNotExists"
@@ -300,7 +300,7 @@
                         "value": "AuditIfNotExists"
                     },
                     "diagnosticsLogsInIoTHubRetentionDays": {
-                        "value": "364"
+                        "value": "365"
                     },
                     "sqlServerAdvancedDataSecurityMonitoringEffect": {
                         "value": "AuditIfNotExists"
@@ -464,7 +464,7 @@
                         "value": "Disabled"
                     },
                     "diagnosticsLogsInBatchAccountRetentionDays": {
-                        "value": "Disabled"
+                        "value": "364"
                     },
                     "metricAlertsInBatchAccountMonitoringEffect": {
                         "value": "Disabled"
@@ -479,31 +479,31 @@
                         "value": "Disabled"
                     },
                     "diagnosticsLogsInDataLakeAnalyticsRetentionDays": {
-                        "value": "Disabled"
+                        "value": "364"
                     },
                     "diagnosticsLogsInDataLakeStoreMonitoringEffect": {
                         "value": "Disabled"
                     },
                     "diagnosticsLogsInDataLakeStoreRetentionDays": {
-                        "value": "Disabled"
+                        "value": "364"
                     },
                     "diagnosticsLogsInEventHubMonitoringEffect": {
                         "value": "Disabled"
                     },
                     "diagnosticsLogsInEventHubRetentionDays": {
-                        "value": "Disabled"
+                        "value": "364"
                     },
                     "diagnosticsLogsInKeyVaultMonitoringEffect": {
                         "value": "Disabled"
                     },
                     "diagnosticsLogsInKeyVaultRetentionDays": {
-                        "value": "Disabled"
+                        "value": "364"
                     },
                     "diagnosticsLogsInLogicAppsMonitoringEffect": {
                         "value": "Disabled"
                     },
                     "diagnosticsLogsInLogicAppsRetentionDays": {
-                        "value": "Disabled"
+                        "value": "364"
                     },
                     "diagnosticsLogsInRedisCacheMonitoringEffect": {
                         "value": "Disabled"
@@ -512,7 +512,7 @@
                         "value": "Disabled"
                     },
                     "diagnosticsLogsInSearchServiceRetentionDays": {
-                        "value": "Disabled"
+                        "value": "364"
                     },
                     "aadAuthenticationInServiceFabricMonitoringEffect": {
                         "value": "Disabled"
@@ -524,7 +524,7 @@
                         "value": "Disabled"
                     },
                     "diagnosticsLogsInServiceBusRetentionDays": {
-                        "value": "Disabled"
+                        "value": "364"
                     },
                     "namespaceAuthorizationRulesInServiceBusMonitoringEffect": {
                         "value": "Disabled"
@@ -539,7 +539,7 @@
                         "value": "Disabled"
                     },
                     "diagnosticsLogsInStreamAnalyticsRetentionDays": {
-                        "value": "Disabled"
+                        "value": "364"
                     },
                     "useRbacRulesMonitoringEffect": {
                         "value": "Disabled"
@@ -680,7 +680,7 @@
                         "value": "Disabled"
                     },
                     "diagnosticsLogsInIoTHubRetentionDays": {
-                        "value": "Disabled"
+                        "value": "364"
                     },
                     "sqlServerAdvancedDataSecurityMonitoringEffect": {
                         "value": "Disabled"
