@@ -1,765 +1,761 @@
 {
     "AzureSecurityCenter": {
-        "EnabledState": {
-            "ASCPolicies": {
-                "properties": {
-                    "displayName": "ASC Default (subscription: $subscriptionId)",
-                    "metadata": {
-                        "assignedBy": "Cloudneeti"
+        "ASCPoliciesEnabledState": {
+            "properties": {
+                "displayName": "auto-update",
+                "metadata": {
+                    "assignedBy": "Security Center"
+                },
+                "policyDefinitionId": "/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8",
+                "parameters": {
+                    "vmssSystemUpdatesMonitoringEffect": {
+                        "value": "AuditIfNotExists"
                     },
-                    "policyDefinitionId": "/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8",
-                    "parameters": {
-                        "vmssSystemUpdatesMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "vmssEndpointProtectionMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "vmssOsVulnerabilitiesMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "systemUpdatesMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "systemConfigurationsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "endpointProtectionMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "diskEncryptionMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "networkSecurityGroupsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "networkSecurityGroupsOnSubnetsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "networkSecurityGroupsOnVirtualMachinesMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "webApplicationFirewallMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "nextGenerationFirewallMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "vulnerabilityAssesmentMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "storageEncryptionMonitoringEffect": {
-                            "value": "Audit"
-                        },
-                        "jitNetworkAccessMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "adaptiveApplicationControlsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "sqlAuditingMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "sqlEncryptionMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "sqlDbEncryptionMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "sqlServerAuditingMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "sqlServerAuditingActionsAndGroupsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "diagnosticsLogsInAppServiceMonitoringEffect": {
-                            "value": "Audit"
-                        },
-                        "diagnosticsLogsInSelectiveAppServicesMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "encryptionOfAutomationAccountMonitoringEffect": {
-                            "value": "Audit"
-                        },
-                        "diagnosticsLogsInBatchAccountMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "diagnosticsLogsInBatchAccountRetentionDays": {
-                            "value": "364"
-                        },
-                        "metricAlertsInBatchAccountMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "classicComputeVMsMonitoringEffect": {
-                            "value": "Audit"
-                        },
-                        "classicStorageAccountsMonitoringEffect": {
-                            "value": "Audit"
-                        },
-                        "diagnosticsLogsInDataLakeAnalyticsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "diagnosticsLogsInDataLakeAnalyticsRetentionDays": {
-                            "value": "364"
-                        },
-                        "diagnosticsLogsInDataLakeStoreMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "diagnosticsLogsInDataLakeStoreRetentionDays": {
-                            "value": "364"
-                        },
-                        "diagnosticsLogsInEventHubMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "diagnosticsLogsInEventHubRetentionDays": {
-                            "value": "364"
-                        },
-                        "diagnosticsLogsInKeyVaultMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "diagnosticsLogsInKeyVaultRetentionDays": {
-                            "value": "365"
-                        },
-                        "diagnosticsLogsInLogicAppsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "diagnosticsLogsInLogicAppsRetentionDays": {
-                            "value": "365"
-                        },
-                        "diagnosticsLogsInRedisCacheMonitoringEffect": {
-                            "value": "Audit"
-                        },
-                        "diagnosticsLogsInSearchServiceMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "diagnosticsLogsInSearchServiceRetentionDays": {
-                            "value": "365"
-                        },
-                        "aadAuthenticationInServiceFabricMonitoringEffect": {
-                            "value": "Audit"
-                        },
-                        "clusterProtectionLevelInServiceFabricMonitoringEffect": {
-                            "value": "Audit"
-                        },
-                        "diagnosticsLogsInServiceBusMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "diagnosticsLogsInServiceBusRetentionDays": {
-                            "value": "365"
-                        },
-                        "namespaceAuthorizationRulesInServiceBusMonitoringEffect": {
-                            "value": "Audit"
-                        },
-                        "aadAuthenticationInSqlServerMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "secureTransferToStorageAccountMonitoringEffect": {
-                            "value": "Audit"
-                        },
-                        "diagnosticsLogsInStreamAnalyticsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "diagnosticsLogsInStreamAnalyticsRetentionDays": {
-                            "value": "365"
-                        },
-                        "useRbacRulesMonitoringEffect": {
-                            "value": "Audit"
-                        },
-                        "disableUnrestrictedNetworkToStorageAccountMonitoringEffect": {
-                            "value": "Audit"
-                        },
-                        "diagnosticsLogsInServiceFabricMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "accessRulesInEventHubNamespaceMonitoringEffect": {
-                            "value": "Audit"
-                        },
-                        "accessRulesInEventHubMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "sqlDbVulnerabilityAssesmentMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "sqlDbDataClassificationMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "identityDesignateLessThanOwnersMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "identityDesignateMoreThanOneOwnerMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "identityEnableMFAForOwnerPermissionsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "identityEnableMFAForWritePermissionsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "identityEnableMFAForReadPermissionsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "identityRemoveDeprecatedAccountWithOwnerPermissionsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "identityRemoveDeprecatedAccountMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "identityRemoveExternalAccountWithOwnerPermissionsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "identityRemoveExternalAccountWithWritePermissionsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "identityRemoveExternalAccountWithReadPermissionsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "apiAppConfigureIPRestrictionsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "functionAppConfigureIPRestrictionsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "webAppConfigureIPRestrictionsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "apiAppDisableRemoteDebuggingMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "functionAppDisableRemoteDebuggingMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "webAppDisableRemoteDebuggingMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "apiAppDisableWebSocketsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "functionAppDisableWebSocketsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "webAppDisableWebSocketsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "apiAppEnforceHttpsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "functionAppEnforceHttpsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "webAppEnforceHttpsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "apiAppRestrictCORSAccessMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "functionAppRestrictCORSAccessMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "webAppRestrictCORSAccessMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "apiAppUsedCustomDomainsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "functionAppUsedCustomDomainsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "webAppUsedCustomDomainsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "apiAppUsedLatestDotNetMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "webAppUsedLatestDotNetMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "apiAppUsedLatestJavaMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "webAppUsedLatestJavaMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "webAppUsedLatestNodeJsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "apiAppUsedLatestPHPMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "webAppUsedLatestPHPMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "apiAppUsedLatestPythonMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "webAppUsedLatestPythonMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "vnetEnableDDoSProtectionMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "diagnosticsLogsInIoTHubMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "diagnosticsLogsInIoTHubRetentionDays": {
-                            "value": "364"
-                        },
-                        "sqlServerAdvancedDataSecurityMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "sqlServerAdvancedDataSecurityEmailsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "sqlManagedInstanceAdvancedDataSecurityEmailAdminsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "sqlManagedInstanceAdvancedDataSecurityMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "kubernetesServiceRbacEnabledMonitoringEffect": {
-                            "value": "Audit"
-                        },
-                        "kubernetesServicePspEnabledMonitoringEffect": {
-                            "value": "Audit"
-                        },
-                        "kubernetesServiceAuthorizedIPRangesEnabledMonitoringEffect": {
-                            "value": "Audit"
-                        },
-                        "kubernetesServiceVersionUpToDateMonitoringEffect": {
-                            "value": "Audit"
-                        },
-                        "vulnerabilityAssessmentOnManagedInstanceMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "vulnerabilityAssessmentOnServerMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "threatDetectionTypesOnManagedInstanceMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "threatDetectionTypesOnServerMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "adaptiveNetworkHardeningsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "restrictAccessToManagementPortsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "restrictAccessToAppServicesMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "disableIPForwardingMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "SqlServerAuditingRetentionDaysMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "apiAppEnforceHttpsMonitoringEffectV2": {
-                            "value": "Audit"
-                        },
-                        "functionAppEnforceHttpsMonitoringEffectV2": {
-                            "value": "Audit"
-                        },
-                        "webAppEnforceHttpsMonitoringEffectV2": {
-                            "value": "Audit"
-                        },
-                        "sqlManagedInstanceAdvancedDataSecurityEmailsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "sqlServerAdvancedDataSecurityEmailAdminsMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "ensureServerTDEIsEncryptedWithYourOwnKeyMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "ensureManagedInstanceTDEIsEncryptedWithYourOwnKeyMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        },
-                        "containerBenchmarkMonitoringEffect": {
-                            "value": "AuditIfNotExists"
-                        }
+                    "vmssEndpointProtectionMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "vmssOsVulnerabilitiesMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "systemUpdatesMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "systemConfigurationsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "endpointProtectionMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "diskEncryptionMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "networkSecurityGroupsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "networkSecurityGroupsOnSubnetsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "networkSecurityGroupsOnVirtualMachinesMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "webApplicationFirewallMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "nextGenerationFirewallMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "vulnerabilityAssesmentMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "storageEncryptionMonitoringEffect": {
+                        "value": "Audit"
+                    },
+                    "jitNetworkAccessMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "adaptiveApplicationControlsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "sqlAuditingMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "sqlEncryptionMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "sqlDbEncryptionMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "sqlServerAuditingMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "sqlServerAuditingActionsAndGroupsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "diagnosticsLogsInAppServiceMonitoringEffect": {
+                        "value": "Audit"
+                    },
+                    "diagnosticsLogsInSelectiveAppServicesMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "encryptionOfAutomationAccountMonitoringEffect": {
+                        "value": "Audit"
+                    },
+                    "diagnosticsLogsInBatchAccountMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "diagnosticsLogsInBatchAccountRetentionDays": {
+                        "value": "364"
+                    },
+                    "metricAlertsInBatchAccountMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "classicComputeVMsMonitoringEffect": {
+                        "value": "Audit"
+                    },
+                    "classicStorageAccountsMonitoringEffect": {
+                        "value": "Audit"
+                    },
+                    "diagnosticsLogsInDataLakeAnalyticsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "diagnosticsLogsInDataLakeAnalyticsRetentionDays": {
+                        "value": "364"
+                    },
+                    "diagnosticsLogsInDataLakeStoreMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "diagnosticsLogsInDataLakeStoreRetentionDays": {
+                        "value": "364"
+                    },
+                    "diagnosticsLogsInEventHubMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "diagnosticsLogsInEventHubRetentionDays": {
+                        "value": "364"
+                    },
+                    "diagnosticsLogsInKeyVaultMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "diagnosticsLogsInKeyVaultRetentionDays": {
+                        "value": "365"
+                    },
+                    "diagnosticsLogsInLogicAppsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "diagnosticsLogsInLogicAppsRetentionDays": {
+                        "value": "365"
+                    },
+                    "diagnosticsLogsInRedisCacheMonitoringEffect": {
+                        "value": "Audit"
+                    },
+                    "diagnosticsLogsInSearchServiceMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "diagnosticsLogsInSearchServiceRetentionDays": {
+                        "value": "365"
+                    },
+                    "aadAuthenticationInServiceFabricMonitoringEffect": {
+                        "value": "Audit"
+                    },
+                    "clusterProtectionLevelInServiceFabricMonitoringEffect": {
+                        "value": "Audit"
+                    },
+                    "diagnosticsLogsInServiceBusMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "diagnosticsLogsInServiceBusRetentionDays": {
+                        "value": "365"
+                    },
+                    "namespaceAuthorizationRulesInServiceBusMonitoringEffect": {
+                        "value": "Audit"
+                    },
+                    "aadAuthenticationInSqlServerMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "secureTransferToStorageAccountMonitoringEffect": {
+                        "value": "Audit"
+                    },
+                    "diagnosticsLogsInStreamAnalyticsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "diagnosticsLogsInStreamAnalyticsRetentionDays": {
+                        "value": "365"
+                    },
+                    "useRbacRulesMonitoringEffect": {
+                        "value": "Audit"
+                    },
+                    "disableUnrestrictedNetworkToStorageAccountMonitoringEffect": {
+                        "value": "Audit"
+                    },
+                    "diagnosticsLogsInServiceFabricMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "accessRulesInEventHubNamespaceMonitoringEffect": {
+                        "value": "Audit"
+                    },
+                    "accessRulesInEventHubMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "sqlDbVulnerabilityAssesmentMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "sqlDbDataClassificationMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "identityDesignateLessThanOwnersMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "identityDesignateMoreThanOneOwnerMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "identityEnableMFAForOwnerPermissionsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "identityEnableMFAForWritePermissionsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "identityEnableMFAForReadPermissionsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "identityRemoveDeprecatedAccountWithOwnerPermissionsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "identityRemoveDeprecatedAccountMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "identityRemoveExternalAccountWithOwnerPermissionsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "identityRemoveExternalAccountWithWritePermissionsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "identityRemoveExternalAccountWithReadPermissionsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "apiAppConfigureIPRestrictionsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "functionAppConfigureIPRestrictionsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "webAppConfigureIPRestrictionsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "apiAppDisableRemoteDebuggingMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "functionAppDisableRemoteDebuggingMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "webAppDisableRemoteDebuggingMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "apiAppDisableWebSocketsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "functionAppDisableWebSocketsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "webAppDisableWebSocketsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "apiAppEnforceHttpsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "functionAppEnforceHttpsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "webAppEnforceHttpsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "apiAppRestrictCORSAccessMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "functionAppRestrictCORSAccessMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "webAppRestrictCORSAccessMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "apiAppUsedCustomDomainsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "functionAppUsedCustomDomainsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "webAppUsedCustomDomainsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "apiAppUsedLatestDotNetMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "webAppUsedLatestDotNetMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "apiAppUsedLatestJavaMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "webAppUsedLatestJavaMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "webAppUsedLatestNodeJsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "apiAppUsedLatestPHPMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "webAppUsedLatestPHPMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "apiAppUsedLatestPythonMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "webAppUsedLatestPythonMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "vnetEnableDDoSProtectionMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "diagnosticsLogsInIoTHubMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "diagnosticsLogsInIoTHubRetentionDays": {
+                        "value": "364"
+                    },
+                    "sqlServerAdvancedDataSecurityMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "sqlServerAdvancedDataSecurityEmailsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "sqlManagedInstanceAdvancedDataSecurityEmailAdminsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "sqlManagedInstanceAdvancedDataSecurityMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "kubernetesServiceRbacEnabledMonitoringEffect": {
+                        "value": "Audit"
+                    },
+                    "kubernetesServicePspEnabledMonitoringEffect": {
+                        "value": "Audit"
+                    },
+                    "kubernetesServiceAuthorizedIPRangesEnabledMonitoringEffect": {
+                        "value": "Audit"
+                    },
+                    "kubernetesServiceVersionUpToDateMonitoringEffect": {
+                        "value": "Audit"
+                    },
+                    "vulnerabilityAssessmentOnManagedInstanceMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "vulnerabilityAssessmentOnServerMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "threatDetectionTypesOnManagedInstanceMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "threatDetectionTypesOnServerMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "adaptiveNetworkHardeningsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "restrictAccessToManagementPortsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "restrictAccessToAppServicesMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "disableIPForwardingMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "SqlServerAuditingRetentionDaysMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "apiAppEnforceHttpsMonitoringEffectV2": {
+                        "value": "Audit"
+                    },
+                    "functionAppEnforceHttpsMonitoringEffectV2": {
+                        "value": "Audit"
+                    },
+                    "webAppEnforceHttpsMonitoringEffectV2": {
+                        "value": "Audit"
+                    },
+                    "sqlManagedInstanceAdvancedDataSecurityEmailsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "sqlServerAdvancedDataSecurityEmailAdminsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "ensureServerTDEIsEncryptedWithYourOwnKeyMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "ensureManagedInstanceTDEIsEncryptedWithYourOwnKeyMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "containerBenchmarkMonitoringEffect": {
+                        "value": "AuditIfNotExists"
                     }
                 }
             }
         },
-        "DisabledState": {
-            "ASCPolicies": {
-                "properties": {
-                    "displayName": "auto-update",
-                    "metadata": {
-                        "assignedBy": "Deployment Service Principal"
+        "ASCPoliciesDisabledState": {
+            "properties": {
+                "displayName": "auto-update",
+                "metadata": {
+                    "assignedBy": "Security Center"
+                },
+                "policyDefinitionId": "/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8",
+                "parameters": {
+                    "vmssSystemUpdatesMonitoringEffect": {
+                        "value": "Disabled"
                     },
-                    "policyDefinitionId": "/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8",
-                    "parameters": {
-                        "vmssSystemUpdatesMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "vmssEndpointProtectionMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "vmssOsVulnerabilitiesMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "systemUpdatesMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "systemConfigurationsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "endpointProtectionMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "diskEncryptionMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "networkSecurityGroupsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "networkSecurityGroupsOnSubnetsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "networkSecurityGroupsOnVirtualMachinesMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "webApplicationFirewallMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "nextGenerationFirewallMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "vulnerabilityAssesmentMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "storageEncryptionMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "jitNetworkAccessMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "adaptiveApplicationControlsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "sqlAuditingMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "sqlEncryptionMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "sqlDbEncryptionMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "sqlServerAuditingMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "sqlServerAuditingActionsAndGroupsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "diagnosticsLogsInAppServiceMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "diagnosticsLogsInSelectiveAppServicesMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "encryptionOfAutomationAccountMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "diagnosticsLogsInBatchAccountMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "diagnosticsLogsInBatchAccountRetentionDays": {
-                            "value": "Disabled"
-                        },
-                        "metricAlertsInBatchAccountMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "classicComputeVMsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "classicStorageAccountsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "diagnosticsLogsInDataLakeAnalyticsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "diagnosticsLogsInDataLakeAnalyticsRetentionDays": {
-                            "value": "Disabled"
-                        },
-                        "diagnosticsLogsInDataLakeStoreMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "diagnosticsLogsInDataLakeStoreRetentionDays": {
-                            "value": "Disabled"
-                        },
-                        "diagnosticsLogsInEventHubMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "diagnosticsLogsInEventHubRetentionDays": {
-                            "value": "Disabled"
-                        },
-                        "diagnosticsLogsInKeyVaultMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "diagnosticsLogsInKeyVaultRetentionDays": {
-                            "value": "Disabled"
-                        },
-                        "diagnosticsLogsInLogicAppsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "diagnosticsLogsInLogicAppsRetentionDays": {
-                            "value": "Disabled"
-                        },
-                        "diagnosticsLogsInRedisCacheMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "diagnosticsLogsInSearchServiceMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "diagnosticsLogsInSearchServiceRetentionDays": {
-                            "value": "Disabled"
-                        },
-                        "aadAuthenticationInServiceFabricMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "clusterProtectionLevelInServiceFabricMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "diagnosticsLogsInServiceBusMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "diagnosticsLogsInServiceBusRetentionDays": {
-                            "value": "Disabled"
-                        },
-                        "namespaceAuthorizationRulesInServiceBusMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "aadAuthenticationInSqlServerMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "secureTransferToStorageAccountMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "diagnosticsLogsInStreamAnalyticsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "diagnosticsLogsInStreamAnalyticsRetentionDays": {
-                            "value": "Disabled"
-                        },
-                        "useRbacRulesMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "disableUnrestrictedNetworkToStorageAccountMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "diagnosticsLogsInServiceFabricMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "accessRulesInEventHubNamespaceMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "accessRulesInEventHubMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "sqlDbVulnerabilityAssesmentMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "sqlDbDataClassificationMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "identityDesignateLessThanOwnersMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "identityDesignateMoreThanOneOwnerMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "identityEnableMFAForOwnerPermissionsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "identityEnableMFAForWritePermissionsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "identityEnableMFAForReadPermissionsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "identityRemoveDeprecatedAccountWithOwnerPermissionsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "identityRemoveDeprecatedAccountMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "identityRemoveExternalAccountWithOwnerPermissionsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "identityRemoveExternalAccountWithWritePermissionsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "identityRemoveExternalAccountWithReadPermissionsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "apiAppConfigureIPRestrictionsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "functionAppConfigureIPRestrictionsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "webAppConfigureIPRestrictionsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "apiAppDisableRemoteDebuggingMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "functionAppDisableRemoteDebuggingMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "webAppDisableRemoteDebuggingMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "apiAppDisableWebSocketsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "functionAppDisableWebSocketsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "webAppDisableWebSocketsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "apiAppEnforceHttpsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "functionAppEnforceHttpsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "webAppEnforceHttpsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "apiAppRestrictCORSAccessMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "functionAppRestrictCORSAccessMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "webAppRestrictCORSAccessMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "apiAppUsedCustomDomainsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "functionAppUsedCustomDomainsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "webAppUsedCustomDomainsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "apiAppUsedLatestDotNetMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "webAppUsedLatestDotNetMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "apiAppUsedLatestJavaMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "webAppUsedLatestJavaMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "webAppUsedLatestNodeJsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "apiAppUsedLatestPHPMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "webAppUsedLatestPHPMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "apiAppUsedLatestPythonMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "webAppUsedLatestPythonMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "vnetEnableDDoSProtectionMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "diagnosticsLogsInIoTHubMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "diagnosticsLogsInIoTHubRetentionDays": {
-                            "value": "Disabled"
-                        },
-                        "sqlServerAdvancedDataSecurityMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "sqlServerAdvancedDataSecurityEmailsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "sqlManagedInstanceAdvancedDataSecurityEmailAdminsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "sqlManagedInstanceAdvancedDataSecurityMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "kubernetesServiceRbacEnabledMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "kubernetesServicePspEnabledMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "kubernetesServiceAuthorizedIPRangesEnabledMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "kubernetesServiceVersionUpToDateMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "vulnerabilityAssessmentOnManagedInstanceMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "vulnerabilityAssessmentOnServerMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "threatDetectionTypesOnManagedInstanceMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "threatDetectionTypesOnServerMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "adaptiveNetworkHardeningsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "restrictAccessToManagementPortsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "restrictAccessToAppServicesMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "disableIPForwardingMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "SqlServerAuditingRetentionDaysMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "apiAppEnforceHttpsMonitoringEffectV2": {
-                            "value": "Disabled"
-                        },
-                        "functionAppEnforceHttpsMonitoringEffectV2": {
-                            "value": "Disabled"
-                        },
-                        "webAppEnforceHttpsMonitoringEffectV2": {
-                            "value": "Disabled"
-                        },
-                        "sqlManagedInstanceAdvancedDataSecurityEmailsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "sqlServerAdvancedDataSecurityEmailAdminsMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "ensureServerTDEIsEncryptedWithYourOwnKeyMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "ensureManagedInstanceTDEIsEncryptedWithYourOwnKeyMonitoringEffect": {
-                            "value": "Disabled"
-                        },
-                        "containerBenchmarkMonitoringEffect": {
-                            "value": "Disabled"
-                        }
+                    "vmssEndpointProtectionMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "vmssOsVulnerabilitiesMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "systemUpdatesMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "systemConfigurationsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "endpointProtectionMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "diskEncryptionMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "networkSecurityGroupsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "networkSecurityGroupsOnSubnetsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "networkSecurityGroupsOnVirtualMachinesMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "webApplicationFirewallMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "nextGenerationFirewallMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "vulnerabilityAssesmentMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "storageEncryptionMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "jitNetworkAccessMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "adaptiveApplicationControlsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "sqlAuditingMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "sqlEncryptionMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "sqlDbEncryptionMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "sqlServerAuditingMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "sqlServerAuditingActionsAndGroupsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "diagnosticsLogsInAppServiceMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "diagnosticsLogsInSelectiveAppServicesMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "encryptionOfAutomationAccountMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "diagnosticsLogsInBatchAccountMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "diagnosticsLogsInBatchAccountRetentionDays": {
+                        "value": "Disabled"
+                    },
+                    "metricAlertsInBatchAccountMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "classicComputeVMsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "classicStorageAccountsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "diagnosticsLogsInDataLakeAnalyticsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "diagnosticsLogsInDataLakeAnalyticsRetentionDays": {
+                        "value": "Disabled"
+                    },
+                    "diagnosticsLogsInDataLakeStoreMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "diagnosticsLogsInDataLakeStoreRetentionDays": {
+                        "value": "Disabled"
+                    },
+                    "diagnosticsLogsInEventHubMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "diagnosticsLogsInEventHubRetentionDays": {
+                        "value": "Disabled"
+                    },
+                    "diagnosticsLogsInKeyVaultMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "diagnosticsLogsInKeyVaultRetentionDays": {
+                        "value": "Disabled"
+                    },
+                    "diagnosticsLogsInLogicAppsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "diagnosticsLogsInLogicAppsRetentionDays": {
+                        "value": "Disabled"
+                    },
+                    "diagnosticsLogsInRedisCacheMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "diagnosticsLogsInSearchServiceMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "diagnosticsLogsInSearchServiceRetentionDays": {
+                        "value": "Disabled"
+                    },
+                    "aadAuthenticationInServiceFabricMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "clusterProtectionLevelInServiceFabricMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "diagnosticsLogsInServiceBusMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "diagnosticsLogsInServiceBusRetentionDays": {
+                        "value": "Disabled"
+                    },
+                    "namespaceAuthorizationRulesInServiceBusMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "aadAuthenticationInSqlServerMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "secureTransferToStorageAccountMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "diagnosticsLogsInStreamAnalyticsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "diagnosticsLogsInStreamAnalyticsRetentionDays": {
+                        "value": "Disabled"
+                    },
+                    "useRbacRulesMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "disableUnrestrictedNetworkToStorageAccountMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "diagnosticsLogsInServiceFabricMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "accessRulesInEventHubNamespaceMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "accessRulesInEventHubMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "sqlDbVulnerabilityAssesmentMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "sqlDbDataClassificationMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "identityDesignateLessThanOwnersMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "identityDesignateMoreThanOneOwnerMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "identityEnableMFAForOwnerPermissionsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "identityEnableMFAForWritePermissionsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "identityEnableMFAForReadPermissionsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "identityRemoveDeprecatedAccountWithOwnerPermissionsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "identityRemoveDeprecatedAccountMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "identityRemoveExternalAccountWithOwnerPermissionsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "identityRemoveExternalAccountWithWritePermissionsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "identityRemoveExternalAccountWithReadPermissionsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "apiAppConfigureIPRestrictionsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "functionAppConfigureIPRestrictionsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "webAppConfigureIPRestrictionsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "apiAppDisableRemoteDebuggingMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "functionAppDisableRemoteDebuggingMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "webAppDisableRemoteDebuggingMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "apiAppDisableWebSocketsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "functionAppDisableWebSocketsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "webAppDisableWebSocketsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "apiAppEnforceHttpsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "functionAppEnforceHttpsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "webAppEnforceHttpsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "apiAppRestrictCORSAccessMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "functionAppRestrictCORSAccessMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "webAppRestrictCORSAccessMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "apiAppUsedCustomDomainsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "functionAppUsedCustomDomainsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "webAppUsedCustomDomainsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "apiAppUsedLatestDotNetMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "webAppUsedLatestDotNetMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "apiAppUsedLatestJavaMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "webAppUsedLatestJavaMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "webAppUsedLatestNodeJsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "apiAppUsedLatestPHPMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "webAppUsedLatestPHPMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "apiAppUsedLatestPythonMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "webAppUsedLatestPythonMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "vnetEnableDDoSProtectionMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "diagnosticsLogsInIoTHubMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "diagnosticsLogsInIoTHubRetentionDays": {
+                        "value": "Disabled"
+                    },
+                    "sqlServerAdvancedDataSecurityMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "sqlServerAdvancedDataSecurityEmailsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "sqlManagedInstanceAdvancedDataSecurityEmailAdminsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "sqlManagedInstanceAdvancedDataSecurityMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "kubernetesServiceRbacEnabledMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "kubernetesServicePspEnabledMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "kubernetesServiceAuthorizedIPRangesEnabledMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "kubernetesServiceVersionUpToDateMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "vulnerabilityAssessmentOnManagedInstanceMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "vulnerabilityAssessmentOnServerMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "threatDetectionTypesOnManagedInstanceMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "threatDetectionTypesOnServerMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "adaptiveNetworkHardeningsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "restrictAccessToManagementPortsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "restrictAccessToAppServicesMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "disableIPForwardingMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "SqlServerAuditingRetentionDaysMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "apiAppEnforceHttpsMonitoringEffectV2": {
+                        "value": "Disabled"
+                    },
+                    "functionAppEnforceHttpsMonitoringEffectV2": {
+                        "value": "Disabled"
+                    },
+                    "webAppEnforceHttpsMonitoringEffectV2": {
+                        "value": "Disabled"
+                    },
+                    "sqlManagedInstanceAdvancedDataSecurityEmailsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "sqlServerAdvancedDataSecurityEmailAdminsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "ensureServerTDEIsEncryptedWithYourOwnKeyMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "ensureManagedInstanceTDEIsEncryptedWithYourOwnKeyMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "containerBenchmarkMonitoringEffect": {
+                        "value": "Disabled"
                     }
                 }
             }
