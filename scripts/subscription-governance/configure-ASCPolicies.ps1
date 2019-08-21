@@ -40,18 +40,21 @@ param (
 $ErrorActionPreference = 'Stop'
 $WarningPreference = 'SilentlyContinue'
 
+# Initialization of variables
+$Flag = 0
+
 Write-Host "Script Execution Started..." -ForegroundColor Yellow
 
-# Checking current azure rm context to deploy Azure automation
-$AzureContextSubscriptionId = (Get-AzureRmContext).Subscription.Id
+# Checking current az context to deploy Azure automation
+$AzureContextSubscriptionId = (Get-AzContext).Subscription.Id
 
 If ($AzureContextSubscriptionId -ne $SubscriptionId) {
     Write-Host "You are not logged in to subscription" $SubscriptionId 
     Try {
         Write-Host "Trying to switch powershell context to subscription" $SubscriptionId
-        $AllAvailableSubscriptions = (Get-AzureRmSubscription).Id
+        $AllAvailableSubscriptions = (Get-AzSubscription).Id
         if ($AllAvailableSubscriptions -contains $SubscriptionId) {
-            Set-AzureRmContext -SubscriptionId $SubscriptionId
+            Set-AzContext -SubscriptionId $SubscriptionId
             Write-Host "Successfully context switched to subscription" $SubscriptionId -ForegroundColor Green
         }
         else {
@@ -76,14 +79,21 @@ catch [Exception] {
     Write-Error $_ -ErrorAction Stop
 }
 
-# Update ASC policy data with subscription Id provided by user
-$ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.properties.displayName = "Azure Security Center - $SubscriptionId"
-$ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.properties.displayName = "Azure Security Center - $SubscriptionId"
+# Get existing security center built in policy definition set
+$defaultAssignment = Get-AzPolicyAssignment -Name "SecurityCenterBuiltIn" -ErrorAction SilentlyContinue
+if ($null -ne $defaultAssignment) {
+    $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.properties.displayName = $($defaultAssignment.Properties.displayName)
+	$ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.properties.displayName = $($defaultAssignment.Properties.displayName)
+}
+else {
+    # Assign default policy name
+    $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.properties.displayName = "ASC Default (subscription: $SubscriptionId)"
+    $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.properties.displayName = "ASC Default (subscription: $SubscriptionId)"
+}
 
 # Converting ASC PSObject into JSON object
 $disabledPolicies = ($ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState | ConvertTo-Json -Depth 20)
 $enabledPolicies = ($ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState | ConvertTo-Json -Depth 20)
-
 
 # Getting access token for asc
 Write-Host "Getting Access Token ..."
