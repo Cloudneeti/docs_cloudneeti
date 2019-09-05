@@ -50,7 +50,7 @@
     ApplicationOwnerTag: Application owner
     ServiceNameTag: Service name
     BusinessUnitTag: Business unit
-    ProjectOwnerTag: Application Owner
+    ProjectOwnerTag: Project owner
     ApplicationTag: Application 
     DepartmentTag: Department
     ProjectNameTag: Project name
@@ -271,10 +271,21 @@ Write-Host "Getting Access Token ..."
 $token=$(az account get-access-token | jq -r .accessToken)
 Write-Host "Access Token retrieved Successfully." -ForegroundColor Green
 
-# Create Resource Group
-Write-Host "`nCreating $ResourceGroupName resource group..."
-New-AzResourceGroup -Name $ResourceGroupName -Location $Location -Force
-Write-Host "Successfully created $ResourceGroupName." -ForegroundColor Green
+# # Create Resource Group if not exist
+try{
+    if($null -eq (Get-AzResourceGroup -Name $ResourceGroupName -ErrorAction SilentlyContinue)){
+        Write-Host "`nCreating $ResourceGroupName resource group..."
+        New-AzResourceGroup -Name $ResourceGroupName -Location $Location -Tag $tags -Force
+        Write-Host "Successfully created $ResourceGroupName." -ForegroundColor Green
+    }
+    else{
+        Write-Host "Resource Group $ResourceGroupName is already exist." -ForegroundColor Yellow
+    }
+}
+catch [Exception]{
+    Write-Host "Error occurred while creating resource group." -ForegroundColor Red
+	exit
+}
 
 try {
     # Checking action group on subscription
