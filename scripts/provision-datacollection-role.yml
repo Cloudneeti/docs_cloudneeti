@@ -1,0 +1,29 @@
+Parameters:
+    RoleName:
+        Description: Name of the role to provide access to Cloudneeti
+        Type: String
+        Default: Cloudneeti-SecurityAudit
+    ExternalId:
+        Description: External id for the role (Licnese id of your Cloudneeti account)
+        Type: String
+    CloudneetiAWSAccountId:
+        Description: Cloudneeti AWS account Id
+        Type: String
+Resources:
+  CNDataCollectionRole: 
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Ref RoleName
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                - arn:aws:iam::!Ref CloudneetiAWSAccountId:root
+            Action: sts:AssumeRole
+            Condition:
+              StringEquals:
+                sts:ExternalId: !Ref ExternalId
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/SecurityAudit
