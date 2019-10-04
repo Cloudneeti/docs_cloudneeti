@@ -20,7 +20,11 @@ Resources:
           - Effect: Allow
             Principal:
               AWS:
-                - arn:aws:iam::!Ref CloudneetiAWSAccountId:root
+                Fn::Join:
+                - ""
+                - - 'arn:aws:iam::'
+                  - !Ref CloudneetiAWSAccountId
+                  - ':root'
             Action: sts:AssumeRole
             Condition:
               StringEquals:
