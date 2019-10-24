@@ -55,21 +55,21 @@ param
 
     # Cloudneeti Service Principal Object Id
     [Parameter(Mandatory = $False,
-        HelpMessage = "Cloudneeti Service Principal Object Id",
+        HelpMessage = "Cloudneeti Application Object Id",
         Position = 1
     )]
     [ValidateNotNullOrEmpty()]
     [guid]
-    $CloudneetiServicePrincipalObjectId = $(Read-Host -prompt "Enter Cloudneeti Service Principal Object Id"),
+    $CloudneetiRegisteredApplicationObjectId = $(Read-Host -prompt "Enter Cloudneeti Application Object Id"),
 
     # Contributor Service Principal App Id
     [Parameter(Mandatory = $False,
-        HelpMessage = "Contributor Service Principal App Id",
+        HelpMessage = "Contributor Application App Id",
         Position = 2
     )]
     [ValidateNotNullOrEmpty()]
     [guid]
-    $ServicePrincipalId = $(Read-Host -prompt "Enter Contributor Service Principal App Id"),
+    $ApplicationId = $(Read-Host -prompt "Enter Contributor Application App Id"),
 
     # Contributor Service Principal Secret
     [Parameter(Mandatory = $False,
@@ -78,7 +78,7 @@ param
     )]
     [ValidateNotNullOrEmpty()]
     [secureString]
-    $ServicePrincipalSecret = $(Read-Host -prompt "Enter Contributor Service Principal Secret" -AsSecureString),
+    $ApplicationSecret = $(Read-Host -prompt "Enter Contributor Application Secret" -AsSecureString),
 
     # Subscription ID
     [Parameter(Mandatory = $False,
@@ -96,7 +96,7 @@ param
     )]
     [ValidateNotNullOrEmpty()]
     [guid]
-    $TenantId = $(Read-Host -prompt "Enter Tenant ID"),
+    $AzureActiveDirectoryId = $(Read-Host -prompt "Enter Azure Active Directory ID"),
 
     # Automation Account Name
     [Parameter(Mandatory = $False,
@@ -163,7 +163,7 @@ New-AzAutomationAccount -Name $AutomationAccountName -ResourceGroupName $Resourc
 Write-host "Acquiring Auth Token..." -ForegroundColor Yellow
 $azProfile = [Microsoft.Azure.Commands.Common.Authentication.Abstractions.AzureRmProfileProvider]::Instance.Profile
 $profileClient = New-Object Microsoft.Azure.Commands.ResourceManager.Common.RMProfileClient($azProfile)
-$token = $profileClient.AcquireAccessToken($TenantId)
+$token = $profileClient.AcquireAccessToken($AzureActiveDirectoryId)
 
 # Importing required modules
 Write-Host "Importing required modules into the automation account..." -ForegroundColor Yellow
@@ -197,14 +197,14 @@ Import-AzureRmAutomationRunbook -Name $RunbookName `
 
 # Credential object creation
 Write-host "Creating secure credentials object contributor service principal in Automation accout" -ForegroundColor Yellow
-$Credential = New-Object -TypeName System.Management.Automation.PSCredential($ServicePrincipalId, $ServicePrincipalSecret)
+$Credential = New-Object -TypeName System.Management.Automation.PSCredential($ApplicationId, $ApplicationSecret)
 New-AzAutomationCredential -Name "ContributorSPCredentials" -AutomationAccountName $AutomationAccountName -ResourceGroupName $ResourceGroupName -Value $Credential
 
 # Creating variable in Azure automation
 $VariableTable = @{    
-    "CloudneetiServicePrincipalObjectId" = $CloudneetiServicePrincipalObjectId
-    "SubscriptionId"                     = $SubscriptionId
-    "TenantId"                           = $TenantId
+    "CloudneetiRegisteredApplicationObjectId" = $CloudneetiRegisteredApplicationObjectId
+    "SubscriptionId"                          = $SubscriptionId
+    "AzureActiveDirectoryId"                  = $AzureActiveDirectoryId
 }
 
 foreach ($Variable in $VariableTable.GetEnumerator()) {
