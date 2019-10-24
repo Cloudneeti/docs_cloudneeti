@@ -13,7 +13,7 @@
 
 .EXAMPLE
     1. Assign permissions.
-        ./AutoAssign-PermissionsToKeyvault.ps1 -SubscriptionId <Subscription Id> -CloudneetiServicePrincipalObjectId <Cloudneeti Data Collector Service Principal Object ID>
+        ./AutoAssign-PermissionsToKeyvault.ps1 -SubscriptionId <Subscription Id> -CloudneetiRegisteredApplicationObjectId <Cloudneeti Data Collector Service Principal Object ID>
 
 .INPUTS
     SubscriptionId: Comma seperated list of Subscription Id.
@@ -34,14 +34,14 @@ $Credentials = Get-AutomationPSCredential -Name "ContributorSPCredentials"
 Write-Output "Fetching automation variables..."
 
 $SubscriptionId = Get-AutomationVariable -Name "SubscriptionId"
-$TenantId = Get-AutomationVariable -Name "TenantId"
-$CloudneetiServicePrincipalObjectId = Get-AutomationVariable -Name "CloudneetiServicePrincipalObjectId"
+$AzureActiveDirectoryId = Get-AutomationVariable -Name "AzureActiveDirectoryId"
+$CloudneetiRegisteredApplicationObjectId = Get-AutomationVariable -Name "CloudneetiRegisteredApplicationObjectId"
 
 
 $Subscriptions = $SubscriptionId.Split(',')
 
 Write-Output "Login using service principal..."
-Login-AzAccount -Subscription $Subscriptions[0] -Tenant $TenantId -Credential $Credentials -ServicePrincipal -Force
+Login-AzAccount -Subscription $Subscriptions[0] -Tenant $AzureActiveDirectoryId -Credential $Credentials -ServicePrincipal -Force
 
 foreach ($Subscription in $Subscriptions) {
 
@@ -53,7 +53,7 @@ foreach ($Subscription in $Subscriptions) {
 
     foreach ($Vault in $AllKeyVaults) {
         Write-Output "Assigning permissions to keyvault: $($Vault.VaultName)"
-        Set-AzKeyVaultAccessPolicy -VaultName $Vault.VaultName -ObjectId $CloudneetiServicePrincipalObjectId -PermissionsToSecrets Get, List -PermissionsToKeys Get, List
+        Set-AzKeyVaultAccessPolicy -VaultName $Vault.VaultName -ObjectId $CloudneetiRegisteredApplicationObjectId -PermissionsToSecrets Get, List -PermissionsToKeys Get, List
     }
 }
 
