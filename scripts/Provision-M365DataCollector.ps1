@@ -6,7 +6,7 @@
      This script creates an automation account, Runbook, Schedule for execution and required variables & credentials for running the M365 policies. The automation runbook executes once per day and export data to cloudneeti using Cloudneeti API.
  
 .NOTES
-    Version:        1.0
+    Version:        1.1
     Author:         Cloudneeti
     Creation Date:  11/02/2018
 
@@ -25,10 +25,11 @@
         - Cloudneeti Office 365 Data Collector Artifacts Storage Access Key
         - Cloudneeti Office 365 Data Collector Version
         - Office 365 Domain Name
-        - Office 365 Tenant Id
-        - Office 365 Administator Id
-        - Office 365  App Password
+        - Office 365 Directory Id
+        - Office 365 Administator Email Id
+        - Office 365  App Password or User Password
         - Azure Subscription Id where office 365 data collector resouces will be created
+        - Enter office 365 data collector name
 
 .INPUTS
     Below is the list of inputs to the script:-
@@ -39,16 +40,17 @@
         - Cloudneeti Office 365 Data Collector Artifacts Storage Access Key <Contact Cloudneeti team>
         - Cloudneeti Office 365 Data Collector Version <Contact Cloudneeti team>
         - Office 365 Domain Name <Office 365 domian name>
-        - Office 365 Tenant Id <Tenant Id of Office 365>
-        - Office 365 Administator Id <Office 365 Global Administrator Id>
-        - Office 365 App Password <Office 365 Administrator App password>
+        - Office 365 Directory Id <Directory Id of Office 365>
+        - Office 365 Administator Email Id <Office 365 Global Administrator Email Id>
+        - Office 365 App Password <Office 365 Administrator App password or User password>
         - Azure Subscription Id where office 365 data collector resouces will be created <Azure Subscription Id where office 365 data collector resouces will be created> 
+        - Office 365 data collector name
 
 .OUTPUTS
 
 .NOTES
         - The user should have a contract with Cloudneeti 
-        - Office Admin should have MFA disabled
+        - Office Admin should have MFA enabled and App Password for Office Admin
         - This script should be executed only on Azure CloudShell.
         - Office administrator should have "Enterprise E5" office license
 #>
@@ -95,21 +97,21 @@ param
 
     # Cloudneeti Service principal id
     [Parameter(Mandatory = $False,
-        HelpMessage = "Cloudneeti Data collector Service Principal Id",
+        HelpMessage = "Cloudneeti Data collector application Id",
         Position = 5
     )]
     [ValidateNotNullOrEmpty()]
     [String]
-    $ServicePrincipalId = $(Read-Host -prompt "Enter Cloudneeti Data Collector Service Principal Id"),
+    $CloudneetiApplicationId = $(Read-Host -prompt "Enter Cloudneeti Data Collector application Id"),
 
     # Enter service principal secret
     [Parameter(Mandatory = $False,
-        HelpMessage = "Cloudneeti Data collector Service Principal password",
+        HelpMessage = "Cloudneeti Data collector application secret",
         Position = 6
     )]
     [ValidateNotNullOrEmpty()]
     [SecureString]
-    $ServicePrincipalSecret = $(Read-Host -prompt "Enter Cloudneeti Data Collector Service Principal Secret" -AsSecureString),
+    $CloudneetiApplicationSecret = $(Read-Host -prompt "Enter Cloudneeti Data Collector Application Secret" -AsSecureString),
 
     # Cloudneeti Artifacts Storage Name
     [Parameter(Mandatory = $False,
@@ -148,14 +150,14 @@ param
     [string]
     $OfficeDomain = $(Read-Host -prompt "Enter Office 365 Domain Name"),
 
-    # Office Tenant ID
+    # Office Directory ID
     [Parameter(Mandatory = $False,
-        HelpMessage = "Office 365 Tenant Id",
+        HelpMessage = "Office 365 Directory Id",
         Position = 11
     )]
     [ValidateNotNullOrEmpty()]
     [guid]
-    $OfficeTenantId = $(Read-Host -prompt "Enter Office 365 Tenant Id"),
+    $OfficeDirectoryId = $(Read-Host -prompt "Enter Office 365 Directory Id"),
 
     # Office Admin username
     [ValidateScript( {$_ -match '^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,7})$' })]
@@ -165,16 +167,16 @@ param
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $OfficeAdminId = $(Read-Host -prompt "Enter Office 365 Administator Id"),
+    $OfficeAdminEmailId = $(Read-Host -prompt "Enter Office 365 Administator Id"),
 
-    # Office App password
+    # Office App password or user password
     [Parameter(Mandatory = $False,
-        HelpMessage = "Office 365 app password",
+        HelpMessage = "Office 365 app password or user password",
         Position = 13
     )]
     [ValidateNotNullOrEmpty()]
     [SecureString]
-    $Office365AppPassword = $(Read-Host -prompt "Enter Office 365 App Password" -AsSecureString),
+    $Office365AppPassword = $(Read-Host -prompt "Enter Office 365 App Password or User Password" -AsSecureString),
 
     # Subscription Id for automation account creation
     [Parameter(Mandatory = $False,
@@ -315,32 +317,32 @@ Write-Host $ScriptPrefix "Runbook created successfully with version" $RunbookScr
 
 # Credential object creation
 Write-host "Creating secure credentials object for office admin in Automation accout" -ForegroundColor Yellow
-$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $OfficeAdminId, $Office365AppPassword
+$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $OfficeAdminEmailId, $Office365AppPassword
 $OfficeAdminCredentials = "OfficeAdminCredentials"
 $ExistingCredentials = Get-AzureRmAutomationCredential -Name $OfficeAdminCredentials -ResourceGroupName $ResourceGroupName -AutomationAccountName $AutomationAccountName -ErrorAction SilentlyContinue
 
-If ($ExistingCredentials -ne $null -and $ExistingCredentials.UserName -eq $OfficeAdminId) {
+If ($ExistingCredentials -ne $null -and $ExistingCredentials.UserName -eq $OfficeAdminEmailId) {
     Set-AzureRmAutomationCredential -AutomationAccountName $AutomationAccountName -Name $OfficeAdminCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
-    Write-Host $OfficeAdminId "credential object already exist, Updated sucessfully" -ForegroundColor Green
+    Write-Host $OfficeAdminEmailId "credential object already exist, Updated sucessfully" -ForegroundColor Green
 }    
 else {
     New-AzureRmAutomationCredential -AutomationAccountName $AutomationAccountName -Name $OfficeAdminCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
-    Write-Host $OfficeAdminId "credentials object created successfully" -ForegroundColor Green
+    Write-Host $OfficeAdminEmailId "credentials object created successfully" -ForegroundColor Green
 }
 
 # Credential object creation
 Write-host "Creating secure credentials object for client service principal in Automation account" -ForegroundColor Yellow
-$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $ServicePrincipalId, $ServicePrincipalSecret
+$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $CloudneetiApplicationId, $CloudneetiApplicationSecret
 $CloudneetiCredentials = "CloudneetiCredentials"
 $ExistingCredentials = Get-AzureRmAutomationCredential -Name $CloudneetiCredentials -ResourceGroupName $ResourceGroupName -AutomationAccountName $AutomationAccountName -ErrorAction SilentlyContinue
 
-If ($ExistingCredentials -ne $null -and $ExistingCredentials.UserName -eq $OfficeAdminId) {
+If ($ExistingCredentials -ne $null -and $ExistingCredentials.UserName -eq $OfficeAdminEmailId) {
     Set-AzureRmAutomationCredential -AutomationAccountName $AutomationAccountName -Name $CloudneetiCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
-    Write-Host $ServicePrincipalId "credential object already exists, Updated sucessfully" -ForegroundColor Green
+    Write-Host $CloudneetiApplicationId "credential object already exists, Updated sucessfully" -ForegroundColor Green
 }    
 else {
     New-AzureRmAutomationCredential -AutomationAccountName $AutomationAccountName -Name $CloudneetiCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
-    Write-Host $ServicePrincipalId "credentials object created successfully" -ForegroundColor Green
+    Write-Host $CloudneetiApplicationId "credentials object created successfully" -ForegroundColor Green
 }
 
 
@@ -352,7 +354,7 @@ $VariableObject = @{
     "CloudneetiAccountId"   = $CloudneetiAccountId; 
     "OfficeDomain"          = $OfficeDomain;
     "CloudneetiEnvironment" = $CloudneetiEnvironment 
-    "OfficeTenantId"        = $OfficeTenantId
+    "OfficeDirectoryId"        = $OfficeDirectoryId
     "CloudneetiAPIKey"      = $CloudneetiAPIKeyEncrypt
     "CloudneetiAPIURL"      = $CloudneetiAPIURL
 }
