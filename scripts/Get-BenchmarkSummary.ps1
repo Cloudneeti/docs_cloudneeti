@@ -143,7 +143,7 @@ function Get-TokenWithBrowserLogin {
                 $id_token = ($a.LocationUrl)
                 $id_token = ($id_token -replace (".*id_token=") -replace ("&.*"))
                 
-                Write-Host "Token aquired, you will be logged out automatically..." -ForegroundColor Green
+                Write-Host "Authenticated successfully, you will be logged out automatically..." -ForegroundColor Green
 
                 $ie.navigate($logoutUrl)
                 while ($ie.Busy) { }
