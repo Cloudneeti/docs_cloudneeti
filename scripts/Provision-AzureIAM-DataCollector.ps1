@@ -8,10 +8,9 @@
 .NOTES
     Version:        1.0
     Author:         Cloudneeti
-    Creation Date:  11/02/2018
+    Creation Date:  06/01/2020
 
     # PREREQUISITE
-    * <TBA>
 
 .EXAMPLE
     Upload script to Azure CloudShell and execute below command:-
