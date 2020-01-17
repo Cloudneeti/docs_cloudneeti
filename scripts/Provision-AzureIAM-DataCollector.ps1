@@ -272,15 +272,6 @@ if ($AllAutomationAccountList.AutomationAccountName -contains $AutomationAccount
     Write-Host "Data collector already exists with the name:" $AutomationAccountName -ForegroundColor Magenta
     Write-Host "Please choose different name and Re-run this script" -ForegroundColor Yellow
     break
-} 
-
-# PSH module creation
-Write-Host "Importing required module to Azure Automation account"
-$RequiredModulesObj = ConvertFrom-Json $RequiredModules
-$requiredModulesObj.Modules | ForEach-Object {
-    Write-Host "Importing" $_.Name "PowerShell module" -ForegroundColor Yellow
-    New-AzureRmAutomationModule -AutomationAccountName $AutomationAccountName -Name $_.Name -ContentLink $_.ContentUrl -ResourceGroupName $ResourceGroupName
-    Write-Host $_.Name "module imported successfully" -ForegroundColor Green
 }
 
 # Resource Group creation
