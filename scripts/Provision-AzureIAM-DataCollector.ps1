@@ -159,7 +159,7 @@ param
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $AzureADRederEmailId = $(Read-Host -prompt "Enter Azure AD Global Reader Email Id"),
+    $AzureGlobalReaderEmailId = $(Read-Host -prompt "Enter Azure AD Global Reader Email Id"),
 
     # Azure Global Reader password
     [Parameter(Mandatory = $False,
@@ -168,7 +168,7 @@ param
     )]
     [ValidateNotNullOrEmpty()]
     [SecureString]
-    $AzureADReaderPassword = $(Read-Host -prompt "Enter Azure AD Global Reader Password" -AsSecureString),
+    $AzureGlobalReaderPassword = $(Read-Host -prompt "Enter Azure AD Global Reader Password" -AsSecureString),
 
     # Subscription Id for automation account creation
     [Parameter(Mandatory = $False,
@@ -310,17 +310,17 @@ Write-Host $ScriptPrefix "Runbook created successfully with version" $RunbookScr
 
 # Credential object creation
 Write-host "Creating secure credentials object for Azure Global Reader in Automation accout" -ForegroundColor Yellow
-$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $AzureADRederEmailId, $AzureADReaderPassword
+$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $AzureGlobalReaderEmailId, $AzureGlobalReaderPassword
 $AzureADReaderCredentials = "AzureADReaderCredentials"
 $ExistingCredentials = Get-AzureRmAutomationCredential -Name $AzureADReaderCredentials -ResourceGroupName $ResourceGroupName -AutomationAccountName $AutomationAccountName -ErrorAction SilentlyContinue
 
-If ($ExistingCredentials -ne $null -and $ExistingCredentials.UserName -eq $AzureADRederEmailId) {
+If ($ExistingCredentials -ne $null -and $ExistingCredentials.UserName -eq $AzureGlobalReaderEmailId) {
     Set-AzureRmAutomationCredential -AutomationAccountName $AutomationAccountName -Name $AzureADReaderCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
-    Write-Host $AzureADRederEmailId "credential object already exist, Updated sucessfully" -ForegroundColor Green
+    Write-Host $AzureGlobalReaderEmailId "credential object already exist, Updated sucessfully" -ForegroundColor Green
 }    
 else {
     New-AzureRmAutomationCredential -AutomationAccountName $AutomationAccountName -Name $AzureADReaderCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
-    Write-Host $AzureADRederEmailId "credentials object created successfully" -ForegroundColor Green
+    Write-Host $AzureGlobalReaderEmailId "credentials object created successfully" -ForegroundColor Green
 }
 
 # Credential object creation
@@ -329,7 +329,7 @@ $Credential = New-Object -TypeName System.Management.Automation.PSCredential -Ar
 $CloudneetiCredentials = "CloudneetiCredentials"
 $ExistingCredentials = Get-AzureRmAutomationCredential -Name $CloudneetiCredentials -ResourceGroupName $ResourceGroupName -AutomationAccountName $AutomationAccountName -ErrorAction SilentlyContinue
 
-If ($ExistingCredentials -ne $null -and $ExistingCredentials.UserName -eq $AzureADRederEmailId) {
+If ($ExistingCredentials -ne $null -and $ExistingCredentials.UserName -eq $AzureGlobalReaderEmailId) {
     Set-AzureRmAutomationCredential -AutomationAccountName $AutomationAccountName -Name $CloudneetiCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
     Write-Host $CloudneetiApplicationId "credential object already exists, Updated sucessfully" -ForegroundColor Green
 }    
