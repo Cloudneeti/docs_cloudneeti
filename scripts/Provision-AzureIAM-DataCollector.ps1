@@ -16,15 +16,19 @@
     Upload script to Azure CloudShell and execute below command:-
     .\Provision-IAMPolicies-DataCollector.ps1
 
-    Then script execution will prompt for below secrets:
+    Then script execution will prompt for below inputs:
         - Cloudneeti License Id
         - Cloudneeti Account Id
+        - Cloudneeti API Key
         - Cloudneeti Environment
+        - Cloudneeti Application Id
+        - Cloudneeti Application Secret
         - Cloudneeti Azure IAM Data Collector Artifacts Storage Name
         - Cloudneeti Azure IAM Data Collector Artifacts Storage Access Key
-        - Azure Directory Id
-        - Azure AD Administator Id
-        - Azure AD Administratot Password
+        - Data Collection Version
+        - Azure Active Directory Id
+        - Azure AD Global Reader Email Id
+        - Azure AD Global Reader Password
         - Azure Subscription Id where Azure data collector resouces will be created
         - Enter Azure IAM data collector name
 
@@ -32,13 +36,16 @@
     Below is the list of inputs to the script:-
         - Cloudneeti License Id <Find in "Manage Licenses" of Cloudneeti Settings>
         - Cloudneeti Account Id <Find in "Manage Accounts" of Cloudneeti Settings>
+        - Cloudneeti API Key <Contact Cloudneeti team>
         - Cloudneeti Environment <Cloudneeti Environment>
+        - Cloudneeti Application Id <Cloudneeti Data Collector Application Id>
+        - Cloudneeti Application Secret <Cloudneeti Data Collector Application Secret>
         - Cloudneeti Azure IAM Data Collector Artifacts Storage Name <Contact Cloudneeti team>
         - Cloudneeti Azure IAM Data Collector Artifacts Storage Access Key <Contact Cloudneeti team>
         - Cloudneeti Azure IAM Data Collector Version <Contact Cloudneeti team>
-        - Azure Directory Id <Tenant Id of Azure Directory>
-        - Azure Administator Id <Azure Active Directory Global Administrator Id>
-        - Azure App Password <Azure Active Directory Administrator App password>
+        - Azure Active Directory Id <Tenant Id of Azure Directory>
+        - Azure Active Directory Global Reader Email Id <Azure Active Directory Global Reader Email Id>
+        - Azure Active Directory Global Reader Password <Azure Active Directory Global Reader password>
         - Azure Subscription Id where Azure IAM data collector resouces will be created <Azure Subscription Id where Azure IAM data collector resouces will be created> 
         - Azure IAM data collector name
 
@@ -46,7 +53,7 @@
 
 .NOTES
         - The user should have a contract with Cloudneeti 
-        - Office Admin should be non MFA Azure Admin
+        - Azure Global Reader should be non MFA Azure AD User
         - This script should be executed only on Azure CloudShell.
 #>
 
@@ -97,7 +104,7 @@ param
     )]
     [ValidateNotNullOrEmpty()]
     [String]
-    $ServicePrincipalId = $(Read-Host -prompt "Enter Cloudneeti Data Collector Service Principal Id"),
+    $CloudneetiApplicationId = $(Read-Host -prompt "Enter Cloudneeti Data Collector Service Principal Id"),
 
     # Enter service principal secret
     [Parameter(Mandatory = $False,
@@ -106,84 +113,84 @@ param
     )]
     [ValidateNotNullOrEmpty()]
     [SecureString]
-    $ServicePrincipalSecret = $(Read-Host -prompt "Enter Cloudneeti Data Collector Service Principal Secret" -AsSecureString),
+    $CloudneetiApplicationSecret = $(Read-Host -prompt "Enter Cloudneeti Data Collector Service Principal Secret" -AsSecureString),
 
     # Cloudneeti Artifacts Storage Name
     [Parameter(Mandatory = $False,
-        HelpMessage = "Cloudneeti office 365 Data Collector Artifact Name",
+        HelpMessage = "Cloudneeti Azure IAM Data Collector Artifact Name",
         Position = 7
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $ArtifactsName = $(Read-Host -prompt "Enter Cloudneeti office 365 Data Collector Artifacts Storage Name"),
+    $ArtifactsName = $(Read-Host -prompt "Enter Cloudneeti Azure IAM Data Collector Artifacts Storage Name"),
 
     # Cloudneeti artifacts access key
     [Parameter(Mandatory = $False,
-        HelpMessage = "Cloudneeti office 365 Data Collector Artifacts Acccess Key",
+        HelpMessage = "Cloudneeti Azure IAM Data Collector Artifacts Acccess Key",
         Position = 8
     )]
     [ValidateNotNullOrEmpty()]
     [secureString]
-    $ArtifactsAccessKey = $(Read-Host -prompt "Enter Cloudneeti office 365 Data Collector Artifacts Storage Access Key" -AsSecureString),
+    $ArtifactsAccessKey = $(Read-Host -prompt "Enter Cloudneeti Azure IAM Data Collector Artifacts Storage Access Key" -AsSecureString),
 
     # Data Collector version
     [Parameter(Mandatory = $False,
-        HelpMessage = "Cloudneeti office 365 Data Collector Artifacts Version",
+        HelpMessage = "Cloudneeti Azure IAM Data Collector Artifacts Version",
         Position = 9
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $DataCollectorVersion = $(Read-Host -prompt "Enter Cloudneeti Office 365 Data Collector Version"),
+    $DataCollectorVersion = $(Read-Host -prompt "Enter Cloudneeti Azure IAM Data Collector Version"),
 
-    # Office Tenant ID
+    # Azure Tenant ID
     [Parameter(Mandatory = $False,
-        HelpMessage = "Office 365 Tenant Id",
+        HelpMessage = "Azure Active Directory Id",
         Position = 10
     )]
     [ValidateNotNullOrEmpty()]
     [guid]
-    $AzureDirectoryId = $(Read-Host -prompt "Enter Azure Directory Id"),
+    $AzureDirectoryId = $(Read-Host -prompt "Enter Azure Active Directory Id"),
 
-    # Office Admin username
+    # Azure Global Reader username
     [ValidateScript( {$_ -match '^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,7})$' })]
     [Parameter(Mandatory = $False,
-        HelpMessage = "Office 365 Administator Id",
+        HelpMessage = "Azure AD Global Reader Email Id",
         Position = 11
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $AzureAdminEmailId = $(Read-Host -prompt "Enter Office 365 Administator Id"),
+    $AzureADRederEmailId = $(Read-Host -prompt "Enter Azure AD Global Reader Email Id"),
 
-    # Office App password
+    # Azure Global Reader password
     [Parameter(Mandatory = $False,
-        HelpMessage = "Office 365 app password",
+        HelpMessage = "Azure AD Global Reader Password",
         Position = 12
     )]
     [ValidateNotNullOrEmpty()]
     [SecureString]
-    $AzureAdminPassword = $(Read-Host -prompt "Enter Office 365 App Password" -AsSecureString),
+    $AzureADReaderPassword = $(Read-Host -prompt "Enter Azure AD Global Reader Password" -AsSecureString),
 
     # Subscription Id for automation account creation
     [Parameter(Mandatory = $False,
-        HelpMessage = "Azure Subscription Id for office 365 data collector resources provisioning",
+        HelpMessage = "Azure Subscription Id for IAM data collector resources provisioning",
         Position = 13
     )]
     [ValidateNotNullOrEmpty()]
     [guid]
-    $AzureSubscriptionId = $(Read-Host -prompt "Enter Azure Subscription Id where office 365 data collector resouces will be created"),
+    $AzureSubscriptionId = $(Read-Host -prompt "Enter Azure Subscription Id where IAM data collector resouces will be created"),
 
     # Resource group name for Cloudneeti Resouces
     [Parameter(Mandatory = $False,
-        HelpMessage = "Office 365 Data Collector Name",
+        HelpMessage = "Azure IAM Collector Name",
         Position = 14
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $DataCollectorName = $(Read-Host -prompt "Enter office 365 data collector name"),
+    $DataCollectorName = $(Read-Host -prompt "Enter Azure IAM data collector name"),
 
     # Data collector resource location
     [Parameter(Mandatory = $False,
-        HelpMessage = "Location for Cloudneeti office 365 data collector resources",
+        HelpMessage = "Location for Cloudneeti Azure IAM data collector resources",
         Position = 15
     )]
     [ValidateNotNullOrEmpty()]
@@ -302,33 +309,33 @@ Write-Host $ScriptPrefix "Runbook created successfully with version" $RunbookScr
 
 
 # Credential object creation
-Write-host "Creating secure credentials object for office admin in Automation accout" -ForegroundColor Yellow
-$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $AzureAdminEmailId, $AzureAdminPassword
-$AzureAdminCredentials = "AzureAdminCredentials"
-$ExistingCredentials = Get-AzureRmAutomationCredential -Name $AzureAdminCredentials -ResourceGroupName $ResourceGroupName -AutomationAccountName $AutomationAccountName -ErrorAction SilentlyContinue
+Write-host "Creating secure credentials object for Azure Global Reader in Automation accout" -ForegroundColor Yellow
+$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $AzureADRederEmailId, $AzureADReaderPassword
+$AzureADReaderCredentials = "AzureADReaderCredentials"
+$ExistingCredentials = Get-AzureRmAutomationCredential -Name $AzureADReaderCredentials -ResourceGroupName $ResourceGroupName -AutomationAccountName $AutomationAccountName -ErrorAction SilentlyContinue
 
-If ($ExistingCredentials -ne $null -and $ExistingCredentials.UserName -eq $AzureAdminEmailId) {
-    Set-AzureRmAutomationCredential -AutomationAccountName $AutomationAccountName -Name $AzureAdminCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
-    Write-Host $OfficeAdminId "credential object already exist, Updated sucessfully" -ForegroundColor Green
+If ($ExistingCredentials -ne $null -and $ExistingCredentials.UserName -eq $AzureADRederEmailId) {
+    Set-AzureRmAutomationCredential -AutomationAccountName $AutomationAccountName -Name $AzureADReaderCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
+    Write-Host $AzureADRederEmailId "credential object already exist, Updated sucessfully" -ForegroundColor Green
 }    
 else {
-    New-AzureRmAutomationCredential -AutomationAccountName $AutomationAccountName -Name $AzureAdminCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
-    Write-Host $OfficeAdminId "credentials object created successfully" -ForegroundColor Green
+    New-AzureRmAutomationCredential -AutomationAccountName $AutomationAccountName -Name $AzureADReaderCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
+    Write-Host $AzureADRederEmailId "credentials object created successfully" -ForegroundColor Green
 }
 
 # Credential object creation
 Write-host "Creating secure credentials object for client service principal in Automation account" -ForegroundColor Yellow
-$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $ServicePrincipalId, $ServicePrincipalSecret
+$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $CloudneetiApplicationId, $CloudneetiApplicationSecret
 $CloudneetiCredentials = "CloudneetiCredentials"
 $ExistingCredentials = Get-AzureRmAutomationCredential -Name $CloudneetiCredentials -ResourceGroupName $ResourceGroupName -AutomationAccountName $AutomationAccountName -ErrorAction SilentlyContinue
 
-If ($ExistingCredentials -ne $null -and $ExistingCredentials.UserName -eq $OfficeAdminId) {
+If ($ExistingCredentials -ne $null -and $ExistingCredentials.UserName -eq $AzureADRederEmailId) {
     Set-AzureRmAutomationCredential -AutomationAccountName $AutomationAccountName -Name $CloudneetiCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
-    Write-Host $ServicePrincipalId "credential object already exists, Updated sucessfully" -ForegroundColor Green
+    Write-Host $CloudneetiApplicationId "credential object already exists, Updated sucessfully" -ForegroundColor Green
 }    
 else {
     New-AzureRmAutomationCredential -AutomationAccountName $AutomationAccountName -Name $CloudneetiCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
-    Write-Host $ServicePrincipalId "credentials object created successfully" -ForegroundColor Green
+    Write-Host $CloudneetiApplicationId "credentials object created successfully" -ForegroundColor Green
 }
 
 
