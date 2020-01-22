@@ -149,7 +149,7 @@ param
     )]
     [ValidateNotNullOrEmpty()]
     [guid]
-    $AzureDirectoryId = $(Read-Host -prompt "Enter Azure Active Directory Id"),
+    $AzureActiveDirectoryId = $(Read-Host -prompt "Enter Azure Active Directory Id"),
 
     # Azure Global Reader username
     [ValidateScript( {$_ -match '^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,7})$' })]
@@ -346,7 +346,7 @@ $VariableObject = @{
     "CloudneetiLicenseId"   = $CloudneetiLicenseId;
     "CloudneetiAccountId"   = $CloudneetiAccountId; 
     "CloudneetiEnvironment" = $CloudneetiEnvironment 
-    "AzureDirectoryId"      = $AzureDirectoryId
+    "AzureDirectoryId"      = $AzureActiveDirectoryId 
     "CloudneetiAPIKey"      = $CloudneetiAPIKeyEncrypt
     "CloudneetiAPIURL"      = $CloudneetiAPIURL
 }
