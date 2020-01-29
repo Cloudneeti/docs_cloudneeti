@@ -229,15 +229,15 @@ $CloudneetiAPIEndpoints = @{
 $CloudneetiAPIURL = $CloudneetiAPIEndpoints[$CloudneetiEnvironment.ToLower()]
 
 # Checking current azure rm context to deploy Azure automation
-$AzureContextSubscriptionId = (Get-AzureRmContext).Subscription.Id
+$AzureContextSubscriptionId = (Get-AzContext).Subscription.Id
 
 If ($AzureContextSubscriptionId -ne $AzureSubscriptionId) {
     Write-Host "You are not logged in to subscription" $AzureSubscriptionId 
     Try {
         Write-Host "Trying to switch powershell context to subscription" $AzureSubscriptionId
-        $AllAvailableSubscriptions = (Get-AzureRmSubscription).Id
+        $AllAvailableSubscriptions = (Get-AzSubscription).Id
         if ($AllAvailableSubscriptions -contains $AzureSubscriptionId) {
-            Set-AzureRmContext -SubscriptionId $AzureSubscriptionId
+            Set-AzContext -SubscriptionId $AzureSubscriptionId
             Write-Host "Successfully context switched to subscription" $AzureSubscriptionId
         }
         else {
@@ -259,11 +259,11 @@ Write-host "Fetching Office 365 scanning script to create Azure automation runbo
 $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($ArtifactsAccessKey)            
 $ArtifactsKey = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR) 
 $CNConnectionString = "BlobEndpoint=https://$ArtifactsName.blob.core.windows.net/;SharedAccessSignature=$ArtifactsKey"
-$PackageContext = New-AzureStorageContext -ConnectionString $CNConnectionString
+$PackageContext = New-AzStorageContext -ConnectionString $CNConnectionString
 
 New-Item -ItemType Directory -Force -Path $path | Out-Null
 
-Get-AzureStorageBlobContent -Container $ContianerName -Blob $RunbookScriptName -Destination "./runbooks/" -Context $PackageContext -Force | Out-Null
+Get-AzStorageBlobContent -Container $ContianerName -Blob $RunbookScriptName -Destination "./runbooks/" -Context $PackageContext -Force | Out-Null
 Write-Host "Office 365 scanning script successfully fetched and ready to push in automation runbook" -ForegroundColor Green
 
 
@@ -275,13 +275,19 @@ $RequiredModules = @"
             "Name": "Microsoft.Online.SharePoint.PowerShell",
             "ContentUrl" : "https://www.powershellgallery.com/api/v2/package/Microsoft.Online.SharePoint.PowerShell/16.0.8414.1200",
             "Version" : "16.0.8414.1200"
+        },
+        {
+            "Product": "AzureRM.Profile",
+            "Name": "AzureRM.Profile",
+            "ContentUrl" : "https://www.powershellgallery.com/api/v2/package/AzureRM.profile/5.8.3",
+            "Version" : "5.8.3"
         }
     ]
 }
 "@
 
 # Azure Automation account check for exists or not
-$AllAutomationAccountList = Get-AzureRmAutomationAccount | Select AutomationAccountName
+$AllAutomationAccountList = Get-AzAutomationAccount | Select AutomationAccountName
 if ($AllAutomationAccountList.AutomationAccountName -contains $AutomationAccountName) {
     Write-Host "Data collector already exists with the name:" $AutomationAccountName -ForegroundColor Magenta
     Write-Host "Please choose different name and Re-run this script" -ForegroundColor Yellow
@@ -290,12 +296,12 @@ if ($AllAutomationAccountList.AutomationAccountName -contains $AutomationAccount
 
 # Resource Group creation
 Write-host "Creating Resource Group for data collector resources" -ForegroundColor Yellow
-New-AzureRmResourceGroup -Name $ResourceGroupName -Location $Location -Force
+New-AzResourceGroup -Name $ResourceGroupName -Location $Location -Force
 Write-Host "Resource Group $ResourceGroupName  is created successfully" -ForegroundColor Green
 
 # Automation account creation
 Write-Host "Creating Azure Automation Account" -ForegroundColor Yellow
-New-AzureRmAutomationAccount -Name $AutomationAccountName -Location $Location -ResourceGroupName $ResourceGroupName
+New-AzAutomationAccount -Name $AutomationAccountName -Location $Location -ResourceGroupName $ResourceGroupName
 Write-host $AutomationAccountName "Automation Account is created successfully"
 
 # PSH module creation
@@ -304,14 +310,14 @@ $RequiredModulesObj = ConvertFrom-Json $RequiredModules
 
 $requiredModulesObj.Modules | ForEach-Object {
     Write-Host "Importing" $_.Name "PowerShell module" -ForegroundColor Yellow
-    New-AzureRmAutomationModule -AutomationAccountName $AutomationAccountName -Name $_.Name -ContentLink $_.ContentUrl -ResourceGroupName $ResourceGroupName
+    New-AzAutomationModule -AutomationAccountName $AutomationAccountName -Name $_.Name -ContentLink $_.ContentUrl -ResourceGroupName $ResourceGroupName
     Write-Host $_.Name "module imported successfully" -ForegroundColor Green
 }
 
 # Runbook creation
 Write-Host "Creating powershell runbook" -ForegroundColor Yellow
 
-Import-AzureRmAutomationRunbook -Name $RunbookName -Path .\runbooks\$RunbookScriptName -Tags $Tags -ResourceGroup $ResourceGroupName -AutomationAccountName $AutomationAccountName -Type PowerShell -Published -Force
+Import-AzAutomationRunbook -Name $RunbookName -Path .\runbooks\$RunbookScriptName -Tags $Tags -ResourceGroup $ResourceGroupName -AutomationAccountName $AutomationAccountName -Type PowerShell -Published -Force
 Write-Host $ScriptPrefix "Runbook created successfully with version" $RunbookScriptVersion
 
 
@@ -319,14 +325,14 @@ Write-Host $ScriptPrefix "Runbook created successfully with version" $RunbookScr
 Write-host "Creating secure credentials object for office admin in Automation accout" -ForegroundColor Yellow
 $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $OfficeAdminEmailId, $Office365AppPassword
 $OfficeAdminCredentials = "OfficeAdminCredentials"
-$ExistingCredentials = Get-AzureRmAutomationCredential -Name $OfficeAdminCredentials -ResourceGroupName $ResourceGroupName -AutomationAccountName $AutomationAccountName -ErrorAction SilentlyContinue
+$ExistingCredentials = Get-AzAutomationCredential -Name $OfficeAdminCredentials -ResourceGroupName $ResourceGroupName -AutomationAccountName $AutomationAccountName -ErrorAction SilentlyContinue
 
 If ($ExistingCredentials -ne $null -and $ExistingCredentials.UserName -eq $OfficeAdminEmailId) {
-    Set-AzureRmAutomationCredential -AutomationAccountName $AutomationAccountName -Name $OfficeAdminCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
+    Set-AzAutomationCredential -AutomationAccountName $AutomationAccountName -Name $OfficeAdminCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
     Write-Host $OfficeAdminEmailId "credential object already exist, Updated sucessfully" -ForegroundColor Green
 }    
 else {
-    New-AzureRmAutomationCredential -AutomationAccountName $AutomationAccountName -Name $OfficeAdminCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
+    New-AzAutomationCredential -AutomationAccountName $AutomationAccountName -Name $OfficeAdminCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
     Write-Host $OfficeAdminEmailId "credentials object created successfully" -ForegroundColor Green
 }
 
@@ -334,14 +340,14 @@ else {
 Write-host "Creating secure credentials object for client service principal in Automation account" -ForegroundColor Yellow
 $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $CloudneetiApplicationId, $CloudneetiApplicationSecret
 $CloudneetiCredentials = "CloudneetiCredentials"
-$ExistingCredentials = Get-AzureRmAutomationCredential -Name $CloudneetiCredentials -ResourceGroupName $ResourceGroupName -AutomationAccountName $AutomationAccountName -ErrorAction SilentlyContinue
+$ExistingCredentials = Get-AzAutomationCredential -Name $CloudneetiCredentials -ResourceGroupName $ResourceGroupName -AutomationAccountName $AutomationAccountName -ErrorAction SilentlyContinue
 
 If ($ExistingCredentials -ne $null -and $ExistingCredentials.UserName -eq $OfficeAdminEmailId) {
-    Set-AzureRmAutomationCredential -AutomationAccountName $AutomationAccountName -Name $CloudneetiCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
+    Set-AzAutomationCredential -AutomationAccountName $AutomationAccountName -Name $CloudneetiCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
     Write-Host $CloudneetiApplicationId "credential object already exists, Updated sucessfully" -ForegroundColor Green
 }    
 else {
-    New-AzureRmAutomationCredential -AutomationAccountName $AutomationAccountName -Name $CloudneetiCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
+    New-AzAutomationCredential -AutomationAccountName $AutomationAccountName -Name $CloudneetiCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
     Write-Host $CloudneetiApplicationId "credentials object created successfully" -ForegroundColor Green
 }
 
@@ -354,14 +360,14 @@ $VariableObject = @{
     "CloudneetiAccountId"   = $CloudneetiAccountId; 
     "OfficeDomain"          = $OfficeDomain;
     "CloudneetiEnvironment" = $CloudneetiEnvironment 
-    "OfficeDirectoryId"        = $OfficeDirectoryId
+    "OfficeDirectoryId"     = $OfficeDirectoryId
     "CloudneetiAPIKey"      = $CloudneetiAPIKeyEncrypt
     "CloudneetiAPIURL"      = $CloudneetiAPIURL
 }
 
 Write-Host "Creating Azure automation variables in automation account"
 foreach ($Variable in $VariableObject.GetEnumerator()) {
-    $ExistingVariable = Get-AzureRmAutomationVariable -AutomationAccountName $AutomationAccountName -Name $Variable.Name -ResourceGroupName $ResourceGroupName -ErrorAction SilentlyContinue
+    $ExistingVariable = Get-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $Variable.Name -ResourceGroupName $ResourceGroupName -ErrorAction SilentlyContinue
     If ($ExistingVariable -ne $null -and $ExistingVariable.Value -eq $Variable.Value) {
         Write-Host $Variable.Name "variable already exists" -ForegroundColor Yellow
     }
@@ -369,24 +375,24 @@ foreach ($Variable in $VariableObject.GetEnumerator()) {
         if ($ExistingVariable -ne $null) {
             if ($Variable.Name -eq "CloudneetiAPIKey") {
                 Write-Host "Updating variable value of" $Variable.Name -ForegroundColor Yellow
-                Set-AzureRmAutomationVariable -AutomationAccountName $AutomationAccountName -Name $Variable.Name -Encrypted $true -Value $Variable.Value -ResourceGroupName $ResourceGroupName
+                Set-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $Variable.Name -Encrypted $true -Value $Variable.Value -ResourceGroupName $ResourceGroupName
                 Write-Host $Variable.Name "variable successfully updated" -ForegroundColor Green
             }
             else {
                 Write-Host "Updating variable value of" $Variable.Name -ForegroundColor Yellow
-                Set-AzureRmAutomationVariable -AutomationAccountName $AutomationAccountName -Name $Variable.Name -Encrypted $False -Value $Variable.Value -ResourceGroupName $ResourceGroupName
+                Set-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $Variable.Name -Encrypted $False -Value $Variable.Value -ResourceGroupName $ResourceGroupName
                 Write-Host $Variable.Name "variable successfully updated" -ForegroundColor Green
             }
         }
         else {
             if ($Variable.Name -eq "CloudneetiAPIKey") {
                 Write-Host "Creating variable " $Variable.Name -ForegroundColor Yellow
-                New-AzureRmAutomationVariable -AutomationAccountName $AutomationAccountName -Name $Variable.Name -Encrypted $true -Value $Variable.Value -ResourceGroupName $ResourceGroupName
+                New-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $Variable.Name -Encrypted $true -Value $Variable.Value -ResourceGroupName $ResourceGroupName
                 Write-Host $Variable.Name "variable successfully created" -ForegroundColor Green
             }
             else {
                 Write-Host "Creating variable " $Variable.Name -ForegroundColor Yellow
-                New-AzureRmAutomationVariable -AutomationAccountName $AutomationAccountName -Name $Variable.Name -Encrypted $False -Value $Variable.Value -ResourceGroupName $ResourceGroupName
+                New-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $Variable.Name -Encrypted $False -Value $Variable.Value -ResourceGroupName $ResourceGroupName
                 Write-Host $Variable.Name "variable successfully created" -ForegroundColor Green   
             }         
         }
@@ -398,7 +404,7 @@ try {
     Write-Host "Creating automation account schedule"
     $scheduleName = "$ScriptPrefix-DailySchedule" 
     $StartTime = (Get-Date).AddMinutes(8)
-    New-AzureRmAutomationSchedule -ResourceGroupName $ResourceGroupName –AutomationAccountName $AutomationAccountName –Name $scheduleName –StartTime $StartTime –DayInterval 1
+    New-AzAutomationSchedule -ResourceGroupName $ResourceGroupName –AutomationAccountName $AutomationAccountName –Name $scheduleName –StartTime $StartTime –DayInterval 1
     Write-Host "Successfully created the automation account schedule" $scheduleName
 }
 catch [Exception] {
@@ -409,7 +415,7 @@ catch [Exception] {
 # Link schedule to automation account	
 try {
     Write-Host "Linking automation account schedule $scheduleName to runbook $RunbookName"
-    Register-AzureRmAutomationScheduledRunbook -ResourceGroupName $ResourceGroupName –AutomationAccountName $AutomationAccountName –RunbookName $RunbookName -ScheduleName $scheduleName
+    Register-AzAutomationScheduledRunbook -ResourceGroupName $ResourceGroupName –AutomationAccountName $AutomationAccountName –RunbookName $RunbookName -ScheduleName $scheduleName
     Write-Host "Successfully linked the automation account schedule $scheduleName to runbook $RunbookName"
 }
 catch [Exception] {
