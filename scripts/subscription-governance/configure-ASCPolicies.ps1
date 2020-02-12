@@ -83,9 +83,7 @@ if($EnableManagementGroup)
 else {
     # Checking current az context to deploy Azure automation
     $AzureContextSubscriptionId = (Get-AzContext).Subscription.Id
-
-    $mgmtAPI = "https://management.azure.com/subscriptions/$subscriptionId/providers/Microsoft.Authorization/policyAssignments/SecurityCenterBuiltIn?api-version=2018-05-01"
-
+    
     If ($AzureContextSubscriptionId -ne $SubscriptionId) {
         Write-Host "You are not logged in to subscription" $SubscriptionId 
         Try {
@@ -141,8 +139,10 @@ if($EnableManagementGroup)
     }
 }
 else { 
-    $defaultAssignment = Get-AzPolicyAssignment -Name "SecurityCenterBuiltIn" -ErrorAction SilentlyContinue
+    $defaultAssignment = Get-AzPolicyAssignment -Scope "/subscriptions/$SubscriptionId" -PolicyDefinitionId "/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8" | Select-Object -First 1
     if ($null -ne $defaultAssignment) {
+        $PolicyAssignmentId = $defaultAssignment.PolicyAssignmentId.split('/')[-1]
+        $mgmtAPI = "https://management.azure.com/subscriptions/$subscriptionId/providers/Microsoft.Authorization/policyAssignments/$($PolicyAssignmentId)?api-version=2018-05-01"
         $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.properties.displayName = $($defaultAssignment.Properties.displayName)
         $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.properties.displayName = $($defaultAssignment.Properties.displayName)
     }
