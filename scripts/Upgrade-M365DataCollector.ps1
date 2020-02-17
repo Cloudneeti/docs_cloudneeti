@@ -132,8 +132,7 @@ If ($ExistingRunbook -ne $RunbookName){
     Write-host "Fetching scanning script to create Azure automation runbook" -ForegroundColor Yellow
  
     # Download cis m365 scan script to push in to Azure automation runbook
-    $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($ArtifactsAccessKey)            
-    $ArtifactsKey = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR) 
+    $ArtifactsKey = (New-Object PSCredential "user",$ArtifactsAccessKey).GetNetworkCredential().Password
     $CNConnectionString  = "BlobEndpoint=https://$ArtifactsName.blob.core.windows.net/;SharedAccessSignature=$ArtifactsKey"
     $PackageContext = New-AzureStorageContext -ConnectionString $CNConnectionString
 
