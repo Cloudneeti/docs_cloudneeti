@@ -404,7 +404,7 @@ try {
     Write-Host "Creating automation account schedule"
     $scheduleName = "$ScriptPrefix-DailySchedule" 
     $StartTime = (Get-Date).AddMinutes(8)
-    New-AzAutomationSchedule -ResourceGroupName $ResourceGroupName –AutomationAccountName $AutomationAccountName –Name $scheduleName –StartTime $StartTime –DayInterval 1
+    New-AzAutomationSchedule -ResourceGroupName $ResourceGroupName -AutomationAccountName $AutomationAccountName -Name $scheduleName -StartTime $StartTime -DayInterval 1
     Write-Host "Successfully created the automation account schedule" $scheduleName
 }
 catch [Exception] {
@@ -415,7 +415,7 @@ catch [Exception] {
 # Link schedule to automation account	
 try {
     Write-Host "Linking automation account schedule $scheduleName to runbook $RunbookName"
-    Register-AzAutomationScheduledRunbook -ResourceGroupName $ResourceGroupName –AutomationAccountName $AutomationAccountName –RunbookName $RunbookName -ScheduleName $scheduleName
+    Register-AzAutomationScheduledRunbook -ResourceGroupName $ResourceGroupName -AutomationAccountName $AutomationAccountName -RunbookName $RunbookName -ScheduleName $scheduleName
     Write-Host "Successfully linked the automation account schedule $scheduleName to runbook $RunbookName"
 }
 catch [Exception] {
