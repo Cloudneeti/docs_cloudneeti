@@ -256,8 +256,7 @@ if ($NotValidSubscription -eq 0) {
 
 Write-host "Fetching Office 365 scanning script to create Azure automation runbook..." -ForegroundColor Yellow
 # Download cis m365 scan script to push in to Azure automation runbook
-$BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($ArtifactsAccessKey)            
-$ArtifactsKey = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR) 
+$ArtifactsKey = (New-Object PSCredential "user",$ArtifactsAccessKey).GetNetworkCredential().Password
 $CNConnectionString = "BlobEndpoint=https://$ArtifactsName.blob.core.windows.net/;SharedAccessSignature=$ArtifactsKey"
 $PackageContext = New-AzStorageContext -ConnectionString $CNConnectionString
 
@@ -353,8 +352,7 @@ else {
 
 
 # Creating variable in Azure automation
-$BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($CloudneetiAPIKey)            
-$CloudneetiAPIKeyEncrypt = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)
+$CloudneetiAPIKeyEncrypt = (New-Object PSCredential "user",$CloudneetiAPIKey).GetNetworkCredential().Password
 $VariableObject = @{    
     "CloudneetiContractId"  = $CloudneetiLicenseId;
     "CloudneetiAccountId"   = $CloudneetiAccountId; 
