@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloudneeti-agent-config
+  namespace: cloudneeti
+data:
+  clusterName: "<uniqueclustername>"
+  licenseId: "<cloudneetilicenseid>"
+  accountId: "<cloudneetiaccountid>"
+  cloudneetiEnvironment: "<prod/trial>"

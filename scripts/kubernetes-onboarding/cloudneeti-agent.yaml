@@ -1,0 +1,91 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: cloudneeti-agent
+  namespace: cloudneeti
+spec:
+  schedule: "0 12 * * *"
+  jobTemplate:
+    metadata:
+      labels:
+        app: cloudneeti-agent
+    spec:
+      template:
+        spec:
+          hostPID: true
+          nodeSelector:
+            node-role.kubernetes.io/master: ""
+          tolerations:
+            - key: node-role.kubernetes.io/master
+              operator: Exists
+              effect: NoSchedule
+          restartPolicy: OnFailure
+          containers:
+          - name: kube-bench
+            image: aquasec/kube-bench:latest
+            command: ["/bin/sh", "-c"]
+            args: ["kube-bench >> /var/log/kube-bench/kube-bench.log 2>&1"]
+            volumeMounts:
+            - name: var-lib-etcd
+              mountPath: /var/lib/etcd
+            - name: var-lib-kubelet
+              mountPath: /var/lib/kubelet
+            - name: etc-systemd
+              mountPath: /etc/systemd
+            - name: etc-kubernetes
+              mountPath: /etc/kubernetes
+              # /usr/bin is mounted to access kubectl / kubelet, for auto-detecting the Kubernetes version.
+              # You can omit this mount if you specify --version as part of the command.
+            - name: usr-bin
+              mountPath: /usr/bin
+            - name: kube-bench-log
+              mountPath: /var/log/kube-bench
+          - name: cloudneeti-agent
+            image: cloudneeticorp/cloudneeti-agent:1.0
+            env:
+              - name: CLUSTER_NAME
+                valueFrom:
+                  configMapKeyRef:
+                    name: cloudneeti-agent-config
+                    key: clusterName
+              - name: LICENSE_ID
+                valueFrom:
+                  configMapKeyRef:
+                    name: cloudneeti-agent-config
+                    key: licenseId
+              - name: ACCOUNT_ID
+                valueFrom:
+                  configMapKeyRef:
+                    name: cloudneeti-agent-config
+                    key: accountId
+              - name: CLOUDNEETI_ENV
+                valueFrom:
+                  configMapKeyRef:
+                    name: cloudneeti-agent-config
+                    key: cloudneetiEnvironment
+              - name: CLOUDNEETI_API_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: cloudneeti-agent
+                    key: cloudneetiAPIKey
+            volumeMounts:
+            - name: kube-bench-log
+              mountPath: /var/log/kube-bench
+          volumes:
+          - name: var-lib-etcd
+            hostPath:
+              path: "/var/lib/etcd"
+          - name: var-lib-kubelet
+            hostPath:
+              path: "/var/lib/kubelet"
+          - name: etc-systemd
+            hostPath:
+              path: "/etc/systemd"
+          - name: etc-kubernetes
+            hostPath:
+              path: "/etc/kubernetes"
+          - name: usr-bin
+            hostPath:
+              path: "/usr/bin"
+          - name: kube-bench-log
+            emptyDir: {}
