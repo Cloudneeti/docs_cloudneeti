@@ -1,0 +1,164 @@
+Parameters:
+    Stack:
+        Description: Stack name
+        Type: String
+        Default: dev
+    awsaccountid:
+        Description: AWS Account ID
+        Type: String
+    aggregatorname:
+        Description: Config Aggregator Name
+        Type: String
+Resources:
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+        BucketName:
+          Fn::Join:
+          - ""
+          - - 'config-bucket-'
+            - !Ref Stack
+            - '-'
+            - !Ref awsaccountid
+        BucketEncryption:
+            ServerSideEncryptionConfiguration:
+                - ServerSideEncryptionByDefault:
+                    SSEAlgorithm: AES256
+        LifecycleConfiguration:
+            Rules:
+            - Id: Delete-ct-logs
+              Prefix: AWSLogs/
+              Status: Enabled
+              ExpirationInDays: 2
+              NoncurrentVersionExpirationInDays: 1
+        VersioningConfiguration:
+            Status: Enabled
+        Tags: 
+          -
+            Key: "ServiceName"
+            Value: "config-bucket"
+          -
+            Key: "Description"
+            Value: "Bucket for config data collection"
+  
+  ConfigBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    DependsOn: S3Bucket
+    Properties: 
+      Bucket:
+        Fn::Join:
+        - ""
+        - - 'config-bucket-'
+          - !Ref Stack
+          - '-'
+          - !Ref awsaccountid
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: ConfigBucketPolicy1
+            Action:
+              - "s3:GetBucketAcl"
+            Effect: "Allow"
+            Principal:
+              Service:
+                - config.amazonaws.com
+            Resource:
+              Fn::Join:
+              - ""
+              - - 'arn:aws:s3:::config-bucket-'
+                - !Ref Stack
+                - '-'
+                - !Ref awsaccountid
+          - Sid: ConfigBucketPolicy2
+            Action:
+              - "s3:PutObject"
+            Effect: "Allow"
+            Principal:
+              Service:
+                - config.amazonaws.com
+            Resource:
+              Fn::Join:
+              - ""
+              - - 'arn:aws:s3:::config-bucket-'
+                - !Ref Stack
+                - '-'
+                - !Ref awsaccountid
+                - '/AWSLogs/'
+                - !Ref awsaccountid
+                - '/Config/*'
+            Condition:
+              StringEquals: 
+                s3:x-amz-acl: 
+                  - "bucket-owner-full-control"
+  
+  ConfigRole:
+    Type: AWS::IAM::Role
+    DependsOn: ConfigBucketPolicy
+    Properties:
+      RoleName:
+        Fn::Join:
+        - ""
+        - - 'config-role-'
+          - !Ref Stack
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - "config.amazonaws.com" 
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/service-role/AWSConfigRole"
+        
+  ConfigRecorder:
+    Type: AWS::Config::ConfigurationRecorder
+    Properties: 
+      Name:
+        Fn::Join:
+        - ""
+        - - 'config'
+          - !Ref Stack
+      RecordingGroup:
+        AllSupported: true
+        IncludeGlobalResourceTypes: true
+      RoleARN:
+        Fn::Join:
+        - ""
+        - - 'arn:aws:iam::'
+          - !Ref awsaccountid
+          - ':role/config-role-'
+          - !Ref Stack
+          
+  ConfigDeliveryChannel:
+    Type: AWS::Config::DeliveryChannel
+    Properties:
+      Name:
+        Fn::Join:
+        - ""
+        - - 'config-delivery-channel'
+          - !Ref Stack
+      S3BucketName:
+        Fn::Join:
+        - ""
+        - - 'config-bucket-'
+          - !Ref Stack
+          - '-'
+          - !Ref awsaccountid
+
+  ConfigurationAggregator:
+    Type: 'AWS::Config::ConfigurationAggregator'
+    DependsOn: ConfigRecorder
+    Properties:
+      AccountAggregationSources:
+        - AccountIds:
+            - !Ref awsaccountid
+          AllAwsRegions: true
+      ConfigurationAggregatorName: !Ref aggregatorname
+
+
+
+
+
+
+
