@@ -1,6 +1,6 @@
 Parameters:
-    Stack:
-        Description: Stack name
+    env:
+        Description: Environment Prefix
         Type: String
         Default: dev
     awsaccountid:

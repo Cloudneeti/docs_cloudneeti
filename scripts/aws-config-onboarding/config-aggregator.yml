@@ -1,6 +1,6 @@
 Parameters:
-    Stack:
-        Description: Stack name
+    env:
+        Description: Environment Prefix
         Type: String
         Default: dev
     awsaccountid:
@@ -17,7 +17,7 @@ Resources:
           Fn::Join:
           - ""
           - - 'config-bucket-'
-            - !Ref Stack
+            - !Ref env
             - '-'
             - !Ref awsaccountid
         BucketEncryption:
@@ -49,7 +49,7 @@ Resources:
         Fn::Join:
         - ""
         - - 'config-bucket-'
-          - !Ref Stack
+          - !Ref env
           - '-'
           - !Ref awsaccountid
       PolicyDocument:
@@ -66,7 +66,7 @@ Resources:
               Fn::Join:
               - ""
               - - 'arn:aws:s3:::config-bucket-'
-                - !Ref Stack
+                - !Ref env
                 - '-'
                 - !Ref awsaccountid
           - Sid: ConfigBucketPolicy2
@@ -80,7 +80,7 @@ Resources:
               Fn::Join:
               - ""
               - - 'arn:aws:s3:::config-bucket-'
-                - !Ref Stack
+                - !Ref env
                 - '-'
                 - !Ref awsaccountid
                 - '/AWSLogs/'
@@ -99,7 +99,7 @@ Resources:
         Fn::Join:
         - ""
         - - 'config-role-'
-          - !Ref Stack
+          - !Ref env
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -118,7 +118,7 @@ Resources:
         Fn::Join:
         - ""
         - - 'config'
-          - !Ref Stack
+          - !Ref env
       RecordingGroup:
         AllSupported: true
         IncludeGlobalResourceTypes: true
@@ -128,7 +128,7 @@ Resources:
         - - 'arn:aws:iam::'
           - !Ref awsaccountid
           - ':role/config-role-'
-          - !Ref Stack
+          - !Ref env
           
   ConfigDeliveryChannel:
     Type: AWS::Config::DeliveryChannel
@@ -137,12 +137,12 @@ Resources:
         Fn::Join:
         - ""
         - - 'config-delivery-channel'
-          - !Ref Stack
+          - !Ref env
       S3BucketName:
         Fn::Join:
         - ""
         - - 'config-bucket-'
-          - !Ref Stack
+          - !Ref env
           - '-'
           - !Ref awsaccountid
 
