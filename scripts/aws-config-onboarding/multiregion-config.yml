@@ -17,7 +17,7 @@ Resources:
         Fn::Join:
         - ""
         - - 'config'
-          - !Ref Stack
+          - !Ref env
       RecordingGroup:
         AllSupported: true
         IncludeGlobalResourceTypes: false
@@ -27,7 +27,7 @@ Resources:
         - - 'arn:aws:iam::'
           - !Ref awsaccountid
           - ':role/config-role-'
-          - !Ref Stack
+          - !Ref env
   
   ConfigDeliveryChannel:
     Type: AWS::Config::DeliveryChannel
@@ -36,12 +36,12 @@ Resources:
         Fn::Join:
         - ""
         - - 'config-delivery-channel'
-          - !Ref Stack
+          - !Ref env
       S3BucketName:
         Fn::Join:
         - ""
         - - 'config-bucket-'
-          - !Ref Stack
+          - !Ref env
           - '-'
           - !Ref awsaccountid
   
@@ -50,10 +50,3 @@ Resources:
     Properties: 
       AuthorizedAccountId: !Ref awsaccountid
       AuthorizedAwsRegion: !Ref aggregatorregion
-
-
-
-
-
-
-
