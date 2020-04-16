@@ -63,11 +63,21 @@ spec:
                   configMapKeyRef:
                     name: cloudneeti-agent-config
                     key: cloudneetiEnvironment
+              - name: CLOUDNEETI_APIAPP_ID
+                valueFrom:
+                  configMapKeyRef:
+                    name: cloudneeti-agent-config
+                    key: cloudneetiApiAppId
               - name: CLOUDNEETI_API_KEY
                 valueFrom:
                   secretKeyRef:
                     name: cloudneeti-agent
                     key: cloudneetiAPIKey
+              - name: CLOUDNEETI_APIAPP_SECRET
+                valueFrom:
+                  secretKeyRef:
+                    name: cloudneeti-agent
+                    key: cloudneetiAPIAppSecret
             volumeMounts:
             - name: kube-bench-log
               mountPath: /var/log/kube-bench
