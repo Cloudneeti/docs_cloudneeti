@@ -33,7 +33,8 @@
     None
 '
 
-usage() { echo "Usage: $0 [-a <12-digit-account-id>] [-e <environment-prefix>] [-p <primary-aggregator-region>] [-s <list of regions(secondary) where config is to enabled>]" 1>&2; exit 1; }
+usage() { echo "Usage: $0 [-a <12-digit-account-id>] [-e <environment-prefix>] [-p <primary-aggregator-region>] [-s <list of regions(secondary) where config is to enabled>]"
+          echo "Enter correct values for region parameters. Following are the acceptable values: ${aws_regions[@]}" 1>&2; exit 1; }
 env="dev"
 version="1.0"
 regionlist=('na')

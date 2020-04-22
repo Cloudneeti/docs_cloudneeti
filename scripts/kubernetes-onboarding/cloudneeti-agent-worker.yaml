@@ -35,7 +35,7 @@ spec:
             - name: kube-bench-log
               mountPath: /var/log/kube-bench
           - name: cloudneeti-agent
-            image: cloudneeticorp/cloudneeti-agent:1.0
+            image: cloudneeticorp/cloudneeti-agent:2.5
             env:
               - name: CLUSTER_NAME
                 valueFrom:
@@ -62,6 +62,11 @@ spec:
                   configMapKeyRef:
                     name: cloudneeti-agent-config
                     key: cloudneetiApiAppId
+              - name: CLOUDNEETI_CONNECTOR_TYPE
+                valueFrom:
+                  configMapKeyRef:
+                    name: cloudneeti-agent-config
+                    key: cloudneeticonnectorType
               - name: CLOUDNEETI_API_KEY
                 valueFrom:
                   secretKeyRef:
