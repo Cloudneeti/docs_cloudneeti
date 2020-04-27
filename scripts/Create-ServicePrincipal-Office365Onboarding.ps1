@@ -1,28 +1,23 @@
 <#
 .SYNOPSIS
     Create service principal and assign permission required for Cloudneeti application.
-
 .DESCRIPTION
     This script creates an Active Directory Application, Service Principal and setup the permission required for Cloudneeti application.
     The script requires activeDirectoryId as a mandatory input.
-
 .NOTES
     Version:        1.0
     Author:         Cloudneeti
     Creation Date:  22/05/2019
-
     # PREREQUISITE
     * Windows PowerShell version 5 and above
         1. To check PowerShell version type "$PSVersionTable.PSVersion" in PowerShell and you will find PowerShell version,
         2. To Install powershell follow link https://docs.microsoft.com/en-us/powershell/scripting/setup/installing-windows-powershell?view=powershell-6
-
     * AzureAD 2.0.0.131 or above module installed
         1. To check Azure AD version type "Get-InstalledModule -Name azureAD" in PowerShell window
         2. You can Install the required modules by executing below command.
             Install-Module -Name AzureAD -MinimumVersion 2.0.0.131
     * Account permissions
         The script must be executed with user having Global AD Administrator or Application Administrator role
-
 .EXAMPLE
     1. Creates a service principal.
         .\Create-ServicePrincipal-Office365Onboarding.ps1 -activeDirectoryId xxxxxxx-xxxx-xxxx-xxxx-xxxxxxx
@@ -30,7 +25,6 @@
         .\Create-ServicePrincipal-Office365Onboarding.ps1 -activeDirectoryId xxxxxxx-xxxx-xxxx-xxxx-xxxxxxx -servicePrincipalName <CloudneetiDataCollector>
     3. Creates a Service Principal with the expiry date.
         .\Create-ServicePrincipal-Office365Onboarding.ps1 -activeDirectoryId xxxxxxx-xxxx-xxxx-xxxx-xxxxxxx -expirationPeriod <1year, 2year, NeverExpires>
-
 .INPUTS
     azureActiveDirectoryId [Mandatory]:- Azure Active Directory Id (aka TenantId)
     servicePrincipalName [Optional]:- It is the display name for your app, must be unique in your directory (Azure AD Application name)
@@ -38,7 +32,6 @@
     expirationPeriod [Optional]:- Service principal key will get expire after this duration.
                                    Default: 1 year
                                    Available Values: 1year, 2year, NeverExpires
-
 .OUTPUTS
     Tenat Id:- Azure Tenant Id
     Domain Name:- Azure AD domain Name
@@ -88,15 +81,39 @@ $requiredAccess = @"
             "resourceAppId":"00000003-0000-0000-c000-000000000000",
             "rules": [
                 {
-                    "name": "Directory.Read.All",
-                    "description":"Read directory data",
-                    "id":"7ab1d382-f21e-4acd-a863-ba3e13f7da61",
+                    "name": "Organization.Read.All",
+                    "description":"Read Organization Data",
+                    "id":"498476ce-e0fe-48b0-b801-37ba7e2685c6",
                     "type":"Role"
                 },
                 {  
                     "name": "SecurityEvents.Read.All",
                     "description": "Read your organization's security events",
                     "id":"bf394140-e372-4bf9-a898-299cfc7564e5",
+                    "type":"Role"
+                },
+                {  
+                    "name": "User.Read.All",
+                    "description": "Read your organization's users information",
+                    "id":"df021288-bdef-4463-88db-98f22de89214",
+                    "type":"Role"
+                },
+                {  
+                    "name": "Application.Read.All",
+                    "description": "Read your organization's Applications information",
+                    "id":"9a5d68dd-52b0-4cc2-bd40-abcf44ac3a30",
+                    "type":"Role"
+                },
+                {
+                    "name": "DeviceManagementConfiguration.Read.All",
+                    "description":"Read DeviceManagement Configuration policies",
+                    "id":"dc377aa6-52d8-4e23-b271-2a7ae04cedf3",
+                    "type":"Role"
+                },
+                {
+                    "name": "DeviceManagementApps.Read.All",
+                    "description":"Read DeviceManagement Apps policies",
+                    "id":"7a6ee1e7-141e-4cec-ae74-d9db155731ff",
                     "type":"Role"
                 }
             ]
