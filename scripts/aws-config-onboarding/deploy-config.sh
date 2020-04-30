@@ -77,7 +77,7 @@ if [[ "$awsaccountid" == "" ]] || ! [[ "$awsaccountid" =~ ^[0-9]+$ ]] || [[ ${#a
 fi
 
 if [[ "$confugure_account" != *"$awsaccountid"* ]];then
-    echo "AWS CLI configuration account and entered configuration account does not match. Please try again with correct AWS Account Id."
+    echo "AWS CLI configuration AWS account Id and entered AWS account Id does not match. Please try again with correct AWS Account Id."
     exit 1
 fi
 
