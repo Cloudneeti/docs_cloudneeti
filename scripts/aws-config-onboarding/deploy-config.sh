@@ -43,7 +43,7 @@ usage() { echo "Usage: $0 [-a <12-digit-account-id>] [-e <environment-prefix>] [
           echo "Enter correct values for region parameters. Following are the acceptable values: ${aws_regions[@]}" 1>&2; exit 1; }
 env="dev"
 version="1.0"
-regionlist=('na')
+regionlist=("na")
 while getopts "a:e:n:p:s:" o; do
     case "${o}" in
         a)
@@ -68,6 +68,8 @@ while getopts "a:e:n:p:s:" o; do
 done
 shift $((OPTIND-1))
 
+aws_regions=( "us-east-1" "us-east-2" "us-west-1" "us-west-2" "ap-south-1" "ap-northeast-2" "ap-southeast-1" "ap-southeast-2" "ap-northeast-1" "ca-central-1" "eu-central-1" "eu-west-1" "eu-west-2" "eu-west-3" "eu-north-1" "sa-east-1")
+
 if [[ "$awsaccountid" == "" ]] || ! [[ "$awsaccountid" =~ ^[0-9]+$ ]] || [[ ${#awsaccountid} != 12 ]] || [[ "$aggregatorname" == "" ]]; then
     usage
 fi
@@ -77,10 +79,35 @@ aggregatorname="$(echo "$aggregatorname" | tr "[:upper:]" "[:lower:]")"
 aggregatorregion="$(echo "$aggregatorregion" | tr "[:upper:]" "[:lower:]")"
 regionlist="$(echo "$regionlist" | tr "[:upper:]" "[:lower:]")"
 
-aws_regions=( "na" "us-east-1" "us-east-2" "us-west-1" "us-west-2" "ap-south-1" "ap-northeast-2" "ap-southeast-1" "ap-southeast-2" "ap-northeast-1" "ca-central-1" "eu-central-1" "eu-west-1" "eu-west-2" "eu-west-3" "eu-north-1" "sa-east-1")
-
 if [[ " ${aws_regions[*]} " != *" $aggregatorregion "* ]] || [[ " ${aggregatorregion} " != *" $aggregatorregion "* ]]; then
     usage
+fi
+
+if [[ $regionlist == "all" ]]; then
+    input_regions="${aws_regions[@]}"
+elif [[ $regionlist == "na" ]]; then
+    input_regions=("na")
+else
+    IFS=, read -a input_regions <<<"${regionlist}"
+    printf -v ips ',"%s"' "${input_regions[@]}"
+    ips="${ips:1}"
+fi
+
+input_regions=($(echo "${input_regions[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
+
+if [[ $regionlist != "all" ]] && [[ $regionlist != "na" ]]; then
+    validated_regions=()
+    for i in "${input_regions[@]}"; do
+        for j in "${aws_regions[@]}"; do
+            if [[ $i == $j ]]; then
+                validated_regions+=("$i")
+            fi
+        done
+    done
+
+    if [[ ${#validated_regions[@]} != ${#input_regions[@]} ]]; then
+        usage
+    fi
 fi
 
 echo "Verifying if the config aggregator or the config deployment bucket with the similar environment variable exists in the account..."
@@ -100,28 +127,9 @@ if [[ $s3_status != 0 ]] && [[ $stack_status -eq 0 ]]; then
     exit 1
 fi
 
-if [[ $regionlist == "all" ]]; then
-    input_regions = aws_regions
-fi
-
-IFS=, read -a input_regions <<<"${regionlist}"
-printf -v ips ',"%s"' "${input_regions[@]}"
-ips="${ips:1}"
-
-input_regions=($(echo "${input_regions[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
-
-validated_regions=()
-for i in "${aws_regions[@]}"; do
-    for j in "${input_regions[@]}"; do
-        if [[ $i == $j ]]; then
-            validated_regions+=("$i")
-        fi
-    done
-done
-
-if [[ ${#validated_regions[@]} != ${#input_regions[@]} ]]; then
-    usage
-fi
+echo "Deleting the default configuration recorder and delivery channel (if exists) in the primary region: $aggregatorregion..."
+aws configservice delete-configuration-recorder --configuration-recorder-name default --region $aggregatorregion 2>/dev/null
+aws configservice delete-delivery-channel --delivery-channel-name default --region $aggregatorregion 2>/dev/null
 
 echo "Deploying/Re-deploying config and aggregator in the primary region: $aggregatorregion"
 aws cloudformation deploy --template-file config-aggregator.yml --stack-name "cn-data-collector-"$env --region $aggregatorregion --parameter-overrides env=$env awsaccountid=$awsaccountid aggregatorname=$aggregatorname --capabilities CAPABILITY_NAMED_IAM --no-fail-on-empty-changeset
@@ -130,6 +138,10 @@ aggregator_status=$?
 if [[ "$aggregator_status" -eq 0 ]] && [[ "${input_regions[0]}" != "na" ]]; then
     for region in "${input_regions[@]}"; do
         if [[ "$region" != "$aggregatorregion" ]]; then
+            echo "Deleting the default configuration recorder and delivery channel (if exists) in the secondary region: $region..."
+            aws configservice delete-configuration-recorder --configuration-recorder-name default --region $region 2>/dev/null
+            aws configservice delete-delivery-channel --delivery-channel-name default --region $region 2>/dev/null
+
             echo "Deploying/Re-deploying config in the secondary region: $region"
             aws cloudformation deploy --template-file multiregion-config.yml --stack-name "cn-data-collector-"$env --region $region --parameter-overrides env=$env awsaccountid=$awsaccountid aggregatorregion=$aggregatorregion --capabilities CAPABILITY_NAMED_IAM --no-fail-on-empty-changeset
             multiregionconfig_status=$?
@@ -140,7 +152,7 @@ elif [[ "${input_regions[0]}" == "na" ]] || [[ "$multiregionconfig_status" -eq 0
     echo "Successfully deployed config(s) and aggregator in the mentioned regions!!"
 
 elif [[ "${input_regions[0]}" == "na" ]]; then
-    echo "Successfully deployed config(s) and aggregator in the mentioned regions!!"
+    echo "Successfully deployed config and aggregator in the mentioned region!!"
 
 else
     echo "Something went wrong! Please contact Cloudneeti support for more details"

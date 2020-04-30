@@ -66,6 +66,8 @@ while getopts "a:e:p:s:" o; do
 done
 shift $((OPTIND-1))
 
+aws_regions=("us-east-1" "us-east-2" "us-west-1" "us-west-2" "ap-south-1" "ap-northeast-2" "ap-southeast-1" "ap-southeast-2" "ap-northeast-1" "ca-central-1" "eu-central-1" "eu-west-1" "eu-west-2" "eu-west-3" "eu-north-1" "sa-east-1")
+
 if [[ "$awsaccountid" == "" ]] || ! [[ "$awsaccountid" =~ ^[0-9]+$ ]] || [[ ${#awsaccountid} != 12 ]]; then
     usage
 fi
@@ -74,33 +76,35 @@ env="$(echo "$env" | tr "[:upper:]" "[:lower:]")"
 aggregatorregion="$(echo "$aggregatorregion" | tr "[:upper:]" "[:lower:]")"
 regionlist="$(echo "$regionlist" | tr "[:upper:]" "[:lower:]")"
 
-aws_regions=( "na" "us-east-1" "us-east-2" "us-west-1" "us-west-2" "ap-south-1" "ap-northeast-2" "ap-southeast-1" "ap-southeast-2" "ap-northeast-1" "ca-central-1" "eu-central-1" "eu-west-1" "eu-west-2" "eu-west-3" "eu-north-1" "sa-east-1")
-
 if [[ " ${aws_regions[*]} " != *" $aggregatorregion "* ]] || [[ " ${aggregatorregion} " != *" $aggregatorregion "* ]]; then
     usage
 fi
 
 if [[ $regionlist == "all" ]]; then
-    input_regions = aws_regions
+    input_regions="${aws_regions[@]}"
+elif [[ $regionlist == "na" ]]; then
+    input_regions=()
+else
+    IFS=, read -a input_regions <<<"${regionlist}"
+    printf -v ips ',"%s"' "${input_regions[@]}"
+    ips="${ips:1}"
 fi
-
-IFS=, read -a input_regions <<<"${regionlist}"
-printf -v ips ',"%s"' "${input_regions[@]}"
-ips="${ips:1}"
 
 input_regions=($(echo "${input_regions[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
 
-validated_regions=()
-for i in "${aws_regions[@]}"; do
-    for j in "${input_regions[@]}"; do
-        if [[ $i == $j ]]; then
-            validated_regions+=("$i")
-        fi
+if [[ $regionlist != "all" ]] && [[ $regionlist != "na" ]]; then
+    validated_regions=()
+    for i in "${input_regions[@]}"; do
+        for j in "${aws_regions[@]}"; do
+            if [[ $i == $j ]]; then
+                validated_regions+=("$i")
+            fi
+        done
     done
-done
 
-if [[ ${#validated_regions[@]} != ${#input_regions[@]} ]]; then
-    usage
+    if [[ ${#validated_regions[@]} != ${#input_regions[@]} ]]; then
+        usage
+    fi
 fi
 
 stack_detail="$(aws cloudformation describe-stacks --stack-name "cn-data-collector-"$env --region $aggregatorregion 2>/dev/null)"
@@ -126,16 +130,16 @@ if [[ $s3_status -eq 0 ]]; then
     exit 1
 fi
 
-echo "Deleting primary config deployment stack..."
+echo "Deleting primary config deployment stack in $aggregatorregion region..."
 sleep 3
 aws cloudformation delete-stack --stack-name "cn-data-collector-"$env --region $aggregatorregion 2>/dev/null
 
-echo "Deleting config(secondary) deployment stack in the mentioned regions..."
 sleep 6
 for region in "${input_regions[@]}"; do
     if [[ "$region" != "$aggregatorregion" ]]; then
+        echo "Deleting config(secondary) deployment stack in the $region region..."
         aws cloudformation delete-stack --stack-name "cn-data-collector-"$env --region $region 2>/dev/null
     fi
 done
 
-echo "Successfully deleted config setup in all the mentioned regions"
+echo "Successfully deleted config setup from the mentioned region(s)"
