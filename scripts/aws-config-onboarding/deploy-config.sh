@@ -92,6 +92,15 @@ done
 
 aggregator_regions=( "us-east-1" "us-east-2" "us-west-1" "us-west-2" "ap-south-1" "ap-northeast-2" "ap-southeast-1" "ap-southeast-2" "ap-northeast-1" "ca-central-1" "eu-central-1" "eu-west-1" "eu-west-2" "eu-west-3" "eu-north-1" "sa-east-1")
 
+new_regions=()
+for i in "${enabled_regions[@]}"; do
+    skip=
+    for j in "${aggregator_regions[@]}"; do
+        [[ $i == $j ]] && { skip=1; break; }
+    done
+    [[ -n $skip ]] || new_regions+=("$i")
+done
+
 confugure_account="$(aws sts get-caller-identity)"
 
 if [[ "$confugure_account" != *"$awsaccountid"* ]];then
@@ -169,9 +178,15 @@ if [[ "$aggregator_status" -eq 0 ]] && [[ "${input_regions[0]}" != "na" ]]; then
             aws configservice delete-configuration-recorder --configuration-recorder-name default --region $region 2>/dev/null
             aws configservice delete-delivery-channel --delivery-channel-name default --region $region 2>/dev/null
 
-            echo "Deploying/Re-deploying config in the secondary region: $region"
-            aws cloudformation deploy --template-file multiregion-config.yml --stack-name "cn-data-collector-"$env --region $region --parameter-overrides env=$env awsaccountid=$awsaccountid aggregatorregion=$aggregatorregion --capabilities CAPABILITY_NAMED_IAM --no-fail-on-empty-changeset
-            multiregionconfig_status=$?
+            if [[ " ${new_regions[*]} " == *" $region "* ]]; then
+                echo "Deploying/Re-deploying config in the secondary region: $region. Note that this is a newly added AWS region and support for aggregator authorization is still not available in this region which may cause some data discrepancy in the aggregator."
+                aws cloudformation deploy --template-file newregion-config.yml --stack-name "cn-data-collector-"$env --region $region --parameter-overrides env=$env awsaccountid=$awsaccountid --capabilities CAPABILITY_NAMED_IAM --no-fail-on-empty-changeset
+                multiregionconfig_status=$?
+            else
+                echo "Deploying/Re-deploying config in the secondary region: $region"
+                aws cloudformation deploy --template-file multiregion-config.yml --stack-name "cn-data-collector-"$env --region $region --parameter-overrides env=$env awsaccountid=$awsaccountid aggregatorregion=$aggregatorregion --capabilities CAPABILITY_NAMED_IAM --no-fail-on-empty-changeset
+                multiregionconfig_status=$?
+            fi
         fi
     done
 
