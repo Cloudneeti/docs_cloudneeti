@@ -73,10 +73,10 @@ spec:
                   configMapKeyRef:
                     name: cloudneeti-agent-config
                     key: cloudneetiApiAppId
-              - name: CLOUDNEETI_CONNECTOR_TYPE	
-                valueFrom:	
-                  configMapKeyRef:	
-                    name: cloudneeti-agent-config	
+              - name: CLOUDNEETI_CONNECTOR_TYPE
+                valueFrom:
+                  configMapKeyRef:
+                    name: cloudneeti-agent-config
                     key: cloudneeticonnectorType
               - name: CLOUDNEETI_API_KEY
                 valueFrom:
