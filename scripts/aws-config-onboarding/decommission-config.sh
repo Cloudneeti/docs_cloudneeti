@@ -2,7 +2,7 @@
 
 : '
 #SYNOPSIS
-    Deployment of config and related resources that were deployed for config based data collection.
+    Deletion of config and related resources that were deployed for config based data collection.
 .DESCRIPTION
     This script will delete all the resources that were deployed for config based data collection.
 
@@ -31,21 +31,20 @@
     Command to execute : bash decommission-config.sh [-a <12-digit-account-id>] [-e <environment-prefix>] [-p <primary-aggregator-region>] [-s <list of regions(secondary) where config is to enabled>]
 
 .INPUTS
-    (-a)Account Id: 12-digit AWS account Id of the account where you want the remediation framework to be deployed
+    (-a)Account Id: 12-digit AWS account Id of the account where you want to delete the AWS Config setup setup
     (-e)Environment prefix: Enter any suitable prefix for your deployment
-    (-p)Config Aggregator region(primary): Programmatic name of the region where the the primary config with an aggregator is to be created(eg:us-east-1)
-    (-s)Region list(secondary): Comma seperated list(with nos spaces) of the regions where the config(secondary) is to be enabled(eg: us-east-1,us-east-2)
+    (-p)Config Aggregator region(primary): Programmatic name of the region where the the primary config with an aggregator was deployed(eg:us-east-1)
 
 .OUTPUTS
     None
 '
 
-usage() { echo "Usage: $0 [-a <12-digit-account-id>] [-e <environment-prefix>] [-p <primary-aggregator-region>] [-s <list of regions(secondary) where config is to enabled>]"
-          echo "Enter correct values for region parameters. Following are the acceptable values: ${aws_regions[@]}" 1>&2; exit 1; }
+usage() { echo "Usage: $0 [-a <12-digit-account-id>] [-e <environment-prefix>] [-p <primary-aggregator-region>]" 1>&2; exit 1; }
+aggregion_validation() { echo "Enter correct value for the aggregator region parameter. Following are the acceptable values: ${aggregator_regions[@]}" 1>&2; exit 1; }
+
 env="dev"
-version="1.0"
-regionlist=('na')
-while getopts "a:e:p:s:" o; do
+
+while getopts "a:e:p:" o; do
     case "${o}" in
         a)
             awsaccountid=${OPTARG}
@@ -56,9 +55,6 @@ while getopts "a:e:p:s:" o; do
         p)
             aggregatorregion=${OPTARG}
             ;;
-		s)  
-            regionlist=${OPTARG}
-            ;;
         *)
             usage
             ;;
@@ -66,13 +62,28 @@ while getopts "a:e:p:s:" o; do
 done
 shift $((OPTIND-1))
 
-aws_regions=("us-east-1" "us-east-2" "us-west-1" "us-west-2" "ap-south-1" "ap-northeast-2" "ap-southeast-1" "ap-southeast-2" "ap-northeast-1" "ca-central-1" "eu-central-1" "eu-west-1" "eu-west-2" "eu-west-3" "eu-north-1" "sa-east-1")
-
-confugure_account="$(aws sts get-caller-identity)"
-
-if [[ "$awsaccountid" == "" ]] || ! [[ "$awsaccountid" =~ ^[0-9]+$ ]] || [[ ${#awsaccountid} != 12 ]] || [[ "$aggregatorname" == "" ]]; then
+if [[ "$awsaccountid" == "" ]] || ! [[ "$awsaccountid" =~ ^[0-9]+$ ]] || [[ ${#awsaccountid} != 12 ]]; then
     usage
 fi
+
+echo "Validating input parameters..."
+
+region_detail="$(aws ec2 describe-regions | jq '.Regions')"
+region_count="$(echo $region_detail | jq length)"
+
+aws_regions=()
+for ((i = 0 ; i < region_count ; i++ )); do
+    aws_regions+=("$(echo $region_detail | jq -r --arg i "$i" '.[$i | tonumber]' | jq '.RegionName')")
+done
+
+enabled_regions=()
+for index in ${!aws_regions[@]}; do
+    enabled_regions+=("$(echo ${aws_regions[index]//\"/})")
+done
+
+aggregator_regions=( "us-east-1" "us-east-2" "us-west-1" "us-west-2" "ap-south-1" "ap-northeast-2" "ap-southeast-1" "ap-southeast-2" "ap-northeast-1" "ca-central-1" "eu-central-1" "eu-west-1" "eu-west-2" "eu-west-3" "eu-north-1" "sa-east-1")
+
+confugure_account="$(aws sts get-caller-identity)"
 
 if [[ "$confugure_account" != *"$awsaccountid"* ]];then
     echo "AWS CLI configuration AWS account Id and entered AWS account Id does not match. Please try again with correct AWS Account Id."
@@ -81,37 +92,9 @@ fi
 
 env="$(echo "$env" | tr "[:upper:]" "[:lower:]")"
 aggregatorregion="$(echo "$aggregatorregion" | tr "[:upper:]" "[:lower:]")"
-regionlist="$(echo "$regionlist" | tr "[:upper:]" "[:lower:]")"
 
-if [[ " ${aws_regions[*]} " != *" $aggregatorregion "* ]] || [[ " ${aggregatorregion} " != *" $aggregatorregion "* ]]; then
-    usage
-fi
-
-if [[ $regionlist == "all" ]]; then
-    input_regions="${aws_regions[@]}"
-elif [[ $regionlist == "na" ]]; then
-    input_regions=()
-else
-    IFS=, read -a input_regions <<<"${regionlist}"
-    printf -v ips ',"%s"' "${input_regions[@]}"
-    ips="${ips:1}"
-fi
-
-input_regions=($(echo "${input_regions[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
-
-if [[ $regionlist != "all" ]] && [[ $regionlist != "na" ]]; then
-    validated_regions=()
-    for i in "${input_regions[@]}"; do
-        for j in "${aws_regions[@]}"; do
-            if [[ $i == $j ]]; then
-                validated_regions+=("$i")
-            fi
-        done
-    done
-
-    if [[ ${#validated_regions[@]} != ${#input_regions[@]} ]]; then
-        usage
-    fi
+if [[ " ${aggregator_regions[*]} " != *" $aggregatorregion "* ]] || [[ " ${aggregatorregion} " != *" $aggregatorregion "* ]]; then
+    aggregion_validation
 fi
 
 stack_detail="$(aws cloudformation describe-stacks --stack-name "cn-data-collector-"$env --region $aggregatorregion 2>/dev/null)"
@@ -142,11 +125,11 @@ sleep 3
 aws cloudformation delete-stack --stack-name "cn-data-collector-"$env --region $aggregatorregion 2>/dev/null
 
 sleep 6
-for region in "${input_regions[@]}"; do
+echo "Deleting config(secondary) deployment stack(s)..."
+for region in "${enabled_regions[@]}"; do
     if [[ "$region" != "$aggregatorregion" ]]; then
-        echo "Deleting config(secondary) deployment stack in the $region region..."
         aws cloudformation delete-stack --stack-name "cn-data-collector-"$env --region $region 2>/dev/null
     fi
 done
 
-echo "Successfully deleted config setup from the mentioned region(s)"
+echo "Successfully deleted the config(secondary) setup from all the concerned region(s)"
