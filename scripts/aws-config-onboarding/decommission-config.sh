@@ -18,6 +18,8 @@
     # PREREQUISITE
       - Install aws cli
         Link : https://docs.aws.amazon.com/cli/latest/userguide/install-linux-al2017.html
+      - Install json parser jq
+        Installation command: sudo apt-get install jq
       - Configure your aws account using the below command:
         aws configure
         Enter the required inputs:
@@ -28,10 +30,10 @@
       - Run this script in any bash shell (linux command prompt)
 
 .EXAMPLE
-    Command to execute : bash decommission-config.sh [-a <12-digit-account-id>] [-e <environment-prefix>] [-p <primary-aggregator-region>] [-s <list of regions(secondary) where config is to enabled>]
+    Command to execute : bash decommission-config.sh [-a <12-digit-account-id>] [-e <environment-prefix>] [-p <primary-aggregator-region>]
 
 .INPUTS
-    (-a)Account Id: 12-digit AWS account Id of the account where you want to delete the AWS Config setup setup
+    (-a)Account Id: 12-digit AWS account Id of the account from where you want to delete the AWS Config setup
     (-e)Environment prefix: Enter any suitable prefix for your deployment
     (-p)Config Aggregator region(primary): Programmatic name of the region where the the primary config with an aggregator was deployed(eg:us-east-1)
 
