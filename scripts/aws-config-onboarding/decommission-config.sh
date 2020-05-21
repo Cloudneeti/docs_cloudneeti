@@ -2,7 +2,7 @@
 
 : '
 #SYNOPSIS
-    Deployment of config and related resources that were deployed for config based data collection.
+    Deletion of config and related resources that were deployed for config based data collection.
 .DESCRIPTION
     This script will delete all the resources that were deployed for config based data collection.
 
@@ -31,9 +31,9 @@
     Command to execute : bash decommission-config.sh [-a <12-digit-account-id>] [-e <environment-prefix>] [-p <primary-aggregator-region>] [-s <list of regions(secondary) where config is to enabled>]
 
 .INPUTS
-    (-a)Account Id: 12-digit AWS account Id of the account where you want the remediation framework to be deployed
+    (-a)Account Id: 12-digit AWS account Id of the account where you want to delete the AWS Config setup setup
     (-e)Environment prefix: Enter any suitable prefix for your deployment
-    (-p)Config Aggregator region(primary): Programmatic name of the region where the the primary config with an aggregator is to be created(eg:us-east-1)
+    (-p)Config Aggregator region(primary): Programmatic name of the region where the the primary config with an aggregator was deployed(eg:us-east-1)
 
 .OUTPUTS
     None
