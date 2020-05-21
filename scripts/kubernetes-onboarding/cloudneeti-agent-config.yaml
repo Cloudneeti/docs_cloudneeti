@@ -14,3 +14,4 @@ data:
   accountId: "<cloudneetiaccountid>"
   cloudneetiEnvironment: "<prod/trial>"
   cloudneetiApiAppId: "<cloudneetiapiappid>"
+  cloudneeticonnectorType: "<cloudneeticonnectortype>"
