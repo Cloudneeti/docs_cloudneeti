@@ -13,4 +13,5 @@ data:
   licenseId: "<cloudneetilicenseid>"
   accountId: "<cloudneetiaccountid>"
   cloudneetiEnvironment: "<prod/trial>"
-  cloudneetiApiAppId: "<cloudneetiapiappid>"
+  cloudneetiApiAppId: "<cloudneetiapiappid>",
+  clusterhosting: "<clusterhosting>"
