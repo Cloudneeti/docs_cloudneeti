@@ -279,7 +279,7 @@ $RequiredModules = @"
 "@
 
 # Azure Automation account check for exists or not
-$AllAutomationAccountList = Get-AzureRmAutomationAccount | Select AutomationAccountName
+$AllAutomationAccountList = Get-AzAutomationAccount | Select AutomationAccountName
 if ($AllAutomationAccountList.AutomationAccountName -contains $AutomationAccountName) {
     Write-Host "Data collector already exists with the name:" $AutomationAccountName -ForegroundColor Magenta
     Write-Host "Please choose different name and Re-run this script" -ForegroundColor Yellow
@@ -288,12 +288,12 @@ if ($AllAutomationAccountList.AutomationAccountName -contains $AutomationAccount
 
 # Resource Group creation
 Write-host "Creating Resource Group for data collector resources" -ForegroundColor Yellow
-New-AzureRmResourceGroup -Name $ResourceGroupName -Location $Location -Force
+New-AzResourceGroup -Name $ResourceGroupName -Location $Location -Force
 Write-Host "Resource Group $ResourceGroupName  is created successfully" -ForegroundColor Green
 
 # Automation account creation
 Write-Host "Creating Azure Automation Account" -ForegroundColor Yellow
-New-AzureRmAutomationAccount -Name $AutomationAccountName -Location $Location -ResourceGroupName $ResourceGroupName
+New-AzAutomationAccount -Name $AutomationAccountName -Location $Location -ResourceGroupName $ResourceGroupName
 Write-host $AutomationAccountName "Automation Account is created successfully"
 
 # PSH module creation
@@ -345,8 +345,8 @@ else {
 
 
 # Creating variable in Azure automation
-$BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($CloudneetiAPIKey)            
-$CloudneetiAPIKeyEncrypt = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)
+$CloudneetiAPIKeyEncrypt = (New-Object PSCredential "user",$CloudneetiAPIKey).GetNetworkCredential().Password
+
 $VariableObject = @{    
     "CloudneetiLicenseId"   = $CloudneetiLicenseId;
     "CloudneetiAccountId"   = $CloudneetiAccountId; 
