@@ -71,7 +71,7 @@ spec:
                 valueFrom:
                   configMapKeyRef:
                     name: cloudneeti-agent-config
-                    key: clusterhosting
+                    key: clusterHosting
               - name: CLOUDNEETI_API_KEY
                 valueFrom:
                   secretKeyRef:
