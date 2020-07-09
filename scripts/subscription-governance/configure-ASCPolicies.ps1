@@ -115,7 +115,7 @@ else {
 # Read ASC policies data
 Write-host "Fetching ASC policies to configure"
 try {
-    $ascPolicies = Invoke-WebRequest -uri "https://raw.githubusercontent.com/Cloudneeti/docs_cloudneeti/master/scripts/subscription-governance/asc-policy-data.json" | ConvertFrom-Json
+    $ascPolicies = Invoke-WebRequest -uri "https://raw.githubusercontent.com/Cloudneeti/docs_cloudneeti/pratik/asc-quick-wins/scripts/subscription-governance/asc-policy-data.json" | ConvertFrom-Json
     write-host "Successfully fetched ASC policies" -ForegroundColor Green
 }
 catch [Exception] {
