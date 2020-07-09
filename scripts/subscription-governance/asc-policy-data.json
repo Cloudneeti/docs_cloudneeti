@@ -1,6 +1,7 @@
 {
     "AzureSecurityCenter": {
         "ASCPoliciesEnabledState": {
+            "location": "auto-update",
             "properties": {
                 "displayName": "auto-update",
                 "metadata": {
@@ -381,6 +382,7 @@
             }
         },
         "ASCPoliciesDisabledState": {
+            "location": "auto-update",
             "properties": {
                 "displayName": "auto-update",
                 "metadata": {
