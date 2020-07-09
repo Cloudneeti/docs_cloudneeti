@@ -137,25 +137,24 @@ if($EnableManagementGroup)
         
         # Setting up the JSON Object
         # ASC Disable JSON Object
-        $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.name = $($defaultAssignment.Name)
-        $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.identity.principalId = $($defaultAssignment.Identity.principalId)
-        $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.identity.tenantId = $($defaultAssignment.Identity.tenantId)
-        $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.id = $($defaultAssignment.PolicyAssignmentId)
+        # $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.name = $($defaultAssignment.Name)
+        # $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.identity.principalId = $($defaultAssignment.Identity.principalId)
+        # $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.identity.tenantId = $($defaultAssignment.Identity.tenantId)
+        # $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.id = $($defaultAssignment.PolicyAssignmentId)
         $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.location = $($defaultAssignment.Location)
         $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.properties.displayName = $($defaultAssignment.Properties.displayName)
 
         # ASC Enable JSON Object
-        $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.name = $($defaultAssignment.Name)
-        $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.identity.principalId = $($defaultAssignment.Identity.principalId)
-        $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.identity.tenantId = $($defaultAssignment.Identity.tenantId)
-        $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.id = $($defaultAssignment.PolicyAssignmentId)
+        # $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.name = $($defaultAssignment.Name)
+        # $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.identity.principalId = $($defaultAssignment.Identity.principalId)
+        # $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.identity.tenantId = $($defaultAssignment.Identity.tenantId)
+        # $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.id = $($defaultAssignment.PolicyAssignmentId)
         $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.location = $($defaultAssignment.Location)
         $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.properties.displayName = $($defaultAssignment.Properties.displayName)
     }
     else {
         Write-Host "Azure Security Center initiative at Management Group $ManagementGroupId not found." -foregroundcolor red
         break;
-
     }
 }
 else { 
@@ -165,18 +164,18 @@ else {
         $mgmtAPI = "https://management.azure.com/subscriptions/$subscriptionId/providers/Microsoft.Authorization/policyAssignments/$($PolicyAssignmentId)?api-version=2018-05-01"
         # Setting up the JSON Object
         # ASC Disable JSON Object
-        $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.name = $($defaultAssignment.Name)
-        $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.identity.principalId = $($defaultAssignment.Identity.principalId)
-        $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.identity.tenantId = $($defaultAssignment.Identity.tenantId)
-        $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.id = $($defaultAssignment.PolicyAssignmentId)
+        # $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.name = $($defaultAssignment.Name)
+        # $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.identity.principalId = $($defaultAssignment.Identity.principalId)
+        # $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.identity.tenantId = $($defaultAssignment.Identity.tenantId)
+        # $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.id = $($defaultAssignment.PolicyAssignmentId)
         $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.location = $($defaultAssignment.Location)
         $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.properties.displayName = $($defaultAssignment.Properties.displayName)
 
         # ASC Enable JSON Object
-        $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.name = $($defaultAssignment.Name)
-        $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.identity.principalId = $($defaultAssignment.Identity.principalId)
-        $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.identity.tenantId = $($defaultAssignment.Identity.tenantId)
-        $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.id = $($defaultAssignment.PolicyAssignmentId)
+        # $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.name = $($defaultAssignment.Name)
+        # $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.identity.principalId = $($defaultAssignment.Identity.principalId)
+        # $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.identity.tenantId = $($defaultAssignment.Identity.tenantId)
+        # $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.id = $($defaultAssignment.PolicyAssignmentId)
         $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.location = $($defaultAssignment.Location)
         $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.properties.displayName = $($defaultAssignment.Properties.displayName)
     }

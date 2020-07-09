@@ -1,14 +1,6 @@
 {
     "AzureSecurityCenter": {
         "ASCPoliciesEnabledState": {
-            "identity": {
-                "principalId": "auto-update",
-                "tenantId": "auto-update",
-                "type": "SystemAssigned"
-            },
-            "id": "auto-update",
-            "type": "Microsoft.Authorization/policyAssignments",
-            "name": "auto-update",
             "location": "auto-update",
             "properties": {
                 "displayName": "auto-update",
@@ -390,14 +382,6 @@
             }
         },
         "ASCPoliciesDisabledState": {
-            "identity": {
-                "principalId": "auto-update",
-                "tenantId": "auto-update",
-                "type": "SystemAssigned"
-            },
-            "id": "auto-update",
-            "type": "Microsoft.Authorization/policyAssignments",
-            "name": "auto-update",
             "location": "auto-update",
             "properties": {
                 "displayName": "auto-update",
