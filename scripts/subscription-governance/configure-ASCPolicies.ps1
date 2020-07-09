@@ -115,7 +115,7 @@ else {
 # Read ASC policies data
 Write-host "Fetching ASC policies to configure"
 try {
-    $ascPolicies = Invoke-WebRequest -uri "https://raw.githubusercontent.com/Cloudneeti/docs_cloudneeti/pratik/asc-quick-wins/scripts/subscription-governance/asc-policy-data.json" | ConvertFrom-Json
+    $ascPolicies = Invoke-WebRequest -uri "https://raw.githubusercontent.com/Cloudneeti/docs_cloudneeti/master/scripts/subscription-governance/asc-policy-data.json" | ConvertFrom-Json
     write-host "Successfully fetched ASC policies" -ForegroundColor Green
 }
 catch [Exception] {
@@ -137,18 +137,10 @@ if($EnableManagementGroup)
         
         # Setting up the JSON Object
         # ASC Disable JSON Object
-        # $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.name = $($defaultAssignment.Name)
-        # $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.identity.principalId = $($defaultAssignment.Identity.principalId)
-        # $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.identity.tenantId = $($defaultAssignment.Identity.tenantId)
-        # $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.id = $($defaultAssignment.PolicyAssignmentId)
         $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.location = $($defaultAssignment.Location)
         $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.properties.displayName = $($defaultAssignment.Properties.displayName)
 
         # ASC Enable JSON Object
-        # $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.name = $($defaultAssignment.Name)
-        # $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.identity.principalId = $($defaultAssignment.Identity.principalId)
-        # $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.identity.tenantId = $($defaultAssignment.Identity.tenantId)
-        # $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.id = $($defaultAssignment.PolicyAssignmentId)
         $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.location = $($defaultAssignment.Location)
         $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.properties.displayName = $($defaultAssignment.Properties.displayName)
     }
@@ -162,20 +154,13 @@ else {
     if ($null -ne $defaultAssignment) {
         $PolicyAssignmentId = $defaultAssignment.PolicyAssignmentId.split('/')[-1]
         $mgmtAPI = "https://management.azure.com/subscriptions/$subscriptionId/providers/Microsoft.Authorization/policyAssignments/$($PolicyAssignmentId)?api-version=2018-05-01"
+        
         # Setting up the JSON Object
         # ASC Disable JSON Object
-        # $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.name = $($defaultAssignment.Name)
-        # $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.identity.principalId = $($defaultAssignment.Identity.principalId)
-        # $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.identity.tenantId = $($defaultAssignment.Identity.tenantId)
-        # $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.id = $($defaultAssignment.PolicyAssignmentId)
         $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.location = $($defaultAssignment.Location)
         $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.properties.displayName = $($defaultAssignment.Properties.displayName)
 
         # ASC Enable JSON Object
-        # $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.name = $($defaultAssignment.Name)
-        # $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.identity.principalId = $($defaultAssignment.Identity.principalId)
-        # $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.identity.tenantId = $($defaultAssignment.Identity.tenantId)
-        # $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.id = $($defaultAssignment.PolicyAssignmentId)
         $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.location = $($defaultAssignment.Location)
         $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.properties.displayName = $($defaultAssignment.Properties.displayName)
     }
