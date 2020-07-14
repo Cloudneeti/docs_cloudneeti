@@ -4,10 +4,10 @@
     
 .DESCRIPTION
      This script creates an automation account, Runbook, Schedule for execution and required variables & credentials for running the M365 policies. The automation runbook executes once per day and export data to cloudneeti using Cloudneeti API.
-
+ 
 .NOTES
 
-    Copyright (c) Cloudneeti. All rights reserved.
+  Copyright (c) Cloudneeti. All rights reserved.
     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is  furnished to do so, subject to the following conditions:
     The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
@@ -149,17 +149,27 @@ param
     # Office Domain name
     [ValidateScript( {$_ -notmatch 'https://+' -and $_ -notmatch 'http://+'})]
     [Parameter(Mandatory = $False,
-        HelpMessage = "Office 365 Domain Name: ",
+        HelpMessage = "Office 365 Domain Name",
         Position = 10
     )]
     [ValidateNotNullOrEmpty()]
     [string]
     $OfficeDomain = $(Read-Host -prompt "Enter Office 365 Domain Name"),
 
+    # Office Domain URL
+    [ValidateScript( {$_ -notmatch 'https://+' -and $_ -notmatch 'http://+'})]
+    [Parameter(Mandatory = $False,
+        HelpMessage = "Share Point Domain",
+        Position = 11
+    )]
+    [ValidateNotNullOrEmpty()]
+    [string]
+    $SharePointDomain = $(Read-Host -prompt "Enter Share Point Domain"),
+
     # Office Directory ID
     [Parameter(Mandatory = $False,
         HelpMessage = "Office 365 Directory Id",
-        Position = 11
+        Position = 12
     )]
     [ValidateNotNullOrEmpty()]
     [guid]
@@ -168,17 +178,17 @@ param
     # Office Admin username
     [ValidateScript( {$_ -match '^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,7})$' })]
     [Parameter(Mandatory = $False,
-        HelpMessage = "Office 365 Administator Id",
-        Position = 12
+        HelpMessage = "Office 365 Administator Email Id",
+        Position = 13
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $OfficeAdminEmailId = $(Read-Host -prompt "Enter Office 365 Administator Id"),
+    $OfficeAdminEmailId = $(Read-Host -prompt "Enter Office 365 Administator Email Id"),
 
-    # Office App password or user password
+        # Office App password or user password
     [Parameter(Mandatory = $False,
         HelpMessage = "Office 365 app password or user password",
-        Position = 13
+        Position = 14
     )]
     [ValidateNotNullOrEmpty()]
     [SecureString]
@@ -187,15 +197,16 @@ param
     # Subscription Id for automation account creation
     [Parameter(Mandatory = $False,
         HelpMessage = "Azure Subscription Id for office 365 data collector resources provisioning",
-        Position = 14
+        Position = 15
     )]
     [ValidateNotNullOrEmpty()]
     [guid]
     $AzureSubscriptionId = $(Read-Host -prompt "Enter Azure Subscription Id where office 365 data collector resouces will be created"),
 
-    # Resource group name for Cloudneeti Resouces
+ # Resource group name for Cloudneeti Resouces
     [Parameter(Mandatory = $False,
-        HelpMessage = "Office 365 Data Collector Name"
+        HelpMessage = "Office 365 Data Collector Name",
+        Position = 16
     )]
     [ValidateNotNullOrEmpty()]
     [string]
@@ -204,7 +215,7 @@ param
     # Data collector resource location
     [Parameter(Mandatory = $False,
         HelpMessage = "Location for Cloudneeti office 365 data collector resources",
-        Position = 16
+        Position = 17
     )]
     [ValidateNotNullOrEmpty()]
     [string]
@@ -224,6 +235,7 @@ $RunbookScriptName = "$ScriptPrefix-$DataCollectorVersion.ps1"
 $RunbookName = "$ScriptPrefix-$DataCollectorVersion"
 $path = "./runbooks"
 $Tags = @{"Service" = "Cloudneeti-Office365-Data-Collection"}
+$SharePointDomainURL = "https://$SharePointDomain"
 
 # Cloudneeti API URL
 $CloudneetiAPIEndpoints = @{
@@ -260,8 +272,8 @@ if ($NotValidSubscription -eq 0) {
     break
 }
 
-Write-host "Fetching Office 365 scanning script to create Azure automation runbook..." -ForegroundColor Yellow
 # Download cis m365 scan script to push in to Azure automation runbook
+Write-host "Fetching Office 365 scanning script to create Azure automation runbook..." -ForegroundColor Yellow
 $ArtifactsKey = (New-Object PSCredential "user",$ArtifactsAccessKey).GetNetworkCredential().Password
 $CNConnectionString = "BlobEndpoint=https://$ArtifactsName.blob.core.windows.net/;SharedAccessSignature=$ArtifactsKey"
 $PackageContext = New-AzStorageContext -ConnectionString $CNConnectionString
@@ -279,13 +291,13 @@ $RequiredModules = @"
             "Product": "SharePoint",
             "Name": "Microsoft.Online.SharePoint.PowerShell",
             "ContentUrl" : "https://www.powershellgallery.com/api/v2/package/Microsoft.Online.SharePoint.PowerShell/16.0.8414.1200",
-            "Version" : "16.0.8414.1200"
+            "Version" : "16.0.8414.1200" 
         },
         {
-            "Product": "AzureRM.Profile",
-            "Name": "AzureRM.Profile",
-            "ContentUrl" : "https://www.powershellgallery.com/api/v2/package/AzureRM.profile/5.8.3",
-            "Version" : "5.8.3"
+                "Product": "AzureRM.Profile",
+                "Name": "AzureRM.Profile",
+                "ContentUrl" : "https://www.powershellgallery.com/api/v2/package/AzureRM.profile/5.8.3",
+                "Version" : "5.8.3"
         }
     ]
 }
@@ -363,10 +375,12 @@ $VariableObject = @{
     "CloudneetiContractId"  = $CloudneetiLicenseId;
     "CloudneetiAccountId"   = $CloudneetiAccountId; 
     "OfficeDomain"          = $OfficeDomain;
-    "CloudneetiEnvironment" = $CloudneetiEnvironment 
-    "OfficeDirectoryId"     = $OfficeDirectoryId
-    "CloudneetiAPIKey"      = $CloudneetiAPIKeyEncrypt
-    "CloudneetiAPIURL"      = $CloudneetiAPIURL
+    "CloudneetiEnvironment" = $CloudneetiEnvironment;
+    "OfficeDirectoryId"     = $OfficeDirectoryId;
+    "CloudneetiAPIKey"      = $CloudneetiAPIKeyEncrypt;
+    "CloudneetiAPIURL"      = $CloudneetiAPIURL;
+    "DataCollectorVersion"  = $DataCollectorVersion;
+    "SharePointDomainURL"   = $SharePointDomainURL
 }
 
 Write-Host "Creating Azure automation variables in automation account"
