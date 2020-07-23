@@ -1,12 +1,12 @@
 <#
 .SYNOPSIS
-    Script to upgrade Cloudneeti IAM data collector automation account
+    Script to upgrade Cloudneeti IAM data collector's automation account
 .DESCRIPTION
     This script will upgrade runbook from IAM data collector(Automation Account) and deprecate older version on runbook.
 .EXAMPLE
     Commands to run this script.
      Upload script to Azure CloudShell and execute below command:-
-    .\Upgrade-AzureIAM-DataCollector.ps1.ps1
+    .\Upgrade-AzureIAM-DataCollector.ps1
 
      Then script execution will prompt for below inputs and secrets:
             - Enter Cloudneeti Azure IAM Data Collector Artifacts Storage Name
@@ -76,7 +76,7 @@ param
     [guid]
     $AzureSubscriptionId = $(Read-Host -prompt "Enter Azure Subscription Id where Azure IAM data collector is present"),
 
-    # Resource group name for Cloudneeti Resouces
+    # Data collector automation account name
     [Parameter(Mandatory = $True,
         HelpMessage = "Azure IAM Data Collector Name",
         Position = 5

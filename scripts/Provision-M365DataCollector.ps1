@@ -26,31 +26,41 @@
     Then script execution will prompt for below secrets:
         - Cloudneeti License Id
         - Cloudneeti Account Id
+        - Cloudneeti API Key
         - Cloudneeti Environment
+        - Cloudneeti Application Id
+        - Cloudneeti Application Secret
         - Cloudneeti Office 365 Data Collector Artifacts Storage Name
         - Cloudneeti Office 365 Data Collector Artifacts Storage Access Key
         - Cloudneeti Office 365 Data Collector Version
         - Office 365 Domain Name
+        - SharePoint Admin Center Domain
         - Office 365 Directory Id
         - Office 365 Administator Email Id
         - Office 365  App Password or User Password
         - Azure Subscription Id where office 365 data collector resouces will be created
-        - Enter office 365 data collector name
+        - Office 365 data collector name
+        - Location
 
 .INPUTS
     Below is the list of inputs to the script:-
         - Cloudneeti License Id <Find in "Manage Licenses" of Cloudneeti Settings>
         - Cloudneeti Account Id <Find in "Manage Accounts" of Cloudneeti Settings>
+        - Cloudneeti API Management Key <Find in "Cloudneeti API Management Portal">
         - Cloudneeti Environment <Cloudneeti Environment>
+        - Cloudneeti Data Collector Application Id
+        - Cloudneeti Data Collector Application Secret 
         - Cloudneeti Office 365 Data Collector Artifacts Storage Name <Contact Cloudneeti team>
         - Cloudneeti Office 365 Data Collector Artifacts Storage Access Key <Contact Cloudneeti team>
         - Cloudneeti Office 365 Data Collector Version <Contact Cloudneeti team>
         - Office 365 Domain Name <Office 365 domian name>
+        - SharePoint Admin Center Domain Name 
         - Office 365 Directory Id <Directory Id of Office 365>
         - Office 365 Administator Email Id <Office 365 Global Administrator Email Id>
         - Office 365 App Password <Office 365 Administrator App password or User password>
         - Azure Subscription Id where office 365 data collector resouces will be created <Azure Subscription Id where office 365 data collector resouces will be created> 
         - Office 365 data collector name
+        - Location
 
 .OUTPUTS
 
@@ -164,7 +174,7 @@ param
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $SharePointDomain = $(Read-Host -prompt "Enter Share Point Domain"),
+    $SharePointAdminCenterDomain = $(Read-Host -prompt "Enter SharePoint admin center domain name"),
 
     # Office Directory ID
     [Parameter(Mandatory = $False,
@@ -235,7 +245,7 @@ $RunbookScriptName = "$ScriptPrefix-$DataCollectorVersion.ps1"
 $RunbookName = "$ScriptPrefix-$DataCollectorVersion"
 $path = "./runbooks"
 $Tags = @{"Service" = "Cloudneeti-Office365-Data-Collection"}
-$SharePointDomainURL = "https://$SharePointDomain"
+$SharePointAdminCenterURL = "https://$SharePointAdminCenterDomain"
 
 # Cloudneeti API URL
 $CloudneetiAPIEndpoints = @{
@@ -291,7 +301,7 @@ $RequiredModules = @"
             "Product": "SharePoint",
             "Name": "Microsoft.Online.SharePoint.PowerShell",
             "ContentUrl" : "https://www.powershellgallery.com/api/v2/package/Microsoft.Online.SharePoint.PowerShell/16.0.8414.1200",
-            "Version" : "16.0.8414.1200" 
+            "Version" : "16.0.8414.1200"
         },
         {
                 "Product": "AzureRM.Profile",
@@ -372,15 +382,15 @@ else {
 # Creating variable in Azure automation
 $CloudneetiAPIKeyEncrypt = (New-Object PSCredential "user",$CloudneetiAPIKey).GetNetworkCredential().Password
 $VariableObject = @{    
-    "CloudneetiContractId"  = $CloudneetiLicenseId;
-    "CloudneetiAccountId"   = $CloudneetiAccountId; 
-    "OfficeDomain"          = $OfficeDomain;
-    "CloudneetiEnvironment" = $CloudneetiEnvironment;
-    "OfficeDirectoryId"     = $OfficeDirectoryId;
-    "CloudneetiAPIKey"      = $CloudneetiAPIKeyEncrypt;
-    "CloudneetiAPIURL"      = $CloudneetiAPIURL;
-    "DataCollectorVersion"  = $DataCollectorVersion;
-    "SharePointDomainURL"   = $SharePointDomainURL
+    "CloudneetiContractId"      = $CloudneetiLicenseId;
+    "CloudneetiAccountId"       = $CloudneetiAccountId; 
+    "OfficeDomain"              = $OfficeDomain;
+    "CloudneetiEnvironment"     = $CloudneetiEnvironment;
+    "OfficeDirectoryId"         = $OfficeDirectoryId;
+    "CloudneetiAPIKey"          = $CloudneetiAPIKeyEncrypt;
+    "CloudneetiAPIURL"          = $CloudneetiAPIURL;
+    "DataCollectorVersion"      = $DataCollectorVersion;
+    "SharePointAdminCenterURL"  = $SharePointAdminCenterURL
 }
 
 Write-Host "Creating Azure automation variables in automation account"

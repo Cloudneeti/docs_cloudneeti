@@ -14,13 +14,15 @@
             - Enter Cloudneeti Office 365 Data Collector Version
             - Enter Azure Subscription Id where office 365 data collector resouces is present
             - Enter office 365 data collector name
+            - Enter office 365 SharePoint admin center domain name
             
 .INPUTS
         - Cloudneeti Office 365 Data Collector Artifacts Storage Name <Contact Cloudneeti team>
         - Cloudneeti Office 365 Data Collector Artifacts Storage Access Key <Contact Cloudneeti team>
         - Cloudneeti Office 365 Data Collector Version <Contact Cloudneeti team>
         - Office 365 data collector name
-        - Azure Subscription Id where office 365 data collector resouces will be created <Azure Subscription Id where office 365 data collector resouces is present>
+        - Azure Subscription Id where office 365 data collector resouces will be created <Azure Subscription Id where office 365 data collector resource is present>
+        - SharePoint admin domain name
 
 .OUTPUTS
     Output (if any)
@@ -69,14 +71,14 @@ param
 
     # Subscription Id for automation account creation
     [Parameter(Mandatory = $False,
-        HelpMessage = "Azure Subscription Id for office 365 data collector resources provisioned",
+        HelpMessage = "Azure Subscription Id for office 365 data collector resource provisioned",
         Position = 4
     )]
     [ValidateNotNullOrEmpty()]
     [guid]
     $AzureSubscriptionId = $(Read-Host -prompt "Enter Azure Subscription Id where office 365 data collector is present"),
 
-    # Resource group name for Cloudneeti Resouces
+    # Resource group name for cloudneeti resource
     [Parameter(Mandatory = $False,
         HelpMessage = "Office 365 Data Collector Name",
         Position = 5
@@ -85,15 +87,15 @@ param
     [string]
     $DataCollectorName = $(Read-Host -prompt "Enter office 365 data collector name"),
 
-    # Office Domain URL
+    # SharePoint admin center domain
     [ValidateScript( {$_ -notmatch 'https://+' -and $_ -notmatch 'http://+'})]
     [Parameter(Mandatory = $False,
-        HelpMessage = "Share Point Domain",
-        Position = 11
+        HelpMessage = "SharePoint admin center domain name",
+        Position = 6
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $SharePointDomain = $(Read-Host -prompt "Enter Share Point Domain")
+    $SharePointAdminCenterDomain = $(Read-Host -prompt "Enter SharePoint admin center domain name")
 )
 # Session configuration
 $ErrorActionPreference = 'Stop'
@@ -107,11 +109,11 @@ $ContianerName = "m365-datacollection-script"
 $RunbookScriptName = "$ScriptPrefix-$DataCollectorVersion.ps1"
 $RunbookName = "$ScriptPrefix-$DataCollectorVersion"
 $path = "./runbooks"
-$SharePointDomainURL = "https://$SharePointDomain"
+$SharePointAdminCenterURL = "https://$SharePointAdminCenterDomain"
 $scheduleName = "$ScriptPrefix-DailySchedule" 
 $VariableObject = @{
-    "DataCollectorVersion"  = $DataCollectorVersion;
-    "SharePointDomainURL"   = $SharePointDomainURL
+    "DataCollectorVersion"       = $DataCollectorVersion;
+    "SharePointAdminCenterURL"   = $SharePointAdminCenterURL
 }
 
 $RequiredModules = @"
