@@ -34,7 +34,7 @@
         - Cloudneeti Office 365 Data Collector Artifacts Storage Access Key
         - Cloudneeti Office 365 Data Collector Version
         - Office 365 Domain Name
-        - SharePoint Admin Center Domain
+        - SharePoint Admin Center URL
         - Office 365 Directory Id
         - Office 365 Administator Email Id
         - Office 365  App Password or User Password
@@ -54,7 +54,7 @@
         - Cloudneeti Office 365 Data Collector Artifacts Storage Access Key <Contact Cloudneeti team>
         - Cloudneeti Office 365 Data Collector Version <Contact Cloudneeti team>
         - Office 365 Domain Name <Office 365 domian name>
-        - SharePoint Admin Center Domain Name 
+        - SharePoint Admin Center URL 
         - Office 365 Directory Id <Directory Id of Office 365>
         - Office 365 Administator Email Id <Office 365 Global Administrator Email Id>
         - Office 365 App Password <Office 365 Administrator App password or User password>
@@ -166,15 +166,15 @@ param
     [string]
     $OfficeDomain = $(Read-Host -prompt "Enter Office 365 Domain Name"),
 
-    # Office Domain URL
-    [ValidateScript( {$_ -notmatch 'https://+' -and $_ -notmatch 'http://+'})]
+    # SharePoint URL
+    [ValidateScript({$_ -notmatch 'http://+'})]
     [Parameter(Mandatory = $False,
-        HelpMessage = "Share Point Domain",
+        HelpMessage = "SharePoint URL",
         Position = 11
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $SharePointAdminCenterDomain = $(Read-Host -prompt "Enter SharePoint admin center domain name"),
+    $SharePointAdminCenterURL = $(Read-Host -prompt "Enter SharePoint admin center URL"),
 
     # Office Directory ID
     [Parameter(Mandatory = $False,
@@ -195,7 +195,7 @@ param
     [string]
     $OfficeAdminEmailId = $(Read-Host -prompt "Enter Office 365 Administator Email Id"),
 
-        # Office App password or user password
+    # Office App password or user password
     [Parameter(Mandatory = $False,
         HelpMessage = "Office 365 app password or user password",
         Position = 14
@@ -213,7 +213,7 @@ param
     [guid]
     $AzureSubscriptionId = $(Read-Host -prompt "Enter Azure Subscription Id where office 365 data collector resouces will be created"),
 
- # Resource group name for Cloudneeti Resouces
+    # Resource group name for Cloudneeti Resouces
     [Parameter(Mandatory = $False,
         HelpMessage = "Office 365 Data Collector Name",
         Position = 16
@@ -245,7 +245,9 @@ $RunbookScriptName = "$ScriptPrefix-$DataCollectorVersion.ps1"
 $RunbookName = "$ScriptPrefix-$DataCollectorVersion"
 $path = "./runbooks"
 $Tags = @{"Service" = "Cloudneeti-Office365-Data-Collection"}
-$SharePointAdminCenterURL = "https://$SharePointAdminCenterDomain"
+if($SharePointAdminCenterURL -notlike "https://*"){
+    $SharePointAdminCenterURL = "https://$SharePointAdminCenterURL"
+}
 
 # Cloudneeti API URL
 $CloudneetiAPIEndpoints = @{
