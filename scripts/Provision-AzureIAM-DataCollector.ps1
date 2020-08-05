@@ -350,10 +350,11 @@ $CloudneetiAPIKeyEncrypt = (New-Object PSCredential "user",$CloudneetiAPIKey).Ge
 $VariableObject = @{    
     "CloudneetiLicenseId"   = $CloudneetiLicenseId;
     "CloudneetiAccountId"   = $CloudneetiAccountId; 
-    "CloudneetiEnvironment" = $CloudneetiEnvironment 
-    "AzureDirectoryId"      = $AzureActiveDirectoryId 
-    "CloudneetiAPIKey"      = $CloudneetiAPIKeyEncrypt
-    "CloudneetiAPIURL"      = $CloudneetiAPIURL
+    "CloudneetiEnvironment" = $CloudneetiEnvironment;
+    "AzureDirectoryId"      = $AzureActiveDirectoryId;
+    "CloudneetiAPIKey"      = $CloudneetiAPIKeyEncrypt;
+    "CloudneetiAPIURL"      = $CloudneetiAPIURL;
+    "DataCollectorVersion"  = $DataCollectorVersion;
 }
 
 Write-Host "Creating Azure automation variables in automation account"
