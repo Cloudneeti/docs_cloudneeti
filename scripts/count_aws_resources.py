@@ -1,17 +1,17 @@
 """
 SYNOPSIS
 --------
-    Get Count of resources present in AWS account
+    Get the count of resources present across regions in the AWS account
 
 DESCRIPTION
 -----------
-    This scripts counts the resources present in AWS account. 
-	It will give you the services wise resource count created on all regions of AWS account 
+    This script provides a detailed overview of the number of resources present in the AWS account. 
+	It provides a service-wise count of resources created in all the regions of the AWS account. 
 
 EXAMPLE
 -------
-    This script can be execute on python compiler (Powershell, Coomand line)
-    python ./count_aws_resources.py --accessKey <AWS access key> --secretKey <AWS secret key>
+    This script can be executed on a python compiler (Powershell, any command line tool with python installed)
+    python ./count_aws_resources.py --accessKey <AWS Access Key Id> --secretKey <AWS Secret Access Key>
     
 NOTES
 -----
@@ -22,8 +22,9 @@ NOTES
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
     Prerequisites
-        -   Workstation should have installed Python version 3 and above, with multiprocessing and Boto3 modules
-        -   User should have Security Audit role on AWS account
+
+        -   Workstation with Python version 3 and above, with multiprocessing and Boto3 modules installed.
+        -   User credentials (Access Key Id and Secret Accces Key) of a user having atleast the Security Audit permission and above on the AWS account
 """
 
 import boto3
