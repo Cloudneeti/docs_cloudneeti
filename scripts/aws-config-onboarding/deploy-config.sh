@@ -146,9 +146,9 @@ if [[ $regionlist != "all" ]] && [[ $regionlist != "na" ]]; then
     fi
 fi
 
-read -p "This script will delete any default config recorders and delivery channels present in entered regions of the AWS Account: $awsaccountid. Continue? (Y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || exit 1
+read -p "This script will update any existing config setup present in entered regions of the AWS Account: $awsaccountid, as per Cloudneeti requirements. Continue? (Y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || exit 1
 
-echo "Verifying if the config aggregator or the config deployment bucket with the similar environment variable exists in the account..."
+echo "Verifying if the config aggregator or the config deployment bucket with the similar environment prefix exists in the account..."
 s3_detail="$(aws s3api get-bucket-versioning --bucket config-bucket-$env-$awsaccountid 2>/dev/null)"
 s3_status=$?
 
@@ -165,38 +165,58 @@ if [[ $s3_status != 0 ]] && [[ $stack_status -eq 0 ]]; then
     exit 1
 fi
 
-echo "Deleting the default configuration recorder and delivery channel (if exists) in the primary region: $aggregatorregion"
-aws configservice delete-configuration-recorder --configuration-recorder-name default --region $aggregatorregion 2>/dev/null
-aws configservice delete-delivery-channel --delivery-channel-name default --region $aggregatorregion 2>/dev/null
+echo "Fetching details for any existing configuration recorder and delivery channel in the primary region: $aggregatorregion"
+config_recorder="$(aws configservice describe-configuration-recorders --region $aggregatorregion | jq '.ConfigurationRecorders[0].name')"
+role_arn="$(aws configservice describe-configuration-recorders --region $aggregatorregion | jq '.ConfigurationRecorders[0].roleARN')"
+delivery_channel="$(aws configservice describe-delivery-channels --region $aggregatorregion | jq '.DeliveryChannels[0].name')"
 
-echo "Deploying/Re-deploying config and aggregator in the primary region: $aggregatorregion"
-aws cloudformation deploy --template-file config-aggregator.yml --stack-name "cn-data-collector-"$env --region $aggregatorregion --parameter-overrides env=$env awsaccountid=$awsaccountid aggregatorname=$aggregatorname --capabilities CAPABILITY_NAMED_IAM --no-fail-on-empty-changeset
-aggregator_status=$?
+if [[ $config_recorder != null ]] && [[ $delivery_channel != null ]]; then
+    echo "Found existing config setup!! Updating existing configuration recorder and delivery channel.."
+    aws configservice put-configuration-recorder --configuration-recorder name=$config_recorder,roleARN=$role_arn --recording-group allSupported=true,includeGlobalResourceTypes=true --region $aggregatorregion 2>/dev/null
+    config_status=$?
+    if [[ $config_status -eq 0 ]]; then        
+        aws configservice put-configuration-aggregator --region $aggregatorregion --configuration-aggregator-name $aggregatorname --account-aggregation-sources AccountIds=$awsaccountid,AllAwsRegions=true 2>/dev/null
+        aggregator_status=$?
+    else
+        echo "Error updating existing setup. Please contact Cloudneeti support!"
+    fi
+else
+    echo "No existing config setup found. Deploying new config setup and aggregator in the primary region: $aggregatorregion"
+    aws cloudformation deploy --template-file config-aggregator.yml --stack-name "cn-data-collector-"$env --region $aggregatorregion --parameter-overrides env=$env awsaccountid=$awsaccountid aggregatorname=$aggregatorname --capabilities CAPABILITY_NAMED_IAM --no-fail-on-empty-changeset
+    aggregator_status=$?
+fi
 
 if [[ "$aggregator_status" -eq 0 ]] && [[ "${input_regions[0]}" != "na" ]]; then
     for region in "${input_regions[@]}"; do
         if [[ "$region" != "$aggregatorregion" ]]; then
-            echo "Deleting the default configuration recorder and delivery channel (if exists) in the secondary region: $region"
-            aws configservice delete-configuration-recorder --configuration-recorder-name default --region $region 2>/dev/null
-            aws configservice delete-delivery-channel --delivery-channel-name default --region $region 2>/dev/null
+            echo "Fetching details for any existing configuration recorder and delivery channel in the secondary region: $region"
+            config_recorder="$(aws configservice describe-configuration-recorders --region $region | jq '.ConfigurationRecorders[0].name')"
+            role_arn="$(aws configservice describe-configuration-recorders --region $region | jq '.ConfigurationRecorders[0].roleARN')"
+            delivery_channel="$(aws configservice describe-delivery-channels --region $region | jq '.DeliveryChannels[0].name')"
 
-            if [[ " ${new_regions[*]} " == *" $region "* ]]; then
-                echo "Deploying/Re-deploying config in the secondary region: $region. Note that this is a newly added AWS region and support for aggregator authorization is still not available in this region which may cause some data discrepancy in the aggregator."
-                aws cloudformation deploy --template-file newregion-config.yml --stack-name "cn-data-collector-"$env --region $region --parameter-overrides env=$env awsaccountid=$awsaccountid --capabilities CAPABILITY_NAMED_IAM --no-fail-on-empty-changeset
+            if [[ $config_recorder -ne null ]] && [[ $delivery_channel -ne null ]]; then
+                echo "Updating existing configuration recorder and delivery channel.."
+                aws configservice put-configuration-recorder --configuration-recorder name=$config_recorder,roleARN=$role_arn --recording-group allSupported=true,includeGlobalResourceTypes=false --region $region 2>/dev/null
                 multiregionconfig_status=$?
             else
-                echo "Deploying/Re-deploying config in the secondary region: $region"
-                aws cloudformation deploy --template-file multiregion-config.yml --stack-name "cn-data-collector-"$env --region $region --parameter-overrides env=$env awsaccountid=$awsaccountid aggregatorregion=$aggregatorregion --capabilities CAPABILITY_NAMED_IAM --no-fail-on-empty-changeset
-                multiregionconfig_status=$?
+                if [[ " ${new_regions[*]} " == *" $region "* ]]; then
+                    echo "Deploying/Re-deploying config in the secondary region: $region. Note that this is a newly added AWS region and support for aggregator authorization is still not available in this region which may cause some data discrepancy in the aggregator."
+                    aws cloudformation deploy --template-file newregion-config.yml --stack-name "cn-data-collector-"$env --region $region --parameter-overrides env=$env awsaccountid=$awsaccountid --capabilities CAPABILITY_NAMED_IAM --no-fail-on-empty-changeset
+                    multiregionconfig_status=$?
+                else
+                    echo "Deploying/Re-deploying config in the secondary region: $region"
+                    aws cloudformation deploy --template-file multiregion-config.yml --stack-name "cn-data-collector-"$env --region $region --parameter-overrides env=$env awsaccountid=$awsaccountid aggregatorregion=$aggregatorregion --capabilities CAPABILITY_NAMED_IAM --no-fail-on-empty-changeset
+                    multiregionconfig_status=$?
+                fi
             fi
         fi
     done
 
 elif [[ "${input_regions[0]}" == "na" ]] || [[ "$multiregionconfig_status" -eq 0 ]]; then
-    echo "Successfully deployed config(s) and aggregator in the mentioned regions!!"
+    echo "Successfully deployed/updated config(s) and aggregator in the mentioned regions!!"
 
 elif [[ "${input_regions[0]}" == "na" ]]; then
-    echo "Successfully deployed config and aggregator in the mentioned region!!"
+    echo "Successfully deployed/updated config and aggregator in the mentioned region!!"
 
 else
     echo "Something went wrong! Please contact Cloudneeti support for more details"
