@@ -165,13 +165,13 @@ if [[ $s3_status != 0 ]] && [[ $stack_status -eq 0 ]]; then
     exit 1
 fi
 
-echo "Fetching details for any existing configuration recorder and delivery channel in the primary region: $aggregatorregion"
+echo "Fetching details for any existing config setup in the primary region: $aggregatorregion"
 config_recorder="$(aws configservice describe-configuration-recorders --region $aggregatorregion | jq '.ConfigurationRecorders[0].name')"
 role_arn="$(aws configservice describe-configuration-recorders --region $aggregatorregion | jq '.ConfigurationRecorders[0].roleARN')"
 delivery_channel="$(aws configservice describe-delivery-channels --region $aggregatorregion | jq '.DeliveryChannels[0].name')"
 
 if [[ $config_recorder != null ]] && [[ $delivery_channel != null ]]; then
-    echo "Found existing config setup!! Updating existing configuration recorder and delivery channel.."
+    echo "Found existing config setup!! Enhancing existing config setup to record all the resource types including global in the primary region..."
     aws configservice put-configuration-recorder --configuration-recorder name=$config_recorder,roleARN=$role_arn --recording-group allSupported=true,includeGlobalResourceTypes=true --region $aggregatorregion 2>/dev/null
     config_status=$?
     if [[ $config_status -eq 0 ]]; then        
@@ -189,22 +189,22 @@ fi
 if [[ "$aggregator_status" -eq 0 ]] && [[ "${input_regions[0]}" != "na" ]]; then
     for region in "${input_regions[@]}"; do
         if [[ "$region" != "$aggregatorregion" ]]; then
-            echo "Fetching details for any existing configuration recorder and delivery channel in the secondary region: $region"
+            echo "Fetching details for any existing config setup in the secondary region: $region"
             config_recorder="$(aws configservice describe-configuration-recorders --region $region | jq '.ConfigurationRecorders[0].name')"
             role_arn="$(aws configservice describe-configuration-recorders --region $region | jq '.ConfigurationRecorders[0].roleARN')"
             delivery_channel="$(aws configservice describe-delivery-channels --region $region | jq '.DeliveryChannels[0].name')"
 
             if [[ $config_recorder -ne null ]] && [[ $delivery_channel -ne null ]]; then
-                echo "Updating existing configuration recorder and delivery channel.."
+                echo "Found existing config setup!! Enhancing existing config setup to record all the resource types in the secondary region..."
                 aws configservice put-configuration-recorder --configuration-recorder name=$config_recorder,roleARN=$role_arn --recording-group allSupported=true,includeGlobalResourceTypes=false --region $region 2>/dev/null
                 multiregionconfig_status=$?
             else
                 if [[ " ${new_regions[*]} " == *" $region "* ]]; then
-                    echo "Deploying/Re-deploying config in the secondary region: $region. Note that this is a newly added AWS region and support for aggregator authorization is still not available in this region which may cause some data discrepancy in the aggregator."
+                    echo "No existing config setup found. Deploying/Re-deploying config in the secondary region: $region."
                     aws cloudformation deploy --template-file newregion-config.yml --stack-name "cn-data-collector-"$env --region $region --parameter-overrides env=$env awsaccountid=$awsaccountid --capabilities CAPABILITY_NAMED_IAM --no-fail-on-empty-changeset
                     multiregionconfig_status=$?
                 else
-                    echo "Deploying/Re-deploying config in the secondary region: $region"
+                    echo "No existing config setup found. Deploying/Re-deploying config in the secondary region: $region."
                     aws cloudformation deploy --template-file multiregion-config.yml --stack-name "cn-data-collector-"$env --region $region --parameter-overrides env=$env awsaccountid=$awsaccountid aggregatorregion=$aggregatorregion --capabilities CAPABILITY_NAMED_IAM --no-fail-on-empty-changeset
                     multiregionconfig_status=$?
                 fi
