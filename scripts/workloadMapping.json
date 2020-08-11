@@ -17,6 +17,34 @@
             "Kubernetes Service (AKS)": "microsoft.containerservice/managedclusters",
             "Cache for Redis": "microsoft.cache/redis"
         },
-        "AWS": {}
+        "AWS": {
+            "EC2 Instances": "AWS::EC2::Instance",
+            "RDS Aurora Cluster": "AWS::RDS::DBCluster::Aurora",
+            "RDS Aurora MySql Cluster": "AWS::RDS::DBCluster::AuroraMySql",
+            "RDS Aurora Postgres Cluster": "AWS::RDS::DBCluster::AuroraPostgres",
+            "RDS Aurora Instance": "AWS::RDS::DBInstance::Aurora",            
+            "RDS MariaDB Instance": "AWS::RDS::DBInstance::MariaDB",
+            "RDS MySql Instance": "AWS::RDS::DBInstance::MySql",
+            "RDS Oracle Instance": "AWS::RDS::DBInstance::Oracle",
+            "RDS Postgres Instance": "AWS::RDS::DBInstance::Postgres",
+            "RDS SQLServer Instance": "AWS::RDS::DBInstance::SQLServer",
+            "RDS Reserve Instance": "AWS::RDS::ReservedInstance",    
+            "Document DB Instance": "AWS::DocDB::DBInstance",
+            "Document DB Cluster": "AWS::DocDB::DBCluster",
+            "Redshift Cluster": "AWS::Redshift::Cluster",
+            "Redshift ReservedNode": "AWS::Redshift::ReservedNode",
+            "Neptune DB Instance": "AWS::Neptune::DBCluster",
+            "Neptune DB Cluster": "AWS::Neptune::DBInstance",
+            "Dynamo DB Cluster": "AWS::DAX::Cluster",
+            "Dynamo DB Table": "AWS::DynamoDB::Table",
+            "Elastic Load Balancer": "AWS::ElasticLoadBalancing::LoadBalancer",
+            "Elastic Load Balancer V2": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+            "API Gateway V2": "AWS::ApiGatewayV2::Api",
+            "API Gateway": "AWS::ApiGateway::RestApi",
+            "Elastic Kubernetes Services (EKS)": "AWS::EKS::Cluster",
+            "Elastic Container Services (EKS)": "AWS::ECS::Cluster",
+            "Kinesis Stream": "AWS::Kinesis::Stream",
+            "KinesisFirehose Delivery Stream": "AWS::KinesisFirehose::DeliveryStream"
+        }
     }
 }
