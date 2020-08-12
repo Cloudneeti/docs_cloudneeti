@@ -27,9 +27,12 @@ NOTES
         -   User credentials (Access Key Id and Secret Accces Key) of a user having atleast the Security Audit permission and above on the AWS account
 """
 
+import json
 import boto3
-import multiprocessing
 import argparse
+import multiprocessing
+
+from urllib.request import urlopen
 
 def acm(function, credentials, resource_count, region_list):
     print('Scanning ACM resources')
@@ -1280,9 +1283,9 @@ def main(arg):
                 print("Excepyion occurred while creating process. Please try again later!")
                 quit()
 
-    print("Completed resource counting.\n")
-    print("Resource Summary:")
-    
+    print("Completed resource counting")
+
+    # Updating Resource Count Object
     resource_count_details.update({ 'AWS::Lambda::Function': resource_count[lambdas],
                                     'AWS::CertificateManager::Certificate': resource_count[acm],
                                     'AWS::ApiGateway::RestApi': resource_count[apigateway],
@@ -1364,12 +1367,38 @@ def main(arg):
                                     'AWS::CodePipeline::Pipeline': resource_count[codepipeline]
                                     })
 
-    count = 0
-    for key, value in sorted(resource_count_details.items()):
-        print("\t{} : {}".format(key, value))
-        count+=value
+    # Processing Workloads
+    workload_count = 0
+    try:
+        print("Fetching workload mapping")
+        workload_mapping_url = "https://raw.githubusercontent.com/Cloudneeti/docs_cloudneeti/workload-resource-count/scripts/workloadMapping.json" 
 
-    print("\nTotal Resource Count", count)
+        with urlopen(workload_mapping_url) as url:
+            workload_mapping = json.loads(url.read())
+
+        print("Successfully fetched workload mapping")
+
+        print("\nWorkload Distribution:")
+        for workload in workload_mapping['workloadMapping']['AWS']:
+            service_type = workload_mapping['workloadMapping']['AWS'][workload]
+            if resource_count_details[service_type] != 0:
+                workload_count += resource_count_details[service_type]
+                print("\t{} : {}".format(service_type, resource_count_details[service_type]))
+    except:
+        print("Error occurred while processing workloads, Please contact cspm support")
+
+    # Showing Resource Distribution
+    print("\nResource Distribution:")
+    resource_count = 0
+    for key, value in sorted(resource_count_details.items(), key=lambda x: x[1], reverse=True):
+        if value != 0:
+            print("\t{} : {}".format(key, value))
+            resource_count+=value
+
+    print("\n\nSummary:")
+    print("\tZscaler CSPM Supported Total Workloads:", workload_count)
+    print("\tTotal Resources:", resource_count)
+
 
 if(__name__ == '__main__'):
     arg_parser = argparse.ArgumentParser(prog='count_aws_resources',
