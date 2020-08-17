@@ -1371,7 +1371,7 @@ def main(arg):
     workload_count = 0
     try:
         print("Fetching workload mapping")
-        workload_mapping_url = "https://raw.githubusercontent.com/Cloudneeti/docs_cloudneeti/workload-resource-count/scripts/workloadMapping.json" 
+        workload_mapping_url = "https://raw.githubusercontent.com/Cloudneeti/docs_cloudneeti/master/scripts/workloadMapping.json" 
 
         with urlopen(workload_mapping_url) as url:
             workload_mapping = json.loads(url.read())
