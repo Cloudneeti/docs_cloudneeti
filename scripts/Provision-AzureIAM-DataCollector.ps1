@@ -273,6 +273,12 @@ $RequiredModules = @"
             "Name": "AzureRM.Profile",
             "ContentUrl" : "https://www.powershellgallery.com/api/v2/package/azurerm.profile",
             "Version" : "5.8.3"
+        },
+        {
+            "Product": "MSOnline",
+            "Name": "MSOnline",
+            "ContentUrl" : "https://www.powershellgallery.com/api/v2/package/MSOnline",
+            "Version" : "1.1.183.57"
         }
     ]
 }
