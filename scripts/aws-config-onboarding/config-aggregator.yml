@@ -114,7 +114,7 @@ Resources:
                 - "config.amazonaws.com" 
             Action: sts:AssumeRole
       ManagedPolicyArns:
-        - "arn:aws:iam::aws:policy/service-role/AWSConfigRole"
+        - "arn:aws:iam::aws:policy/service-role/AWS_ConfigRole"
         
   ConfigRecorder:
     Type: AWS::Config::ConfigurationRecorder

@@ -103,9 +103,9 @@ for i in "${enabled_regions[@]}"; do
     [[ -n $skip ]] || new_regions+=("$i")
 done
 
-confugure_account="$(aws sts get-caller-identity)"
+configure_account="$(aws sts get-caller-identity)"
 
-if [[ "$confugure_account" != *"$awsaccountid"* ]];then
+if [[ "$configure_account" != *"$awsaccountid"* ]];then
     echo "AWS CLI configuration AWS account Id and entered AWS account Id does not match. Please try again with correct AWS Account Id."
     exit 1
 fi
