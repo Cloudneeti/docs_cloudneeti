@@ -135,13 +135,18 @@ if($EnableManagementGroup)
         $PolicyAssignmentId = $defaultAssignment.PolicyAssignmentId.split('/')[-1]
         $mgmtAPI = "https://management.azure.com/providers/Microsoft.Management/managementGroups/$ManagementGroupId/providers/Microsoft.Authorization/policyAssignments/$($PolicyAssignmentId)?api-version=2018-05-01"
         
+        # Setting up the JSON Object
+        # ASC Disable JSON Object
+        $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.location = $($defaultAssignment.Location)
         $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.properties.displayName = $($defaultAssignment.Properties.displayName)
+
+        # ASC Enable JSON Object
+        $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.location = $($defaultAssignment.Location)
         $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.properties.displayName = $($defaultAssignment.Properties.displayName)
     }
     else {
         Write-Host "Azure Security Center initiative at Management Group $ManagementGroupId not found." -foregroundcolor red
         break;
-
     }
 }
 else { 
@@ -149,13 +154,19 @@ else {
     if ($null -ne $defaultAssignment) {
         $PolicyAssignmentId = $defaultAssignment.PolicyAssignmentId.split('/')[-1]
         $mgmtAPI = "https://management.azure.com/subscriptions/$subscriptionId/providers/Microsoft.Authorization/policyAssignments/$($PolicyAssignmentId)?api-version=2018-05-01"
+        
+        # Setting up the JSON Object
+        # ASC Disable JSON Object
+        $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.location = $($defaultAssignment.Location)
         $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.properties.displayName = $($defaultAssignment.Properties.displayName)
+
+        # ASC Enable JSON Object
+        $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.location = $($defaultAssignment.Location)
         $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.properties.displayName = $($defaultAssignment.Properties.displayName)
     }
     else {
-        # Assign default policy name
-        $ascPolicies.AzureSecurityCenter.ASCPoliciesDisabledState.properties.displayName = "ASC Default (subscription: $SubscriptionId)"
-        $ascPolicies.AzureSecurityCenter.ASCPoliciesEnabledState.properties.displayName = "ASC Default (subscription: $SubscriptionId)"
+        Write-Host "Azure Security Center initiative at default policy not found." -foregroundcolor red
+        break;
     }
 }
 

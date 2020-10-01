@@ -28,7 +28,7 @@
             Default output format: json  
       - Run this script in any bash shell (linux command prompt)
 .EXAMPLE
-    Command to execute : bash deploy-config.sh [-a <12-digit-account-id>] [-e <environment-prefix>] [-n <config-aggregator-name] [-p <primary-aggregator-region>] [-s <list of regions(secondary) where config is to enabled>]
+    Command to execute : bash deploy-config.sh [-a <12-digit-account-id>] [-e <environment-prefix>] [-n <config-aggregator-name>] [-p <primary-aggregator-region>] [-s <list of regions(secondary) where config is to enabled>]
 .INPUTS
     (-a)Account Id: 12-digit AWS account Id of the account where you want to deploy the AWS Config setup
     (-e)Environment prefix: Enter any suitable prefix for your deployment
@@ -41,7 +41,7 @@
     None
 '
 
-usage() { echo "Usage: $0 [-a <12-digit-account-id>] [-e <environment-prefix>] [-n <config-aggregator-name] [-p <primary-aggregator-region>] [-s <list of regions(secondary) where config is to enabled>]" 1>&2; exit 1; }
+usage() { echo "Usage: $0 [-a <12-digit-account-id>] [-e <environment-prefix>] [-n <config-aggregator-name>] [-p <primary-aggregator-region>] [-s <list of regions(secondary) where config is to enabled>]" 1>&2; exit 1; }
 aggregion_validation() { echo "Enter correct value for the aggregator region parameter. Following are the acceptable values: ${aggregator_regions[@]}" 1>&2; exit 1; }
 region_validation() { echo "Enter correct value(s) for the secondary region parameter. Following are the acceptable values: ${enabled_regions[@]}" 1>&2; exit 1; }
 
