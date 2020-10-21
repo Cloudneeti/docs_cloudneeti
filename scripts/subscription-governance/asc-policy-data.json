@@ -39,17 +39,8 @@
                     "networkSecurityGroupsOnVirtualMachinesMonitoringEffect": {
                         "value": "AuditIfNotExists"
                     },
-                    "webApplicationFirewallMonitoringEffect": {
-                        "value": "AuditIfNotExists"
-                    },
-                    "nextGenerationFirewallMonitoringEffect": {
-                        "value": "AuditIfNotExists"
-                    },
                     "vulnerabilityAssesmentMonitoringEffect": {
                         "value": "AuditIfNotExists"
-                    },
-                    "storageEncryptionMonitoringEffect": {
-                        "value": "Audit"
                     },
                     "jitNetworkAccessMonitoringEffect": {
                         "value": "AuditIfNotExists"
@@ -57,23 +48,11 @@
                     "adaptiveApplicationControlsMonitoringEffect": {
                         "value": "AuditIfNotExists"
                     },
-                    "sqlAuditingMonitoringEffect": {
-                        "value": "AuditIfNotExists"
-                    },
-                    "sqlEncryptionMonitoringEffect": {
-                        "value": "AuditIfNotExists"
-                    },
                     "sqlDbEncryptionMonitoringEffect": {
                         "value": "AuditIfNotExists"
                     },
                     "sqlServerAuditingMonitoringEffect": {
                         "value": "AuditIfNotExists"
-                    },
-                    "sqlServerAuditingActionsAndGroupsMonitoringEffect": {
-                        "value": "AuditIfNotExists"
-                    },
-                    "diagnosticsLogsInAppServiceMonitoringEffect": {
-                        "value": "Audit"
                     },
                     "diagnosticsLogsInSelectiveAppServicesMonitoringEffect": {
                         "value": "AuditIfNotExists"
@@ -86,9 +65,6 @@
                     },
                     "diagnosticsLogsInBatchAccountRetentionDays": {
                         "value": "365"
-                    },
-                    "metricAlertsInBatchAccountMonitoringEffect": {
-                        "value": "AuditIfNotExists"
                     },
                     "classicComputeVMsMonitoringEffect": {
                         "value": "Audit"
@@ -147,9 +123,6 @@
                     "diagnosticsLogsInServiceBusRetentionDays": {
                         "value": "365"
                     },
-                    "namespaceAuthorizationRulesInServiceBusMonitoringEffect": {
-                        "value": "Audit"
-                    },
                     "aadAuthenticationInSqlServerMonitoringEffect": {
                         "value": "AuditIfNotExists"
                     },
@@ -169,12 +142,6 @@
                         "value": "Audit"
                     },
                     "diagnosticsLogsInServiceFabricMonitoringEffect": {
-                        "value": "AuditIfNotExists"
-                    },
-                    "accessRulesInEventHubNamespaceMonitoringEffect": {
-                        "value": "Audit"
-                    },
-                    "accessRulesInEventHubMonitoringEffect": {
                         "value": "AuditIfNotExists"
                     },
                     "sqlDbVulnerabilityAssesmentMonitoringEffect": {
@@ -213,15 +180,6 @@
                     "identityRemoveExternalAccountWithReadPermissionsMonitoringEffect": {
                         "value": "AuditIfNotExists"
                     },
-                    "apiAppConfigureIPRestrictionsMonitoringEffect": {
-                        "value": "AuditIfNotExists"
-                    },
-                    "functionAppConfigureIPRestrictionsMonitoringEffect": {
-                        "value": "AuditIfNotExists"
-                    },
-                    "webAppConfigureIPRestrictionsMonitoringEffect": {
-                        "value": "AuditIfNotExists"
-                    },
                     "apiAppDisableRemoteDebuggingMonitoringEffect": {
                         "value": "AuditIfNotExists"
                     },
@@ -229,15 +187,6 @@
                         "value": "AuditIfNotExists"
                     },
                     "webAppDisableRemoteDebuggingMonitoringEffect": {
-                        "value": "AuditIfNotExists"
-                    },
-                    "apiAppDisableWebSocketsMonitoringEffect": {
-                        "value": "AuditIfNotExists"
-                    },
-                    "functionAppDisableWebSocketsMonitoringEffect": {
-                        "value": "AuditIfNotExists"
-                    },
-                    "webAppDisableWebSocketsMonitoringEffect": {
                         "value": "AuditIfNotExists"
                     },
                     "apiAppEnforceHttpsMonitoringEffect": {
@@ -258,42 +207,6 @@
                     "webAppRestrictCORSAccessMonitoringEffect": {
                         "value": "AuditIfNotExists"
                     },
-                    "apiAppUsedCustomDomainsMonitoringEffect": {
-                        "value": "AuditIfNotExists"
-                    },
-                    "functionAppUsedCustomDomainsMonitoringEffect": {
-                        "value": "AuditIfNotExists"
-                    },
-                    "webAppUsedCustomDomainsMonitoringEffect": {
-                        "value": "AuditIfNotExists"
-                    },
-                    "apiAppUsedLatestDotNetMonitoringEffect": {
-                        "value": "AuditIfNotExists"
-                    },
-                    "webAppUsedLatestDotNetMonitoringEffect": {
-                        "value": "AuditIfNotExists"
-                    },
-                    "apiAppUsedLatestJavaMonitoringEffect": {
-                        "value": "AuditIfNotExists"
-                    },
-                    "webAppUsedLatestJavaMonitoringEffect": {
-                        "value": "AuditIfNotExists"
-                    },
-                    "webAppUsedLatestNodeJsMonitoringEffect": {
-                        "value": "AuditIfNotExists"
-                    },
-                    "apiAppUsedLatestPHPMonitoringEffect": {
-                        "value": "AuditIfNotExists"
-                    },
-                    "webAppUsedLatestPHPMonitoringEffect": {
-                        "value": "AuditIfNotExists"
-                    },
-                    "apiAppUsedLatestPythonMonitoringEffect": {
-                        "value": "AuditIfNotExists"
-                    },
-                    "webAppUsedLatestPythonMonitoringEffect": {
-                        "value": "AuditIfNotExists"
-                    },
                     "vnetEnableDDoSProtectionMonitoringEffect": {
                         "value": "AuditIfNotExists"
                     },
@@ -306,9 +219,6 @@
                     "sqlServerAdvancedDataSecurityMonitoringEffect": {
                         "value": "AuditIfNotExists"
                     },
-                    "sqlServerAdvancedDataSecurityEmailsMonitoringEffect": {
-                        "value": "AuditIfNotExists"
-                    },
                     "sqlManagedInstanceAdvancedDataSecurityEmailAdminsMonitoringEffect": {
                         "value": "AuditIfNotExists"
                     },
@@ -316,9 +226,6 @@
                         "value": "AuditIfNotExists"
                     },
                     "kubernetesServiceRbacEnabledMonitoringEffect": {
-                        "value": "Audit"
-                    },
-                    "kubernetesServicePspEnabledMonitoringEffect": {
                         "value": "Audit"
                     },
                     "kubernetesServiceAuthorizedIPRangesEnabledMonitoringEffect": {
@@ -333,19 +240,10 @@
                     "vulnerabilityAssessmentOnServerMonitoringEffect": {
                         "value": "AuditIfNotExists"
                     },
-                    "threatDetectionTypesOnManagedInstanceMonitoringEffect": {
-                        "value": "AuditIfNotExists"
-                    },
-                    "threatDetectionTypesOnServerMonitoringEffect": {
-                        "value": "AuditIfNotExists"
-                    },
                     "adaptiveNetworkHardeningsMonitoringEffect": {
                         "value": "AuditIfNotExists"
                     },
                     "restrictAccessToManagementPortsMonitoringEffect": {
-                        "value": "AuditIfNotExists"
-                    },
-                    "restrictAccessToAppServicesMonitoringEffect": {
                         "value": "AuditIfNotExists"
                     },
                     "disableIPForwardingMonitoringEffect": {
@@ -420,16 +318,7 @@
                     "networkSecurityGroupsOnVirtualMachinesMonitoringEffect": {
                         "value": "Disabled"
                     },
-                    "webApplicationFirewallMonitoringEffect": {
-                        "value": "Disabled"
-                    },
-                    "nextGenerationFirewallMonitoringEffect": {
-                        "value": "Disabled"
-                    },
                     "vulnerabilityAssesmentMonitoringEffect": {
-                        "value": "Disabled"
-                    },
-                    "storageEncryptionMonitoringEffect": {
                         "value": "Disabled"
                     },
                     "jitNetworkAccessMonitoringEffect": {
@@ -438,22 +327,10 @@
                     "adaptiveApplicationControlsMonitoringEffect": {
                         "value": "Disabled"
                     },
-                    "sqlAuditingMonitoringEffect": {
-                        "value": "Disabled"
-                    },
-                    "sqlEncryptionMonitoringEffect": {
-                        "value": "Disabled"
-                    },
                     "sqlDbEncryptionMonitoringEffect": {
                         "value": "Disabled"
                     },
                     "sqlServerAuditingMonitoringEffect": {
-                        "value": "Disabled"
-                    },
-                    "sqlServerAuditingActionsAndGroupsMonitoringEffect": {
-                        "value": "Disabled"
-                    },
-                    "diagnosticsLogsInAppServiceMonitoringEffect": {
                         "value": "Disabled"
                     },
                     "diagnosticsLogsInSelectiveAppServicesMonitoringEffect": {
@@ -467,9 +344,6 @@
                     },
                     "diagnosticsLogsInBatchAccountRetentionDays": {
                         "value": "364"
-                    },
-                    "metricAlertsInBatchAccountMonitoringEffect": {
-                        "value": "Disabled"
                     },
                     "classicComputeVMsMonitoringEffect": {
                         "value": "Disabled"
@@ -528,9 +402,6 @@
                     "diagnosticsLogsInServiceBusRetentionDays": {
                         "value": "364"
                     },
-                    "namespaceAuthorizationRulesInServiceBusMonitoringEffect": {
-                        "value": "Disabled"
-                    },
                     "aadAuthenticationInSqlServerMonitoringEffect": {
                         "value": "Disabled"
                     },
@@ -550,12 +421,6 @@
                         "value": "Disabled"
                     },
                     "diagnosticsLogsInServiceFabricMonitoringEffect": {
-                        "value": "Disabled"
-                    },
-                    "accessRulesInEventHubNamespaceMonitoringEffect": {
-                        "value": "Disabled"
-                    },
-                    "accessRulesInEventHubMonitoringEffect": {
                         "value": "Disabled"
                     },
                     "sqlDbVulnerabilityAssesmentMonitoringEffect": {
@@ -594,15 +459,6 @@
                     "identityRemoveExternalAccountWithReadPermissionsMonitoringEffect": {
                         "value": "Disabled"
                     },
-                    "apiAppConfigureIPRestrictionsMonitoringEffect": {
-                        "value": "Disabled"
-                    },
-                    "functionAppConfigureIPRestrictionsMonitoringEffect": {
-                        "value": "Disabled"
-                    },
-                    "webAppConfigureIPRestrictionsMonitoringEffect": {
-                        "value": "Disabled"
-                    },
                     "apiAppDisableRemoteDebuggingMonitoringEffect": {
                         "value": "Disabled"
                     },
@@ -610,15 +466,6 @@
                         "value": "Disabled"
                     },
                     "webAppDisableRemoteDebuggingMonitoringEffect": {
-                        "value": "Disabled"
-                    },
-                    "apiAppDisableWebSocketsMonitoringEffect": {
-                        "value": "Disabled"
-                    },
-                    "functionAppDisableWebSocketsMonitoringEffect": {
-                        "value": "Disabled"
-                    },
-                    "webAppDisableWebSocketsMonitoringEffect": {
                         "value": "Disabled"
                     },
                     "apiAppEnforceHttpsMonitoringEffect": {
@@ -639,42 +486,6 @@
                     "webAppRestrictCORSAccessMonitoringEffect": {
                         "value": "Disabled"
                     },
-                    "apiAppUsedCustomDomainsMonitoringEffect": {
-                        "value": "Disabled"
-                    },
-                    "functionAppUsedCustomDomainsMonitoringEffect": {
-                        "value": "Disabled"
-                    },
-                    "webAppUsedCustomDomainsMonitoringEffect": {
-                        "value": "Disabled"
-                    },
-                    "apiAppUsedLatestDotNetMonitoringEffect": {
-                        "value": "Disabled"
-                    },
-                    "webAppUsedLatestDotNetMonitoringEffect": {
-                        "value": "Disabled"
-                    },
-                    "apiAppUsedLatestJavaMonitoringEffect": {
-                        "value": "Disabled"
-                    },
-                    "webAppUsedLatestJavaMonitoringEffect": {
-                        "value": "Disabled"
-                    },
-                    "webAppUsedLatestNodeJsMonitoringEffect": {
-                        "value": "Disabled"
-                    },
-                    "apiAppUsedLatestPHPMonitoringEffect": {
-                        "value": "Disabled"
-                    },
-                    "webAppUsedLatestPHPMonitoringEffect": {
-                        "value": "Disabled"
-                    },
-                    "apiAppUsedLatestPythonMonitoringEffect": {
-                        "value": "Disabled"
-                    },
-                    "webAppUsedLatestPythonMonitoringEffect": {
-                        "value": "Disabled"
-                    },
                     "vnetEnableDDoSProtectionMonitoringEffect": {
                         "value": "Disabled"
                     },
@@ -687,9 +498,6 @@
                     "sqlServerAdvancedDataSecurityMonitoringEffect": {
                         "value": "Disabled"
                     },
-                    "sqlServerAdvancedDataSecurityEmailsMonitoringEffect": {
-                        "value": "Disabled"
-                    },
                     "sqlManagedInstanceAdvancedDataSecurityEmailAdminsMonitoringEffect": {
                         "value": "Disabled"
                     },
@@ -697,9 +505,6 @@
                         "value": "Disabled"
                     },
                     "kubernetesServiceRbacEnabledMonitoringEffect": {
-                        "value": "Disabled"
-                    },
-                    "kubernetesServicePspEnabledMonitoringEffect": {
                         "value": "Disabled"
                     },
                     "kubernetesServiceAuthorizedIPRangesEnabledMonitoringEffect": {
@@ -714,19 +519,10 @@
                     "vulnerabilityAssessmentOnServerMonitoringEffect": {
                         "value": "Disabled"
                     },
-                    "threatDetectionTypesOnManagedInstanceMonitoringEffect": {
-                        "value": "Disabled"
-                    },
-                    "threatDetectionTypesOnServerMonitoringEffect": {
-                        "value": "Disabled"
-                    },
                     "adaptiveNetworkHardeningsMonitoringEffect": {
                         "value": "Disabled"
                     },
                     "restrictAccessToManagementPortsMonitoringEffect": {
-                        "value": "Disabled"
-                    },
-                    "restrictAccessToAppServicesMonitoringEffect": {
                         "value": "Disabled"
                     },
                     "disableIPForwardingMonitoringEffect": {
