@@ -1,20 +1,21 @@
 <#
 .SYNOPSIS
-    Script to on-board Office 365 account for PowerShell policy data collection inside Cloudneeti.
+    Script to on-board Office 365 account for PowerShell policy data collection inside Zscaler CSPM.
     
 .DESCRIPTION
-     This script creates an automation account, Runbook, Schedule for execution and required variables & credentials for running the M365 policies. The automation runbook executes once per day and export data to cloudneeti using Cloudneeti API.
+     This script creates an automation account, Runbook, Schedule for execution and required variables & credentials for running the M365 policies. The automation runbook executes once per day and export data to Zscaler CSPM using Zscaler CSPM API.
  
 .NOTES
 
-  Copyright (c) Cloudneeti. All rights reserved.
+  Copyright (c) Zscaler CSPM. All rights reserved.
     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is  furnished to do so, subject to the following conditions:
     The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-    Version:        1.1
-    Author:         Cloudneeti
-    Creation Date:  11/02/2018
+    Version:        1.7
+    Author:         Zscaler CSPM
+    Creation Date:  09/04/2020
+    Last Modified Date: 22/10/2020
 
     # PREREQUISITE
     * <TBA>
@@ -24,15 +25,15 @@
     .\Provision-M365DataCollector.ps1
 
     Then script execution will prompt for below secrets:
-        - Cloudneeti License Id
-        - Cloudneeti Account Id
-        - Cloudneeti API Key
-        - Cloudneeti Environment
-        - Cloudneeti Application Id
-        - Cloudneeti Application Secret
-        - Cloudneeti Office 365 Data Collector Artifacts Storage Name
-        - Cloudneeti Office 365 Data Collector Artifacts Storage Access Key
-        - Cloudneeti Office 365 Data Collector Version
+        - ZCSPM License Id
+        - ZCSPM Account Id
+        - ZCSPM API Key
+        - ZCSPM Environment
+        - ZCSPM Application Id
+        - ZCSPM Application Secret
+        - ZCSPM Office 365 Data Collector Artifacts Storage Name
+        - ZCSPM Office 365 Data Collector Artifacts Storage Access Key
+        - ZCSPM Office 365 Data Collector Version
         - Office 365 Domain Name
         - SharePoint Admin Center URL
         - Office 365 Directory Id
@@ -44,15 +45,15 @@
 
 .INPUTS
     Below is the list of inputs to the script:-
-        - Cloudneeti License Id <Find in "Manage Licenses" of Cloudneeti Settings>
-        - Cloudneeti Account Id <Find in "Manage Accounts" of Cloudneeti Settings>
-        - Cloudneeti API Management Key <Find in "Cloudneeti API Management Portal">
-        - Cloudneeti Environment <Cloudneeti Environment>
-        - Cloudneeti Data Collector Application Id
-        - Cloudneeti Data Collector Application Secret 
-        - Cloudneeti Office 365 Data Collector Artifacts Storage Name <Contact Cloudneeti team>
-        - Cloudneeti Office 365 Data Collector Artifacts Storage Access Key <Contact Cloudneeti team>
-        - Cloudneeti Office 365 Data Collector Version <Contact Cloudneeti team>
+        - ZCSPM License Id <Find in "Manage Licenses" of ZCSPM Settings>
+        - ZCSPM Account Id <Find in "Manage Accounts" of ZCSPM Settings>
+        - ZCSPM API Management Key <Find in "ZCSPM API Management Portal">
+        - ZCSPM Environment <ZCSPM Environment>
+        - ZCSPM Data Collector Application Id
+        - ZCSPM Data Collector Application Secret 
+        - ZCSPM Office 365 Data Collector Artifacts Storage Name <Contact ZCSPM team>
+        - ZCSPM Office 365 Data Collector Artifacts Storage Access Key <Contact ZCSPM team>
+        - ZCSPM Office 365 Data Collector Version <Contact ZCSPM team>
         - Office 365 Domain Name <Office 365 domian name>
         - SharePoint Admin Center URL 
         - Office 365 Directory Id <Directory Id of Office 365>
@@ -65,7 +66,7 @@
 .OUTPUTS
 
 .NOTES
-        - The user should have a contract with Cloudneeti 
+        - The user should have a contract with Zscaler CSPM 
         - Office Admin should have MFA enabled and App Password for Office Admin
         - This script should be executed only on Azure CloudShell.
         - Office administrator should have "Enterprise E5" office license
@@ -75,86 +76,86 @@
 param
 (
 
-    # Cloudneeti contract Id
+    # ZCSPM contract Id
     [Parameter(Mandatory = $False,
-        HelpMessage = "Cloudneeti License Id",
+        HelpMessage = "ZCSPM License Id",
         Position = 1
     )]
     [ValidateNotNullOrEmpty()]
     [guid]
-    $CloudneetiLicenseId = $(Read-Host -prompt "Enter Cloudneeti License Id"),
+    $ZCSPMLicenseId = $(Read-Host -prompt "Enter ZCSPM License Id"),
 
-    # Cloudneeti account Id
+    # ZCSPM account Id
     [Parameter(Mandatory = $False,
-        HelpMessage = "Cloudneeti Account Id",
+        HelpMessage = "ZCSPM Account Id",
         Position = 2
     )]
     [ValidateNotNullOrEmpty()]
     [guid]
-    $CloudneetiAccountId = $(Read-Host -prompt "Enter Cloudneeti Account Id"),
+    $ZCSPMAccountId = $(Read-Host -prompt "Enter ZCSPM Account Id"),
 
-    # Cloudneeti API key
+    # ZCSPM API key
     [Parameter(Mandatory = $False,
-        HelpMessage = "Cloudneeti API Key",
+        HelpMessage = "ZCSPM API Key",
         Position = 3
     )]
     [ValidateNotNullOrEmpty()]
     [secureString]
-    $CloudneetiAPIKey = $(Read-Host -prompt "Enter Cloudneeti API Key" -AsSecureString),
+    $ZCSPMAPIKey = $(Read-Host -prompt "Enter ZCSPM API Key" -AsSecureString),
 
-    # Cloudneeti Environment
+    # ZCSPM Environment
     [Parameter(Mandatory = $False,
-        HelpMessage = "Cloudneeti Environment",
+        HelpMessage = "ZCSPM Environment",
         Position = 4
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $CloudneetiEnvironment = $(Read-Host -prompt "Enter Cloudneeti Environment"),
+    $ZCSPMEnvironment = $(Read-Host -prompt "Enter ZCSPM Environment"),
 
-    # Cloudneeti Service principal id
+    # ZCSPM Service principal id
     [Parameter(Mandatory = $False,
-        HelpMessage = "Cloudneeti Data collector application Id",
+        HelpMessage = "ZCSPM Data collector application Id",
         Position = 5
     )]
     [ValidateNotNullOrEmpty()]
     [String]
-    $CloudneetiApplicationId = $(Read-Host -prompt "Enter Cloudneeti Data Collector application Id"),
+    $ZCSPMApplicationId = $(Read-Host -prompt "Enter ZCSPM Data Collector application Id"),
 
     # Enter service principal secret
     [Parameter(Mandatory = $False,
-        HelpMessage = "Cloudneeti Data collector application secret",
+        HelpMessage = "ZCSPM Data collector application secret",
         Position = 6
     )]
     [ValidateNotNullOrEmpty()]
     [SecureString]
-    $CloudneetiApplicationSecret = $(Read-Host -prompt "Enter Cloudneeti Data Collector Application Secret" -AsSecureString),
+    $ZCSPMApplicationSecret = $(Read-Host -prompt "Enter ZCSPM Data Collector Application Secret" -AsSecureString),
 
-    # Cloudneeti Artifacts Storage Name
+    # ZCSPM Artifacts Storage Name
     [Parameter(Mandatory = $False,
-        HelpMessage = "Cloudneeti office 365 Data Collector Artifact Name",
+        HelpMessage = "ZCSPM office 365 Data Collector Artifact Name",
         Position = 7
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $ArtifactsName = $(Read-Host -prompt "Enter Cloudneeti office 365 Data Collector Artifacts Storage Name"),
+    $ArtifactsName = $(Read-Host -prompt "Enter ZCSPM office 365 Data Collector Artifacts Storage Name"),
 
-    # Cloudneeti artifacts access key
+    # ZCSPM artifacts access key
     [Parameter(Mandatory = $False,
-        HelpMessage = "Cloudneeti office 365 Data Collector Artifacts Acccess Key",
+        HelpMessage = "ZCSPM office 365 Data Collector Artifacts Acccess Key",
         Position = 8
     )]
     [ValidateNotNullOrEmpty()]
     [secureString]
-    $ArtifactsAccessKey = $(Read-Host -prompt "Enter Cloudneeti office 365 Data Collector Artifacts Storage Access Key" -AsSecureString),
+    $ArtifactsAccessKey = $(Read-Host -prompt "Enter ZCSPM office 365 Data Collector Artifacts Storage Access Key" -AsSecureString),
 
     # Data Collector version
     [Parameter(Mandatory = $False,
-        HelpMessage = "Cloudneeti office 365 Data Collector Artifacts Version",
+        HelpMessage = "ZCSPM office 365 Data Collector Artifacts Version",
         Position = 9
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $DataCollectorVersion = $(Read-Host -prompt "Enter Cloudneeti Office 365 Data Collector Version"),
+    $DataCollectorVersion = $(Read-Host -prompt "Enter ZCSPM Office 365 Data Collector Version"),
 
     # Office Domain name
     [ValidateScript( {$_ -notmatch 'https://+' -and $_ -notmatch 'http://+'})]
@@ -213,7 +214,7 @@ param
     [guid]
     $AzureSubscriptionId = $(Read-Host -prompt "Enter Azure Subscription Id where office 365 data collector resouces will be created"),
 
-    # Resource group name for Cloudneeti Resouces
+    # Resource group name for ZCSPM Resouces
     [Parameter(Mandatory = $False,
         HelpMessage = "Office 365 Data Collector Name",
         Position = 16
@@ -224,7 +225,7 @@ param
 
     # Data collector resource location
     [Parameter(Mandatory = $False,
-        HelpMessage = "Location for Cloudneeti office 365 data collector resources",
+        HelpMessage = "Location for ZCSPM office 365 data collector resources",
         Position = 17
     )]
     [ValidateNotNullOrEmpty()]
@@ -244,19 +245,19 @@ $ContianerName = "m365-datacollection-script"
 $RunbookScriptName = "$ScriptPrefix-$DataCollectorVersion.ps1"
 $RunbookName = "$ScriptPrefix-$DataCollectorVersion"
 $path = "./runbooks"
-$Tags = @{"Service" = "Cloudneeti-Office365-Data-Collection"}
+$Tags = @{"Service" = "ZCSPM-Office365-Data-Collection"}
 if($SharePointAdminCenterURL -notlike "https://*"){
     $SharePointAdminCenterURL = "https://$SharePointAdminCenterURL"
 }
 
-# Cloudneeti API URL
-$CloudneetiAPIEndpoints = @{
+# ZCSPM API URL
+$ZCSPMAPIEndpoints = @{
     dev   = "https://devapi.cloudneeti-devops.com";
     trial = "https://trialapi.cloudneeti.com";
     qa    = "https://qaapi.cloudneeti-devops.com";
     prod  = "https://api.cloudneeti.com"
 }
-$CloudneetiAPIURL = $CloudneetiAPIEndpoints[$CloudneetiEnvironment.ToLower()]
+$ZCSPMAPIURL = $ZCSPMAPIEndpoints[$ZCSPMEnvironment.ToLower()]
 
 # Checking current azure rm context to deploy Azure automation
 $AzureContextSubscriptionId = (Get-AzContext).Subscription.Id
@@ -367,30 +368,30 @@ else {
 
 # Credential object creation
 Write-host "Creating secure credentials object for client service principal in Automation account" -ForegroundColor Yellow
-$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $CloudneetiApplicationId, $CloudneetiApplicationSecret
-$CloudneetiCredentials = "CloudneetiCredentials"
-$ExistingCredentials = Get-AzAutomationCredential -Name $CloudneetiCredentials -ResourceGroupName $ResourceGroupName -AutomationAccountName $AutomationAccountName -ErrorAction SilentlyContinue
+$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $ZCSPMApplicationId, $ZCSPMApplicationSecret
+$ZCSPMCredentials = "ZCSPMCredentials"
+$ExistingCredentials = Get-AzAutomationCredential -Name $ZCSPMCredentials -ResourceGroupName $ResourceGroupName -AutomationAccountName $AutomationAccountName -ErrorAction SilentlyContinue
 
 If ($ExistingCredentials -ne $null -and $ExistingCredentials.UserName -eq $OfficeAdminEmailId) {
-    Set-AzAutomationCredential -AutomationAccountName $AutomationAccountName -Name $CloudneetiCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
-    Write-Host $CloudneetiApplicationId "credential object already exists, Updated sucessfully" -ForegroundColor Green
+    Set-AzAutomationCredential -AutomationAccountName $AutomationAccountName -Name $ZCSPMCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
+    Write-Host $ZCSPMApplicationId "credential object already exists, Updated sucessfully" -ForegroundColor Green
 }    
 else {
-    New-AzAutomationCredential -AutomationAccountName $AutomationAccountName -Name $CloudneetiCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
-    Write-Host $CloudneetiApplicationId "credentials object created successfully" -ForegroundColor Green
+    New-AzAutomationCredential -AutomationAccountName $AutomationAccountName -Name $ZCSPMCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
+    Write-Host $ZCSPMApplicationId "credentials object created successfully" -ForegroundColor Green
 }
 
 
 # Creating variable in Azure automation
-$CloudneetiAPIKeyEncrypt = (New-Object PSCredential "user",$CloudneetiAPIKey).GetNetworkCredential().Password
+$ZCSPMAPIKeyEncrypt = (New-Object PSCredential "user",$ZCSPMAPIKey).GetNetworkCredential().Password
 $VariableObject = @{    
-    "CloudneetiContractId"      = $CloudneetiLicenseId;
-    "CloudneetiAccountId"       = $CloudneetiAccountId; 
+    "ZCSPMContractId"           = $ZCSPMLicenseId;
+    "ZCSPMAccountId"            = $ZCSPMAccountId; 
     "OfficeDomain"              = $OfficeDomain;
-    "CloudneetiEnvironment"     = $CloudneetiEnvironment;
+    "ZCSPMEnvironment"          = $ZCSPMEnvironment;
     "OfficeDirectoryId"         = $OfficeDirectoryId;
-    "CloudneetiAPIKey"          = $CloudneetiAPIKeyEncrypt;
-    "CloudneetiAPIURL"          = $CloudneetiAPIURL;
+    "ZCSPMAPIKey"               = $ZCSPMAPIKeyEncrypt;
+    "ZCSPMAPIURL"               = $ZCSPMAPIURL;
     "DataCollectorVersion"      = $DataCollectorVersion;
     "SharePointAdminCenterURL"  = $SharePointAdminCenterURL
 }
@@ -403,7 +404,7 @@ foreach ($Variable in $VariableObject.GetEnumerator()) {
     }
     else {
         if ($ExistingVariable -ne $null) {
-            if ($Variable.Name -eq "CloudneetiAPIKey") {
+            if ($Variable.Name -eq "ZCSPMAPIKey") {
                 Write-Host "Updating variable value of" $Variable.Name -ForegroundColor Yellow
                 Set-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $Variable.Name -Encrypted $true -Value $Variable.Value -ResourceGroupName $ResourceGroupName
                 Write-Host $Variable.Name "variable successfully updated" -ForegroundColor Green
@@ -415,7 +416,7 @@ foreach ($Variable in $VariableObject.GetEnumerator()) {
             }
         }
         else {
-            if ($Variable.Name -eq "CloudneetiAPIKey") {
+            if ($Variable.Name -eq "ZCSPMAPIKey") {
                 Write-Host "Creating variable " $Variable.Name -ForegroundColor Yellow
                 New-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $Variable.Name -Encrypted $true -Value $Variable.Value -ResourceGroupName $ResourceGroupName
                 Write-Host $Variable.Name "variable successfully created" -ForegroundColor Green
