@@ -310,43 +310,43 @@
                         "value": "Audit"
                     },
                     "allowedContainerImagesInKubernetesClusterEffect": {
-                        "value": "Audit"
+                        "value": "audit"
                     },
                     "privilegedContainersShouldBeAvoidedEffect": {
-                        "value": "Audit"
+                        "value": "audit"
                     },
                     "allowedContainerPortsInKubernetesClusterEffect": {
-                        "value": "Audit"
+                        "value": "audit"
                     },
                     "allowedServicePortsInKubernetesClusterEffect": {
-                        "value": "Audit"
+                        "value": "audit"
                     },
                     "memoryAndCPULimitsInKubernetesClusterEffect": {
-                        "value": "Audit"
+                        "value": "audit"
                     },
                     "AllowedCapabilitiesInKubernetesClusterEffect": {
-                        "value": "Audit"
+                        "value": "audit"
                     },
                     "ReadOnlyRootFileSystemInKubernetesClusterEffect": {
-                        "value": "Audit"
+                        "value": "audit"
                     },
                     "AllowedHostPathVolumesInKubernetesClusterEffect": {
-                        "value": "Audit"
+                        "value": "audit"
                     },
                     "MustRunAsNonRootNamespaceEffect": {
-                        "value": "Audit"
+                        "value": "audit"
                     },
                     "AllowedHostNetworkingAndPortsInKubernetesClusterEffect": {
-                        "value": "Audit"
+                        "value": "audit"
                     },
                     "NoSharingSensitiveHostNamespacesInKubernetesEffect": {
-                        "value": "Audit"
+                        "value": "audit"
                     },
                     "NoPrivilegeEscalationInKubernetesClusterEffect": {
-                        "value": "Audit"
+                        "value": "audit"
                     },
                     "AllowedAppArmorProfilesInKubernetesClusterEffect": {
-                        "value": "Audit"
+                        "value": "audit"
                     },
                     "networkSecurityGroupsOnInternalVirtualMachinesMonitoringEffect": {
                         "value": "AuditIfNotExists"
@@ -364,7 +364,7 @@
                         "value": "AuditIfNotExists"
                     },
                     "certificatesValidityPeriodMonitoringEffect": {
-                        "value": "Audit"
+                        "value": "audit"
                     }
                 }
             }
