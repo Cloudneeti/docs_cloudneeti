@@ -679,61 +679,61 @@
                         "value": "Disabled"
                     },
                     "allowedContainerImagesInKubernetesClusterEffect": {
-                        "value": "Disabled"
+                        "value": "disabled"
                     },
                     "privilegedContainersShouldBeAvoidedEffect": {
-                        "value": "Disabled"
+                        "value": "disabled"
                     },
                     "allowedContainerPortsInKubernetesClusterEffect": {
-                        "value": "Disabled"
+                        "value": "disabled"
                     },
                     "allowedServicePortsInKubernetesClusterEffect": {
-                        "value": "Disabled"
+                        "value": "disabled"
                     },
                     "memoryAndCPULimitsInKubernetesClusterEffect": {
-                        "value": "Disabled"
+                        "value": "disabled"
                     },
                     "AllowedCapabilitiesInKubernetesClusterEffect": {
-                        "value": "Disabled"
+                        "value": "disabled"
                     },
                     "ReadOnlyRootFileSystemInKubernetesClusterEffect": {
-                        "value": "Disabled"
+                        "value": "disabled"
                     },
                     "AllowedHostPathVolumesInKubernetesClusterEffect": {
-                        "value": "Disabled"
+                        "value": "disabled"
                     },
                     "MustRunAsNonRootNamespaceEffect": {
-                        "value": "Disabled"
+                        "value": "disabled"
                     },
                     "AllowedHostNetworkingAndPortsInKubernetesClusterEffect": {
-                        "value": "Disabled"
+                        "value": "disabled"
                     },
                     "NoSharingSensitiveHostNamespacesInKubernetesEffect": {
-                        "value": "Disabled"
+                        "value": "disabled"
                     },
                     "NoPrivilegeEscalationInKubernetesClusterEffect": {
-                        "value": "Disabled"
+                        "value": "disabled"
                     },
                     "AllowedAppArmorProfilesInKubernetesClusterEffect": {
-                        "value": "Disabled"
+                        "value": "disabled"
                     },
                     "networkSecurityGroupsOnInternalVirtualMachinesMonitoringEffect": {
-                        "value": "Disabled"
+                        "value": "disabled"
                     },
                     "sqlServersVirtualMachinesAdvancedDataSecurityMonitoringEffect": {
-                        "value": "Disabled"
+                        "value": "disabled"
                     },                    
                     "sqlServersAdvancedDataSecurityMonitoringEffect": {
-                        "value": "Disabled"
+                        "value": "disabled"
                     },
                     "storageAccountsAdvancedDataSecurityMonitoringEffect": {
-                        "value": "Disabled"
+                        "value": "disabled"
                     },
                     "keyVaultsAdvancedDataSecurityMonitoringEffect": {
-                        "value": "Disabled"
+                        "value": "disabled"
                     },
                     "certificatesValidityPeriodMonitoringEffect": {
-                        "value": "Disabled"
+                        "value": "disabled"
                     }
                 }
             }
