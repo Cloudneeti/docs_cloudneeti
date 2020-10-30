@@ -718,19 +718,19 @@
                         "value": "disabled"
                     },
                     "networkSecurityGroupsOnInternalVirtualMachinesMonitoringEffect": {
-                        "value": "disabled"
+                        "value": "Disabled"
                     },
                     "sqlServersVirtualMachinesAdvancedDataSecurityMonitoringEffect": {
-                        "value": "disabled"
+                        "value": "Disabled"
                     },                    
                     "sqlServersAdvancedDataSecurityMonitoringEffect": {
-                        "value": "disabled"
+                        "value": "Disabled"
                     },
                     "storageAccountsAdvancedDataSecurityMonitoringEffect": {
-                        "value": "disabled"
+                        "value": "Disabled"
                     },
                     "keyVaultsAdvancedDataSecurityMonitoringEffect": {
-                        "value": "disabled"
+                        "value": "Disabled"
                     },
                     "certificatesValidityPeriodMonitoringEffect": {
                         "value": "disabled"
