@@ -114,15 +114,15 @@ param
     [SecureString]
     $ZCSPMApplicationSecret = $(Read-Host -prompt "Enter ZCSPM Data Collector Application Secret" -AsSecureString),
 
-    # Share Point domain URL
-    [ValidateScript( {$_ -match 'https://+' -and $_ -match 'http://+'})]
+    # SharePoint URL
+    [ValidateScript({$_ -notmatch 'http://+'})]
     [Parameter(Mandatory = $False,
-        HelpMessage = "Share Point Domain URL: ",
+        HelpMessage = "SharePoint URL",
         Position = 9
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $SharePointDomainURL = $(Read-Host -prompt "Enter Share Point Domain URL")
+    $SharePointAdminCenterURL = $(Read-Host -prompt "Enter SharePoint admin center URL")
 )
 # Session configuration
 $ErrorActionPreference = 'Stop'
@@ -139,9 +139,12 @@ $path = "./runbooks"
 $scheduleName = "$ScriptPrefix-DailySchedule" 
 $ZCSPMCredentials = "ZCSPMCredentials"
 $CloudneetiCredentials = "CloudneetiCredentials"
+if($SharePointAdminCenterURL -notlike "https://*"){
+    $SharePointAdminCenterURL = "https://$SharePointAdminCenterURL"
+}
 $VariableObject = @{
     "DataCollectorVersion"  = $DataCollectorVersion;
-    "SharePointDomainURL"   = $SharePointDomainURL
+    "SharePointAdminCenterURL"   = $SharePointAdminCenterURL
 }
 
 $VariableObjectCSPM = @{
