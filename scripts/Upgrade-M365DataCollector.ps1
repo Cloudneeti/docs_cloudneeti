@@ -112,7 +112,17 @@ param
     )]
     [ValidateNotNullOrEmpty()]
     [SecureString]
-    $ZCSPMApplicationSecret = $(Read-Host -prompt "Enter ZCSPM Data Collector Application Secret" -AsSecureString)
+    $ZCSPMApplicationSecret = $(Read-Host -prompt "Enter ZCSPM Data Collector Application Secret" -AsSecureString),
+
+    # Share Point domain URL
+    [ValidateScript( {$_ -match 'https://+' -and $_ -match 'http://+'})]
+    [Parameter(Mandatory = $False,
+        HelpMessage = "Share Point Domain URL: ",
+        Position = 9
+    )]
+    [ValidateNotNullOrEmpty()]
+    [string]
+    $SharePointDomainURL = $(Read-Host -prompt "Enter Share Point Domain URL")
 )
 # Session configuration
 $ErrorActionPreference = 'Stop'
@@ -130,7 +140,8 @@ $scheduleName = "$ScriptPrefix-DailySchedule"
 $ZCSPMCredentials = "ZCSPMCredentials"
 $CloudneetiCredentials = "CloudneetiCredentials"
 $VariableObject = @{
-    "DataCollectorVersion"       = $DataCollectorVersion;
+    "DataCollectorVersion"  = $DataCollectorVersion;
+    "SharePointDomainURL"   = $SharePointDomainURL
 }
 
 $VariableObjectCSPM = @{
