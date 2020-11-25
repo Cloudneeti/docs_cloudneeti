@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Script to upgrade Cloudneeti IAM data collector's automation account
+    Script to upgrade ZCSPM IAM data collector's automation account
 .DESCRIPTION
     This script will upgrade runbook from IAM data collector(Automation Account) and deprecate older version on runbook.
 .EXAMPLE
@@ -9,17 +9,17 @@
     .\Upgrade-AzureIAM-DataCollector.ps1
 
      Then script execution will prompt for below inputs and secrets:
-            - Enter Cloudneeti Azure IAM Data Collector Artifacts Storage Name
-            - Enter Cloudneeti Azure IAM Data Collector Artifacts Storage Access Key
-            - Enter Cloudneeti Azure IAM Data Collector Version
+            - Enter ZCSPM Azure IAM Data Collector Artifacts Storage Name
+            - Enter ZCSPM Azure IAM Data Collector Artifacts Storage Access Key
+            - Enter ZCSPM Azure IAM Data Collector Version
             - Enter Azure Subscription Id where Azure IAM data collector resource is present
             - Enter Azure IAM data collector name
             
 .INPUTS
-        - Cloudneeti Azure IAM Collector Artifacts Storage Name <Contact Cloudneeti team>
-        - Cloudneeti Azure IAM Collector Artifacts Storage Access Key <Contact Cloudneeti team>
-        - Cloudneeti Azure IAM Data Collector Version <Contact Cloudneeti team>
-        - Cloudneeti Azure IAM data collector name
+        - ZCSPM Azure IAM Collector Artifacts Storage Name <Contact ZCSPM team>
+        - ZCSPM Azure IAM Collector Artifacts Storage Access Key <Contact ZCSPM team>
+        - ZCSPM Azure IAM Data Collector Version <Contact ZCSPM team>
+        - ZCSPM Azure IAM data collector name
         - Azure Subscription Id where Azure IAM data collector resouces will be created <Azure Subscription Id where Azure IAM data collector resouces is present>
 
 .OUTPUTS
@@ -27,7 +27,7 @@
 
 .NOTES
 
-    Copyright (c) Cloudneeti. All rights reserved.
+    Copyright (c) Zscaler CSPM. All rights reserved.
     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is  furnished to do so, subject to the following conditions:
     The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
@@ -40,32 +40,32 @@
 [CmdletBinding()]
 param
 (
-    # Cloudneeti Artifacts Storage Name
+    # ZCSPM Artifacts Storage Name
     [Parameter(Mandatory = $True,
-        HelpMessage = "Cloudneeti Azure IAM Data Collector Artifact Name",
+        HelpMessage = "ZCSPM Azure IAM Data Collector Artifact Name",
         Position = 1
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $ArtifactsName = $(Read-Host -prompt "Enter Cloudneeti Azure IAM Data Collector Artifacts Storage Name"),
+    $ArtifactsName = $(Read-Host -prompt "Enter ZCSPM Azure IAM Data Collector Artifacts Storage Name"),
 
-    # Cloudneeti artifacts access key
+    # ZCSPM artifacts access key
     [Parameter(Mandatory = $True,
-        HelpMessage = "Cloudneeti Azure IAM Data Collector Artifacts Acccess Key",
+        HelpMessage = "ZCSPM Azure IAM Data Collector Artifacts Acccess Key",
         Position = 2
     )]
     [ValidateNotNullOrEmpty()]
     [secureString]
-    $ArtifactsAccessKey = $(Read-Host -prompt "Enter Cloudneeti Azure IAM Data Collector Artifacts Storage Access Key" -AsSecureString),
+    $ArtifactsAccessKey = $(Read-Host -prompt "Enter ZCSPM Azure IAM Data Collector Artifacts Storage Access Key" -AsSecureString),
 
     # Data Collector version
     [Parameter(Mandatory = $True,
-        HelpMessage = "Cloudneeti Azure IAM Data Collector Artifacts Version",
+        HelpMessage = "ZCSPM Azure IAM Data Collector Artifacts Version",
         Position = 3
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $DataCollectorVersion = $(Read-Host -prompt "Enter Cloudneeti Azure IAM Data Collector Version"),
+    $DataCollectorVersion = $(Read-Host -prompt "Enter ZCSPM Azure IAM Data Collector Version"),
 
     # Subscription Id for automation account creation
     [Parameter(Mandatory = $True,
@@ -83,7 +83,34 @@ param
     )]
     [ValidateNotNullOrEmpty()]
     [string]
-    $DataCollectorName = $(Read-Host -prompt "Enter Azure IAM data collector name")
+    $DataCollectorName = $(Read-Host -prompt "Enter Azure IAM data collector name"),
+
+    # ZCSPM API key
+    [Parameter(Mandatory = $False,
+        HelpMessage = "ZCSPM API Key",
+        Position = 6
+    )]
+    [ValidateNotNullOrEmpty()]
+    [secureString]
+    $ZCSPMAPIKey = $(Read-Host -prompt "Enter ZCSPM API Key" -AsSecureString),
+
+    # ZCSPM Service principal id
+    [Parameter(Mandatory = $False,
+        HelpMessage = "ZCSPM Data collector application Id",
+        Position = 7
+    )]
+    [ValidateNotNullOrEmpty()]
+    [String]
+    $ZCSPMApplicationId = $(Read-Host -prompt "Enter ZCSPM Data Collector application Id"),
+
+    # Enter service principal secret
+    [Parameter(Mandatory = $False,
+        HelpMessage = "ZCSPM Data collector application secret",
+        Position = 8
+    )]
+    [ValidateNotNullOrEmpty()]
+    [SecureString]
+    $ZCSPMApplicationSecret = $(Read-Host -prompt "Enter ZCSPM Data Collector Application Secret" -AsSecureString)
 )
 # Session configuration
 $ErrorActionPreference = 'Stop'
@@ -98,8 +125,18 @@ $RunbookScriptName = "$ScriptPrefix-$DataCollectorVersion.ps1"
 $RunbookName = "$ScriptPrefix-$DataCollectorVersion"
 $path = "./runbooks"
 $scheduleName = "$ScriptPrefix-DailySchedule" 
+$ZCSPMCredentials = "ZCSPMCredentials"
+$CloudneetiCredentials = "CloudneetiCredentials"
 $VariableObject = @{
     "DataCollectorVersion"  = $DataCollectorVersion
+}
+
+$VariableObjectCSPM = @{
+    "CloudneetiAccountId"   = "ZCSPMAccountId";
+    "CloudneetiLicenseId"   = "ZCSPMLicenseId";
+    "CloudneetiAPIURL"      = "ZCSPMAPIURL";
+    "CloudneetiAPIKey"      = "ZCSPMAPIKey";
+    "CloudneetiEnvironment" = "ZCSPMEnvironment"
 }
 
 $RequiredModules = @"
@@ -159,7 +196,7 @@ If ($ExistingRunbook -ne $RunbookName){
 
     Write-Host "Azure IAM scanning script successfully fetched and ready to push in automation runbook" -ForegroundColor Green
 
-    Write-Host "Creating Cloudneeti automation runbook with version" $DataCollectorVersion
+    Write-Host "Creating ZCSPM automation runbook with version" $DataCollectorVersion
 
     Import-AzAutomationRunbook -Name $RunbookName -Path .\runbooks\$RunbookScriptName -Tags $Tags -ResourceGroup $ResourceGroupName -AutomationAccountName $AutomationAccountName -Type PowerShell -Published -Force
     Write-Host "$RunbookName Runbook successfully created"
@@ -181,26 +218,67 @@ If ($ExistingRunbook -ne $RunbookName){
         Write-Host $_.Name "module imported successfully" -ForegroundColor Green
     }
 
-    # Update the automation account variable
-    foreach ($Variable in $VariableObject.GetEnumerator()) {
-        $ExistingVariable = Get-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $Variable.Name -ResourceGroupName $ResourceGroupName -ErrorAction SilentlyContinue
-        If ($ExistingVariable -ne $null -and $ExistingVariable.Value -eq $Variable.Value) {
-            Write-Host $Variable.Name "variable already exists" -ForegroundColor Yellow
+    # Update automation account credentials
+    try{
+        Write-host "Updating automation account credentials ..." -ForegroundColor Yellow
+        Write-host "Updating secure credentials object for client service principal in Automation account" -ForegroundColor Yellow
+        $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $ZCSPMApplicationId, $ZCSPMApplicationSecret
+        New-AzAutomationCredential -AutomationAccountName $AutomationAccountName -Name $ZCSPMCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
+        Remove-AzAutomationCredential -AutomationAccountName $AutomationAccountName -Name $CloudneetiCredentials -ResourceGroupName $ResourceGroupName
+        Write-host "Updated automation account credentials." -ForegroundColor Green
+    }
+    catch [Exception]{
+        Write-Host "Error occurred while updating the automation account credentials"
+        Write-Output $_
+    }
+    
+    # Update automation account variables
+    try{
+        # Update automation account variables(Related to CSPM banding)
+        Write-host "Updating automation account variables ..." -ForegroundColor Yellow
+        foreach($VariableCSPM in $VariableObjectCSPM.GetEnumerator()) {
+            $ExistingVariable = Get-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $($VariableCSPM.Name) -ResourceGroupName $ResourceGroupName -ErrorAction SilentlyContinue
+            [string]$Value1 = $ExistingVariable.Value
+            if($ExistingVariable -ne $null -and $ExistingVariable.Name -ne 'CloudneetiAPIKey'){
+                Write-Host "Updating Variable" $($VariableCSPM.Name) -ForegroundColor Yellow
+                New-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $VariableCSPM.Value -Encrypted $False -Value $Value1 -ResourceGroupName $ResourceGroupName
+                Remove-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $($VariableCSPM.Name) -ResourceGroupName $ResourceGroupName
+                Write-Host $($VariableCSPM.Name) "variable successfully updated" -ForegroundColor Green
+            }
+            elseif($ExistingVariable.Name -eq 'CloudneetiAPIKey') {
+                Write-Host "Updating Variable" $($VariableCSPM.Name) -ForegroundColor Yellow
+                $ZCSPMAPIKeyEncrypt = (New-Object PSCredential "user",$ZCSPMAPIKey).GetNetworkCredential().Password
+                New-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $($VariableCSPM.Value) -Encrypted $True -Value $ZCSPMAPIKeyEncrypt -ResourceGroupName $ResourceGroupName
+                Remove-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $($VariableCSPM.Name) -ResourceGroupName $ResourceGroupName
+                Write-Host $($VariableCSPM.Name) "variable successfully updated" -ForegroundColor Green
+            }
         }
-        else {
-            if ($ExistingVariable -ne $null) {
-                Write-Host "Updating Variable" $Variable.Name -ForegroundColor Yellow
-                Set-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $Variable.Name -Encrypted $False -Value $Variable.Value -ResourceGroupName $ResourceGroupName
-                Write-Host $Variable.Name "variable successfully updated" -ForegroundColor Green
+        # Update the automation account variable(Not related to CSPM banding)
+        foreach ($Variable in $VariableObject.GetEnumerator()) {
+            $ExistingVariable = Get-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $Variable.Name -ResourceGroupName $ResourceGroupName -ErrorAction SilentlyContinue
+            If ($ExistingVariable -ne $null -and $ExistingVariable.Value -eq $Variable.Value) {
+                Write-Host $Variable.Name "variable already exists" -ForegroundColor Yellow
             }
             else {
-                Write-Host "Creating variable " $Variable.Name -ForegroundColor Yellow
-                New-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $Variable.Name -Encrypted $False -Value $Variable.Value -ResourceGroupName $ResourceGroupName
-                Write-Host $Variable.Name "variable successfully created" -ForegroundColor Green  
+                if ($ExistingVariable -ne $null) {
+                    Write-Host "Updating Variable" $Variable.Name -ForegroundColor Yellow
+                    Set-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $Variable.Name -Encrypted $False -Value $Variable.Value -ResourceGroupName $ResourceGroupName
+                    Write-Host $Variable.Name "variable successfully updated" -ForegroundColor Green
+                }
+                else {
+                    Write-Host "Creating variable " $Variable.Name -ForegroundColor Yellow
+                    New-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $Variable.Name -Encrypted $False -Value $Variable.Value -ResourceGroupName $ResourceGroupName
+                    Write-Host $Variable.Name "variable successfully created" -ForegroundColor Green  
+                }
             }
         }
+        Write-host "Updated all variables of automation account." -ForegroundColor Green
     }
-
+    catch [Exception]{
+        Write-Host "Error occurred while updating the automation account variables"
+        Write-Output $_
+    }
+    
     # Link schedule to the automation account	
     try {
         Write-Host "Linking automation account schedule $scheduleName to runbook $RunbookName"
