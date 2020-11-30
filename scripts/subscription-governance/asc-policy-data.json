@@ -275,6 +275,96 @@
                     },
                     "containerBenchmarkMonitoringEffect": {
                         "value": "AuditIfNotExists"
+                    },
+                    "azurePolicyforWindowsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "windowsDefenderExploitGuardMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "adaptiveApplicationControlsUpdateMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "serverVulnerabilityAssessmentEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "ArcWindowsMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "ArcLinuxMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "kubernetesServiceAdvancedThreatProtectionMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "appServicesAdvancedThreatProtectionMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "containerRegistryAdvancedThreatProtectionMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "virtualMachinesAdvancedThreatProtectionMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "azurePolicyAddonStatusEffect": {
+                        "value": "Audit"
+                    },
+                    "allowedContainerImagesInKubernetesClusterEffect": {
+                        "value": "audit"
+                    },
+                    "privilegedContainersShouldBeAvoidedEffect": {
+                        "value": "audit"
+                    },
+                    "allowedContainerPortsInKubernetesClusterEffect": {
+                        "value": "audit"
+                    },
+                    "allowedServicePortsInKubernetesClusterEffect": {
+                        "value": "audit"
+                    },
+                    "memoryAndCPULimitsInKubernetesClusterEffect": {
+                        "value": "audit"
+                    },
+                    "AllowedCapabilitiesInKubernetesClusterEffect": {
+                        "value": "audit"
+                    },
+                    "ReadOnlyRootFileSystemInKubernetesClusterEffect": {
+                        "value": "audit"
+                    },
+                    "AllowedHostPathVolumesInKubernetesClusterEffect": {
+                        "value": "audit"
+                    },
+                    "MustRunAsNonRootNamespaceEffect": {
+                        "value": "audit"
+                    },
+                    "AllowedHostNetworkingAndPortsInKubernetesClusterEffect": {
+                        "value": "audit"
+                    },
+                    "NoSharingSensitiveHostNamespacesInKubernetesEffect": {
+                        "value": "audit"
+                    },
+                    "NoPrivilegeEscalationInKubernetesClusterEffect": {
+                        "value": "audit"
+                    },
+                    "AllowedAppArmorProfilesInKubernetesClusterEffect": {
+                        "value": "audit"
+                    },
+                    "networkSecurityGroupsOnInternalVirtualMachinesMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "sqlServersVirtualMachinesAdvancedDataSecurityMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },                    
+                    "sqlServersAdvancedDataSecurityMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "storageAccountsAdvancedDataSecurityMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "keyVaultsAdvancedDataSecurityMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "certificatesValidityPeriodMonitoringEffect": {
+                        "value": "audit"
                     }
                 }
             }
@@ -554,6 +644,96 @@
                     },
                     "containerBenchmarkMonitoringEffect": {
                         "value": "Disabled"
+                    },
+                    "azurePolicyforWindowsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "windowsDefenderExploitGuardMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "adaptiveApplicationControlsUpdateMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "serverVulnerabilityAssessmentEffect": {
+                        "value": "Disabled"
+                    },
+                    "ArcWindowsMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "ArcLinuxMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "kubernetesServiceAdvancedThreatProtectionMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "appServicesAdvancedThreatProtectionMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "containerRegistryAdvancedThreatProtectionMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "virtualMachinesAdvancedThreatProtectionMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "azurePolicyAddonStatusEffect": {
+                        "value": "Disabled"
+                    },
+                    "allowedContainerImagesInKubernetesClusterEffect": {
+                        "value": "disabled"
+                    },
+                    "privilegedContainersShouldBeAvoidedEffect": {
+                        "value": "disabled"
+                    },
+                    "allowedContainerPortsInKubernetesClusterEffect": {
+                        "value": "disabled"
+                    },
+                    "allowedServicePortsInKubernetesClusterEffect": {
+                        "value": "disabled"
+                    },
+                    "memoryAndCPULimitsInKubernetesClusterEffect": {
+                        "value": "disabled"
+                    },
+                    "AllowedCapabilitiesInKubernetesClusterEffect": {
+                        "value": "disabled"
+                    },
+                    "ReadOnlyRootFileSystemInKubernetesClusterEffect": {
+                        "value": "disabled"
+                    },
+                    "AllowedHostPathVolumesInKubernetesClusterEffect": {
+                        "value": "disabled"
+                    },
+                    "MustRunAsNonRootNamespaceEffect": {
+                        "value": "disabled"
+                    },
+                    "AllowedHostNetworkingAndPortsInKubernetesClusterEffect": {
+                        "value": "disabled"
+                    },
+                    "NoSharingSensitiveHostNamespacesInKubernetesEffect": {
+                        "value": "disabled"
+                    },
+                    "NoPrivilegeEscalationInKubernetesClusterEffect": {
+                        "value": "disabled"
+                    },
+                    "AllowedAppArmorProfilesInKubernetesClusterEffect": {
+                        "value": "disabled"
+                    },
+                    "networkSecurityGroupsOnInternalVirtualMachinesMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "sqlServersVirtualMachinesAdvancedDataSecurityMonitoringEffect": {
+                        "value": "Disabled"
+                    },                    
+                    "sqlServersAdvancedDataSecurityMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "storageAccountsAdvancedDataSecurityMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "keyVaultsAdvancedDataSecurityMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "certificatesValidityPeriodMonitoringEffect": {
+                        "value": "disabled"
                     }
                 }
             }
