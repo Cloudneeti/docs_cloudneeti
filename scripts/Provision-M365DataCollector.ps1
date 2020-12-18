@@ -12,9 +12,9 @@
     The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-    Version:        1.7
+    Version:        1.8
     Author:         Zscaler CSPM
-    Creation Date:  09/04/2020
+    Creation Date:  23/11/2020
     Last Modified Date: 22/10/2020
 
     # PREREQUISITE
@@ -307,10 +307,16 @@ $RequiredModules = @"
             "Version" : "16.0.8414.1200"
         },
         {
-                "Product": "AzureRM.Profile",
-                "Name": "AzureRM.Profile",
-                "ContentUrl" : "https://www.powershellgallery.com/api/v2/package/AzureRM.profile/5.8.3",
-                "Version" : "5.8.3"
+            "Product": "AzureRM.Profile",
+            "Name": "AzureRM.Profile",
+            "ContentUrl" : "https://www.powershellgallery.com/api/v2/package/AzureRM.profile/5.8.3",
+            "Version" : "5.8.3"
+        },
+        {
+            "Product": "MSOnline",
+            "Name": "MSOnline",
+            "ContentUrl" : "https://www.powershellgallery.com/api/v2/package/MSOnline",
+            "Version" : "1.1.183.57"
         }
     ]
 }

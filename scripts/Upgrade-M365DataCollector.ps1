@@ -159,10 +159,22 @@ $RequiredModules = @"
 {
     Modules: [
         {
+            "Product": "SharePoint",
+            "Name": "Microsoft.Online.SharePoint.PowerShell",
+            "ContentUrl" : "https://www.powershellgallery.com/api/v2/package/Microsoft.Online.SharePoint.PowerShell/16.0.8414.1200",
+            "Version" : "16.0.8414.1200"
+        },
+        {
             "Product": "AzureRM.Profile",
             "Name": "AzureRM.Profile",
             "ContentUrl" : "https://www.powershellgallery.com/api/v2/package/AzureRM.profile/5.8.3",
             "Version" : "5.8.3"
+        },
+        {
+            "Product": "MSOnline",
+            "Name": "MSOnline",
+            "ContentUrl" : "https://www.powershellgallery.com/api/v2/package/MSOnline",
+            "Version" : "1.1.183.57"
         }
     ]
 }
