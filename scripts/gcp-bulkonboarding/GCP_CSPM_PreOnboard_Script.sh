@@ -670,16 +670,20 @@ select opt in "${options[@]}" "Quit"; do
             do
                 for role in "${ROLES[@]}"
                 do
-                    echo -e ""
-                    echo "Role:  $role"
-                    gcloud projects add-iam-policy-binding $project --member serviceAccount:$SERVICE_ACCOUNT --role $role
-                    statusRoleeq=$?
-                    if [[ "$statusRoleeq" -eq 0 ]]; then
-                    echo -e ""
-                    echo -e "${GREEN}Successfully Added role:${NC} $role"
+                    if [ $SA_PROJECT_ID == $project ]; then
+                        echo "Service account project : $SA_PROJECT_ID"
                     else
-                    echo -e ""
-                    echo -e "${RED}Failed to add role:${NC} $role"
+                        echo -e ""
+                        echo "Role:  $role"
+                        gcloud projects add-iam-policy-binding $project --member serviceAccount:$SERVICE_ACCOUNT --role $role
+                        statusRoleeq=$?
+                        if [[ "$statusRoleeq" -eq 0 ]]; then
+                        echo -e ""
+                        echo -e "${GREEN}Successfully Added role:${NC} $role"
+                        else
+                        echo -e ""
+                        echo -e "${RED}Failed to add role:${NC} $role"
+                        fi
                     fi	
                 done
             done		
@@ -796,16 +800,20 @@ select opt in "${options[@]}" "Quit"; do
             do
                 for role in "${ROLES[@]}"
                 do
-                    echo -e ""
-                    echo "Role:  $role"
-                    gcloud projects add-iam-policy-binding $project --member serviceAccount:$SERVICE_ACCOUNT --role $role
-                    statusRoleeq=$?
-                    if [[ "$statusRoleeq" -eq 0 ]]; then
-                    echo -e ""
-                    echo -e "${GREEN}Successfully Added role:${NC} $role"
+                    if [ $SA_PROJECT_ID == $project ]; then
+                        echo "Service account project : $SA_PROJECT_ID"
                     else
-                    echo -e ""
-                    echo -e "${RED}Failed to add role:${NC} $role"
+                        echo -e ""
+                        echo "Role:  $role"
+                        gcloud projects add-iam-policy-binding $project --member serviceAccount:$SERVICE_ACCOUNT --role $role
+                        statusRoleeq=$?
+                        if [[ "$statusRoleeq" -eq 0 ]]; then
+                        echo -e ""
+                        echo -e "${GREEN}Successfully Added role:${NC} $role"
+                        else
+                        echo -e ""
+                        echo -e "${RED}Failed to add role:${NC} $role"
+                        fi
                     fi	
                 done
             done		
