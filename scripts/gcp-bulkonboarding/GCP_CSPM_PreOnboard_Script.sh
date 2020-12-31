@@ -502,7 +502,7 @@ select opt in "${options[@]}" "Quit"; do
             echo -e "${RED}Failed to list service account${NC}"
         fi
         echo -e "${BLUE}*****Enabling APIs on Project*****${NC}"
-        echo -e "3"
+        echo -e ""
         echo "SA_ProjectId: $SA_PROJECT_ID"
         $(gcloud services enable cloudresourcemanager.googleapis.com sqladmin.googleapis.com storage.googleapis.com iam.googleapis.com logging.googleapis.com monitoring.googleapis.com cloudasset.googleapis.com serviceusage.googleapis.com --project $SA_PROJECT_ID)
         statusSAProjAPI1=$?
@@ -514,36 +514,34 @@ select opt in "${options[@]}" "Quit"; do
             sa_fail=$((sa_fail + 1))
         fi
         # creating array with excluding list of projects
-        arr=()
+        EX_PROJECT_ID=()
         [ ! -f $INPUT ] && { echo "$INPUT file not found"; exit 99; }
         i=1
         while IFS=',' read -r f1 f2
         do
             test $i -eq 1 && ((i=i+1)) && continue 
-            arr+=( "$f1" )  
+            EX_PROJECT_ID+=( "$f1" )  
         done < "$INPUT"
 
         # Creating array for all projects within Organization
         echo ""
-        BRR=()
-        echo ""
+        IAM_PROJECT_ID=()
         m=0
         for project in  $(gcloud alpha asset list --organization=$ORGANIZATION_ID --content-type=resource --asset-types="cloudresourcemanager.googleapis.com/Project" --format="value(resource.data.projectId)")
         do
-            BRR[m++]="$project"
+            IAM_PROJECT_ID[m++]="$project"
         done
 
         # IAM_PROJECT_ID
-        echo ""
-        for target in "${arr[@]}"; do
-        for l in "${!BRR[@]}"; do
-            if [[ ${BRR[l]} = $target ]]; then
-            unset 'BRR[l]'
+        for target in "${EX_PROJECT_ID[@]}"; do
+        for l in "${!IAM_PROJECT_ID[@]}"; do
+            if [[ ${IAM_PROJECT_ID[l]} = $target ]]; then
+            unset 'IAM_PROJECT_ID[l]'
             fi
         done
         done
         echo ""
-        for project in "${BRR[@]}"
+        for project in "${IAM_PROJECT_ID[@]}"
         do
             if [ $SA_PROJECT_ID == $project ]; then
                 echo -e ""
