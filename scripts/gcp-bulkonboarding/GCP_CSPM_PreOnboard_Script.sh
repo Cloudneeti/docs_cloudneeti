@@ -501,7 +501,7 @@ select opt in "${options[@]}" "Quit"; do
             echo -e ""
             echo -e "${RED}Failed to list service account${NC}"
         fi
-        echo -e "${BLUE}*****Enabling APIs on Project*****${NC}"
+        echo -e "${BLUE}****Enabling APIs on Project****${NC}"
         echo -e ""
         echo "SA_ProjectId: $SA_PROJECT_ID"
         $(gcloud services enable cloudresourcemanager.googleapis.com sqladmin.googleapis.com storage.googleapis.com iam.googleapis.com logging.googleapis.com monitoring.googleapis.com cloudasset.googleapis.com serviceusage.googleapis.com --project $SA_PROJECT_ID)
