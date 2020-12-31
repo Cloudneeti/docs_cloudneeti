@@ -157,6 +157,9 @@ select opt in "${options[@]}" "Quit"; do
     echo -e "(service account name should be in small letter)"
     read SA_NAME
     echo ""
+    echo -e "Enter the service account display name : "
+    read SA_DISPLAY_NAME
+    echo ""
     title="Please select the options suits for your Organization : "
     prompt="Pick an option:"
     options=("Enable APIs on 1-5 projects" "Enable APIs on all projects" "Enable APIs on allowed list of projects" "Enable APIs on all projects except excluding list of projects")
@@ -172,7 +175,7 @@ select opt in "${options[@]}" "Quit"; do
         echo -e "Enter the project Id's to add service account in IAM : "
         echo -e "Each project Id should have separted with space (Example: ProjectId1 ProjectId2 ProjectId3 ... etc) "
         read -a IAM_PROJECT_ID
-        gcloud iam service-accounts create $SA_NAME  --display-name "CSPM-OrgLevel-Onboarding" --project=$SA_PROJECT_ID
+        gcloud iam service-accounts create $SA_NAME  --display-name $SA_DISPLAY_NAME --project=$SA_PROJECT_ID
         statusSA=$?
         if [[ "$statusSA" -eq 0 ]]; then
             echo -e ""
@@ -222,7 +225,7 @@ select opt in "${options[@]}" "Quit"; do
         echo -e "${BLUE}*****Enabling API's on Project*****${NC}"
         echo -e ""
         echo "SA_ProjectId: $SA_PROJECT_ID"
-        $(gcloud services enable cloudresourcemanager.googleapis.com sqladmin.googleapis.com storage-component.googleapis.com iam.googleapis.com logging.googleapis.com monitoring.googleapis.com cloudasset.googleapis.com serviceusage.googleapis.com --project $SA_PROJECT_ID)
+        $(gcloud services enable cloudresourcemanager.googleapis.com sqladmin.googleapis.com storage.googleapis.com iam.googleapis.com logging.googleapis.com monitoring.googleapis.com cloudasset.googleapis.com serviceusage.googleapis.com --project $SA_PROJECT_ID)
         statusSAProjAPI1=$?
         if [[ "$statusSAProjAPI1" -eq 0 ]]; then
             echo -e "${GREEN}Successfully Enabled APIs on:${NC} $SA_PROJECT_ID"
@@ -236,7 +239,7 @@ select opt in "${options[@]}" "Quit"; do
             if [ $SA_PROJECT_ID == $project ]; then
                 echo -e ""
                 echo "ProjectId: $SA_PROJECT_ID"
-                $(gcloud services enable cloudresourcemanager.googleapis.com compute.googleapis.com bigquery.googleapis.com dns.googleapis.com sqladmin.googleapis.com storage-component.googleapis.com iam.googleapis.com logging.googleapis.com monitoring.googleapis.com cloudasset.googleapis.com serviceusage.googleapis.com --project $SA_PROJECT_ID)
+                $(gcloud services enable cloudresourcemanager.googleapis.com compute.googleapis.com bigquery.googleapis.com dns.googleapis.com sqladmin.googleapis.com storage.googleapis.com iam.googleapis.com logging.googleapis.com monitoring.googleapis.com cloudasset.googleapis.com serviceusage.googleapis.com --project $SA_PROJECT_ID)
                 statusSAProjAPI=$?
                 if [[ "$statusSAProjAPI" -eq 0 ]]; then
                     echo -e "${GREEN}Successfully Enabled APIs on:${NC} $SA_PROJECT_ID"
@@ -266,7 +269,7 @@ select opt in "${options[@]}" "Quit"; do
         2 )
         org_enable_api_allProj_func() {
         echo "You picked $opt which is option $REPLY"
-        gcloud iam service-accounts create $SA_NAME  --display-name "CSPM-Orglevel-Onboarding" --project=$SA_PROJECT_ID
+        gcloud iam service-accounts create $SA_NAME  --display-name $SA_DISPLAY_NAME --project=$SA_PROJECT_ID
         statusSA=$?
         if [[ "$statusSA" -eq 0 ]]; then
             echo -e ""
@@ -314,7 +317,7 @@ select opt in "${options[@]}" "Quit"; do
         echo -e "${BLUE}*****Enabling API's on all Project*****${NC}"
         echo -e ""
         echo "SA_ProjectId: $SA_PROJECT_ID"
-        $(gcloud services enable cloudresourcemanager.googleapis.com sqladmin.googleapis.com storage-component.googleapis.com iam.googleapis.com logging.googleapis.com monitoring.googleapis.com cloudasset.googleapis.com serviceusage.googleapis.com --project $SA_PROJECT_ID)
+        $(gcloud services enable cloudresourcemanager.googleapis.com sqladmin.googleapis.com storage.googleapis.com iam.googleapis.com logging.googleapis.com monitoring.googleapis.com cloudasset.googleapis.com serviceusage.googleapis.com --project $SA_PROJECT_ID)
         statusSAProjAPI1=$?
         if [[ "$statusSAProjAPI1" -eq 0 ]]; then
             echo -e "${GREEN}Successfully Enabled APIs on:${NC} $SA_PROJECT_ID"
@@ -349,7 +352,7 @@ select opt in "${options[@]}" "Quit"; do
         echo -e "Enter the file path of the allowed list of projects : "
         echo -e "(Example: /Path/to/AllowedProjectList.csv )"
         read  INPUT
-        gcloud iam service-accounts create $SA_NAME  --display-name "CSPM-Orglevel-Onboarding" --project=$SA_PROJECT_ID
+        gcloud iam service-accounts create $SA_NAME  --display-name $SA_DISPLAY_NAME --project=$SA_PROJECT_ID
         statusSA=$?
         if [[ "$statusSA" -eq 0 ]]; then
             echo -e ""
@@ -396,7 +399,7 @@ select opt in "${options[@]}" "Quit"; do
         echo -e "${BLUE}*****Enabling APIs on Project*****${NC}"
         echo -e ""
         echo "SA_ProjectId: $SA_PROJECT_ID"
-        $(gcloud services enable cloudresourcemanager.googleapis.com sqladmin.googleapis.com storage-component.googleapis.com iam.googleapis.com logging.googleapis.com monitoring.googleapis.com cloudasset.googleapis.com serviceusage.googleapis.com --project $SA_PROJECT_ID)
+        $(gcloud services enable cloudresourcemanager.googleapis.com sqladmin.googleapis.com storage.googleapis.com iam.googleapis.com logging.googleapis.com monitoring.googleapis.com cloudasset.googleapis.com serviceusage.googleapis.com --project $SA_PROJECT_ID)
         statusSAProjAPI1=$?
         if [[ "$statusSAProjAPI1" -eq 0 ]]; then
             echo -e "${GREEN}Successfully Enabled APIs on:${NC} $SA_PROJECT_ID"
@@ -420,7 +423,7 @@ select opt in "${options[@]}" "Quit"; do
             if [ $SA_PROJECT_ID == $project ]; then
                 echo -e ""
                 echo "ProjectId: $SA_PROJECT_ID"
-                $(gcloud services enable cloudresourcemanager.googleapis.com compute.googleapis.com bigquery.googleapis.com dns.googleapis.com sqladmin.googleapis.com storage-component.googleapis.com iam.googleapis.com logging.googleapis.com monitoring.googleapis.com cloudasset.googleapis.com serviceusage.googleapis.com --project $SA_PROJECT_ID)
+                $(gcloud services enable cloudresourcemanager.googleapis.com compute.googleapis.com bigquery.googleapis.com dns.googleapis.com sqladmin.googleapis.com storage.googleapis.com iam.googleapis.com logging.googleapis.com monitoring.googleapis.com cloudasset.googleapis.com serviceusage.googleapis.com --project $SA_PROJECT_ID)
                 statusSAProjAPI=$?
                 if [[ "$statusSAProjAPI" -eq 0 ]]; then
                     echo -e "${GREEN}Successfully Enabled APIs on:${NC} $SA_PROJECT_ID"
@@ -454,7 +457,7 @@ select opt in "${options[@]}" "Quit"; do
         echo -e "Enter the file path of the excluding list of projects : "
         echo -e "(Example: /Path/to/ExcludedProjectList.csv )"
         read INPUT
-        gcloud iam service-accounts create $SA_NAME  --display-name "CSPM-Orglevel-Onboarding" --project=$SA_PROJECT_ID
+        gcloud iam service-accounts create $SA_NAME  --display-name $SA_DISPLAY_NAME --project=$SA_PROJECT_ID
         statusSA=$?
         if [[ "$statusSA" -eq 0 ]]; then
             echo -e ""
@@ -501,7 +504,7 @@ select opt in "${options[@]}" "Quit"; do
         echo -e "${BLUE}*****Enabling APIs on Project*****${NC}"
         echo -e "3"
         echo "SA_ProjectId: $SA_PROJECT_ID"
-        $(gcloud services enable cloudresourcemanager.googleapis.com sqladmin.googleapis.com storage-component.googleapis.com iam.googleapis.com logging.googleapis.com monitoring.googleapis.com cloudasset.googleapis.com serviceusage.googleapis.com --project $SA_PROJECT_ID)
+        $(gcloud services enable cloudresourcemanager.googleapis.com sqladmin.googleapis.com storage.googleapis.com iam.googleapis.com logging.googleapis.com monitoring.googleapis.com cloudasset.googleapis.com serviceusage.googleapis.com --project $SA_PROJECT_ID)
         statusSAProjAPI1=$?
         if [[ "$statusSAProjAPI1" -eq 0 ]]; then
             echo -e "${GREEN}Succefully Enabled API's on:${NC} $SA_PROJECT_ID"
@@ -545,7 +548,7 @@ select opt in "${options[@]}" "Quit"; do
             if [ $SA_PROJECT_ID == $project ]; then
                 echo -e ""
                 echo "ProjectId: $SA_PROJECT_ID"
-                $(gcloud services enable cloudresourcemanager.googleapis.com compute.googleapis.com bigquery.googleapis.com dns.googleapis.com sqladmin.googleapis.com storage-component.googleapis.com iam.googleapis.com logging.googleapis.com monitoring.googleapis.com cloudasset.googleapis.com serviceusage.googleapis.com --project $SA_PROJECT_ID)
+                $(gcloud services enable cloudresourcemanager.googleapis.com compute.googleapis.com bigquery.googleapis.com dns.googleapis.com sqladmin.googleapis.com storage.googleapis.com iam.googleapis.com logging.googleapis.com monitoring.googleapis.com cloudasset.googleapis.com serviceusage.googleapis.com --project $SA_PROJECT_ID)
                 statusSAProjAPI=$?
                 if [[ "$statusSAProjAPI" -eq 0 ]]; then
                     echo -e "${GREEN}Succefully Enabled API's on:${NC} $SA_PROJECT_ID"
@@ -609,6 +612,9 @@ select opt in "${options[@]}" "Quit"; do
     echo -e "(service account name should be in small letter)"
     read SA_NAME
     echo ""
+    echo -e "Enter the service account display name : "
+    read SA_DISPLAY_NAME
+    echo ""
     title="Please select the options suits for your Project based onboarding : "
     prompt="Pick an option:"
     options=("Enable APIs & add Service Account in IAM for 1-5 projects" "Enable APIs & add Service Account in IAM for allowed list of projects")
@@ -625,7 +631,7 @@ select opt in "${options[@]}" "Quit"; do
         echo -e "Enter the project Id's to add service account in IAM : "
         echo -e "Each project Id should have separted with space (Example: ProjectId1 ProjectId2 ProjectId3 ... etc) "
         read -a IAM_PROJECT_ID
-        gcloud iam service-accounts create $SA_NAME  --display-name "CSPM-ProjectLevel-Onboarding" --project=$SA_PROJECT_ID
+        gcloud iam service-accounts create $SA_NAME  --display-name $SA_DISPLAY_NAME --project=$SA_PROJECT_ID
         statusSA=$?
         if [[ "$statusSA" -eq 0 ]]; then
             echo -e ""
@@ -697,7 +703,7 @@ select opt in "${options[@]}" "Quit"; do
         echo -e "${BLUE}*****Enabling APIs on Project*****${NC}"
         echo -e ""
         echo "SA_ProjectId: $SA_PROJECT_ID"
-        $(gcloud services enable cloudresourcemanager.googleapis.com sqladmin.googleapis.com storage-component.googleapis.com iam.googleapis.com logging.googleapis.com monitoring.googleapis.com cloudasset.googleapis.com serviceusage.googleapis.com --project $SA_PROJECT_ID)
+        $(gcloud services enable cloudresourcemanager.googleapis.com sqladmin.googleapis.com storage.googleapis.com iam.googleapis.com logging.googleapis.com monitoring.googleapis.com cloudasset.googleapis.com serviceusage.googleapis.com --project $SA_PROJECT_ID)
         statusSAProjAPI1=$?
         if [[ "$statusSAProjAPI1" -eq 0 ]]; then
             echo -e "${GREEN}Successfully Enabled APIs on:${NC} $SA_PROJECT_ID"
@@ -711,7 +717,7 @@ select opt in "${options[@]}" "Quit"; do
             if [ $SA_PROJECT_ID == $project ]; then
                 echo -e ""
                 echo "ProjectId: $SA_PROJECT_ID"
-                $(gcloud services enable cloudresourcemanager.googleapis.com compute.googleapis.com bigquery.googleapis.com dns.googleapis.com sqladmin.googleapis.com storage-component.googleapis.com iam.googleapis.com logging.googleapis.com monitoring.googleapis.com cloudasset.googleapis.com serviceusage.googleapis.com --project $SA_PROJECT_ID)
+                $(gcloud services enable cloudresourcemanager.googleapis.com compute.googleapis.com bigquery.googleapis.com dns.googleapis.com sqladmin.googleapis.com storage.googleapis.com iam.googleapis.com logging.googleapis.com monitoring.googleapis.com cloudasset.googleapis.com serviceusage.googleapis.com --project $SA_PROJECT_ID)
                 statusSAProjAPI=$?
                 if [[ "$statusSAProjAPI" -eq 0 ]]; then
                     echo -e "${GREEN}Successfully Enabled APIs on:${NC} $SA_PROJECT_ID"
@@ -755,7 +761,7 @@ select opt in "${options[@]}" "Quit"; do
             IAM_PROJECT_ID+=( "$f1" )  
         done < "$INPUT"
         echo ""
-        gcloud iam service-accounts create $SA_NAME  --display-name "CSPM-ProjectLevel-Onboarding" --project=$SA_PROJECT_ID
+        gcloud iam service-accounts create $SA_NAME  --display-name $SA_DISPLAY_NAME --project=$SA_PROJECT_ID
         statusSA=$?
         if [[ "$statusSA" -eq 0 ]]; then
             echo -e ""
@@ -827,7 +833,7 @@ select opt in "${options[@]}" "Quit"; do
         echo -e "${BLUE}*****Enabling APIs on Project*****${NC}"
         echo -e ""
         echo "SA_ProjectId: $SA_PROJECT_ID"
-        $(gcloud services enable cloudresourcemanager.googleapis.com sqladmin.googleapis.com storage-component.googleapis.com iam.googleapis.com logging.googleapis.com monitoring.googleapis.com cloudasset.googleapis.com serviceusage.googleapis.com --project $SA_PROJECT_ID)
+        $(gcloud services enable cloudresourcemanager.googleapis.com sqladmin.googleapis.com storage.googleapis.com iam.googleapis.com logging.googleapis.com monitoring.googleapis.com cloudasset.googleapis.com serviceusage.googleapis.com --project $SA_PROJECT_ID)
         statusSAProjAPI1=$?
         if [[ "$statusSAProjAPI1" -eq 0 ]]; then
             echo -e "${GREEN}Successfully Enabled APIs on:${NC} $SA_PROJECT_ID"
@@ -841,7 +847,7 @@ select opt in "${options[@]}" "Quit"; do
             if [ $SA_PROJECT_ID == $project ]; then
                 echo -e ""
                 echo "ProjectId: $SA_PROJECT_ID"
-                $(gcloud services enable cloudresourcemanager.googleapis.com compute.googleapis.com bigquery.googleapis.com dns.googleapis.com sqladmin.googleapis.com storage-component.googleapis.com iam.googleapis.com logging.googleapis.com monitoring.googleapis.com cloudasset.googleapis.com serviceusage.googleapis.com --project $SA_PROJECT_ID)
+                $(gcloud services enable cloudresourcemanager.googleapis.com compute.googleapis.com bigquery.googleapis.com dns.googleapis.com sqladmin.googleapis.com storage.googleapis.com iam.googleapis.com logging.googleapis.com monitoring.googleapis.com cloudasset.googleapis.com serviceusage.googleapis.com --project $SA_PROJECT_ID)
                 statusSAProjAPI=$?
                 if [[ "$statusSAProjAPI" -eq 0 ]]; then
                     echo -e "${GREEN}Successfully Enabled APIs on:${NC} $SA_PROJECT_ID"
