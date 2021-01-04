@@ -123,6 +123,13 @@
     Project Passed: 15
     Project Failed: 0
 
+    # Service account key is created in the same directory with the service account name (.json).
+    $ ls
+    # download the key from the path by clicking three dot button at top right corner of cloud shell and select Download File option.
+    # Please provide full path to key file while downloading ( Example: /Path/to/key.json)
+    $ pwd
+
+
 .INPUTS
     None
 .OUTPUTS
