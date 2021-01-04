@@ -125,7 +125,7 @@
 
     # Service account key is created in the same directory with the service account name (.json).
     $ ls
-    # download the key from the path by clicking three dot button at top right corner of cloud shell and select Download File option.
+    # download the key from the path by clicking three dot button at top right corner of cloud shell and select "Download File" option.
     # Please provide full path to key file while downloading ( Example: /Path/to/key.json)
     $ pwd
 
@@ -689,7 +689,7 @@ select opt in "${options[@]}" "Quit"; do
                 for role in "${ROLES[@]}"
                 do
                     if [ $SA_PROJECT_ID == $project ]; then
-                        echo "Service account project : $SA_PROJECT_ID"
+                        echo -e ""
                     else
                         echo -e ""
                         echo "Role:  $role"
@@ -819,7 +819,7 @@ select opt in "${options[@]}" "Quit"; do
                 for role in "${ROLES[@]}"
                 do
                     if [ $SA_PROJECT_ID == $project ]; then
-                        echo "Service account project : $SA_PROJECT_ID"
+                        echo -e ""
                     else
                         echo -e ""
                         echo "Role:  $role"
