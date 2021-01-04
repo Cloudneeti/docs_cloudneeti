@@ -176,7 +176,7 @@ select opt in "${options[@]}" "Quit"; do
     echo -e "Enter the service account display name : "
     read SA_DISPLAY_NAME
     echo ""
-    title="Please select the options suits for your Organization : "
+    title="Please select the option which suits for your Organization : "
     prompt="Pick an option:"
     options=("Enable APIs on 1-5 projects" "Enable APIs on all projects" "Enable APIs on allowed list of projects" "Enable APIs on all projects except excluding list of projects")
     echo "$title"
@@ -629,7 +629,7 @@ select opt in "${options[@]}" "Quit"; do
     echo -e "Enter the service account display name : "
     read SA_DISPLAY_NAME
     echo ""
-    title="Please select the options suits for your Project based onboarding : "
+    title="Please select the option which suits for your Project based onboarding : "
     prompt="Pick an option:"
     options=("Enable APIs & add Service Account in IAM for 1-5 projects" "Enable APIs & add Service Account in IAM for allowed list of projects")
     echo "$title"
