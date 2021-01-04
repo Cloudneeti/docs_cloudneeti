@@ -93,6 +93,13 @@
 
         - Project--> Owner
 
+        ### [optional] CSV file with Allowed list of project
+
+        If you are onboarding number of projects then please create a .csv file with allowed list of project. by running the below command on cloud shell you can list all the project in .csv file and create allowed list of project.
+
+        # Open cloud shell and run the below command
+        $ gcloud projects list --format="csv(projectId,name)" > projectlist.csv 
+
 .EXAMPLE
 
     ## Running the pre-onboarding script on Cloud Shell
@@ -173,7 +180,7 @@ select opt in "${options[@]}" "Quit"; do
         echo "You picked $opt which is option $REPLY"
         echo -e ""
         echo -e "Enter the project Id's to add service account in IAM : "
-        echo -e "Each project Id should have separted with space (Example: ProjectId1 ProjectId2 ProjectId3 ... etc) "
+        echo -e "Each project Id should have separated with space (Example: ProjectId1 ProjectId2 ProjectId3 ... etc) "
         read -a IAM_PROJECT_ID
         gcloud iam service-accounts create $SA_NAME  --display-name $SA_DISPLAY_NAME --project=$SA_PROJECT_ID
         statusSA=$?
@@ -627,7 +634,7 @@ select opt in "${options[@]}" "Quit"; do
         echo "You picked $opt which is option $REPLY"
         echo -e ""
         echo -e "Enter the project Id's to add service account in IAM : "
-        echo -e "Each project Id should have separted with space (Example: ProjectId1 ProjectId2 ProjectId3 ... etc) "
+        echo -e "Each project Id should have separated with space (Example: ProjectId1 ProjectId2 ProjectId3 ... etc) "
         read -a IAM_PROJECT_ID
         gcloud iam service-accounts create $SA_NAME  --display-name $SA_DISPLAY_NAME --project=$SA_PROJECT_ID
         statusSA=$?
