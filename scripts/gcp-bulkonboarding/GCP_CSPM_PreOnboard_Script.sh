@@ -52,6 +52,8 @@
 
     # PREREQUISITE
 
+    - All projects must be linked with Billing Account.
+
     - Organization Based onbaording
         ### Required APIs
 
