@@ -2,9 +2,9 @@
 
 : '
 #SYNOPSIS
-    CSPM GCP Pre-onboarding script.
+    GCP onboard prerequisites script.
 .DESCRIPTION
-    This script has been used to create Service Account, Service Account Key, add Service Account in IAM, assign roles and enable all the pre-requisite APIs required to onboard GCP Organization & Project on ZCSPM
+    This script has been used to create Service Account, Service Account Key, add Service Account in IAM, assign roles to service account and enable all the pre-requisite APIs required to onboard GCP Organization & Project on ZCSPM
 .NOTES
     Copyright (c) Cloudneeti. All rights reserved.
     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is  furnished to do so, subject to the following conditions:
@@ -13,22 +13,22 @@
     Version: 1.0
     ## Coverage
 
-    The pre-onbaording script covers:
+    The prerequisites script covers:
 
     - Organization Based onbaording
         - Create Service Account
         - Create Service Account Key (Service account will be created in same directory where your are running this script)
-        - Promote Service at Organzation Level IAM & attach required roles
+        - Promote Service at Organzation Level IAM and attach required roles
             - Organization Role Viewer
             - Folder Viewer
             - Project--> Viewer
             - Cloud Asset Viewer 
-        - Enable APIs on projects which are going to onboard on ZCSPM
+        - Enable APIs on all the projects which are going to onboard on ZCSPM
             - Options 
-                1. Enable APIs on 1-5 projects
-                2. Enable APIs on all projects
-                3. Enable APIs on allowed list of projects 
-                4. Enable APIs on all projects except excluding list of projects
+                1. 1-5 projects
+                2. All projects
+                3. Allowed list of projects (.csv file)
+                4. All projects excluding a list of projects (.csv file)
 
 
     - Project Based Onboarding
@@ -38,17 +38,17 @@
             - Add Service account in IAM & attach required roles
                 - Project--> Viewer
                 - Cloud Asset Viewer
-            - Enable APIs & add Service Acoount in IAM for project which is going to onboard on ZCSPM
+            - Enable APIs and add Service Acoount in IAM for project which is going to onboard on ZCSPM
         - Multiple Project
             - Create Service Account
             - Create Service Account Key (Service account will be created in same directory where your are running this script)
             - Add Service account in IAM of all the project & assign required roles
                 - Project--> Viewer
                 - Cloud Asset Viewer
-            - Enable APIs and add Service Acoount in IAM for projects which are going to onboard on ZCSPM
+            - Enable APIs and add Service Acoount in IAM for all the projects which are going to onboard on ZCSPM
         - Options
-            1. Enable APIs & add Service Account in IAM for 1-5 projects
-            2. Enable APIs & add Service Account in IAM for allowed list of projects
+            1. 1-5 projects
+            2. Allowed list of projects (.csv file)
 
     # PREREQUISITE
 
@@ -64,7 +64,7 @@
 
         ### Required Permissions
 
-        The following permissions are required to run the pre-onboarding script:
+        The following permissions are required to run this script:
 
         On organization level:
 
@@ -77,7 +77,7 @@
         If you are onboarding specific set of project then please create a .csv file with allowed or excluded list of project. by running the below command on cloud shell you can list all the project within organization in .csv file and create allowed or excluded list of project.
 
         # Open cloud shell and run the below command
-        $ gcloud alpha asset list --organization=<ORG_ID> --content-type=resource --asset-types=cloudresourcemanager.googleapis.com/Project --format="csv(resource.data.projectId,resource.data.name)" > projlist.csv 
+        $ gcloud alpha asset list --organization=<ORG_ID> --content-type=resource --asset-types=cloudresourcemanager.googleapis.com/Project --format="csv(resource.data.projectId,resource.data.name)" > projectlist.csv 
 
 
     - Project Based onbaording
@@ -89,7 +89,7 @@
 
         ### Required Permissions
 
-        The following permissions are required on all the project to run the pre-onboarding script:
+        The following permissions are required on all the projects to run this script:
 
         On project level:
 
@@ -97,38 +97,38 @@
 
         ### [optional] CSV file with Allowed list of project
 
-        If you are onboarding number of projects then please create a .csv file with allowed list of project. by running the below command on cloud shell you can list all the project in .csv file and create allowed list of project.
+        If you are onboarding number of projects then please create a .csv file with allowed list of projects, by running the below command on cloud shell you can list all the project in .csv file and create allowed list of project.
 
         # Open cloud shell and run the below command
         $ gcloud projects list --format="csv(projectId,name)" > projectlist.csv 
 
 .EXAMPLE
 
-    ## Running the pre-onboarding script on Cloud Shell
+    ## Running the script on Cloud Shell
     ### CLI Example 
 
     # make sure your are authenticated to GCP
     $ gcloud auth list
 
     # change the permission of script file to execute
-    $ chmod +x GCP_CSPM_PreOnboard_Script.sh
+    $ chmod +x GCP_Onboard_Prerequisites.sh
 
-    $ ./GCP_CSPM_PreOnboard_Script.sh
+    $ ./GCP_Onboard_Prerequisites.sh
     ...snip...
-    Pre-onboarding Script executed Successfully!!
+    GCP Onboard Prerequisites script executed.
 
     Summary:
     Service Account Email: sa-name@project-org-01-280413.iam.gserviceaccount.com
     Service Account Key Name: sa-name.json
     Service Account Project Passed: 1
     Service Account Project Failed: 0
-    Project Passed: 15
-    Project Failed: 0
+    Projects Passed: 15
+    Projects Failed: 0
 
     # Service account key is created in the same directory with the service account name (.json).
     $ ls
     # download the key from the path by clicking three dot button at top right corner of cloud shell and select "Download File" option.
-    # Please provide full path to key file while downloading ( Example: /Path/to/key.json)
+    # Please provide full path to key file while downloading ( Example: /path/to/key.json)
     $ pwd
 
 
@@ -145,16 +145,16 @@ BLUE='\033[0;34m'
 NC='\033[0m'
 BCyan="\033[1;36m"
 
-title="Please select the onboarding type : "
-prompt="Pick an option:"
-options=("Organization Based Onboarding" "Project Based Onboarding")
+title="Please select the onboarding type: "
+prompt="Pick an option: "
+options=("Organization-based Onboarding" "Project-based Onboarding")
 echo "$title"
 PS3="$prompt"
 select opt in "${options[@]}" "Quit"; do 
 
     case "$REPLY" in
     1)
-    echo "You picked $opt which is option $REPLY"
+    echo "You have selected '$opt'."
     SA_KEY=""
     success=0
     fail=0
@@ -163,22 +163,22 @@ select opt in "${options[@]}" "Quit"; do
     ROLES=(roles/iam.organizationRoleViewer roles/viewer roles/resourcemanager.folderViewer roles/cloudasset.viewer)
     ##################
     echo ""
-    echo -e "Enter the Organization Id : "
+    echo -e "Enter the Organization ID: "
     read ORGANIZATION_ID
     echo ""
-    echo -e "Enter the project Id to create service account : "
+    echo -e "Enter the project ID to create a service account: "
     read SA_PROJECT_ID
     echo ""
-    echo -e "Enter the service account name : "
-    echo -e "(service account name should be in small letter)"
+    echo -e "Enter the service account name: "
+    echo -e "(The service account name is case sensitive and must be in lowercase)"
     read SA_NAME
     echo ""
-    echo -e "Enter the service account display name : "
+    echo -e "Enter the service account display name: "
     read SA_DISPLAY_NAME
     echo ""
-    title="Please select the option which suits for your Organization : "
-    prompt="Pick an option:"
-    options=("Enable APIs on 1-5 projects" "Enable APIs on all projects" "Enable APIs on allowed list of projects" "Enable APIs on all projects except excluding list of projects")
+    title="Please select one of the following options to enable APIs for Organization-based Onboarding: "
+    prompt="Pick an option: "
+    options=("1-5 projects" "All projects" "Allowed list of projects (.csv file)" "All projects excluding a list of projects (.csv file)")
     echo "$title"
     PS3="$prompt"
     select opt in "${options[@]}" "Quit"; do 
@@ -186,10 +186,10 @@ select opt in "${options[@]}" "Quit"; do
         case "$REPLY" in
         1 )
         org_enable_api_few_proj() {
-        echo "You picked $opt which is option $REPLY"
+        echo "You have selected '$opt'."
         echo -e ""
-        echo -e "Enter the project Id's to add service account in IAM : "
-        echo -e "Each project Id should have separated with space (Example: ProjectId1 ProjectId2 ProjectId3 ... etc) "
+        echo -e "Enter the project IDs separated by a space: "
+        echo -e "(Example: ProjectId_1 ProjectId_2 ProjectId_3 ... etc) "
         read -a IAM_PROJECT_ID
         gcloud iam service-accounts create $SA_NAME  --display-name $SA_DISPLAY_NAME --project=$SA_PROJECT_ID
         statusSA=$?
@@ -284,7 +284,7 @@ select opt in "${options[@]}" "Quit"; do
         break;;
         2 )
         org_enable_api_allProj_func() {
-        echo "You picked $opt which is option $REPLY"
+        echo "You have selected '$opt'."
         gcloud iam service-accounts create $SA_NAME  --display-name $SA_DISPLAY_NAME --project=$SA_PROJECT_ID
         statusSA=$?
         if [[ "$statusSA" -eq 0 ]]; then
@@ -363,10 +363,10 @@ select opt in "${options[@]}" "Quit"; do
         break;;
         3 )
         org_enable_api_allowedProj_func() {
-        echo "You picked $opt which is option $REPLY"
+        echo "You have selected '$opt'."
         echo -e ""
-        echo -e "Enter the file path of the allowed list of projects : "
-        echo -e "(Example: /Path/to/AllowedProjectList.csv )"
+        echo -e "Enter the file path to the allowed list of projects: "
+        echo -e "(Example: /home/path/to/allowed_list.csv )"
         read  INPUT
         gcloud iam service-accounts create $SA_NAME  --display-name $SA_DISPLAY_NAME --project=$SA_PROJECT_ID
         statusSA=$?
@@ -468,10 +468,10 @@ select opt in "${options[@]}" "Quit"; do
         break;;
         4 )
         org_enable_api_excludingProj_func() {
-        echo "You picked $opt which is option $REPLY"
+        echo "You have selected '$opt'."
         echo -e ""
-        echo -e "Enter the file path of the excluding list of projects : "
-        echo -e "(Example: /Path/to/ExcludedProjectList.csv )"
+        echo -e "Enter the file path to the list of projects to be excluded: "
+        echo -e "(Example: /home/path/to/excluded_list.csv )"
         read INPUT
         gcloud iam service-accounts create $SA_NAME  --display-name $SA_DISPLAY_NAME --project=$SA_PROJECT_ID
         statusSA=$?
@@ -597,20 +597,21 @@ select opt in "${options[@]}" "Quit"; do
     done
 
     ##################################################################################
-    echo
-    echo -e "${GREEN}Pre-onboarding Script executed Successfully!!${NC}"
+    echo -e ""
+    echo -e ""
+    echo -e "${GREEN}GCP Onboard Prerequisites script executed.${NC}"
     echo
     echo -e "${BCyan}Summary:${NC}"
     echo -e "${BCyan}Service Account Email:${NC} $SERVICE_ACCOUNT"
     echo -e "${BCyan}Service Account Key Name:${NC} $SA_KEY"
     echo -e "${BCyan}Service Account Project Passed:${NC} $sa_success"
     echo -e "${BCyan}Service Account Project Failed:${NC} $sa_fail"
-    echo -e "${BCyan}Project Passed:${NC} $success" 
-    echo -e "${BCyan}Project Failed:${NC} $fail"
+    echo -e "${BCyan}Projects Passed:${NC} $success" 
+    echo -e "${BCyan}Projects Failed:${NC} $fail"
     ###################################################################################
     break;;
     2)
-    echo "You picked $opt which is option $REPLY"
+    echo "You have selected '$opt'."
     echo -e ""
     SA_KEY=""
     success=0
@@ -619,19 +620,19 @@ select opt in "${options[@]}" "Quit"; do
     sa_fail=0
     ROLES=(roles/viewer roles/cloudasset.viewer)
     ##################
-    echo -e "Enter the project Id to create service account : "
+    echo -e "Enter the project ID to create a service account: "
     read SA_PROJECT_ID
     echo ""
-    echo -e "Enter the service account name : "
-    echo -e "(service account name should be in small letter)"
+    echo -e "Enter the service account name: "
+    echo -e "(The service account name is case sensitive and must be in lowercase)"
     read SA_NAME
     echo ""
-    echo -e "Enter the service account display name : "
+    echo -e "Enter the service account display name: "
     read SA_DISPLAY_NAME
     echo ""
-    title="Please select the option which suits for your Project based onboarding : "
-    prompt="Pick an option:"
-    options=("Enable APIs & add Service Account in IAM for 1-5 projects" "Enable APIs & add Service Account in IAM for allowed list of projects")
+    title="Please select one of the following options to enable APIs and add service account in IAM for Project-based Onboarding: "
+    prompt="Pick an option: "
+    options=("1-5 projects" "Allowed list of projects (.csv file)")
     echo "$title"
     PS3="$prompt"
     select opt in "${options[@]}" "Quit"; do 
@@ -640,10 +641,10 @@ select opt in "${options[@]}" "Quit"; do
 
         1 )
         enable_api_few_proj() {
-        echo "You picked $opt which is option $REPLY"
+        echo "You have selected '$opt'."
         echo -e ""
-        echo -e "Enter the project Id's to add service account in IAM : "
-        echo -e "Each project Id should have separated with space (Example: ProjectId1 ProjectId2 ProjectId3 ... etc) "
+        echo -e "Enter the project IDs separated by a space: "
+        echo -e "(Example: ProjectID_1 ProjectID_2 ProjectID_3 ... etc) "
         read -a IAM_PROJECT_ID
         gcloud iam service-accounts create $SA_NAME  --display-name $SA_DISPLAY_NAME --project=$SA_PROJECT_ID
         statusSA=$?
@@ -760,12 +761,12 @@ select opt in "${options[@]}" "Quit"; do
         break;;
         2 )
         enable_api_allowed_proj() {
-        echo "You picked $opt which is option $REPLY"
+        echo "You have selected '$opt'."
         echo -e ""
         IAM_PROJECT_ID=()
         echo -e ""
-        echo -e "Enter the file path of the allowed list of projects : "
-        echo -e "(Example: /Path/to/AllowedProjectList.csv )"
+        echo -e "Enter the file path to the allowed list of projects: "
+        echo -e "(Example: /home/path/to/allowed_list.csv )"
         read  INPUT
         [ ! -f $INPUT ] && { echo "$INPUT file not found"; exit 99; }
         i=1
@@ -896,16 +897,17 @@ select opt in "${options[@]}" "Quit"; do
     done
 
     ##################################################################################
-    echo
-    echo -e "${GREEN}Pre-onboarding Script executed Successfully!!${NC}"
+    echo -e ""
+    echo -e ""
+    echo -e "${GREEN}GCP Onboard Prerequisites script executed.${NC}"
     echo
     echo -e "${BCyan}Summary:${NC}"
     echo -e "${BCyan}Service Account Email:${NC} $SERVICE_ACCOUNT"
     echo -e "${BCyan}Service Account Key Name:${NC} $SA_KEY"
     echo -e "${BCyan}Service Account Project Passed:${NC} $sa_success"
     echo -e "${BCyan}Service Account Project Failed:${NC} $sa_fail"
-    echo -e "${BCyan}Project Passed:${NC} $success" 
-    echo -e "${BCyan}Project Failed:${NC} $fail"
+    echo -e "${BCyan}Projects Passed:${NC} $success" 
+    echo -e "${BCyan}Projects Failed:${NC} $fail"
     ###################################################################################
     break;;
     $(( ${#options[@]}+1 )) ) echo "Goodbye!"; break;;
