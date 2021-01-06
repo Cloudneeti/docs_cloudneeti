@@ -129,7 +129,6 @@
     $ ls
     # download the key from the path by clicking three dot button at top right corner of cloud shell and select "Download File" option.
     # Please provide full path to key file while downloading ( Example: /path/to/key.json)
-    $ pwd
 
 
 .INPUTS
@@ -189,7 +188,7 @@ select opt in "${options[@]}" "Quit"; do
         echo "You have selected '$opt'."
         echo -e ""
         echo -e "Enter the project IDs separated by a space: "
-        echo -e "(Example: ProjectId_1 ProjectId_2 ProjectId_3 ... etc) "
+        echo -e "(Example: ProjectID_1 ProjectID_2 ProjectID_3 ... etc) "
         read -a IAM_PROJECT_ID
         gcloud iam service-accounts create $SA_NAME  --display-name $SA_DISPLAY_NAME --project=$SA_PROJECT_ID
         statusSA=$?
@@ -212,6 +211,7 @@ select opt in "${options[@]}" "Quit"; do
             if [[ "$statusKey" -eq 0 ]]; then
                 echo -e ""
                 SA_KEY=$(ls | grep $SA_NAME.json)
+                SA_KEY_PATH=$(pwd)/$(ls | grep $SA_NAME.json)
                 echo -e "${GREEN}Successfully Created Service account key ${NC}"
             else
                 echo -e ""
@@ -306,6 +306,7 @@ select opt in "${options[@]}" "Quit"; do
             if [[ "$statusKey" -eq 0 ]]; then
                 echo -e ""
                 SA_KEY=$(ls | grep $SA_NAME.json)
+                SA_KEY_PATH=$(pwd)/$(ls | grep $SA_NAME.json)
                 echo -e "${GREEN}Successfully Created Service account key ${NC}"
             else
                 echo -e ""
@@ -389,6 +390,7 @@ select opt in "${options[@]}" "Quit"; do
             if [[ "$statusKey" -eq 0 ]]; then
                 echo -e ""
                 SA_KEY=$(ls | grep $SA_NAME.json)
+                SA_KEY_PATH=$(pwd)/$(ls | grep $SA_NAME.json)
                 echo -e "${GREEN}Successfully Created Service account key ${NC}"
             else
                 echo -e ""
@@ -494,6 +496,7 @@ select opt in "${options[@]}" "Quit"; do
             if [[ "$statusKey" -eq 0 ]]; then
                 echo -e ""
                 SA_KEY=$(ls | grep $SA_NAME.json)
+                SA_KEY_PATH=$(pwd)/$(ls | grep $SA_NAME.json)
                 echo -e "${GREEN}Succefully Created Service account key ${NC}"
             else
                 echo -e ""
@@ -604,6 +607,7 @@ select opt in "${options[@]}" "Quit"; do
     echo -e "${BCyan}Summary:${NC}"
     echo -e "${BCyan}Service Account Email:${NC} $SERVICE_ACCOUNT"
     echo -e "${BCyan}Service Account Key Name:${NC} $SA_KEY"
+    echo -e "${BCyan}Service Account Key File Path:${NC} $SA_KEY_PATH"
     echo -e "${BCyan}Service Account Project Passed:${NC} $sa_success"
     echo -e "${BCyan}Service Account Project Failed:${NC} $sa_fail"
     echo -e "${BCyan}Projects Passed:${NC} $success" 
@@ -667,6 +671,7 @@ select opt in "${options[@]}" "Quit"; do
             if [[ "$statusKey" -eq 0 ]]; then
                 echo -e ""
                 SA_KEY=$(ls | grep $SA_NAME.json)
+                SA_KEY_PATH=$(pwd)/$(ls | grep $SA_NAME.json)
                 echo -e "${GREEN}Successfully Created Service account key ${NC}"
             else
                 echo -e ""
@@ -797,6 +802,7 @@ select opt in "${options[@]}" "Quit"; do
             if [[ "$statusKey" -eq 0 ]]; then
                 echo -e ""
                 SA_KEY=$(ls | grep $SA_NAME.json)
+                SA_KEY_PATH=$(pwd)/$(ls | grep $SA_NAME.json)
                 echo -e "${GREEN}Successfully Created Service account key ${NC}"
             else
                 echo -e ""
@@ -904,6 +910,7 @@ select opt in "${options[@]}" "Quit"; do
     echo -e "${BCyan}Summary:${NC}"
     echo -e "${BCyan}Service Account Email:${NC} $SERVICE_ACCOUNT"
     echo -e "${BCyan}Service Account Key Name:${NC} $SA_KEY"
+    echo -e "${BCyan}Service Account Key File Path:${NC} $SA_KEY_PATH"
     echo -e "${BCyan}Service Account Project Passed:${NC} $sa_success"
     echo -e "${BCyan}Service Account Project Failed:${NC} $sa_fail"
     echo -e "${BCyan}Projects Passed:${NC} $success" 
