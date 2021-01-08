@@ -29,6 +29,12 @@
                 2. All projects
                 3. Allowed list of projects (.csv file)
                 4. All projects excluding a list of projects (.csv file)
+        - List of APIs Enabled on project where service account is created 
+            [cloudresourcemanager.googleapis.com, sqladmin.googleapis.com, storage.googleapis.com, iam.googleapis.com, logging.googleapis.com, monitoring.googleapis.com, cloudasset.googleapis.com, serviceusage.googleapis.com]
+        - List of APIs Enabled on project where service account is created and selected for onboarding
+            [cloudresourcemanager.googleapis.com, compute.googleapis.com, bigquery.googleapis.com, dns.googleapis.com, sqladmin.googleapis.com, storage.googleapis.com, iam.googleapis.com, logging.googleapis.com, monitoring.googleapis.com, cloudasset.googleapis.com, serviceusage.googleapis.com]
+        - List of APIs enabled on project selected for onboarding
+            [compute.googleapis.com, bigquery.googleapis.com, dns.googleapis.com, serviceusage.googleapis.com]
 
 
     - Project Based Onboarding
@@ -49,6 +55,12 @@
         - Options
             1. 1-5 projects
             2. Allowed list of projects (.csv file)
+        - List of APIs Enabled on project where service account is created 
+            [cloudresourcemanager.googleapis.com, sqladmin.googleapis.com, storage.googleapis.com, iam.googleapis.com, logging.googleapis.com, monitoring.googleapis.com, cloudasset.googleapis.com, serviceusage.googleapis.com]
+        - List of APIs Enabled on project where service account is created and selected for onboarding
+            [cloudresourcemanager.googleapis.com, compute.googleapis.com, bigquery.googleapis.com, dns.googleapis.com, sqladmin.googleapis.com, storage.googleapis.com, iam.googleapis.com, logging.googleapis.com, monitoring.googleapis.com, cloudasset.googleapis.com, serviceusage.googleapis.com]
+        - List of APIs enabled on project selected for onboarding
+            [compute.googleapis.com, bigquery.googleapis.com, dns.googleapis.com, serviceusage.googleapis.com]
 
     # PREREQUISITE
 
@@ -105,7 +117,12 @@
 .EXAMPLE
 
     ## Running the script on Cloud Shell
-    ### CLI Example 
+    ### CLI Example
+
+    # Open cloud shell and set project
+    $ gcloud config set project <Project_ID>
+
+    # Download the script on cloud shell by following the documentation
 
     # make sure your are authenticated to GCP
     $ gcloud auth list
