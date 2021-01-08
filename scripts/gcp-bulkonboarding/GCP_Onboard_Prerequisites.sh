@@ -120,6 +120,7 @@
     Summary:
     Service Account Email: sa-name@project-org-01-280413.iam.gserviceaccount.com
     Service Account Key Name: sa-name.json
+    Service Account Key File Path: /home/aj/sa-name.json
     Service Account Project Passed: 1
     Service Account Project Failed: 0
     Projects Passed: 15
