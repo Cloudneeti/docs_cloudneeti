@@ -17,6 +17,9 @@ status_check()
         exit 1
     fi
 }
+
+download_scripts()
+{
 echo ""
 mkdir gcp-bulkonboarding
 cd gcp-bulkonboarding
@@ -64,3 +67,5 @@ else
     echo -e "${RED}Failed to create folder.${NC}"
     exit 1
 fi
+}
+download_scripts
