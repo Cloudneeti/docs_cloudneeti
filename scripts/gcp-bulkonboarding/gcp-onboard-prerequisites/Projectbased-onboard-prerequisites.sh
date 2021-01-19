@@ -94,6 +94,8 @@ if [[ "$status" -eq 0 ]]; then
             echo -e "${BCyan}Service Account Email:${NC} ${output[0]}"
             echo -e "${BCyan}Service Account Key Name:${NC} ${output[1]}"
             echo -e "${BCyan}Service Account Key File Path:${NC} ${output[2]}"
+            echo ""
+            $(rm -rf output)
         else
             echo -e "${RED}Failed to run script${NC} "
             $(rm -rf output)
