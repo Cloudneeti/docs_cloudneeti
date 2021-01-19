@@ -45,7 +45,10 @@ done
 summary_result()
 {
     if [ "$OnboardType" == "ProjectBased" ]; then
-        echo -e "${GREEN}Create Service Account script executed.${NC}"
+        echo $SERVICE_ACCOUNT | tee -a output >/dev/null
+        echo $SA_KEY | tee -a output >/dev/null
+        echo $SA_KEY_PATH | tee -a output >/dev/null
+        echo -e "${GREEN}Created Service Account Successfully!!.${NC}"
     else
         echo -e ""
         echo -e "${GREEN}Create Service Account script executed.${NC}"
@@ -70,14 +73,11 @@ create_service_account()
             statusSAlist=$?
             if [[ "$statusSAlist" -eq 0 ]]; then
                 echo -e ""
-                echo $SERVICE_ACCOUNT | tee -a output >/dev/null
                 gcloud iam service-accounts keys create $SA_NAME.json --iam-account=$SERVICE_ACCOUNT --key-file-type="json" --project=$SA_PROJECT_ID
                 statusKey=$?
                 if [[ "$statusKey" -eq 0 ]]; then
                     SA_KEY=$(ls | grep $SA_NAME.json)
-                    echo $SA_KEY | tee -a output >/dev/null
                     SA_KEY_PATH=$(pwd)/$(ls | grep $SA_NAME.json)
-                    echo $SA_KEY_PATH | tee -a output >/dev/null
                     echo -e "${GREEN}Successfully created service account key${NC}"
                     summary_result
                 else
