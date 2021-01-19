@@ -1,0 +1,4 @@
+{
+    "ORG_Onboarding": ["roles/iam.organizationRoleViewer", "roles/viewer", "roles/resourcemanager.folderViewer", "roles/cloudasset.viewer"],
+    "Project_Onboarding": ["roles/viewer", "roles/cloudasset.viewer"]
+}
