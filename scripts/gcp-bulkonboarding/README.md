@@ -1,5 +1,3 @@
-
-: '
 #SYNOPSIS
     GCP Onboard Prerequisites.
 .DESCRIPTION
@@ -147,5 +145,4 @@
     None
 .OUTPUTS
     None
-'
 
