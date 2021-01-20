@@ -56,7 +56,7 @@ The gcp onboard prerequisites scripts covers:
     | ------------- | ------------- | ------------- |-------------  |
     | Create Service Account & Key  | Owner/Editor |  |  |
     | Promote Service account to Organization level & Attach Roles  | Organization Administrator |  |  |
-    | Enable APIs | Owner/Editor\\nCloud Asset Viewer | Cloud Asset API  | 1. List of project IDs --> (<=10 Projects)\\n2. All projects\\n3. Allowed list of projects (.csv file) --> (>=10 projects)\\n 4. All projects excluding a list of projects (.csv file) |
+    | Enable APIs | Owner/Editor<br />Cloud Asset Viewer | Cloud Asset API  | 1. List of project IDs --> (<=10 Projects)<br />2. All projects<br />3. Allowed list of projects (.csv file) --> (>=10 projects)<br />4. All projects excluding a list of projects (.csv file) |
 
 
     ### [optional] CSV file with Allowed or Excluded list of project
@@ -74,8 +74,8 @@ The gcp onboard prerequisites scripts covers:
     | Action  | Required Permission | Required APIs   | Options |
     | ------------- | ------------- | ------------- |-------------  |
     | Create Service Account & Key  | Owner |  |  |
-    | Add Service Account in IAM & Attach Roles  | Owner |  |  |
-    | Enable APIs | Owner | Cloud Resource Manager API  | 1. [ -l ] List of project IDs separated by a comma --> (<=10 Projects)\\n2. [ -c ] Allowed list of projects (.csv file) --> (>=10 projects) |
+    | Add Service Account in IAM & Attach Roles  | Owner |  | 1. [ -l ] List of project IDs separated by a comma --> (<=10 Projects)<br />2. [ -c ] Allowed list of projects (.csv file) --> (>=10 projects) |
+    | Enable APIs | Owner | Cloud Resource Manager API  | 1. [ -l ] List of project IDs separated by a comma --> (<=10 Projects)<br />2. [ -c ] Allowed list of projects (.csv file) --> (>=10 projects) |
 
 
     ### [optional] CSV file with Allowed list of project
