@@ -11,7 +11,7 @@ Version: 1.0
 
 ## Coverage
 
-The pre-onbaording script covers:
+The gcp onboard prerequisites scripts covers:
 
 - Organization Based onbaording
     - Create Service Account
@@ -59,7 +59,7 @@ The pre-onbaording script covers:
 
     ### Required Permissions
 
-    The following permissions are required to run the pre-onboarding script:
+    The following permissions are required to run the gcp onboard prerequisites script:
 
     On organization level:
 
@@ -86,7 +86,7 @@ The pre-onbaording script covers:
 
     ### Required Permissions
 
-    The following permissions are required on all the project to run the pre-onboarding script:
+    The following permissions are required on all the project to run the gcp onboard prerequisites script:
 
     On project level:
 
@@ -101,7 +101,7 @@ The pre-onbaording script covers:
     $ gcloud projects list --format="csv(projectId,name)" > projectlist.csv
     ```
 
-## Running the pre-onboarding script on Cloud Shell
+## Running the GCP Onboard Prerequisites scripts on Cloud Shell
 ### CLI Example
 
 ```
