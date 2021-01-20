@@ -58,7 +58,7 @@ promote_sa_to_org()
     for role in "${ROLES[@]}"
     do
         echo "Role: $role"
-        gcloud organizations add-iam-policy-binding $ORGANIZATION_ID --member serviceAccount:$SERVICE_ACCOUNT --role $role --format=json | jq .bindings[].members[] | grep $SERVICE_ACCOUNT
+        gcloud organizations add-iam-policy-binding $ORGANIZATION_ID --member serviceAccount:$SERVICE_ACCOUNT --role $role --format=json | jq .bindings[].members[] | grep $SERVICE_ACCOUNT | uniq
         statusOrgRoleSA=$?
         if [[ "$statusOrgRoleSA" -eq 0 ]]; then
             echo -e ""

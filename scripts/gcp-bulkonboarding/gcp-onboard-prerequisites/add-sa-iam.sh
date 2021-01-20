@@ -10,7 +10,7 @@ BCyan="\033[1;36m"
 
 # Function: Print a help message.
 usage() {
-  echo "Usage: $0 [ -p Project ID where Service Account is created ] [ -e Service Account Email ] [ -l List of project IDs separated by a comma ] [ -c Allowed list of projects (.csv file path) ]" 1>&2 
+  echo "Usage: $0 [ -p Project ID where Service Account is created ] [ -e Service Account Email ] [ -l List of project IDs separated by a comma --> (<=10 Projects) | -c Allowed list of projects (.csv file) --> (>=10 projects) ]" 1>&2 
 }
 
 exit_abnormal() {
@@ -45,7 +45,7 @@ add_sa_in_iam_saproj()
     do
         echo -e ""
         echo "Role:  $role"
-        gcloud projects add-iam-policy-binding $SA_PROJECT_ID --member serviceAccount:$SERVICE_ACCOUNT --role $role
+        gcloud projects add-iam-policy-binding $SA_PROJECT_ID --member serviceAccount:$SERVICE_ACCOUNT --role $role --format=json | jq .bindings[].members[] | grep $SERVICE_ACCOUNT | uniq
         statusRoleSA=$?
         if [[ "$statusRoleSA" -eq 0 ]]; then
             echo -e "${GREEN}Successfully Added role:${NC} $role"
@@ -68,7 +68,7 @@ add_sa_in_iam_projlist()
             else
                 echo -e ""
                 echo "Role:  $role"
-                gcloud projects add-iam-policy-binding $project --member serviceAccount:$SERVICE_ACCOUNT --role $role --format=json | jq .bindings[].members[] | grep $SERVICE_ACCOUNT
+                gcloud projects add-iam-policy-binding $project --member serviceAccount:$SERVICE_ACCOUNT --role $role --format=json | jq .bindings[].members[] | grep $SERVICE_ACCOUNT | uniq
                 statusRoleeq=$?
                 if [[ "$statusRoleeq" -eq 0 ]]; then
                     echo -e "${GREEN}Successfully added role:${NC} $role"
@@ -96,7 +96,7 @@ do
             add_sa_in_iam_saproj
             add_sa_in_iam_projlist
             echo ""
-            echo -e "${GREEN}Add Service Account in IAM & assign roles script excecuted.${NC}"
+            echo -e "${GREEN}Added Service Account in IAM & assigned roles.${NC}"
         }
 
         process_list_proj
@@ -116,7 +116,7 @@ do
             add_sa_in_iam_saproj
             add_sa_in_iam_projlist
             echo ""
-            echo -e "${GREEN}Add Service Account in IAM & assign roles script excecuted.${NC}"
+            echo -e "${GREEN}Added Service Account in IAM & assigned roles.${NC}"
         }
 
         process_csvlist_proj

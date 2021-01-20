@@ -24,7 +24,7 @@ if [ $NUMARGS -eq 0 ]; then
   exit 1
 fi
 
-while getopts p:s:d: flag
+while getopts "p:s:d:" flag
 do
     case "${flag}" in
         # project ID to create a service account
@@ -33,7 +33,8 @@ do
         s) SA_NAME=${OPTARG};;
         # service account display name
         d) SA_DISPLAY_NAME=${OPTARG};;
-        :)                                         # If expected argument omitted:
+        # If expected argument omitted:
+        :)                          
         echo "Error: -${OPTARG} requires an argument."
         exit_abnormal;;                            # Exit abnormally.
       
@@ -45,10 +46,11 @@ done
 summary_result()
 {
     if [ "$OnboardType" == "ProjectBased" ]; then
+        echo ""
         echo $SERVICE_ACCOUNT | tee -a output >/dev/null
         echo $SA_KEY | tee -a output >/dev/null
         echo $SA_KEY_PATH | tee -a output >/dev/null
-        echo -e "${GREEN}Created Service Account Successfully!!.${NC}"
+        echo -e "${GREEN}Created Service Account & key Successfully!!.${NC}"
     else
         echo -e ""
         echo -e "${GREEN}Create Service Account script executed.${NC}"

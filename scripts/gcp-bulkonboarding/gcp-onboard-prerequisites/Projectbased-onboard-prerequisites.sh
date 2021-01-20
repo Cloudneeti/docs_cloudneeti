@@ -8,10 +8,11 @@ BCyan="\033[1;36m"
 ############################################################################
 
 OnboardType="ProjectBased"
+output=()
 
 # Function: Print a help message.
 usage() {
-  echo "Usage: $0 [ -p Project ID to create a Service Account ] [ -s Service Account Name ] [ -d Service Account display name ] [ -l ] [ -c ]" 1>&2 
+  echo "Usage: $0 [ -p Project ID to create a Service Account ] [ -s Service Account Name (The service account name is case sensitive and must be in lowercase) ] [ -d Service Account display name ] [ -l List of project IDs separated by a comma --> (<=10 Projects) | -c Allowed list of projects (.csv file) --> (>=10 projects) ]" 1>&2 
 }
 
 exit_abnormal() {
@@ -32,17 +33,23 @@ do
     case "${flag}" in
         # project ID to create a service account
         p) SA_PROJECT_ID=${OPTARG};;
+
         # service account name
         s) SA_NAME=${OPTARG};;
+
         # service account display name
         d) SA_DISPLAY_NAME=${OPTARG};;
 
-        l) list=${OPTARG}
-        echo "$list";;
+        l) list=${OPTARG};;
 
         c) INPUT=${OPTARG};;
 
-        :)                                         # If expected argument omitted:
+        # If expected argument omitted:
+        :) 
+        if [[ $list && $INPUT ]]; then
+            echo "select either one of the flag ( -l | -c )."
+            exit_abnormal;;
+        fi                                        
         echo "Error: -${OPTARG} requires an argument."
         exit_abnormal;;                            # Exit abnormally.
       
@@ -51,9 +58,8 @@ do
     esac
 done
 
-summary_result()
+summary()
 {
-    output=()
     [ ! -f output ] && { echo "output not found"; exit 99; }
     i=0
     while IFS=',' read -r f1
@@ -63,11 +69,13 @@ summary_result()
     done < "output"
 }
 
+project_based_prerequisites()
+{
 chmod +x create-sa.sh
 source ./create-sa.sh -p $SA_PROJECT_ID -s $SA_NAME -d $SA_DISPLAY_NAME
 status=$?
 if [[ "$status" -eq 0 ]]; then
-    summary_result
+    summary
     chmod +x add-sa-iam.sh
     if [ $([[ ! -z "$list" ]] && echo "NotEmpty" || echo "Empty") == "NotEmpty" ]; then
         ./add-sa-iam.sh -p $SA_PROJECT_ID -e ${output[0]} -l $list
@@ -80,8 +88,8 @@ if [[ "$status" -eq 0 ]]; then
         echo ""
         chmod +x enable-api.sh
         if [ $([[ ! -z "$list" ]] && echo "NotEmpty" || echo "Empty") == "NotEmpty" ]; then
-            ./add-sa-iam.sh -p $SA_PROJECT_ID -e ${output[0]} -l $list
-            status_add_sa=$?
+            ./enable-api.sh -P project-based -p $SA_PROJECT_ID -l $list
+            status_enable_api=$?
         else
             ./enable-api.sh -P project-based -p $SA_PROJECT_ID -c $INPUT
             status_enable_api=$?
@@ -111,3 +119,5 @@ else
     $(rm -rf output)
     exit 1
 fi
+}
+project_based_prerequisites

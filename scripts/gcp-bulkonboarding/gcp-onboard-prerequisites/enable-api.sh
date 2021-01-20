@@ -13,7 +13,7 @@ API_FILE="apis.json"
 
 # Function: Print a help message.
 usage() {
-  echo "Usage: $0 [ -O Organization-based onboarding ] [ -P Project-based Onboarding ] [ -o Organization ID ] [ -p Project ID where Service Account is created  ]" 1>&2 
+  echo "Usage: $0 [ -O Organization-based onboarding | -P Project-based Onboarding ] [ -o Organization ID ] [ -p Project ID where Service Account is created  ]" 1>&2 
 }
 
 exit_abnormal() {
@@ -78,11 +78,7 @@ enable_api_projlist()
         done
     done
 }
-# title="Please select the onboarding type: "
-# prompt="Pick an option: "
-# options=("Organization_based_Onboarding" "Project_based_Onboarding")
-# echo "$title"
-# PS3="$prompt"
+
 while getopts "O:P:" options; do
 
     case "$options" in
@@ -106,7 +102,7 @@ while getopts "O:P:" options; do
         echo ""
         title="Please select one of the following options to enable APIs for Organization-based Onboarding: "
         prompt="Pick an option: "
-        options=("1-10 projects" "All projects" "Allowed list of projects (.csv file)" "All projects excluding a list of projects (.csv file)")
+        options=("List of project IDs --> (<=10 Projects)" "All projects" "Allowed list of projects (.csv file) --> (>=10 projects)" "All projects excluding a list of projects (.csv file)")
         echo "$title"
         PS3="$prompt"
         select opt in "${options[@]}" "Quit"; do 
@@ -116,9 +112,9 @@ while getopts "O:P:" options; do
             org_enable_api_few_proj() {
             echo "You have selected '$opt'."
             echo -e ""
-            echo -e "Enter the project IDs separated by a space: "
-            echo -e "(Example: ProjectID_1 ProjectID_2 ProjectID_3 ... etc) "
-            read -a IAM_PROJECT_ID
+            echo -e "Enter the project IDs separated by a comma: "
+            echo -e "(Example: ProjectID_1,ProjectID_2,ProjectID_3,... etc) "
+            IFS="," read -a IAM_PROJECT_ID
 
             ###############################################
             echo -e ""
@@ -126,7 +122,8 @@ while getopts "O:P:" options; do
             echo -e ""
             enable_api_sa_proj
             enable_api_projlist
-
+            echo ""
+            echo -e "${GREEN}Enable APIs script executed.${NC}"
             }
 
             org_enable_api_few_proj
@@ -145,6 +142,8 @@ while getopts "O:P:" options; do
             echo -e ""
             enable_api_sa_proj
             enable_api_projlist
+            echo ""
+            echo -e "${GREEN}Enable APIs script executed.${NC}"
             }
 
             org_enable_api_allProj_func
@@ -170,6 +169,8 @@ while getopts "O:P:" options; do
             echo -e ""
             enable_api_sa_proj
             enable_api_projlist
+            echo ""
+            echo -e "${GREEN}Enable APIs script executed.${NC}"
             }
 
             org_enable_api_allowedProj_func
@@ -211,6 +212,8 @@ while getopts "O:P:" options; do
             echo -e ""
             enable_api_sa_proj
             enable_api_projlist
+            echo ""
+            echo -e "${GREEN}Enable APIs script executed.${NC}"
             }
 
             org_enable_api_excludingProj_func
@@ -224,15 +227,10 @@ while getopts "O:P:" options; do
     break;;
     P) Project_based_Onboarding=${OPTARG}
     if [ "$Project_based_Onboarding" == "project-based" ]; then
-        # title="Please select one of the following options to enable APIs for Project-based Onboarding: "
-        # prompt="Pick an option: "
-        # options=("1-10 projects" "Allowed list of projects (.csv file)")
-        # echo "$title"
-        # PS3="$prompt"
-        # select opt in "${options[@]}" "Quit"; do
+
         # Function: Print a help message.
         usage_proj_based() {
-        echo "Usage: $0 [ -p Project ID where Service Account is created  ] [ -l ] [ -c ]" 1>&2 
+        echo "Usage: $0 [ -p Project ID where Service Account is created  ] [ -l List of project IDs separated by a comma --> (<=10 Projects) | -c Allowed list of projects (.csv file) --> (>=10 projects) ]" 1>&2 
         }
 
         exit_abnormal_sub() {
@@ -256,16 +254,12 @@ while getopts "O:P:" options; do
             l)
             enable_api_few_proj() {
             IFS="," read -a IAM_PROJECT_ID <<< "$OPTARG"
-            # echo "You have selected '$opt'."
-            # echo -e ""
-            # echo -e "Enter the project IDs separated by a space: "
-            # echo -e "(Example: ProjectID_1 ProjectID_2 ProjectID_3 ... etc) "
-            # read -a IAM_PROJECT_ID
-            # echo -e ""
             echo -e "${BLUE}*****Enabling APIs on Project*****${NC}"
             echo -e ""
             enable_api_sa_proj
             enable_api_projlist
+            echo ""
+            echo -e "${GREEN}Enable APIs script executed.${NC}"
             }
 
             enable_api_few_proj
@@ -273,13 +267,6 @@ while getopts "O:P:" options; do
             c)
             enable_api_allowed_proj() {
             INPUT=${OPTARG}
-            # echo "You have selected '$opt'."
-            # echo -e ""
-            
-            # echo -e ""
-            # echo -e "Enter the file path to the allowed list of projects: "
-            # echo -e "(Example: /home/path/to/allowed_list.csv )"
-            # read  INPUT
             IAM_PROJECT_ID=()
             [ ! -f $INPUT ] && { echo "$INPUT file not found"; exit 99; }
             i=1
@@ -296,12 +283,11 @@ while getopts "O:P:" options; do
             echo -e ""
             enable_api_sa_proj
             enable_api_projlist
+            echo ""
+            echo -e "${GREEN}Enable APIs script executed.${NC}"
             }
             enable_api_allowed_proj
             break;;
-
-            # $(( ${#options[@]}+1 )) ) echo "Goodbye!"; break;;
-            # *) echo "Invalid option. Try another one.";continue;;
             :)                                         # If expected argument omitted:
             echo "Error: -${OPTARG} requires an argument."
             exit_abnormal_sub;;
@@ -320,6 +306,3 @@ while getopts "O:P:" options; do
     exit_abnormal;;
     esac
 done
-
-echo ""
-echo -e "${GREEN}Enable APIs script executed.${NC}"
