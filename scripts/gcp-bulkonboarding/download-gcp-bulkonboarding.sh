@@ -7,13 +7,14 @@ NC='\033[0m'
 BCyan="\033[1;36m"
 
 ############################################################################
+FILES=(Projectbased-onboard-prerequisites.sh add-sa-iam.sh apis.json create-sa.sh enable-api.sh permissions.json promote-sa-to-org.sh)
 status_check()
 {
     # status check for each file to download
     if [[ "$status" -eq 0 ]]; then
         echo -e "${GREEN}Successfully downloaded file.${NC}"
     else
-        echo -e "${RED}Failed to Enable APIs on:${NC} $api"
+        echo -e "${RED}Failed to download file:${NC} $api"
         exit 1
     fi
 }
@@ -25,7 +26,7 @@ mkdir gcp-bulkonboarding
 cd gcp-bulkonboarding
 status=$?
 if [[ "$statusSA" -eq 0 ]]; then
-    wget https://raw.githubusercontent.com/lomaingali/docs_cloudneeti/amol/gcp-preOnboard-script/scripts/gcp-bulkonboarding/README.md
+    $(wget https://raw.githubusercontent.com/lomaingali/docs_cloudneeti/amol/gcp-preOnboard-script/scripts/gcp-bulkonboarding/README.md)
     status=$?
 else
     echo -e "${RED}Failed to create folder.${NC}"
@@ -36,33 +37,12 @@ mkdir gcp-onboard-prerequisites
 cd gcp-onboard-prerequisites
 statusOnboard=$?
 if [[ "$statusSA" -eq 0 ]]; then
-    wget https://raw.githubusercontent.com/lomaingali/docs_cloudneeti/amol/gcp-preOnboard-script/scripts/gcp-bulkonboarding/gcp-onboard-prerequisites/Projectbased-onboard-prerequisites.sh
-    status=$?
-    status_check
-
-    wget https://raw.githubusercontent.com/lomaingali/docs_cloudneeti/amol/gcp-preOnboard-script/scripts/gcp-bulkonboarding/gcp-onboard-prerequisites/add-sa-iam.sh
-    status=$?
-    status_check
-
-    wget https://raw.githubusercontent.com/lomaingali/docs_cloudneeti/amol/gcp-preOnboard-script/scripts/gcp-bulkonboarding/gcp-onboard-prerequisites/apis.json
-    status=$?
-    status_check
-
-    wget https://raw.githubusercontent.com/lomaingali/docs_cloudneeti/amol/gcp-preOnboard-script/scripts/gcp-bulkonboarding/gcp-onboard-prerequisites/create-sa.sh
-    status=$?
-    status_check
-
-    wget https://raw.githubusercontent.com/lomaingali/docs_cloudneeti/amol/gcp-preOnboard-script/scripts/gcp-bulkonboarding/gcp-onboard-prerequisites/enable-api.sh
-    status=$?
-    status_check
-
-    wget https://raw.githubusercontent.com/lomaingali/docs_cloudneeti/amol/gcp-preOnboard-script/scripts/gcp-bulkonboarding/gcp-onboard-prerequisites/permissions.json
-    status=$?
-    status_check
-
-    wget https://raw.githubusercontent.com/lomaingali/docs_cloudneeti/amol/gcp-preOnboard-script/scripts/gcp-bulkonboarding/gcp-onboard-prerequisites/promote-sa-to-org.sh
-    status=$?
-    status_check
+    for file in "${FILES[@]}"
+    do
+        $(wget https://raw.githubusercontent.com/lomaingali/docs_cloudneeti/amol/gcp-preOnboard-script/scripts/gcp-bulkonboarding/gcp-onboard-prerequisites/$file)
+        status=$?
+        status_check
+    done
 else
     echo -e "${RED}Failed to create folder.${NC}"
     exit 1
