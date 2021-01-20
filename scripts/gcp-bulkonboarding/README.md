@@ -1,6 +1,6 @@
 # GCP Onboard Prerequisites 
 
-This project holds the GCP Onboard Prerequisites scripts that has been used to create Service Account, Service Account Key, add Service Account in IAM, assign roles and enable all the pre-requisite APIs required to onboard GCP Organization & Project on ZCSPM.
+This Project holds the GCP Onboard Prerequisites scripts that has been used to create Service Account, Service Account Key, add Service Account in IAM, assign roles and enable all the pre-requisite APIs required to onboard GCP Organization & Project on ZCSPM.
 
 # Disclaimer
 Copyright (c) Cloudneeti. All rights reserved.
@@ -130,9 +130,9 @@ $ ./promote-sa-to-org.sh -o <ORGANIZATION_ID> -e <Service_Account_Email>
 # Run the below command to Enable APIs
 $ chmod +x enable-api.sh
 $ ./enable-api.sh -O org-based -o <ORGANIZATION_ID> -p <Service_Account_Project_ID>
-# it will prompt for options please select the appropriate option and proceed
+# it will prompt for the options please select the appropriate option and proceed.
 ```
-#### Organization based onboarding
+#### Project based onboarding
 ```
 # Change the directory
 $ cd gcp-bulkonboarding/gcp-onboard-prerequisites/
