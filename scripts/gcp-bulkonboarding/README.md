@@ -45,40 +45,19 @@ The gcp onboard prerequisites scripts covers:
             - Cloud Asset Viewer
         - Enable APIs and add Service Acoount in IAM for projects which are going to onboard on ZCSPM
     - Options
-        1. [-l] List of project IDs separated by a comma --> (<=10 Projects)
-        2. [-c] Allowed list of projects (.csv file) --> (>=10 projects)
+        1. [ -l ] List of project IDs separated by a comma --> (<=10 Projects)
+        2. [ -c ] Allowed list of projects (.csv file) --> (>=10 projects)
 
 # PREREQUISITE
 
 - Organization Based onbaording
 
-| Action  | Permission | APIs  | Options |
-| ------------- | ------------- | ------------- |-------------  |
-| Create Service Account & Key  | Owner/Editor |  |  |
-| Promote Service account to Organization level & Attach Roles  | Organization Administrator |  |  |
-| Enable APIs | Owner/Editor, Cloud Asset Viewer | Cloud Asset API  | 1. List of project IDs --> (<=10 Projects)
-            2. All projects
-            3. Allowed list of projects (.csv file) --> (>=10 projects)
-            4. All projects excluding a list of projects (.csv file)  |
+    | Action  | Required Permission | Required APIs  | Options |
+    | ------------- | ------------- | ------------- |-------------  |
+    | Create Service Account & Key  | Owner/Editor |  |  |
+    | Promote Service account to Organization level & Attach Roles  | Organization Administrator |  |  |
+    | Enable APIs | Owner/Editor\\nCloud Asset Viewer | Cloud Asset API  | 1. List of project IDs --> (<=10 Projects)\\n2. All projects\\n3. Allowed list of projects (.csv file) --> (>=10 projects)\\n 4. All projects excluding a list of projects (.csv file) |
 
-
-- Organization Based onbaording
-
-    ### Required APIs
-
-    The following GCP APIs should be enabled on cloud shell project:
-
-    - cloudasset.googleapis.com
-
-    ### Required Permissions
-
-    The following permissions are required to run the gcp onboard prerequisites script:
-
-    On organization level:
-
-    - Project--> Owner/Editor [ Create Service account, Enable APIs]
-    - Organization Administrator [ Promote Service account to Organization level ]
-    - Cloud Asset Viewer [ Enable APIs]
 
     ### [optional] CSV file with Allowed or Excluded list of project
 
@@ -91,19 +70,13 @@ The gcp onboard prerequisites scripts covers:
 
 
 - Project Based onbaording
-    ### Required APIs
 
-    The following GCP APIs should be enabled on cloud shell project:
+    | Action  | Required Permission | Required APIs   | Options |
+    | ------------- | ------------- | ------------- |-------------  |
+    | Create Service Account & Key  | Owner |  |  |
+    | Add Service Account in IAM & Attach Roles  | Owner |  |  |
+    | Enable APIs | Owner | Cloud Resource Manager API  | 1. [ -l ] List of project IDs separated by a comma --> (<=10 Projects)\\n2. [ -c ] Allowed list of projects (.csv file) --> (>=10 projects) |
 
-    - cloudresourcemanager.googleapis.com
-
-    ### Required Permissions
-
-    The following permissions are required on all the project to run the gcp onboard prerequisites script:
-
-    On project level:
-
-    - Project--> Owner
 
     ### [optional] CSV file with Allowed list of project
 
