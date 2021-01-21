@@ -52,11 +52,11 @@ The gcp onboard prerequisites scripts covers:
 
 - Organization Based onbaording
 
-    | Action  | Required Permission | Required APIs  | Options |
-    | ------------- | ------------- | ------------- |-------------  |
-    | Create Service Account & Key  | Owner/Editor |  |  |
-    | Promote Service account to Organization level & Attach Roles  | Organization Administrator |  |  |
-    | Enable APIs | Owner/Editor<br />Cloud Asset Viewer | Cloud Asset API  | 1. List of project IDs --> (<=10 Projects)<br />2. All projects<br />3. Allowed list of projects (.csv file) --> (>=10 projects)<br />4. All projects excluding a list of projects (.csv file) |
+    | Action  | Required Permission | Required APIs  | Billing Account | Options  |
+    | ------------- | ------------- | ------------- |-------------  | ------------- |
+    | Create Service Account & Key  | Owner/Editor |  |  |  |
+    | Promote Service account to Organization level & Attach Roles  | Organization Administrator |  |  |    |
+    | Enable APIs | Owner/Editor<br />Cloud Asset Viewer | Cloud Asset API  | All projects must be linked with Billing Account  | 1. List of project IDs --> (<=10 Projects)<br />2. All projects<br />3. Allowed list of projects (.csv file) --> (>=10 projects)<br />4. All projects excluding a list of projects (.csv file) |
 
 
     ### [optional] CSV file with Allowed or Excluded list of project
@@ -71,11 +71,11 @@ The gcp onboard prerequisites scripts covers:
 
 - Project Based onbaording
 
-    | Action  | Required Permission | Required APIs   | Options |
-    | ------------- | ------------- | ------------- |-------------  |
+    | Action  | Required Permission | Required APIs   | Billing Account |  Options |
+    | ------------- | ------------- | ------------- |-------------  | ------------- |
     | Create Service Account & Key  | Owner |  |  |
     | Add Service Account in IAM & Attach Roles  | Owner |  | 1. [ -l ] List of project IDs separated by a comma --> (<=10 Projects)<br />2. [ -c ] Allowed list of projects (.csv file) --> (>=10 projects) |
-    | Enable APIs | Owner | Cloud Resource Manager API  | 1. [ -l ] List of project IDs separated by a comma --> (<=10 Projects)<br />2. [ -c ] Allowed list of projects (.csv file) --> (>=10 projects) |
+    | Enable APIs | Owner | Cloud Resource Manager API  | All projects must be linked with Billing Account | 2. [ -l ] List of project IDs separated by a comma --> (<=10 Projects)<br />2. [ -c ] Allowed list of projects (.csv file) --> (>=10 projects) |
 
 
     ### [optional] CSV file with Allowed list of project
@@ -90,43 +90,68 @@ The gcp onboard prerequisites scripts covers:
 ## Running the GCP Onboard Prerequisites scripts on Cloud Shell
 ### CLI Example
 
+#### Setup: Set project & download script
 ```
 # Open cloud shell and set project
 $ gcloud config set project <Project_ID>
 
-# Download gcp-prequisites script
-
 # make sure you're authenticated to GCP
 $ gcloud auth list
+
+# Run the below commnad to download script
+$ wget https://raw.githubusercontent.com/lomaingali/docs_cloudneeti/amol/gcp-preOnboard-script/scripts/gcp-bulkonboarding/download-gcp-bulkonboarding.sh
+
+# Change the permission & run the script
+$ chmod +x download-gcp-bulkonboarding.sh
+$ ./download-gcp-bulkonboarding.sh
+# it will download all the script required to setup gcp onboard prerequisites
+
 ```
+
 #### Organization based onboarding
 ```
+# Once completed the setup follow steps:
+
 # Change the directory
 $ cd gcp-bulkonboarding/gcp-onboard-prerequisites/
 
-# Run the below command create Service Account
+# Create Service Account
+# Change the permission of file
 $ chmod +x create-sa.sh
-$ ./create-sa.sh -p <Project_ID> -s <Service_Account_Name> -d <Service_Account_Display_Name>
-# Summary will give you the Service account Email & Key file path, download the key.
 
-# Run the below command to Promote Service account to Organization level
+# Run the below command:
+$ ./create-sa.sh -p <Project_ID> -s <Service_Account_Name> -d <Service_Account_Display_Name>
+# Summary will give you the Service account Email & Key file path, copy the path of the key & and click three dot icon at top right corner of cloud shell, select Download File option and download the key.
+
+# Promote Service account to Organization level
+# Change the permission of file
 $ chmod +x promote-sa-to-org.sh
+
+# Run the below command:
 $ ./promote-sa-to-org.sh -o <ORGANIZATION_ID> -e <Service_Account_Email>
 
-# Run the below command to Enable APIs
+# Enable APIs
+# Change the permission of file
 $ chmod +x enable-api.sh
+
+# Run the below command:
 $ ./enable-api.sh -O org-based -o <ORGANIZATION_ID> -p <Service_Account_Project_ID>
 # it will prompt for the options please select the appropriate option and proceed.
 ```
+
 #### Project based onboarding
 ```
+# Once completed the setup follow steps:
+
 # Change the directory
 $ cd gcp-bulkonboarding/gcp-onboard-prerequisites/
 
-# Run the below command
+# Change the permission of file
 $ chmod +x Projectbased-onboard-prerequisites.sh
+
+# Run the below command to setup gcp onboard prerequisites
 $ ./Projectbased-onboard-prerequisites.sh -p <Project_ID> -s <Service_Account_Name> -d <Service_Account_Display_Name> -l "<List_Of_Project_IDs>"
 OR
 $ ./Projectbased-onboard-prerequisites.sh -p <Project_ID> -s <Service_Account_Name> -d <Service_Account_Display_Name> -c "<CSV_File_Path>"
-# Summary will give you the Service account Email & Key file path, download the key.
+# Summary will give you the Service account Email & Key file path, copy the path of the key & and click three dot icon at top right corner of cloud shell, select Download File option and download the key.
 ```
