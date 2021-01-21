@@ -74,6 +74,7 @@ enable_api_projlist()
                 echo -e "${GREEN}Successfully Enabled APIs on:${NC} $api"
             else
                 echo -e "${RED}Failed to Enable APIs on:${NC} $api"
+                exit_abnormal
             fi
         done
     done
