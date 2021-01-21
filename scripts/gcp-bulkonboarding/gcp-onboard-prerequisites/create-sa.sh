@@ -65,38 +65,37 @@ summary_result()
 
 create_service_account() 
 {
-    echo ""
-        gcloud iam service-accounts create $SA_NAME  --display-name $SA_DISPLAY_NAME --project=$SA_PROJECT_ID
-        statusSA=$?
-        if [[ "$statusSA" -eq 0 ]]; then
-            echo -e "${GREEN}Successfully created service account${NC}"
-            sleep 7
-            SERVICE_ACCOUNT=$(gcloud iam service-accounts list --format="value(email)" --project=$SA_PROJECT_ID | grep $SA_NAME@$SA_PROJECT_ID.iam.gserviceaccount.com)
-            statusSAlist=$?
-            if [[ "$statusSAlist" -eq 0 ]]; then
-                echo -e ""
-                gcloud iam service-accounts keys create $SA_NAME.json --iam-account=$SERVICE_ACCOUNT --key-file-type="json" --project=$SA_PROJECT_ID
-                statusKey=$?
-                if [[ "$statusKey" -eq 0 ]]; then
-                    SA_KEY=$(ls | grep $SA_NAME.json)
-                    SA_KEY_PATH=$(pwd)/$(ls | grep $SA_NAME.json)
-                    echo -e "${GREEN}Successfully created service account key${NC}"
-                    summary_result
-                else
-                    echo -e ""
-                    echo -e "${RED}Failed to create service account key${NC}"
-                    exit_abnormal
-                fi
+    gcloud iam service-accounts create $SA_NAME  --display-name $SA_DISPLAY_NAME --project=$SA_PROJECT_ID
+    statusSA=$?
+    if [[ "$statusSA" -eq 0 ]]; then
+        echo -e "${GREEN}Successfully created service account${NC}"
+        sleep 7
+        SERVICE_ACCOUNT=$(gcloud iam service-accounts list --format="value(email)" --project=$SA_PROJECT_ID | grep $SA_NAME@$SA_PROJECT_ID.iam.gserviceaccount.com)
+        statusSAlist=$?
+        if [[ "$statusSAlist" -eq 0 ]]; then
+            echo -e ""
+            gcloud iam service-accounts keys create $SA_NAME.json --iam-account=$SERVICE_ACCOUNT --key-file-type="json" --project=$SA_PROJECT_ID
+            statusKey=$?
+            if [[ "$statusKey" -eq 0 ]]; then
+                SA_KEY=$(ls | grep $SA_NAME.json)
+                SA_KEY_PATH=$(pwd)/$(ls | grep $SA_NAME.json)
+                echo -e "${GREEN}Successfully created service account key${NC}"
+                summary_result
             else
                 echo -e ""
-                echo -e "${RED}Failed to list service account${NC}"
+                echo -e "${RED}Failed to create service account key${NC}"
                 exit_abnormal
             fi
         else
             echo -e ""
-            echo -e "${RED}Failed to create service account${NC}";
+            echo -e "${RED}Failed to list service account${NC}"
             exit_abnormal
         fi
+    else
+        echo -e ""
+        echo -e "${RED}Failed to create service account${NC}";
+        exit_abnormal
+    fi
 }
 
 create_service_account
