@@ -13,7 +13,7 @@ API_FILE="apis.json"
 
 # Function: Print a help message.
 usage() {
-  echo "Usage: $0 [ -O Organization-based onboarding | -P Project-based Onboarding ] [ -o Organization ID ] [ -p Project ID where Service Account is created  ]" 1>&2 
+  echo "Usage: $0 [ -O Organization-based onboarding (org-based) | -P Project-based Onboarding (project-based) ] [ -o Organization ID ] [ -p Project ID where Service Account is created  ]" 1>&2 
 }
 
 exit_abnormal() {
@@ -98,8 +98,7 @@ while getopts "O:P:" options; do
                 exit_abnormal;;
             esac
         done
-        #echo "You have selected '$opt'."
-        echo ""
+
         title="Please select one of the following options to enable APIs for Organization-based Onboarding: "
         prompt="Pick an option: "
         options=("List of project IDs --> (<=10 Projects)" "All projects" "Allowed list of projects (.csv file) --> (>=10 projects)" "All projects excluding a list of projects (.csv file)")
