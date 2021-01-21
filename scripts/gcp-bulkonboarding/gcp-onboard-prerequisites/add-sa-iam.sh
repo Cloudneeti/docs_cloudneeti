@@ -10,7 +10,7 @@ BCyan="\033[1;36m"
 
 # Function: Print a help message.
 usage() {
-  echo "Usage: $0 [ -p Project ID where Service Account is created ] [ -e Service Account Email ] [ -l List of project IDs separated by a comma --> (<=10 Projects) | -c Allowed list of projects (.csv file) --> (>=10 projects) ]" 1>&2 
+  echo "Usage: $0 [ -p Project ID where Service Account is created ] [ -e Service Account Email ] [ -l List of project IDs separated by a comma --> (<=10 Projects) || -c Allowed list of projects (.csv file) --> (>=10 projects) ]" 1>&2 
 }
 
 exit_abnormal() {

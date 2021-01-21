@@ -13,7 +13,7 @@ API_FILE="apis.json"
 
 # Function: Print a help message.
 usage() {
-  echo "Usage: $0 [ -O Organization-based onboarding (org-based) | -P Project-based Onboarding (project-based) ] [ -o Organization ID ] [ -p Project ID where Service Account is created  ]" 1>&2 
+  echo "Usage: $0 [ -O Organization-based onboarding (org-based) || -P Project-based Onboarding (project-based) ] [ -o Organization ID ] [ -p Project ID where Service Account is created  ]" 1>&2 
 }
 
 exit_abnormal() {
@@ -227,7 +227,7 @@ while getopts "O:P:" options; do
 
         # Function: Print a help message.
         usage_proj_based() {
-        echo "Usage: $0 [ -p Project ID where Service Account is created  ] [ -l List of project IDs separated by a comma --> (<=10 Projects) | -c Allowed list of projects (.csv file) --> (>=10 projects) ]" 1>&2 
+        echo "Usage: $0 [ -p Project ID where Service Account is created  ] [ -l List of project IDs separated by a comma --> (<=10 Projects) || -c Allowed list of projects (.csv file) --> (>=10 projects) ]" 1>&2 
         }
 
         exit_abnormal_sub() {

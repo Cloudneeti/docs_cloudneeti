@@ -54,7 +54,7 @@ promote_sa_to_org()
     do
         ROLES+=("$role")  
     done
-    echo ""
+    echo "Organization ID: $ORGANIZATION_ID"
     for role in "${ROLES[@]}"
     do
         echo ""
@@ -84,6 +84,7 @@ echo
 echo -e "${BCyan}Summary:${NC}"
 RESULT_SUCCESS=$([[ ! -z "$ADDED_ROLES" ]] && echo "NotEmpty" || echo "Empty")
 if [[ $RESULT_SUCCESS == "NotEmpty" ]]; then
+    echo -e "${BCyan}Service Account Email:${NC} $SERVICE_ACCOUNT"
     echo -e "${BCyan}Successfully Added Roles:${NC}"
     for success_role in "${ADDED_ROLES[@]}"
     do

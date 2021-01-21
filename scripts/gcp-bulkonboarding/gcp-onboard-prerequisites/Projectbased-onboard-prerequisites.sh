@@ -12,7 +12,7 @@ output=()
 
 # Function: Print a help message.
 usage() {
-  echo "Usage: $0 [ -p Project ID to create a Service Account ] [ -s Service Account Name (The service account name is case sensitive and must be in lowercase) ] [ -d Service Account display name ] [ -l List of project IDs separated by a comma --> (<=10 Projects) | -c Allowed list of projects (.csv file) --> (>=10 projects) ]" 1>&2 
+  echo "Usage: $0 [ -p Project ID to create a Service Account ] [ -s Service Account Name (The service account name is case sensitive and must be in lowercase) ] [ -d Service Account display name ] [ -l List of project IDs separated by a comma --> (<=10 Projects) || -c Allowed list of projects (.csv file) --> (>=10 projects) ]" 1>&2 
 }
 
 exit_abnormal() {
