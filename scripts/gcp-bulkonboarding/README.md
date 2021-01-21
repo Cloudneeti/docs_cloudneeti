@@ -74,7 +74,7 @@ The gcp onboard prerequisites scripts covers:
     | Action  | Required Permission | Required APIs   | Billing Account |  Options |
     | ------------- | ------------- | ------------- |-------------  | ------------- |
     | Create Service Account & Key  | Owner |  |  |
-    | Add Service Account in IAM & Attach Roles  | Owner |  | 1. [ -l ] List of project IDs separated by a comma --> (<=10 Projects)<br />2. [ -c ] Allowed list of projects (.csv file) --> (>=10 projects) |
+    | Add Service Account in IAM & Attach Roles  | Owner |  |  | 1. [ -l ] List of project IDs separated by a comma --> (<=10 Projects)<br />2. [ -c ] Allowed list of projects (.csv file) --> (>=10 projects) |
     | Enable APIs | Owner | Cloud Resource Manager API  | All projects must be linked with Billing Account | 2. [ -l ] List of project IDs separated by a comma --> (<=10 Projects)<br />2. [ -c ] Allowed list of projects (.csv file) --> (>=10 projects) |
 
 
