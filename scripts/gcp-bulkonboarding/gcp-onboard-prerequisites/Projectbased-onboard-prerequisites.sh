@@ -40,16 +40,12 @@ do
         # service account display name
         d) SA_DISPLAY_NAME=${OPTARG};;
 
-        l) list=${OPTARG};;
+        l) PROJECT_LIST=${OPTARG};;
 
         c) INPUT=${OPTARG};;
 
         # If expected argument omitted:
-        :) 
-        if [[ $list && $INPUT ]]; then
-            echo "select either one of the flag ( -l | -c )."
-            exit_abnormal;;
-        fi                                        
+        :)                                        
         echo "Error: -${OPTARG} requires an argument."
         exit_abnormal;;                            # Exit abnormally.
       
@@ -71,53 +67,55 @@ summary()
 
 project_based_prerequisites()
 {
-chmod +x create-sa.sh
-source ./create-sa.sh -p $SA_PROJECT_ID -s $SA_NAME -d $SA_DISPLAY_NAME
-status=$?
-if [[ "$status" -eq 0 ]]; then
-    summary
-    chmod +x add-sa-iam.sh
-    if [ $([[ ! -z "$list" ]] && echo "NotEmpty" || echo "Empty") == "NotEmpty" ]; then
-        ./add-sa-iam.sh -p $SA_PROJECT_ID -e ${output[0]} -l $list
-        status_add_sa=$?
-    else
-        ./add-sa-iam.sh -p $SA_PROJECT_ID -e ${output[0]} -c $INPUT
-        status_add_sa=$?
+    RESULT_PROJECT_LIST=$([[ ! -z "$PROJECT_LIST" ]] && echo "NotEmpty" || echo "Empty")
+    RESULT_INPUT=$([[ ! -z "$INPUT" ]] && echo "NotEmpty" || echo "Empty")
+    if [[ $RESULT_PROJECT_LIST == $RESULT_INPUT ]]; then
+        echo -e "select either one of the flag [-l | -c]"
+        exit_abnormal
     fi
-    if [[ "$status_add_sa" -eq 0 ]]; then
-        echo ""
-        chmod +x enable-api.sh
-        if [ $([[ ! -z "$list" ]] && echo "NotEmpty" || echo "Empty") == "NotEmpty" ]; then
-            ./enable-api.sh -P project-based -p $SA_PROJECT_ID -l $list
-            status_enable_api=$?
+    chmod +x create-sa.sh
+    source ./create-sa.sh -p $SA_PROJECT_ID -s $SA_NAME -d $SA_DISPLAY_NAME
+    status=$?
+    if [[ "$status" -eq 0 ]]; then
+        summary
+        chmod +x add-sa-iam.sh
+        if [ $([[ ! -z "$PROJECT_LIST" ]] && echo "NotEmpty" || echo "Empty") == "NotEmpty" ]; then
+            ./add-sa-iam.sh -p $SA_PROJECT_ID -e ${output[0]} -l $PROJECT_LIST
+            status_add_sa=$?
         else
-            ./enable-api.sh -P project-based -p $SA_PROJECT_ID -c $INPUT
-            status_enable_api=$?
+            ./add-sa-iam.sh -p $SA_PROJECT_ID -e ${output[0]} -c $INPUT
+            status_add_sa=$?
         fi
-        if [[ "$status_enable_api" -eq 0 ]]; then
+        if [[ "$status_add_sa" -eq 0 ]]; then
             echo ""
-            echo ""
-            echo -e "${BCyan}Summary:${NC}"
-            echo -e "${BCyan}Service Account Project ID:${NC} $SA_PROJECT_ID"
-            echo -e "${BCyan}Service Account Email:${NC} ${output[0]}"
-            echo -e "${BCyan}Service Account Key Name:${NC} ${output[1]}"
-            echo -e "${BCyan}Service Account Key File Path:${NC} ${output[2]}"
-            echo ""
-            $(rm -rf output)
+            chmod +x enable-api.sh
+            if [ $([[ ! -z "$PROJECT_LIST" ]] && echo "NotEmpty" || echo "Empty") == "NotEmpty" ]; then
+                ./enable-api.sh -P project-based -p $SA_PROJECT_ID -l $PROJECT_LIST
+                status_enable_api=$?
+            else
+                ./enable-api.sh -P project-based -p $SA_PROJECT_ID -c $INPUT
+                status_enable_api=$?
+            fi
+            if [[ "$status_enable_api" -eq 0 ]]; then
+                echo ""
+                echo ""
+                echo -e "${BCyan}Summary:${NC}"
+                echo -e "${BCyan}Service Account Project ID:${NC} $SA_PROJECT_ID"
+                echo -e "${BCyan}Service Account Email:${NC} ${output[0]}"
+                echo -e "${BCyan}Service Account Key Name:${NC} ${output[1]}"
+                echo -e "${BCyan}Service Account Key File Path:${NC} ${output[2]}"
+                echo -e "$(rm -rf output)"
+            else
+                echo -e "${RED}Failed to run script${NC} "
+                exit 1
+            fi
         else
             echo -e "${RED}Failed to run script${NC} "
-            $(rm -rf output)
-            exit_abnormal
+            exit 1
         fi
     else
         echo -e "${RED}Failed to run script${NC} "
-        $(rm -rf output)
-        exit_abnormal
+        exit 1
     fi
-else
-    echo -e "${RED}Failed to run script${NC} "
-    $(rm -rf output)
-    exit 1
-fi
 }
 project_based_prerequisites

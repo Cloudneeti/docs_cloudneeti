@@ -44,8 +44,8 @@ add_sa_in_iam_saproj()
     for role in "${ROLES[@]}"
     do
         echo -e ""
-        echo "Role:  $role"
-        gcloud projects add-iam-policy-binding $SA_PROJECT_ID --member serviceAccount:$SERVICE_ACCOUNT --role $role --format=json | jq .bindings[].members[] | grep $SERVICE_ACCOUNT | uniq
+        echo "Role: $role"
+        gcloud projects add-iam-policy-binding $SA_PROJECT_ID --member serviceAccount:$SERVICE_ACCOUNT --role $role --format=json | jq -r .bindings[].members[] | grep $SERVICE_ACCOUNT | uniq
         statusRoleSA=$?
         if [[ "$statusRoleSA" -eq 0 ]]; then
             echo -e "${GREEN}Successfully Added role:${NC} $role"
@@ -67,8 +67,8 @@ add_sa_in_iam_projlist()
                 echo -e ""
             else
                 echo -e ""
-                echo "Role:  $role"
-                gcloud projects add-iam-policy-binding $project --member serviceAccount:$SERVICE_ACCOUNT --role $role --format=json | jq .bindings[].members[] | grep $SERVICE_ACCOUNT | uniq
+                echo "Role: $role"
+                gcloud projects add-iam-policy-binding $project --member serviceAccount:$SERVICE_ACCOUNT --role $role --format=json | jq -r .bindings[].members[] | grep $SERVICE_ACCOUNT | uniq
                 statusRoleeq=$?
                 if [[ "$statusRoleeq" -eq 0 ]]; then
                     echo -e "${GREEN}Successfully added role:${NC} $role"

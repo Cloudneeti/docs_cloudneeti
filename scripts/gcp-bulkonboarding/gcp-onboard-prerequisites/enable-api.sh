@@ -115,8 +115,6 @@ while getopts "O:P:" options; do
             echo -e "Enter the project IDs separated by a comma: "
             echo -e "(Example: ProjectID_1,ProjectID_2,ProjectID_3,... etc) "
             IFS="," read -a IAM_PROJECT_ID
-
-            ###############################################
             echo -e ""
             echo -e "${BLUE}*****Enabling API's on Project*****${NC}"
             echo -e ""
@@ -275,9 +273,6 @@ while getopts "O:P:" options; do
                 test $i -eq 1 && ((i=i+1)) && continue
                 IAM_PROJECT_ID+=( "$f1" )  
             done < "$INPUT"
-            echo ""
-
-            ###############################################
             echo -e ""
             echo -e "${BLUE}*****Enabling APIs on Project*****${NC}"
             echo -e ""

@@ -46,7 +46,7 @@ done
 summary_result()
 {
     if [ "$OnboardType" == "ProjectBased" ]; then
-        echo ""
+        echo -e "$(rm -rf output)"
         echo $SERVICE_ACCOUNT | tee -a output >/dev/null
         echo $SA_KEY | tee -a output >/dev/null
         echo $SA_KEY_PATH | tee -a output >/dev/null
@@ -70,7 +70,7 @@ create_service_account()
         statusSA=$?
         if [[ "$statusSA" -eq 0 ]]; then
             echo -e "${GREEN}Successfully created service account${NC}"
-            sleep 5
+            sleep 7
             SERVICE_ACCOUNT=$(gcloud iam service-accounts list --format="value(email)" --project=$SA_PROJECT_ID | grep $SA_NAME@$SA_PROJECT_ID.iam.gserviceaccount.com)
             statusSAlist=$?
             if [[ "$statusSAlist" -eq 0 ]]; then
