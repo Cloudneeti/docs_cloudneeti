@@ -12,7 +12,19 @@ output=()
 
 # Function: Print a help message.
 usage() {
-  echo "Usage: $0 [ -p Project ID to create a Service Account ] [ -s Service Account Name (The service account name is case sensitive and must be in lowercase) ] [ -d Service Account display name ] [ -l List of project IDs separated by a comma --> (<=10 Projects) || -c Allowed list of projects (.csv file) --> (>=10 projects) ]" 1>&2 
+  echo "Usage: $0 [ -p SA_PROJECT_ID ] [ -s SA_NAME ] [ -d SA_DISPLAY_NAME ] 
+  [ -l PROJECT_LIST || -w ALLOWED_CSV ]
+  
+  where:
+    -p Project ID of project to create a Service Account
+    -s Service Account Name (The service account name is case sensitive and must be in lowercase)
+    -d Service Account display name
+
+    Provide one of the following options to enable APIs and add service account in IAM for Project-based Onboarding:
+    -l List of project IDs --> (<=10 Projects)
+      (Example: "ProjectID_1,ProjectID_2,ProjectID_3,..." etc)
+    -w Allowed list of projects (.csv file) --> (>=10 projects)
+      (Example: /home/path/to/allowed_list.csv )" 1>&2 
 }
 
 exit_abnormal() {
@@ -28,7 +40,7 @@ if [ $NUMARGS -eq 0 ]; then
 fi
 
 # flags
-while getopts ":p:s:d:l:c:" flag
+while getopts ":p:s:d:l:w:" flag
 do
     case "${flag}" in
         # project ID to create a service account
@@ -40,9 +52,11 @@ do
         # service account display name
         d) SA_DISPLAY_NAME=${OPTARG};;
 
-        l) PROJECT_LIST=${OPTARG};;
+        l) PROJECT_LIST=${OPTARG}
+        RESULT_PROJECT_LIST=$([[ ! -z "$PROJECT_LIST" ]] && echo "NotEmpty" || echo "Empty");;
 
-        c) INPUT=${OPTARG};;
+        w) ALLOWED_CSV=${OPTARG}
+        RESULT_ALLOWED_CSV=$([[ ! -z "$ALLOWED_CSV" ]] && echo "NotEmpty" || echo "Empty");;
 
         # If expected argument omitted:
         :)                                        
@@ -67,10 +81,13 @@ summary()
 
 project_based_prerequisites()
 {
-    RESULT_PROJECT_LIST=$([[ ! -z "$PROJECT_LIST" ]] && echo "NotEmpty" || echo "Empty")
-    RESULT_INPUT=$([[ ! -z "$INPUT" ]] && echo "NotEmpty" || echo "Empty")
-    if [[ $RESULT_PROJECT_LIST == $RESULT_INPUT ]]; then
-        echo -e "select either one of the flag [-l | -c]"
+    if [ "$RESULT_PROJECT_LIST" == "NotEmpty" ] && [ "$RESULT_ALLOWED_CSV" == "NotEmpty" ]; then
+        echo "Please select only one option from: [-l |-w ]"
+        exit_abnormal
+    fi
+    # mandatory arguments
+    if [ ! "$SA_PROJECT_ID" ] || [ ! "$SA_NAME" ] || [ ! "$SA_DISPLAY_NAME" ]; then
+        echo "arguments -p, -s & -d must be provided"
         exit_abnormal
     fi
     chmod +x create-sa.sh
@@ -79,21 +96,21 @@ project_based_prerequisites()
     if [[ "$status" -eq 0 ]]; then
         summary
         chmod +x add-sa-iam.sh
-        if [ $([[ ! -z "$PROJECT_LIST" ]] && echo "NotEmpty" || echo "Empty") == "NotEmpty" ]; then
+        if [ "$RESULT_PROJECT_LIST" == "NotEmpty" ]; then
             ./add-sa-iam.sh -p $SA_PROJECT_ID -e ${output[0]} -l $PROJECT_LIST
             status_add_sa=$?
         else
-            ./add-sa-iam.sh -p $SA_PROJECT_ID -e ${output[0]} -c $INPUT
+            ./add-sa-iam.sh -p $SA_PROJECT_ID -e ${output[0]} -w $ALLOWED_CSV
             status_add_sa=$?
         fi
         if [[ "$status_add_sa" -eq 0 ]]; then
             echo ""
             chmod +x enable-api.sh
-            if [ $([[ ! -z "$PROJECT_LIST" ]] && echo "NotEmpty" || echo "Empty") == "NotEmpty" ]; then
-                ./enable-api.sh -P project-based -p $SA_PROJECT_ID -l $PROJECT_LIST
+            if [ "$RESULT_PROJECT_LIST" == "NotEmpty" ]; then
+                ./enable-api.sh -p $SA_PROJECT_ID -l $PROJECT_LIST
                 status_enable_api=$?
             else
-                ./enable-api.sh -P project-based -p $SA_PROJECT_ID -c $INPUT
+                ./enable-api.sh -p $SA_PROJECT_ID -w $ALLOWED_CSV
                 status_enable_api=$?
             fi
             if [[ "$status_enable_api" -eq 0 ]]; then

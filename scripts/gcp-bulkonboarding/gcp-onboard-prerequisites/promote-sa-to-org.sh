@@ -12,7 +12,11 @@ ADDED_ROLES=()
 
 # Function: Print a help message.
 usage() {
-  echo "Usage: $0 [ -o Organization ID ] [ -e Service Account Email ]" 1>&2 
+  echo "Usage: $0 [ -o ORGANIZATION_ID ] [ -e SERVICE_ACCOUNT ]
+  
+  where:
+    -o Organization ID
+    -e Service Account Email" 1>&2 
 }
 
 exit_abnormal() {
@@ -44,6 +48,12 @@ do
     esac
 done
 
+# mandatory arguments
+if [ ! "$ORGANIZATION_ID" ] || [ ! "$SERVICE_ACCOUNT" ]; then
+    echo "arguments -o and -e must be provided"
+    exit_abnormal
+fi
+
 PERMISSION_FILE="permissions.json"
 [ ! -f $PERMISSION_FILE ] && { echo "$PERMISSION_FILE file not found"; exit 99; }
 
@@ -59,7 +69,7 @@ promote_sa_to_org()
     do
         echo ""
         echo "Role: $role"
-        gcloud organizations add-iam-policy-binding $ORGANIZATION_ID --member serviceAccount:$SERVICE_ACCOUNT --role $role --format=json | jq -r .bindings[].members[] | grep $SERVICE_ACCOUNT | uniq
+        gcloud organizations add-iam-policy-binding $ORGANIZATION_ID --member serviceAccount:$SERVICE_ACCOUNT --role $role --format=json
         statusOrgRoleSA=$?
         if [[ "$statusOrgRoleSA" -eq 0 ]]; then
             echo -e "${GREEN}Successfully added role:${NC} $role"

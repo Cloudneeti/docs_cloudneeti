@@ -10,7 +10,17 @@ BCyan="\033[1;36m"
 
 # Function: Print a help message.
 usage() {
-  echo "Usage: $0 [ -p Project ID where Service Account is created ] [ -e Service Account Email ] [ -l List of project IDs separated by a comma --> (<=10 Projects) || -c Allowed list of projects (.csv file) --> (>=10 projects) ]" 1>&2 
+  echo "Usage: $0 [ -p SA_PROJECT_ID ] [ -e SERVICE_ACCOUNT ] 
+    [ -l PROJECT_LIST || -w ALLOWED_CSV ]
+   where:
+    -p Project ID where Service Account is created
+    -e Service Account Email
+  
+    Provide one of the following options to add service account in IAM and attach role for Project-based Onboarding:
+    -l List of project IDs --> (<=10 Projects)
+      (Example: "ProjectID_1,ProjectID_2,ProjectID_3,..." etc)
+    -w Allowed list of projects (.csv file) --> (>=10 projects)
+      (Example: /home/path/to/allowed_list.csv )" 1>&2 
 }
 
 exit_abnormal() {
@@ -45,7 +55,7 @@ add_sa_in_iam_saproj()
     do
         echo -e ""
         echo "Role: $role"
-        gcloud projects add-iam-policy-binding $SA_PROJECT_ID --member serviceAccount:$SERVICE_ACCOUNT --role $role --format=json | jq -r .bindings[].members[] | grep $SERVICE_ACCOUNT | uniq
+        gcloud projects add-iam-policy-binding $SA_PROJECT_ID --member serviceAccount:$SERVICE_ACCOUNT --role $role --format=json
         statusRoleSA=$?
         if [[ "$statusRoleSA" -eq 0 ]]; then
             echo -e "${GREEN}Successfully Added role:${NC} $role"
@@ -68,7 +78,7 @@ add_sa_in_iam_projlist()
             else
                 echo -e ""
                 echo "Role: $role"
-                gcloud projects add-iam-policy-binding $project --member serviceAccount:$SERVICE_ACCOUNT --role $role --format=json | jq -r .bindings[].members[] | grep $SERVICE_ACCOUNT | uniq
+                gcloud projects add-iam-policy-binding $project --member serviceAccount:$SERVICE_ACCOUNT --role $role --format=json
                 statusRoleeq=$?
                 if [[ "$statusRoleeq" -eq 0 ]]; then
                     echo -e "${GREEN}Successfully added role:${NC} $role"
@@ -81,7 +91,7 @@ add_sa_in_iam_projlist()
     done
 }
 
-while getopts ":p:e:l:c:" options
+while getopts ":p:e:l:w:" options
 do 
 
         case "$options" in
@@ -90,9 +100,10 @@ do
             # Service Account Email
         e) SERVICE_ACCOUNT=${OPTARG};;
 
-        l)
+        l) 
         process_list_proj() {
-            IFS="," read -a IAM_PROJECT_ID <<< "$OPTARG"
+            PROJECT_LIST="$OPTARG"
+            IFS="," read -a IAM_PROJECT_ID <<< "$PROJECT_LIST"
             add_sa_in_iam_saproj
             add_sa_in_iam_projlist
             echo ""
@@ -101,17 +112,17 @@ do
 
         process_list_proj
         break;;
-        c) 
+        w) 
         process_csvlist_proj() {
-            INPUT=${OPTARG}
+            ALLOWED_CSV=${OPTARG}
             IAM_PROJECT_ID=()
-            [ ! -f $INPUT ] && { echo "$INPUT file not found"; exit 99; }
+            [ ! -f $ALLOWED_CSV ] && { echo "$ALLOWED_CSV file not found"; exit 99; }
             i=1
             while IFS=',' read -r f1 f2
             do
                 test $i -eq 1 && ((i=i+1)) && continue
                 IAM_PROJECT_ID+=( "$f1" )  
-            done < "$INPUT"
+            done < "$ALLOWED_CSV"
             echo ""
             add_sa_in_iam_saproj
             add_sa_in_iam_projlist

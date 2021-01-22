@@ -9,7 +9,12 @@ BCyan="\033[1;36m"
 ############################################################################
 # Function: Print a help message.
 usage() {
-  echo "Usage: $0 [ -p Project ID to create a Service Account ] [ -s Service Account Name (The service account name is case sensitive and must be in lowercase) ] [ -d Service Account display name ]" 1>&2 
+  echo "Usage: $0 [ -p SA_PROJECT_ID ] [ -s SA_NAME ] [ -d SA_DISPLAY_NAME ]
+  
+  where:
+  -p Project ID of project to create a Service Account
+  -s Service Account Name (The service account name is case sensitive and must be in lowercase)
+  -d Service Account display name" 1>&2 
 }
 
 exit_abnormal() {
@@ -43,6 +48,12 @@ do
         esac
 done
 
+# mandatory arguments
+if [ ! "$SA_PROJECT_ID" ] || [ ! "$SA_NAME" ] || [ ! "$SA_DISPLAY_NAME" ]; then
+    echo "arguments -p, -s & -d must be provided"
+    exit_abnormal
+fi
+
 summary_result()
 {
     if [ "$OnboardType" == "ProjectBased" ]; then
@@ -50,7 +61,7 @@ summary_result()
         echo $SERVICE_ACCOUNT | tee -a output >/dev/null
         echo $SA_KEY | tee -a output >/dev/null
         echo $SA_KEY_PATH | tee -a output >/dev/null
-        echo -e "${GREEN}Created Service Account & key Successfully!!.${NC}"
+        echo -e "${GREEN}Created Service Account & Key Successfully!!.${NC}"
     else
         echo -e ""
         echo -e "${GREEN}Create Service Account script executed.${NC}"

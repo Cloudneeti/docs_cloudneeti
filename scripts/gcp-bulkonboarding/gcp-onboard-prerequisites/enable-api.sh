@@ -13,7 +13,26 @@ API_FILE="apis.json"
 
 # Function: Print a help message.
 usage() {
-  echo "Usage: $0 [ -O Organization-based onboarding (org-based) || -P Project-based Onboarding (project-based) ] [ -o Organization ID ] [ -p Project ID where Service Account is created  ]" 1>&2 
+  echo "Usage: $0 [ -o ORGANIZATION_ID ] [ -p SA_PROJECT_ID  ] 
+  [ -l PROJECT_LIST || -a ALL_PROJECT(ALL) || -w ALLOWED_CSV || -x EXCLUDED_CSV ]
+  where:
+    -o Organization ID
+    -p Project ID where Service Account is created
+
+    Provide one of the following options to enable APIs for Organization-based Onboarding:
+    -l List of project IDs --> (<=10 Projects)
+       (Example: "ProjectID_1,ProjectID_2,ProjectID_3,..." etc)
+    -a All projects (value=ALL)
+    -w Allowed list of projects (.csv file) --> (>=10 projects)
+       (Example: /home/path/to/allowed_list.csv )
+    -x All projects excluding a list of projects (.csv file)
+       (Example: /home/path/to/excluded_list.csv )
+    
+    Provide one of the following options to enable APIs for Project-based Onboarding:
+    -l List of project IDs --> (<=10 Projects)
+       (Example: "ProjectID_1,ProjectID_2,ProjectID_3,..." etc)
+    -w Allowed list of projects (.csv file) --> (>=10 projects)
+      (Example: /home/path/to/allowed_list.csv )" 1>&2 
 }
 
 exit_abnormal() {
@@ -29,7 +48,7 @@ if [ $NUMARGS -eq 0 ]; then
 fi
 
 [ ! -f $API_FILE ] && { echo "$API_FILE file not found"; exit 99; }
-api_list_func()
+api_list()
 {
     # APIs needs to enable on project where Service account is created
     for api in $(jq -r .SA_Project_APIs[] $API_FILE) 
@@ -42,7 +61,7 @@ api_list_func()
         Onboard_Project_APIs+=("$api")  
     done
 }
-api_list_func
+api_list
 
 enable_api_sa_proj()
 {
@@ -53,10 +72,10 @@ enable_api_sa_proj()
         statusSAProjAPI1=$?
         if [[ "$statusSAProjAPI1" -eq 0 ]]; then
             echo -e "${GREEN}Successfully Enabled API:${NC} $api"
-            else
-                echo -e "${RED}Failed to Enable API:${NC} $api"
-                exit_abnormal
-            fi
+        else
+            echo -e "${RED}Failed to Enable API:${NC} $api"
+            exit_abnormal
+        fi
     done
 }
 
@@ -71,233 +90,168 @@ enable_api_projlist()
             $(gcloud services enable $api --project $project)
             statusIAMProjAPI=$?
             if [[ "$statusIAMProjAPI" -eq 0 ]]; then
-                echo -e "${GREEN}Successfully Enabled APIs on:${NC} $api"
+                echo -e "${GREEN}Successfully Enabled API:${NC} $api"
             else
-                echo -e "${RED}Failed to Enable APIs on:${NC} $api"
+                echo -e "${RED}Failed to Enable API:${NC} $api"
                 exit_abnormal
             fi
         done
     done
 }
 
-while getopts "O:P:" options; do
+while getopts "o:p:l:a:w:x:" options; do
 
     case "$options" in
-    O) Org_based_Onboarding=${OPTARG}
-    if [ "$Org_based_Onboarding" == "org-based" ]; then
-        while getopts o:p: flag
-        do
-            case "${flag}" in
-                # project ID to create a service account
-                o) ORGANIZATION_ID=${OPTARG};;
-                p) SA_PROJECT_ID=${OPTARG};;
-                :)                                         # If expected argument omitted:
-                echo "Error: -${OPTARG} requires an argument."
-                exit_abnormal;;                            # Exit abnormally.
-        
-                *)                                         # If unknown (any other) option:
-                exit_abnormal;;
-            esac
-        done
 
-        title="Please select one of the following options to enable APIs for Organization-based Onboarding: "
-        prompt="Pick an option: "
-        options=("List of project IDs --> (<=10 Projects)" "All projects" "Allowed list of projects (.csv file) --> (>=10 projects)" "All projects excluding a list of projects (.csv file)")
-        echo "$title"
-        PS3="$prompt"
-        select opt in "${options[@]}" "Quit"; do 
+    o) ORGANIZATION_ID=${OPTARG};;
+    # project ID of project where service account is created
+    p) SA_PROJECT_ID=${OPTARG};;
 
-            case "$REPLY" in
-            1 )
-            org_enable_api_few_proj() {
-            echo "You have selected '$opt'."
-            echo -e ""
-            echo -e "Enter the project IDs separated by a comma: "
-            echo -e "(Example: ProjectID_1,ProjectID_2,ProjectID_3,... etc) "
-            IFS="," read -a IAM_PROJECT_ID
-            echo -e ""
-            echo -e "${BLUE}*****Enabling API's on Project*****${NC}"
-            echo -e ""
-            enable_api_sa_proj
-            enable_api_projlist
-            echo ""
-            echo -e "${GREEN}Enable APIs script executed.${NC}"
-            }
+    l) PROJECT_LIST=${OPTARG}
+    RESULT_PROJECT_LIST=$([[ ! -z "$PROJECT_LIST" ]] && echo "NotEmpty" || echo "Empty");;
 
-            org_enable_api_few_proj
-            break;;
-            2 )
-            org_enable_api_allProj_func() {
-            echo "You have selected '$opt'."
-            echo -e ""
-            IAM_PROJECT_ID=()
-            m=0
-            for project in  $(gcloud alpha asset list --organization=$ORGANIZATION_ID --content-type=resource --asset-types="cloudresourcemanager.googleapis.com/Project" --format="value(resource.data.projectId)")
-            do
-                IAM_PROJECT_ID[m++]="$project"
-            done
-            echo -e "${BLUE}*****Enabling API's on all Project*****${NC}"
-            echo -e ""
-            enable_api_sa_proj
-            enable_api_projlist
-            echo ""
-            echo -e "${GREEN}Enable APIs script executed.${NC}"
-            }
+    a) ALL_PROJECT=${OPTARG}
+    RESULT_ALL_PROJECT=$([[ ! -z "$ALL_PROJECT" ]] && echo "NotEmpty" || echo "Empty");;
 
-            org_enable_api_allProj_func
-            break;;
-            3 )
-            org_enable_api_allowedProj_func() {
-            echo "You have selected '$opt'."
-            echo -e ""
-            echo -e "Enter the file path to the allowed list of projects: "
-            echo -e "(Example: /home/path/to/allowed_list.csv )"
-            read  INPUT
-            echo -e ""
-            IAM_PROJECT_ID=()
-            [ ! -f $INPUT ] && { echo "$INPUT file not found"; exit 99; }
-            i=1
-            while IFS=',' read -r f1 f2
-            do
-                test $i -eq 1 && ((i=i+1)) && continue
-                IAM_PROJECT_ID+=( "$f1" )  
-            done < "$INPUT"
-            echo -e ""
-            echo -e "${BLUE}*****Enabling APIs on Project*****${NC}"
-            echo -e ""
-            enable_api_sa_proj
-            enable_api_projlist
-            echo ""
-            echo -e "${GREEN}Enable APIs script executed.${NC}"
-            }
+    w) ALLOWED_CSV=${OPTARG}
+    RESULT_ALLOWED_CSV=$([[ ! -z "$ALLOWED_CSV" ]] && echo "NotEmpty" || echo "Empty");;
 
-            org_enable_api_allowedProj_func
-            break;;
-            4 )
-            org_enable_api_excludingProj_func() {
-            echo "You have selected '$opt'."
-            echo -e ""
-            echo -e "Enter the file path to the list of projects to be excluded: "
-            echo -e "(Example: /home/path/to/excluded_list.csv )"
-            read INPUT
-            # creating array with excluding list of projects
-            EX_PROJECT_ID=()
-            [ ! -f $INPUT ] && { echo "$INPUT file not found"; exit 99; }
-            i=1
-            while IFS=',' read -r f1 f2
-            do
-                test $i -eq 1 && ((i=i+1)) && continue 
-                EX_PROJECT_ID+=( "$f1" )  
-            done < "$INPUT"
+    x) EXCLUDED_CSV=${OPTARG}
+    RESULT_EXCLUDED_CSV=$([[ ! -z "$EXCLUDED_CSV" ]] && echo "NotEmpty" || echo "Empty");;
 
-            # Creating array for all projects within Organization
-            IAM_PROJECT_ID=()
-            m=0
-            for project in  $(gcloud alpha asset list --organization=$ORGANIZATION_ID --content-type=resource --asset-types="cloudresourcemanager.googleapis.com/Project" --format="value(resource.data.projectId)")
-            do
-                IAM_PROJECT_ID[m++]="$project"
-            done
-
-            # IAM_PROJECT_ID
-            for target in "${EX_PROJECT_ID[@]}"; do
-            for l in "${!IAM_PROJECT_ID[@]}"; do
-                if [[ ${IAM_PROJECT_ID[l]} = $target ]]; then
-                unset 'IAM_PROJECT_ID[l]'
-                fi
-            done
-            done
-            echo -e "${BLUE}****Enabling APIs on Project****${NC}"
-            echo -e ""
-            enable_api_sa_proj
-            enable_api_projlist
-            echo ""
-            echo -e "${GREEN}Enable APIs script executed.${NC}"
-            }
-
-            org_enable_api_excludingProj_func
-            break;;
-            $(( ${#options[@]}+1 )) ) echo "Goodbye!"; break;;
-            *) echo "Invalid option. Try another one.";continue;;
-
-            esac
-        done
-    fi
-    break;;
-    P) Project_based_Onboarding=${OPTARG}
-    if [ "$Project_based_Onboarding" == "project-based" ]; then
-
-        # Function: Print a help message.
-        usage_proj_based() {
-        echo "Usage: $0 [ -p Project ID where Service Account is created  ] [ -l List of project IDs separated by a comma --> (<=10 Projects) || -c Allowed list of projects (.csv file) --> (>=10 projects) ]" 1>&2 
-        }
-
-        exit_abnormal_sub() {
-        usage_proj_based
-        exit 1
-        }
-
-        #Check the number of arguments. If none are passed, print usage and exit.
-        NUMARGS=$#
-        if [ $NUMARGS -eq 0 ]; then
-        usage_proj_based
-        exit 1
-        fi
-
-        while getopts ":p:l:c:" options
-        do
-
-            case "$options" in
-            p) SA_PROJECT_ID=${OPTARG};;
-
-            l)
-            enable_api_few_proj() {
-            IFS="," read -a IAM_PROJECT_ID <<< "$OPTARG"
-            echo -e "${BLUE}*****Enabling APIs on Project*****${NC}"
-            echo -e ""
-            enable_api_sa_proj
-            enable_api_projlist
-            echo ""
-            echo -e "${GREEN}Enable APIs script executed.${NC}"
-            }
-
-            enable_api_few_proj
-            break;;
-            c)
-            enable_api_allowed_proj() {
-            INPUT=${OPTARG}
-            IAM_PROJECT_ID=()
-            [ ! -f $INPUT ] && { echo "$INPUT file not found"; exit 99; }
-            i=1
-            while IFS=',' read -r f1 f2
-            do
-                test $i -eq 1 && ((i=i+1)) && continue
-                IAM_PROJECT_ID+=( "$f1" )  
-            done < "$INPUT"
-            echo -e ""
-            echo -e "${BLUE}*****Enabling APIs on Project*****${NC}"
-            echo -e ""
-            enable_api_sa_proj
-            enable_api_projlist
-            echo ""
-            echo -e "${GREEN}Enable APIs script executed.${NC}"
-            }
-            enable_api_allowed_proj
-            break;;
-            :)                                         # If expected argument omitted:
-            echo "Error: -${OPTARG} requires an argument."
-            exit_abnormal_sub;;
-            
-            *)                                         # If unknown (any other) option:
-            exit_abnormal_sub;;
-            esac
-        done
-    fi
-    break;;
     :)                                         # If expected argument omitted:
     echo "Error: -${OPTARG} requires an argument."
     exit_abnormal;;
-      
+            
     *)                                         # If unknown (any other) option:
     exit_abnormal;;
     esac
 done
+shift "$(( OPTIND - 1 ))"
+
+if [ "$RESULT_PROJECT_LIST" == "NotEmpty" ] && [ "$RESULT_ALL_PROJECT" == "NotEmpty" ]; then
+    echo "Please select only one option from: [-l | -a |-w | -x]"
+    exit_abnormal
+elif [ "$RESULT_ALLOWED_CSV" == "NotEmpty" ] && [ "$RESULT_EXCLUDED_CSV" == "NotEmpty" ]; then
+    echo "Please select only one option from: [-l | -a |-w | -x]"
+    exit_abnormal
+elif [ "$RESULT_ALL_PROJECT" == "NotEmpty" ] && [ "$RESULT_ALLOWED_CSV" == "NotEmpty" ]; then
+    echo "Please select only one option from: [-l | -a |-w | -x]"
+    exit_abnormal
+elif [ "$RESULT_EXCLUDED_CSV" == "NotEmpty" ] && [ "$RESULT_PROJECT_LIST" == "NotEmpty" ]; then
+    echo "Please select only one option from: [-l | -a |-w | -x]"
+    exit_abnormal
+else
+    if [ "$RESULT_PROJECT_LIST" == "NotEmpty" ]; then
+        enable_api_list_projects()
+        {
+            # mandatory arguments
+            if [ ! "$SA_PROJECT_ID" ]; then
+                echo "arguments -p must be provided"
+                exit_abnormal
+            fi
+            IFS="," read -a IAM_PROJECT_ID <<< "$PROJECT_LIST"
+            echo -e "${BLUE}*****Enabling APIs on Project*****${NC}"
+            echo -e ""
+            enable_api_sa_proj
+            enable_api_projlist
+            echo ""
+            echo -e "${GREEN}Enable APIs script executed.${NC}"
+        }
+        enable_api_list_projects
+    elif [[ $ALL_PROJECT == "ALL" ]]; then
+        enable_api_all_projects() 
+        {
+                # mandatory arguments
+                if [ ! "$ORGANIZATION_ID" ] || [ ! "$SA_PROJECT_ID" ]; then
+                    echo "arguments -o and -p must be provided"
+                    exit_abnormal
+                fi
+                IAM_PROJECT_ID=()
+                m=0
+                for project in  $(gcloud alpha asset list --organization=$ORGANIZATION_ID --content-type=resource --asset-types="cloudresourcemanager.googleapis.com/Project" --format="value(resource.data.projectId)")
+                do
+                    IAM_PROJECT_ID[m++]="$project"
+                done
+                echo -e "${BLUE}*****Enabling API's on all Project*****${NC}"
+                echo -e ""
+                enable_api_sa_proj
+                enable_api_projlist
+                echo ""
+                echo -e "${GREEN}Enable APIs script executed.${NC}"
+
+        }
+        enable_api_all_projects
+
+    elif [ "$RESULT_ALLOWED_CSV" == "NotEmpty" ]; then
+        enable_api_allowed_list_projects() 
+        {
+            # mandatory arguments
+            if [ ! "$SA_PROJECT_ID" ]; then
+                echo "arguments -p must be provided"
+                exit_abnormal
+            fi
+            IAM_PROJECT_ID=()
+            [ ! -f $ALLOWED_CSV ] && { echo "$ALLOWED_CSV file not found"; exit 99; }
+            i=1
+            while IFS=',' read -r f1 f2
+            do
+                test $i -eq 1 && ((i=i+1)) && continue
+                IAM_PROJECT_ID+=( "$f1" )  
+            done < "$ALLOWED_CSV"
+            echo -e ""
+            echo -e "${BLUE}*****Enabling APIs on Project*****${NC}"
+            echo -e ""
+            enable_api_sa_proj
+            enable_api_projlist
+            echo ""
+            echo -e "${GREEN}Enable APIs script executed.${NC}"
+        }
+        enable_api_allowed_list_projects
+
+    elif [ "$RESULT_EXCLUDED_CSV" == "NotEmpty" ]; then
+        enable_api_excluding_list_projects() 
+        {
+                # mandatory arguments
+                if [ ! "$ORGANIZATION_ID" ] || [ ! "$SA_PROJECT_ID" ]; then
+                    echo "arguments -o and -p must be provided"
+                    exit_abnormal
+                fi
+                # Creating array with excluding list of projects
+                EX_PROJECT_ID=()
+                [ ! -f $EXCLUDED_CSV ] && { echo "$EXCLUDED_CSV file not found"; exit 99; }
+                i=1
+                while IFS=',' read -r f1 f2
+                do
+                    test $i -eq 1 && ((i=i+1)) && continue 
+                    EX_PROJECT_ID+=( "$f1" )  
+                done < "$EXCLUDED_CSV"
+
+                # Creating array for all projects within Organization
+                IAM_PROJECT_ID=()
+                m=0
+                for project in  $(gcloud alpha asset list --organization=$ORGANIZATION_ID --content-type=resource --asset-types="cloudresourcemanager.googleapis.com/Project" --format="value(resource.data.projectId)")
+                do
+                    IAM_PROJECT_ID[m++]="$project"
+                done
+
+                # Array of project to process
+                for target in "${EX_PROJECT_ID[@]}"; do
+                for l in "${!IAM_PROJECT_ID[@]}"; do
+                if [[ ${IAM_PROJECT_ID[l]} = $target ]]; then
+                    unset 'IAM_PROJECT_ID[l]'
+                fi
+                done
+                done
+                echo -e "${BLUE}****Enabling APIs on Project****${NC}"
+                echo -e ""
+                enable_api_sa_proj
+                enable_api_projlist
+                echo ""
+                echo -e "${GREEN}Enable APIs script executed.${NC}"
+        }
+        enable_api_excluding_list_projects
+    else
+        exit_abnormal
+    fi
+fi

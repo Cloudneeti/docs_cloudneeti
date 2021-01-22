@@ -56,7 +56,7 @@ The gcp onboard prerequisites scripts covers:
     | ------------- | ------------- | ------------- |-------------  | ------------- |
     | Create Service Account & Key  | Owner/Editor |  |  |  |
     | Promote Service account to Organization level & Attach Roles  | Organization Administrator |  |  |    |
-    | Enable APIs | Owner/Editor<br />Cloud Asset Viewer | Cloud Asset API  | All projects must be linked with Billing Account  | 1. List of project IDs --> (<=10 Projects)<br />2. All projects<br />3. Allowed list of projects (.csv file) --> (>=10 projects)<br />4. All projects excluding a list of projects (.csv file) |
+    | Enable APIs | Owner/Editor<br />Cloud Asset Viewer | Cloud Asset API  | All projects must be linked with Billing Account  | [-l] List of project IDs --> (<=10 Projects)<br />[-a] All projects<br />[-w] Allowed list of projects (.csv file) --> (>=10 projects)<br />[x] All projects excluding a list of projects (.csv file) |
 
 
     ### [optional] CSV file with Allowed or Excluded list of project
@@ -71,11 +71,11 @@ The gcp onboard prerequisites scripts covers:
 
 - Project Based onbaording
 
-    | Action  | Required Permission | Required APIs   | Billing Account |  Options |
-    | ------------- | ------------- | ------------- |-------------  | ------------- |
+    | Action  | Required Permission | Billing Account |  Options |
+    | ------------- | ------------- |-------------  | ------------- |
     | Create Service Account & Key  | Owner |  |  |
-    | Add Service Account in IAM & Attach Roles  | Owner |  |  | 1. [ -l ] List of project IDs separated by a comma --> (<=10 Projects)<br />2. [ -c ] Allowed list of projects (.csv file) --> (>=10 projects) |
-    | Enable APIs | Owner | Cloud Resource Manager API  | All projects must be linked with Billing Account | 2. [ -l ] List of project IDs separated by a comma --> (<=10 Projects)<br />2. [ -c ] Allowed list of projects (.csv file) --> (>=10 projects) |
+    | Add Service Account in IAM & Attach Roles  | Owner |   | [-l] List of project IDs separated by a comma --> (<=10 Projects)<br />[-w] Allowed list of projects (.csv file) --> (>=10 projects) |
+    | Enable APIs | Owner | All projects must be linked with Billing Account | [-l] List of project IDs separated by a comma --> (<=10 Projects)<br />[-w] Allowed list of projects (.csv file) --> (>=10 projects) |
 
 
     ### [optional] CSV file with Allowed list of project
@@ -135,8 +135,16 @@ $ ./promote-sa-to-org.sh -o <ORGANIZATION_ID> -e <Service_Account_Email>
 $ chmod +x enable-api.sh
 
 # Run the below command:
-$ ./enable-api.sh -O org-based -o <ORGANIZATION_ID> -p <Service_Account_Project_ID>
-# it will prompt for the options please select the appropriate option and proceed.
+$ ./enable-api.sh -o <ORGANIZATION_ID> -p <Service_Account_Project_ID>
+
+    Provide one of the following options to enable APIs for Organization-based Onboarding:
+    -l List of project IDs --> (<=10 Projects)
+       (Example: "ProjectID_1,ProjectID_2,ProjectID_3,..." etc)
+    -a All projects (value=ALL)
+    -w Allowed list of projects (.csv file) --> (>=10 projects)
+       (Example: /home/path/to/allowed_list.csv )
+    -x All projects excluding a list of projects (.csv file)
+       (Example: /home/path/to/excluded_list.csv )
 ```
 
 #### Project based onboarding
@@ -150,8 +158,13 @@ $ cd gcp-bulkonboarding/gcp-onboard-prerequisites/
 $ chmod +x Projectbased-onboard-prerequisites.sh
 
 # Run the below command to setup gcp onboard prerequisites
-$ ./Projectbased-onboard-prerequisites.sh -p <Project_ID> -s <Service_Account_Name> -d <Service_Account_Display_Name> -l "<List_Of_Project_IDs>"
-OR
-$ ./Projectbased-onboard-prerequisites.sh -p <Project_ID> -s <Service_Account_Name> -d <Service_Account_Display_Name> -c "<CSV_File_Path>"
+$ ./Projectbased-onboard-prerequisites.sh -p <Project_ID> -s <Service_Account_Name> -d <Service_Account_Display_Name>
+
+    Provide one of the following options to enable APIs and add service account in IAM for Project-based Onboarding:
+    -l List of project IDs --> (<=10 Projects)
+      (Example: "ProjectID_1,ProjectID_2,ProjectID_3,..." etc)
+    -w Allowed list of projects (.csv file) --> (>=10 projects)
+      (Example: /home/path/to/allowed_list.csv )
+
 # Summary will give you the Service account Email & Key file path, copy the path of the key & and click three dot icon at top right corner of cloud shell, select Download File option and download the key.
 ```
