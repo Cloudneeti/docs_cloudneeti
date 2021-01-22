@@ -7,7 +7,7 @@ NC='\033[0m'
 BCyan="\033[1;36m"
 
 ############################################################################
-FILES=(Projectbased-onboard-prerequisites.sh add-sa-iam.sh apis.json create-sa.sh enable-api.sh permissions.json promote-sa-to-org.sh)
+FILES=(Projectbased-onboard-prerequisites.sh add-sa-in-iam.sh apis.json create-sa.sh enable-api.sh permissions.json promote-sa-to-org.sh)
 status_check()
 {
     # status check for each file to download

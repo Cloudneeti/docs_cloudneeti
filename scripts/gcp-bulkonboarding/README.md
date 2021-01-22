@@ -23,10 +23,10 @@ The gcp onboard prerequisites scripts covers:
         - Cloud Asset Viewer 
     - Enable APIs on projects which are going to onboard on ZCSPM
         - Options 
-            1. -l List of project IDs --> (<=10 Projects)
-            2. -a All projects
-            3. -w Allowed list of projects (.csv file) --> (>=10 projects)
-            4. -x All projects excluding a list of projects (.csv file)
+            1. (-l) List of project IDs --> (<=10 Projects)
+            2. (-a) All projects
+            3. (-w) Allowed list of projects (.csv file) --> (>=10 projects)
+            4. (-x) All projects excluding a list of projects (.csv file)
 
 
 - Project Based Onboarding
@@ -56,7 +56,7 @@ The gcp onboard prerequisites scripts covers:
     | ------------- | ------------- | ------------- |-------------  | ------------- |
     | Create Service Account & Key  | Owner/Editor |  |  |  |
     | Promote Service account to Organization level & Attach Roles  | Organization Administrator |  |  |    |
-    | Enable APIs | Owner/Editor<br />Cloud Asset Viewer | Cloud Asset API  | All projects must be linked with Billing Account  | -l List of project IDs --> (<=10 Projects)<br />-a All projects<br />-w Allowed list of projects (.csv file) --> (>=10 projects)<br />-x All projects excluding a list of projects (.csv file) |
+    | Enable APIs | Owner/Editor<br />Cloud Asset Viewer | Cloud Asset API  | All projects must be linked with Billing Account  | (-l) List of project IDs --> (<=10 Projects)<br />(-a) All projects<br />(-w) Allowed list of projects (.csv file) --> (>=10 projects)<br />(-x) All projects excluding a list of projects (.csv file) |
 
 
     ### [optional] CSV file with Allowed or Excluded list of project
@@ -74,8 +74,8 @@ The gcp onboard prerequisites scripts covers:
     | Action  | Required Permission | Billing Account |  Options |
     | ------------- | ------------- |-------------  | ------------- |
     | Create Service Account & Key  | Owner |  |  |
-    | Add Service Account in IAM & Attach Roles  | Owner |   | -l List of project IDs separated by a comma --> (<=10 Projects)<br />-w Allowed list of projects (.csv file) --> (>=10 projects) |
-    | Enable APIs | Owner | All projects must be linked with Billing Account | -l List of project IDs separated by a comma --> (<=10 Projects)<br />-w Allowed list of projects (.csv file) --> (>=10 projects) |
+    | Add Service Account in IAM & Attach Roles  | Owner |   | (-l) List of project IDs --> (<=10 Projects)<br />(-w) Allowed list of projects (.csv file) --> (>=10 projects) |
+    | Enable APIs | Owner | All projects must be linked with Billing Account | (-l) List of project IDs --> (<=10 Projects)<br />(-w) Allowed list of projects (.csv file) --> (>=10 projects) |
 
 
     ### [optional] CSV file with Allowed list of project
