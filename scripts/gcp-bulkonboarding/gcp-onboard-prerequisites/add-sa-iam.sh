@@ -10,7 +10,7 @@ BCyan="\033[1;36m"
 
 # Function: Print a help message.
 usage() {
-  echo "Usage: $0 [ -p SA_PROJECT_ID ] [ -e SERVICE_ACCOUNT ] 
+  echo "Usage: $0 [ -p SA_PROJECT_ID ] [ -e SERVICE_ACCOUNT_EMAIL ] 
     [ -l PROJECT_LIST || -w ALLOWED_CSV ]
    where:
     -p Project ID where Service Account is created
@@ -55,7 +55,7 @@ add_sa_in_iam_saproj()
     do
         echo -e ""
         echo "Role: $role"
-        gcloud projects add-iam-policy-binding $SA_PROJECT_ID --member serviceAccount:$SERVICE_ACCOUNT --role $role --format=json
+        gcloud projects add-iam-policy-binding $SA_PROJECT_ID --member serviceAccount:$SERVICE_ACCOUNT_EMAIL --role $role --format=json
         statusRoleSA=$?
         if [[ "$statusRoleSA" -eq 0 ]]; then
             echo -e "${GREEN}Successfully Added role:${NC} $role"
@@ -78,7 +78,7 @@ add_sa_in_iam_projlist()
             else
                 echo -e ""
                 echo "Role: $role"
-                gcloud projects add-iam-policy-binding $project --member serviceAccount:$SERVICE_ACCOUNT --role $role --format=json
+                gcloud projects add-iam-policy-binding $project --member serviceAccount:$SERVICE_ACCOUNT_EMAIL --role $role --format=json
                 statusRoleeq=$?
                 if [[ "$statusRoleeq" -eq 0 ]]; then
                     echo -e "${GREEN}Successfully added role:${NC} $role"
@@ -98,7 +98,7 @@ do
 
         p) SA_PROJECT_ID=${OPTARG};;
             # Service Account Email
-        e) SERVICE_ACCOUNT=${OPTARG};;
+        e) SERVICE_ACCOUNT_EMAIL=${OPTARG};;
 
         l) 
         process_list_proj() {

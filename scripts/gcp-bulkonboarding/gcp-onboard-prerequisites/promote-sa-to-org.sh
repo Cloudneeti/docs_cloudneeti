@@ -12,7 +12,7 @@ ADDED_ROLES=()
 
 # Function: Print a help message.
 usage() {
-  echo "Usage: $0 [ -o ORGANIZATION_ID ] [ -e SERVICE_ACCOUNT ]
+  echo "Usage: $0 [ -o ORGANIZATION_ID ] [ -e SERVICE_ACCOUNT_EMAIL ]
   
   where:
     -o Organization ID
@@ -38,7 +38,7 @@ do
             # Organization ID
             o) ORGANIZATION_ID=${OPTARG};;
             # Service Account Email
-            e) SERVICE_ACCOUNT=${OPTARG};;
+            e) SERVICE_ACCOUNT_EMAIL=${OPTARG};;
             :)                                         # If expected argument omitted:
             echo "Error: -${OPTARG} requires an argument."
             exit_abnormal;;                            # Exit abnormally.
@@ -49,7 +49,7 @@ do
 done
 
 # mandatory arguments
-if [ ! "$ORGANIZATION_ID" ] || [ ! "$SERVICE_ACCOUNT" ]; then
+if [ ! "$ORGANIZATION_ID" ] || [ ! "$SERVICE_ACCOUNT_EMAIL" ]; then
     echo "arguments -o and -e must be provided"
     exit_abnormal
 fi
@@ -69,7 +69,7 @@ promote_sa_to_org()
     do
         echo ""
         echo "Role: $role"
-        gcloud organizations add-iam-policy-binding $ORGANIZATION_ID --member serviceAccount:$SERVICE_ACCOUNT --role $role --format=json
+        gcloud organizations add-iam-policy-binding $ORGANIZATION_ID --member serviceAccount:$SERVICE_ACCOUNT_EMAIL --role $role --format=json
         statusOrgRoleSA=$?
         if [[ "$statusOrgRoleSA" -eq 0 ]]; then
             echo -e "${GREEN}Successfully added role:${NC} $role"
@@ -94,7 +94,7 @@ echo
 echo -e "${BCyan}Summary:${NC}"
 RESULT_SUCCESS=$([[ ! -z "$ADDED_ROLES" ]] && echo "NotEmpty" || echo "Empty")
 if [[ $RESULT_SUCCESS == "NotEmpty" ]]; then
-    echo -e "${BCyan}Service Account Email:${NC} $SERVICE_ACCOUNT"
+    echo -e "${BCyan}Service Account Email:${NC} $SERVICE_ACCOUNT_EMAIL"
     echo -e "${BCyan}Successfully Added Roles:${NC}"
     for success_role in "${ADDED_ROLES[@]}"
     do

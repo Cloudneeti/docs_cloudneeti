@@ -58,7 +58,7 @@ summary_result()
 {
     if [ "$OnboardType" == "ProjectBased" ]; then
         echo -e "$(rm -rf output)"
-        echo $SERVICE_ACCOUNT | tee -a output >/dev/null
+        echo $SERVICE_ACCOUNT_EMAIL | tee -a output >/dev/null
         echo $SA_KEY | tee -a output >/dev/null
         echo $SA_KEY_PATH | tee -a output >/dev/null
         echo -e "${GREEN}Created Service Account & Key Successfully!!.${NC}"
@@ -68,7 +68,7 @@ summary_result()
         echo
         echo -e "${BCyan}Summary:${NC}"
         echo -e "${BCyan}Service Account Project ID:${NC} $SA_PROJECT_ID"
-        echo -e "${BCyan}Service Account Email:${NC} $SERVICE_ACCOUNT"
+        echo -e "${BCyan}Service Account Email:${NC} $SERVICE_ACCOUNT_EMAIL"
         echo -e "${BCyan}Service Account Key Name:${NC} $SA_KEY"
         echo -e "${BCyan}Service Account Key File Path:${NC} $SA_KEY_PATH"
     fi
@@ -81,11 +81,11 @@ create_service_account()
     if [[ "$statusSA" -eq 0 ]]; then
         echo -e "${GREEN}Successfully created service account${NC}"
         sleep 7
-        SERVICE_ACCOUNT=$(gcloud iam service-accounts list --format="value(email)" --project=$SA_PROJECT_ID | grep $SA_NAME@$SA_PROJECT_ID.iam.gserviceaccount.com)
+        SERVICE_ACCOUNT_EMAIL=$(gcloud iam service-accounts list --format="value(email)" --project=$SA_PROJECT_ID | grep $SA_NAME@$SA_PROJECT_ID.iam.gserviceaccount.com)
         statusSAlist=$?
         if [[ "$statusSAlist" -eq 0 ]]; then
             echo -e ""
-            gcloud iam service-accounts keys create $SA_NAME.json --iam-account=$SERVICE_ACCOUNT --key-file-type="json" --project=$SA_PROJECT_ID
+            gcloud iam service-accounts keys create $SA_NAME.json --iam-account=$SERVICE_ACCOUNT_EMAIL --key-file-type="json" --project=$SA_PROJECT_ID
             statusKey=$?
             if [[ "$statusKey" -eq 0 ]]; then
                 SA_KEY=$(ls | grep $SA_NAME.json)
