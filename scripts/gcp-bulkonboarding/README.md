@@ -99,11 +99,11 @@ $ gcloud config set project <Project_ID>
 $ gcloud auth list
 
 # Run the below commnad to download script
-$ wget https://raw.githubusercontent.com/lomaingali/docs_cloudneeti/amol/gcp-preOnboard-script/scripts/gcp-bulkonboarding/download-gcp-bulkonboarding.sh
+$ wget https://raw.githubusercontent.com/lomaingali/docs_cloudneeti/amol/gcp-preOnboard-script/scripts/gcp-bulkonboarding/gcp-bulkonboarding.sh
 
 # Change the permission & run the script
-$ chmod +x download-gcp-bulkonboarding.sh
-$ ./download-gcp-bulkonboarding.sh
+$ chmod +x gcp-bulkonboarding.sh
+$ ./gcp-bulkonboarding.sh
 # it will download all the script required to setup gcp onboard prerequisites
 
 ```

@@ -95,12 +95,12 @@ project_based_prerequisites()
     status=$?
     if [[ "$status" -eq 0 ]]; then
         summary
-        chmod +x add-sa-iam.sh
+        chmod +x add-sa-in-iam.sh
         if [ "$RESULT_PROJECT_LIST" == "NotEmpty" ]; then
-            ./add-sa-iam.sh -p $SA_PROJECT_ID -e ${output[0]} -l $PROJECT_LIST
+            ./add-sa-in-iam.sh -p $SA_PROJECT_ID -e ${output[0]} -l $PROJECT_LIST
             status_add_sa=$?
         else
-            ./add-sa-iam.sh -p $SA_PROJECT_ID -e ${output[0]} -w $ALLOWED_CSV
+            ./add-sa-in-iam.sh -p $SA_PROJECT_ID -e ${output[0]} -w $ALLOWED_CSV
             status_add_sa=$?
         fi
         if [[ "$status_add_sa" -eq 0 ]]; then
