@@ -12,7 +12,7 @@
     The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-    Version:        1.0
+    Version:        1.1
     Author:         Cloudneeti
     Creation Date:  09/10/2019
 
@@ -69,7 +69,7 @@ param (
         HelpMessage = "Exclude Storage Account",
         Position = 2
     )]
-    [string[]] $ExcludeStorageAccounts,
+    [string[]] $ExcludeStorageAccounts = "",
 
     # Enable Secure Transfer
     [Parameter(ParameterSetName = 'Https')]
@@ -101,7 +101,7 @@ $ErrorActionPreference = 'Stop'
 $WarningPreference = 'SilentlyContinue'
 
 # Intialization 
-[System.Collections.ArrayList]$storageAccounts = @()
+$storageAccounts = @()
 
 Write-Host "Script Execution Started..." -ForegroundColor Yellow
 
@@ -147,6 +147,12 @@ Catch [Exception] {
 
 # Storage account list
 $storageAccounts = $AllStorageAccounts | where { $ExcludeStorageAccounts -NotContains $_.StorageAccountName }
+
+if(($storageAccounts).count -eq 0) {
+    Write-Host "Storage accounts are not available for performing operations." -ForegroundColor Yellow
+    Write-Host "Kindly check the ExcludeStorageAccount list and try again" -ForegroundColor Yellow
+    Exit
+}
 
 # Updating storage accounts present in az context
 if($EnableHttps -and ($null -ne $storageAccounts)){
