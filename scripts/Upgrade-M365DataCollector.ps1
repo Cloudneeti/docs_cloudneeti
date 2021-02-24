@@ -242,11 +242,16 @@ If ($ExistingRunbook -ne $RunbookName){
 
     # Update automation account credentials
     try{
+        $credentials = Get-AzAutomationCredential -ResourceGroupName $ResourceGroupName -AutomationAccountName $AutomationAccountName
         Write-host "Updating automation account credentials ..." -ForegroundColor Yellow
         Write-host "Updating secure credentials object for client service principal in Automation account ..." -ForegroundColor Yellow
         $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $ZCSPMApplicationId, $ZCSPMApplicationSecret
         New-AzAutomationCredential -AutomationAccountName $AutomationAccountName -Name $ZCSPMCredentials -Value $Credential -ResourceGroupName $ResourceGroupName
-        Remove-AzAutomationCredential -AutomationAccountName $AutomationAccountName -Name $CloudneetiCredentials -ResourceGroupName $ResourceGroupName
+        foreach($cred in $credentials){
+            if($CloudneetiCredentials -eq $cred.Name){
+                Remove-AzAutomationCredential -AutomationAccountName $AutomationAccountName -Name $CloudneetiCredentials -ResourceGroupName $ResourceGroupName
+            }            
+        }
         Write-host "Updated automation account credentials." -ForegroundColor Green
     }
     catch [Exception]{
