@@ -45,8 +45,8 @@ The gcp onboard prerequisites scripts covers:
             - Cloud Asset Viewer
         - Enable APIs and add Service Acoount in IAM for projects which are going to onboard on ZCSPM
     - Options
-        1. -l List of project IDs --> (<=10 Projects)
-        2. -w Allowed list of projects (.csv file) --> (>=10 projects)
+        1. (-l) List of project IDs --> (<=10 Projects)
+        2. (-w) Allowed list of projects (.csv file) --> (>=10 projects)
 
 # PREREQUISITE
 
@@ -122,6 +122,7 @@ $ chmod +x create-sa.sh
 # Run the below command:
 $ ./create-sa.sh -p <SA_PROJECT_ID> -s <SA_NAME> -d <SA_DISPLAY_NAME>
 # Summary will give you the Service account Email & Key file path, copy the path of the key & and click three dot icon at top right corner of cloud shell, select Download File option and download the key.
+$ cloudshell download <KEY_PATH>
 
 # Promote Service account to Organization level
 # Change the permission of file
