@@ -245,10 +245,17 @@ If ($ExistingRunbook -ne $RunbookName){
             $ExistingVariable = Get-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $($VariableCSPM.Name) -ResourceGroupName $ResourceGroupName -ErrorAction SilentlyContinue
             [string]$Value1 = $ExistingVariable.Value
             if($ExistingVariable -ne $null -and $ExistingVariable.Name -ne 'CloudneetiAPIKey'){
-                Write-Host "Updating Variable" $($VariableCSPM.Name) -ForegroundColor Yellow
-                New-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $VariableCSPM.Value -Encrypted $False -Value $Value1 -ResourceGroupName $ResourceGroupName
-                Remove-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $($VariableCSPM.Name) -ResourceGroupName $ResourceGroupName
-                Write-Host $($VariableCSPM.Name) "variable successfully updated" -ForegroundColor Green
+                if($ExistingVariable.Value -ne $null -or $ExistingVariable.Name -eq 'CloudneetiAccountId')
+                {
+                    Write-Host "Removing Variable" $($VariableCSPM.Name) -ForegroundColor Yellow
+                    Remove-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $($ExistingVariable.Name) -ResourceGroupName $ResourceGroupName
+                    Write-Host $($VariableCSPM.Name) "variable successfully removed" -ForegroundColor Green
+                }else{
+                    Write-Host "Updating Variable" $($VariableCSPM.Name) -ForegroundColor Yellow
+                    New-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $VariableCSPM.Value -Encrypted $False -Value $Value1 -ResourceGroupName $ResourceGroupName
+                    Remove-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $($VariableCSPM.Name) -ResourceGroupName $ResourceGroupName
+                    Write-Host $($VariableCSPM.Name) "variable successfully updated" -ForegroundColor Green
+                }     
             }
             elseif($ExistingVariable.Name -eq 'CloudneetiAPIKey') {
                 Write-Host "Updating Variable" $($VariableCSPM.Name) -ForegroundColor Yellow
@@ -256,6 +263,15 @@ If ($ExistingRunbook -ne $RunbookName){
                 New-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $($VariableCSPM.Value) -Encrypted $True -Value $ZCSPMAPIKeyEncrypt -ResourceGroupName $ResourceGroupName
                 Remove-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $($VariableCSPM.Name) -ResourceGroupName $ResourceGroupName
                 Write-Host $($VariableCSPM.Name) "variable successfully updated" -ForegroundColor Green
+            }
+        }
+        foreach($VariableCSPM in $VariableObjectCSPM.GetEnumerator()) {
+            $ExistingVariable = Get-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $($VariableCSPM.Value) -ResourceGroupName $ResourceGroupName -ErrorAction SilentlyContinue
+            [string]$Value1 = $ExistingVariable.Value
+            if($ExistingVariable -ne $null -and $ExistingVariable.Name -ne 'ZCSPMAccountId'){
+                Write-Host "Removing Variable" $ExistingVariable.Name -ForegroundColor Yellow
+                Remove-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $($ExistingVariable.Name) -ResourceGroupName $ResourceGroupName
+                Write-Host $ExistingVariable.Name "variable successfully removed" -ForegroundColor Green     
             }
         }
         # Update the automation account variable(Not related to CSPM banding)

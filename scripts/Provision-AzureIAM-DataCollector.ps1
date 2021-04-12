@@ -12,10 +12,10 @@
     The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-    Version:        1.3
+    Version:        1.4
     Author:         Zscaler CSPM
     Creation Date:  06/01/2020
-    Last Modified Date: 22/10/2020
+    Last Modified Date: 12/04/2021
 
     # PREREQUISITE
 
@@ -76,15 +76,6 @@ param
     [ValidateNotNullOrEmpty()]
     [guid]
     $ZCSPMLicenseId = $(Read-Host -prompt "Enter ZCSPM License Id"),
-
-    # ZCSPM account Id
-    [Parameter(Mandatory = $False,
-        HelpMessage = "ZCSPM Account Id",
-        Position = 2
-    )]
-    [ValidateNotNullOrEmpty()]
-    [guid]
-    $ZCSPMAccountId = $(Read-Host -prompt "Enter ZCSPM Account Id"),
 
     # ZCSPM API key
     [Parameter(Mandatory = $False,
@@ -356,7 +347,6 @@ $ZCSPMAPIKeyEncrypt = (New-Object PSCredential "user",$ZCSPMAPIKey).GetNetworkCr
 
 $VariableObject = @{    
     "ZCSPMLicenseId"        = $ZCSPMLicenseId;
-    "ZCSPMAccountId"        = $ZCSPMAccountId; 
     "ZCSPMEnvironment"      = $ZCSPMEnvironment;
     "AzureDirectoryId"      = $AzureActiveDirectoryId;
     "ZCSPMAPIKey"           = $ZCSPMAPIKeyEncrypt;
