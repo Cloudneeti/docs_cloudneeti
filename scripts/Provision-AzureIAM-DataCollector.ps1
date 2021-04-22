@@ -78,7 +78,7 @@ param
     # ZCSPM API key
     [Parameter(Mandatory = $False,
         HelpMessage = "ZCSPM API Key",
-        Position = 3
+        Position = 2
     )]
     [ValidateNotNullOrEmpty()]
     [secureString]
@@ -87,7 +87,7 @@ param
     # ZCSPM Environment
     [Parameter(Mandatory = $False,
         HelpMessage = "ZCSPM Environment",
-        Position = 4
+        Position = 3
     )]
     [ValidateNotNullOrEmpty()]
     [string]
@@ -96,7 +96,7 @@ param
     # ZCSPM Service principal id
     [Parameter(Mandatory = $False,
         HelpMessage = "ZCSPM Data collector Service Principal Id",
-        Position = 5
+        Position = 4
     )]
     [ValidateNotNullOrEmpty()]
     [String]
@@ -105,7 +105,7 @@ param
     # Enter service principal secret
     [Parameter(Mandatory = $False,
         HelpMessage = "ZCSPM Data collector Service Principal password",
-        Position = 6
+        Position = 5
     )]
     [ValidateNotNullOrEmpty()]
     [SecureString]
@@ -114,7 +114,7 @@ param
     # ZCSPM Artifacts Storage Name
     [Parameter(Mandatory = $False,
         HelpMessage = "ZCSPM Azure IAM Data Collector Artifact Name",
-        Position = 7
+        Position = 6
     )]
     [ValidateNotNullOrEmpty()]
     [string]
@@ -123,7 +123,7 @@ param
     # ZCSPM artifacts access key
     [Parameter(Mandatory = $False,
         HelpMessage = "ZCSPM Azure IAM Data Collector Artifacts Acccess Key",
-        Position = 8
+        Position = 7
     )]
     [ValidateNotNullOrEmpty()]
     [secureString]
@@ -132,7 +132,7 @@ param
     # Data Collector version
     [Parameter(Mandatory = $False,
         HelpMessage = "ZCSPM Azure IAM Data Collector Artifacts Version",
-        Position = 9
+        Position = 8
     )]
     [ValidateNotNullOrEmpty()]
     [string]
@@ -141,7 +141,7 @@ param
     # Azure Tenant ID
     [Parameter(Mandatory = $False,
         HelpMessage = "Azure Active Directory Id",
-        Position = 10
+        Position = 9
     )]
     [ValidateNotNullOrEmpty()]
     [guid]
@@ -151,7 +151,7 @@ param
     [ValidateScript( {$_ -match '^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,7})$' })]
     [Parameter(Mandatory = $False,
         HelpMessage = "Azure AD Global Reader Email Id",
-        Position = 11
+        Position = 10
     )]
     [ValidateNotNullOrEmpty()]
     [string]
@@ -160,7 +160,7 @@ param
     # Azure Global Reader password
     [Parameter(Mandatory = $False,
         HelpMessage = "Azure AD Global Reader Password",
-        Position = 12
+        Position = 11
     )]
     [ValidateNotNullOrEmpty()]
     [SecureString]
@@ -169,7 +169,7 @@ param
     # Subscription Id for automation account creation
     [Parameter(Mandatory = $False,
         HelpMessage = "Azure Subscription Id for IAM data collector resources provisioning",
-        Position = 13
+        Position = 12
     )]
     [ValidateNotNullOrEmpty()]
     [guid]
@@ -178,7 +178,7 @@ param
     # Resource group name for ZCSPM Resouces
     [Parameter(Mandatory = $False,
         HelpMessage = "Azure IAM Collector Name",
-        Position = 14
+        Position = 13
     )]
     [ValidateNotNullOrEmpty()]
     [string]
@@ -187,7 +187,7 @@ param
     # Data collector resource location
     [Parameter(Mandatory = $False,
         HelpMessage = "Location for ZCSPM Azure IAM data collector resources",
-        Position = 15
+        Position = 14
     )]
     [ValidateNotNullOrEmpty()]
     [string]
