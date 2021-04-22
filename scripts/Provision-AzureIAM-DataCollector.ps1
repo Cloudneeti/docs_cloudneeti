@@ -25,7 +25,6 @@
 
     Then script execution will prompt for below inputs:
         - ZCSPM License Id
-        - ZCSPM Account Id
         - ZCSPM API Key
         - ZCSPM Environment
         - ZCSPM Application Id
@@ -42,7 +41,6 @@
 .INPUTS
     Below is the list of inputs to the script:-
         - ZCSPM License Id <Find in "Manage Licenses" of ZCSPM Settings>
-        - ZCSPM Account Id <Find in "Manage Accounts" of ZCSPM Settings>
         - ZCSPM API Key <Contact ZCSPM team>
         - ZCSPM Environment <ZCSPM Environment>
         - ZCSPM Application Id <ZCSPM Data Collector Application Id>
