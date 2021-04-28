@@ -245,7 +245,7 @@ If ($ExistingRunbook -ne $RunbookName){
             $ExistingVariable = Get-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $($VariableCSPM.Name) -ResourceGroupName $ResourceGroupName -ErrorAction SilentlyContinue
             [string]$Value1 = $ExistingVariable.Value
             if($ExistingVariable -ne $null -and $ExistingVariable.Name -ne 'CloudneetiAPIKey'){
-                if($ExistingVariable.Value -ne $null -or $ExistingVariable.Name -eq 'CloudneetiAccountId')
+                if($ExistingVariable.Value -ne $null -and $ExistingVariable.Name -eq 'CloudneetiAccountId')
                 {
                     Write-Host "Removing Variable" $($VariableCSPM.Name) -ForegroundColor Yellow
                     Remove-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $($ExistingVariable.Name) -ResourceGroupName $ResourceGroupName
@@ -268,7 +268,7 @@ If ($ExistingRunbook -ne $RunbookName){
         foreach($VariableCSPM in $VariableObjectCSPM.GetEnumerator()) {
             $ExistingVariable = Get-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $($VariableCSPM.Value) -ResourceGroupName $ResourceGroupName -ErrorAction SilentlyContinue
             [string]$Value1 = $ExistingVariable.Value
-            if($ExistingVariable -ne $null -and $ExistingVariable.Name -ne 'ZCSPMAccountId'){
+            if($ExistingVariable -ne $null -and $ExistingVariable.Name -eq 'ZCSPMAccountId'){
                 Write-Host "Removing Variable" $ExistingVariable.Name -ForegroundColor Yellow
                 Remove-AzAutomationVariable -AutomationAccountName $AutomationAccountName -Name $($ExistingVariable.Name) -ResourceGroupName $ResourceGroupName
                 Write-Host $ExistingVariable.Name "variable successfully removed" -ForegroundColor Green     
