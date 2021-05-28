@@ -759,7 +759,7 @@
                     "certificatesValidityPeriodMonitoringEffect": {
                         "value": "disabled"
                     },
-                                        "ensureThatPHPVersionIsTheLatestIfUsedAsAPartOfTheApiAppMonitoringEffect": {
+                    "ensureThatPHPVersionIsTheLatestIfUsedAsAPartOfTheApiAppMonitoringEffect": {
                         "value": "Disabled"
                     },
                     "ensureThatPHPVersionIsTheLatestIfUsedAsAPartOfTheWEBAppMonitoringEffect": {
