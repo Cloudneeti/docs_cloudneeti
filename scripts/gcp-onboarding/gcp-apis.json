@@ -1,5 +1,5 @@
 {
-    "orgOnboarding": [
+    "ServiceAccountProjectAPIs": [
         "cloudresourcemanager.googleapis.com",
         "sqladmin.googleapis.com",
         "storage.googleapis.com",
@@ -13,7 +13,7 @@
         "bigtableadmin.googleapis.com",
         "pubsub.googleapis.com"
     ],
-    "projectOnboarding": [
+    "OnboardProjectAPIs": [
         "compute.googleapis.com",
         "bigquery.googleapis.com",
         "dns.googleapis.com",

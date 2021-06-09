@@ -92,7 +92,7 @@ get_service_account_email()
 {
     # Getting service Account Email
     sleep 5
-    SERVICE_ACCOUNT_EMAIL=$(gcloud iam service-accounts list --filter $SERVICE_ACCOUNT_NAME | awk 'NR>=2 { print $2 }')
+    SERVICE_ACCOUNT_EMAIL=$(gcloud iam service-accounts list --filter $SERVICE_ACCOUNT_NAME --project $PROJECT_ID | awk 'NR>=2 { print $2 }')
     if [[ ! -z "$SERVICE_ACCOUNT_EMAIL" ]]; then
         echo -e "${GREEN}Successfully got service account email${NC}"
     else

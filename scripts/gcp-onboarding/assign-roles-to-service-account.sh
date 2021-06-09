@@ -22,8 +22,8 @@ EXAMPLE
     3. Assign roles to multiple projects using projects present in CSV file
         ./assign-roles-to-service-account.sh -s SERVICE_ACCOUNT_EMAIL -c PROJECT_LIST.csv
 INPUTS
-    (-s)Service Account Name: Service Account Name
-    (-p)Project Id: Signle or comma separated list of GCP project ids
+    (-s)Service Account Email: Service Account Email
+    (-p)Project Id: Single or comma separated list of GCP project ids
     (-c)CSV File: CSV file containing list of project ids
 OUTPUTS
     None
@@ -54,7 +54,7 @@ exit_abnormal() {
   exit 1
 }
 
-#Check the number of arguments. If none are passed, print usage and exit.
+# Check the number of arguments
 NUMARGS=$#
 if [ $NUMARGS -lt 2 ]; then
   usage
