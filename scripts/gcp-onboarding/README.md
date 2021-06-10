@@ -1,15 +1,15 @@
 # GCP Project Onboarding Scripts
 
-This directory contains set of scripts that can be used for configuring prerequisites required for GCP onboarding to the ZCSPM platform.
+This directory contains a set of scripts that can be used for configuring prerequisites required for GCP onboarding to the ZCSPM platform.
 
 ## Overview
 
-ZCSPM supports following onboarding options,
+ZCSPM supports the following onboarding options,
 
 * Organization Based Onboarding
 * Project Based Onboarding
 
-In order to onboard the GCP projects on ZCSPM platform customer needs to perform majorly 3 steps as part of prerequisites configuration.
+In order to onboard the GCP projects on the ZCSPM platform customer needs to perform majorly 3 steps as part of the prerequisites configuration.
 
 1. Creation of Service Account and Key
 2. Assigning roles to Service Principal
@@ -34,7 +34,7 @@ In order to onboard the GCP projects on ZCSPM platform customer needs to perform
 
    $ chmod +x zcspm-gcp-onboarding/*.sh
    ```
-5. Swich working directory
+5. Switch working directory
    ```bash
 
    $ cd zcspm-gcp-onboarding
@@ -42,13 +42,66 @@ In order to onboard the GCP projects on ZCSPM platform customer needs to perform
 
 ## Organization Based Onboarding
 
+### Permissions
+
+Make sure you have below permission on GCP projects while executing the below commands.
+
+| Action  | Required Permission | Billing Account |
+| ------------- | ------------- | -------------  |
+| Create Service Account & Key  | Project Owner/Editor |  |  |
+| Promote Service account and assign role  | Organization Administrator |  |
+| Enable Service APIs on GCP project | Project Owner/Editor  | All projects must be linked with Billing Account  |
+
 ### Configure organization onboarding prerequisites
 
 **Step 1: Create Service Account**
 
-**Step 2: Assign Roles to Service Account**
+1. Execute below command to create service account in the GCP project
+	```bash
+	$ ./create-service-account.sh -p <PROJECT_ID> -s <SERVICE_ACCOUNT_NAME>
+	```
+2. Find the summary section in the script output for Service account Email & Key file path
+3. Copy service account key file path and run below command to download service account key file
+	```bash
+	$ cloudshell download <SERVICE_ACCOUNT_KEY_FILE_PATH>
+	```
+4. Store key file at a secure location
+
+**Step 2: Promote Service account to Organization level and assign roles**
+
+Execute the below command to promote the GCP service account at an organization level. It also assigns required ZCSPM roles to the service account
+
+```bash
+$ ./promote-service-account.sh -s <SERVICE_ACCOUNT_EMAIL> -o <GCP_ORGANIZATION_ID>
+```
 
 **Step 3: Enable Service APIs on GCP project**
+
+Execute the below command to enable ZCSPM required service APIs on all the projects present in the GCP organization
+
+```bash
+$ ./enable-gcp-api.sh -s <SERVICE_ACCOUNT_PROJECT_ID> -o <GCP_ORGANIZATION_ID> -a
+```
+
+**Note:**
+If you have more than 400 projects in the GCP organization then try to increase below API limits of GCP project where service account is created by contacting the GCP support team.
+* Service Usage API - Default Request
+* Service Usage API - Mutate Request
+
+
+**[Optional] Multiple projects present in CSV**
+1. If you are onboarding a certain number of projects then create a .csv file, by running the below command on the cloud shell you can list all the projects in a .csv file.
+
+	```bash
+	$ gcloud alpha asset list --organization=<GCP_ORGANIZATION_ID> --content-type=resource --asset-types=cloudresourcemanager.googleapis.com/Project --format="csv(resource.data.projectId,resource.data.name)" > projlist.csv
+	```
+	Updates CSV file as per requirement.
+
+2. Execute the below commands to enable service APIs for multiple GCP projects present in CSV file
+
+	```bash
+	$ ./enable-gcp-api.sh -s <SERVICE_ACCOUNT_PROJECT_ID> -c <PROJECT_LIST.CSV>
+	```
 
 ## Project Based Onboarding
 
@@ -59,13 +112,13 @@ Make sure you have below permission on GCP projects while executing the below co
 | - | - | - |
 | Create Service Account & Key | Project Owner |   |
 | Assign roles to Service Account | Project Owner |   |
-| Enable APIs | Project Owner | All projects must be linked with Billing Account |
+| Enable Service APIs on GCP project | Project Owner | All projects must be linked with Billing Account |
 
 ### Configure project onboarding prerequisites
 
 **Step 1: Single or multiple project**
 
-Execute below commands to configure project onboarding prerequisites for single or multiple projects
+Execute the below commands to configure project onboarding prerequisites for single or multiple projects
 
 ```bash
 $ ./configure-project-onboarding-prerequisites.sh -p <SERVICE_ACCOUNT_PROJECT_ID> -s <SERVICE_ACCOUNT_NAME> -l <PROJECT_LIST>
@@ -73,24 +126,31 @@ $ ./configure-project-onboarding-prerequisites.sh -p <SERVICE_ACCOUNT_PROJECT_ID
 
 **[Optional] Multiple projects present in CSV**
 
-1. If you are onboarding number of projects then please create a .csv file with allowed list of projects, by running the below command on cloud shell you can list all the project in .csv file and create allowed list of project.
+1. If you are onboarding a certain number of projects then create a .csv file, by running the below command on the cloud shell you can list all the projects in a .csv file.
 
 	```bash
-	# Open cloud shell and run the below command
 	$ gcloud projects list --format="csv(projectId,name)" > projectlist.csv
 	```
 	
-2. Execute below commands to configure project onboarding prerequisites for multiple projects present in CSV file
+2. Execute the below commands to configure project onboarding prerequisites for multiple projects present in a CSV file
 
 	```bash
-	$ ./configure-project-onboarding-prerequisites.sh -p <SERVICE_ACCOUNT_PROJECT_ID> -s <SERVICE_ACCOUNT_NAME> -c <ALLOWED_PROJECT_LIST.CSV>
+	$ ./configure-project-onboarding-prerequisites.sh -p <SERVICE_ACCOUNT_PROJECT_ID> -s <SERVICE_ACCOUNT_NAME> -c <PROJECT_LIST.CSV>
 	```
 	
 **Step 2: Download Service Account Key File**
 
-1. Find summary section in the script output for Service account Email & Key file path
+1. Find the summary section in the script output for Service account Email & Key file path
 2. Copy service account key file path and run below command to download service account key file
 	```bash
 	$ cloudshell download <SERVICE_ACCOUNT_KEY_FILE_PATH> 
 	```
-3. Store key file at secure location
+3. Store key file at a secure location
+
+
+# Disclaimer
+
+Copyright (c) Zscaler. All rights reserved.
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is  furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
