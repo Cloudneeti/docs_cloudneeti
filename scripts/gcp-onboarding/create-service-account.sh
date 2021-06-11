@@ -103,7 +103,6 @@ get_service_account_email()
 create_service_account_keys()
 {
     KEY_FILE_NAME="$SERVICE_ACCOUNT_NAME.json"
-    KEY_FILE_PATH=$(pwd)/$(ls | grep $KEY_FILE_NAME)
 
     gcloud iam service-accounts keys create $KEY_FILE_NAME --iam-account=$SERVICE_ACCOUNT_EMAIL --key-file-type="json" --project=$PROJECT_ID
     statusKey=$?
@@ -129,6 +128,7 @@ get_service_account_email
 # Generate Service Account Keys
 echo "Generating Service Account $SERVICE_ACCOUNT_NAME keys"
 create_service_account_keys
+KEY_FILE_PATH=$(pwd)/$(ls | grep $KEY_FILE_NAME)
 
 # Service Account Details
 echo -e "${BCyan}Summary:${NC}"
