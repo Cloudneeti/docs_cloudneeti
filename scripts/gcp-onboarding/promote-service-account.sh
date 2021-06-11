@@ -51,7 +51,7 @@ exit_abnormal() {
 
 # Check the number of arguments
 NUMARGS=$#
-if [ $NUMARGS -lt 2 ]; then
+if [ $NUMARGS -ne 4 ]; then
   usage
   exit 1
 fi

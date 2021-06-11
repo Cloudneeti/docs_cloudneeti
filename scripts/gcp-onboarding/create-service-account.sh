@@ -49,7 +49,7 @@ exit_abnormal() {
 
 # Check the for two arguments
 NUMARGS=$#
-if [ $NUMARGS -le 2 ]; then
+if [ $NUMARGS -ne 4 ]; then
   usage
   exit 1
 fi
