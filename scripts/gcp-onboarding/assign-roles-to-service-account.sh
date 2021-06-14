@@ -56,7 +56,7 @@ exit_abnormal() {
 
 # Check the number of arguments
 NUMARGS=$#
-if [ $NUMARGS -lt 2 ]; then
+if [ $NUMARGS -ne 4 ]; then
   usage
   exit 1
 fi
@@ -107,10 +107,7 @@ assign_roles_to_service_account()
 load_project_from_csv() 
 {
     PROJECT_CSV=$1
- 
-    # Test existance of csv file
-    [ ! -f $PROJECT_CSV ] && { echo "$PROJECT_CSV file not found"; exit 99; }
-    
+
     # Iterate CSV
     while IFS=',' read -r project_id project_name
     do
@@ -144,6 +141,8 @@ do
 
         c) # Load projects from CSV file
             PROJECT_CSV_FILE=${OPTARG}
+            # Test existance of csv file
+            [ ! -f $PROJECT_CSV_FILE ] && { echo "$PROJECT_CSV_FILE file not found"; exit 99; }
             PROJECT_LIST=$(load_project_from_csv $PROJECT_CSV_FILE)
             ;;
 

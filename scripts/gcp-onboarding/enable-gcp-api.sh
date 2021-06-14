@@ -121,7 +121,7 @@ load_all_org_projects()
     # validate org id
     echo "Validating Organization ID"
     VALID_ORG_ID=$(gcloud organizations list --filter=$ORGANIZATION_ID | awk 'NR > 1 {print $2}')
-    if [[ $VALID_ORG_ID -eq $ORGANIZATION_ID  ]]; then
+    if [[ $VALID_ORG_ID == $ORGANIZATION_ID ]]; then
         # Load all the GCP projects
         PROJECT_LIST="$(gcloud alpha asset list --organization=$ORGANIZATION_ID --content-type=resource --asset-types="cloudresourcemanager.googleapis.com/Project" --filter=resource.data.lifecycleState=ACTIVE --format="value(resource.data.projectId)")"
     else
