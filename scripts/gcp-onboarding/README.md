@@ -77,12 +77,6 @@ Execute the below command to promote the GCP service account at an organization 
 
 **Step 3: Enable Service APIs on GCP project**
 
-Execute the below command to enable ZCSPM required service APIs on single or multiple GCP projects
-
-```bash
-./enable-gcp-api.sh -s <SERVICE_ACCOUNT_PROJECT_ID> -p <PROJECT_LIST>
-```
-
 Execute the below command to enable ZCSPM required service APIs on all the projects present in the GCP organization
 
 ```bash
@@ -94,6 +88,11 @@ If you have more than 400 projects in the GCP organization then try to increase 
 * Service Usage API - Default Request
 * Service Usage API - Mutate Request
 
+[Optional] In case you want to enable ZCSPM required service APIs on single or multiple GCP projects present within the organization then execute the below command
+
+```bash
+./enable-gcp-api.sh -s <SERVICE_ACCOUNT_PROJECT_ID> -p <PROJECT_LIST>
+```
 
 **[Optional] Multiple projects present in CSV**
 1. If you are onboarding a certain number of projects then create a .csv file, by running the below command on the cloud shell you can list all the projects in a .csv file.
