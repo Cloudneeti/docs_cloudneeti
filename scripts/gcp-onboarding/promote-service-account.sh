@@ -37,11 +37,11 @@ ADDED_ROLES=()
 usage() {
     echo "Script to promote service account to GCP organization"
     echo ""
-    echo "Syntax: $0 -s SERVICE_ACCOUNT_EMAIL -o PROJECT_ID"
+    echo "Syntax: $0 -s SERVICE_ACCOUNT_EMAIL -o ORGANIZATION_ID"
     echo "Options:"
     echo "  -h    Print this Help"
     echo "  -s    Service Account Email"
-    echo "  -o    GCP Organization"
+    echo "  -o    GCP Organization ID"
 }
 
 exit_abnormal() {
