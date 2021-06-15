@@ -96,8 +96,13 @@ add_iam_policy_binding()
 # Adding Service account in IAM for allowed list of projects and assigning roles
 assign_roles_to_service_account()
 {
+    # Check if service account project is present there in the list if not append it
+    if [[ ! "$PROJECT_LIST" =~ "$SA_PROJECT_ID" ]]; then
+    	PROJECT_LIST[${#PROJECT_LIST[@]}]="$SA_PROJECT_ID"
+    fi
+
     # TODO: Assign roles to service account in parallel using multi-threading
-    for project in $PROJECT_LIST
+    for project in ${PROJECT_LIST[@]}
     do  
         echo -e "${YELLOW}Adding service account $SERVICE_ACCOUNT_EMAIL to project $project IAM${NC}"
         add_iam_policy_binding $project
