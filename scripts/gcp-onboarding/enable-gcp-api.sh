@@ -99,13 +99,13 @@ enable_apis()
     for project in $PROJECT_IDS
     do
         {   
-            echo "Enabling GCP API on $project project"
+            echo "Enabling GCP APIs on $project project"
             gcloud services enable $PROJECT_APIS --project $project
             status=$?
             if [[ "$status" -eq 0 ]]; then
-                echo -e "${GREEN}Successfully Enabled API on $project project${NC}" #$PROJECT_APIS"
+                echo -e "${GREEN}Successfully Enabled APIs on $project project${NC}" #$PROJECT_APIS"
             else
-                echo -e "${RED}Failed to Enable API on $project project${NC}"
+                echo -e "${RED}Failed to Enable APIs on $project project${NC}"
             fi
         } &
         ((i=i%NUM_THREADS)); ((i++==0)) && wait
