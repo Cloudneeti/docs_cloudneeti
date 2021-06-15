@@ -20,24 +20,24 @@ In order to onboard the GCP projects on the ZCSPM platform customer needs to per
 1. Open GCP cloudshell
 2. Set GCP Project
    ```bash
-   $ gcloud config set project <Project_ID>
+   gcloud config set project <Project_ID>
 
    # make sure you're authenticated to GCP
-   $ gcloud auth list
+   gcloud auth list
    ```
 3. Download onboarding prerequisites scripts
    ```bash
-   $ wget -O - https://raw.githubusercontent.com/Cloudneeti/docs_cloudneeti/rahul/gcp-onboarding-scripts/scripts/gcp-onboarding/download-gcp-onboarding-scripts.sh | bash
+   wget -O - https://raw.githubusercontent.com/Cloudneeti/docs_cloudneeti/rahul/gcp-onboarding-scripts/scripts/gcp-onboarding/download-gcp-onboarding-scripts.sh | bash
    ```
 4. Make scripts executable
    ```bash
 
-   $ chmod +x zcspm-gcp-onboarding/*.sh
+   chmod +x zcspm-gcp-onboarding/*.sh
    ```
 5. Switch working directory
    ```bash
 
-   $ cd zcspm-gcp-onboarding
+   cd zcspm-gcp-onboarding
    ```
 
 ## Organization Based Onboarding
@@ -58,12 +58,12 @@ Make sure you have below permission on GCP projects while executing the below co
 
 1. Execute below command to create service account in the GCP project
 	```bash
-	$ ./create-service-account.sh -p <PROJECT_ID> -s <SERVICE_ACCOUNT_NAME>
+	./create-service-account.sh -p <PROJECT_ID> -s <SERVICE_ACCOUNT_NAME>
 	```
 2. Find the summary section in the script output for Service account Email & Key file path
 3. Copy service account key file path and run below command to download service account key file
 	```bash
-	$ cloudshell download <SERVICE_ACCOUNT_KEY_FILE_PATH>
+	cloudshell download <SERVICE_ACCOUNT_KEY_FILE_PATH>
 	```
 4. Store key file at a secure location
 
@@ -72,15 +72,21 @@ Make sure you have below permission on GCP projects while executing the below co
 Execute the below command to promote the GCP service account at an organization level. It also assigns required ZCSPM roles to the service account
 
 ```bash
-$ ./promote-service-account.sh -s <SERVICE_ACCOUNT_EMAIL> -o <GCP_ORGANIZATION_ID>
+./promote-service-account.sh -s <SERVICE_ACCOUNT_EMAIL> -o <GCP_ORGANIZATION_ID>
 ```
 
 **Step 3: Enable Service APIs on GCP project**
 
+Execute the below command to enable ZCSPM required service APIs on single or multiple GCP projects
+
+```bash
+./enable-gcp-api.sh -s <SERVICE_ACCOUNT_PROJECT_ID> -p <PROJECT_LIST>
+```
+
 Execute the below command to enable ZCSPM required service APIs on all the projects present in the GCP organization
 
 ```bash
-$ ./enable-gcp-api.sh -s <SERVICE_ACCOUNT_PROJECT_ID> -o <GCP_ORGANIZATION_ID> -a
+./enable-gcp-api.sh -s <SERVICE_ACCOUNT_PROJECT_ID> -o <GCP_ORGANIZATION_ID> -a
 ```
 
 **Note:**
@@ -93,14 +99,14 @@ If you have more than 400 projects in the GCP organization then try to increase 
 1. If you are onboarding a certain number of projects then create a .csv file, by running the below command on the cloud shell you can list all the projects in a .csv file.
 
 	```bash
-	$ gcloud alpha asset list --organization=<GCP_ORGANIZATION_ID> --content-type=resource --asset-types=cloudresourcemanager.googleapis.com/Project --format="csv(resource.data.projectId,resource.data.name)" > projlist.csv
+	gcloud alpha asset list --organization=<GCP_ORGANIZATION_ID> --content-type=resource --asset-types=cloudresourcemanager.googleapis.com/Project --format="csv(resource.data.projectId,resource.data.name)" > projlist.csv
 	```
 	Updates CSV file as per requirement.
 
 2. Execute the below commands to enable service APIs for multiple GCP projects present in CSV file
 
 	```bash
-	$ ./enable-gcp-api.sh -s <SERVICE_ACCOUNT_PROJECT_ID> -c <PROJECT_LIST.CSV>
+	./enable-gcp-api.sh -s <SERVICE_ACCOUNT_PROJECT_ID> -c <PROJECT_LIST.CSV>
 	```
 
 ## Project Based Onboarding
@@ -121,7 +127,7 @@ Make sure you have below permission on GCP projects while executing the below co
 Execute the below commands to configure project onboarding prerequisites for single or multiple projects
 
 ```bash
-$ ./configure-project-onboarding-prerequisites.sh -p <SERVICE_ACCOUNT_PROJECT_ID> -s <SERVICE_ACCOUNT_NAME> -l <PROJECT_LIST>
+./configure-project-onboarding-prerequisites.sh -p <SERVICE_ACCOUNT_PROJECT_ID> -s <SERVICE_ACCOUNT_NAME> -l <PROJECT_LIST>
 ```
 
 **[Optional] Multiple projects present in CSV**
@@ -129,13 +135,13 @@ $ ./configure-project-onboarding-prerequisites.sh -p <SERVICE_ACCOUNT_PROJECT_ID
 1. If you are onboarding a certain number of projects then create a .csv file, by running the below command on the cloud shell you can list all the projects in a .csv file.
 
 	```bash
-	$ gcloud projects list --format="csv(projectId,name)" > projectlist.csv
+	gcloud projects list --format="csv(projectId,name)" > projectlist.csv
 	```
 	
 2. Execute the below commands to configure project onboarding prerequisites for multiple projects present in a CSV file
 
 	```bash
-	$ ./configure-project-onboarding-prerequisites.sh -p <SERVICE_ACCOUNT_PROJECT_ID> -s <SERVICE_ACCOUNT_NAME> -c <PROJECT_LIST.CSV>
+	./configure-project-onboarding-prerequisites.sh -p <SERVICE_ACCOUNT_PROJECT_ID> -s <SERVICE_ACCOUNT_NAME> -c <PROJECT_LIST.CSV>
 	```
 	
 **Step 2: Download Service Account Key File**
@@ -143,7 +149,7 @@ $ ./configure-project-onboarding-prerequisites.sh -p <SERVICE_ACCOUNT_PROJECT_ID
 1. Find the summary section in the script output for Service account Email & Key file path
 2. Copy service account key file path and run below command to download service account key file
 	```bash
-	$ cloudshell download <SERVICE_ACCOUNT_KEY_FILE_PATH> 
+	cloudshell download <SERVICE_ACCOUNT_KEY_FILE_PATH> 
 	```
 3. Store key file at a secure location
 
