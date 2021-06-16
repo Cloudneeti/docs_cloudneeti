@@ -46,7 +46,7 @@ usage() {
     echo "  -h    Print this Help"
     echo "  -s    Service Account Email"
     echo "  -p    Single or list of comma separated GCP project ids"
-    echo "  -c    CSV file containing list of GCP projects) (>=10 projects)" 
+    echo "  -c    CSV file containing list of GCP projects (>=10 projects)" 
 }
 
 exit_abnormal() {

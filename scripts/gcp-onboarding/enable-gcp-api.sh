@@ -50,7 +50,7 @@ usage() {
     echo "  -s    Service Account Project ID"
     echo "  -p    Single or comma separated list of GCP project ids (Example: "ProjectID_1,ProjectID_2,ProjectID_3,..." etc)"
     echo "  -a    All projects within Organization"
-    echo "  -c    CSV file containing list of GCP projects) (>=10 projects)"
+    echo "  -c    CSV file containing list of GCP projects (>=10 projects)"
 }
 
 exit_abnormal() {

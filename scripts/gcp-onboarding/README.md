@@ -31,12 +31,10 @@ In order to onboard the GCP projects on the ZCSPM platform customer needs to per
    ```
 4. Make scripts executable
    ```bash
-
    chmod +x zcspm-gcp-onboarding/*.sh
    ```
 5. Switch working directory
    ```bash
-
    cd zcspm-gcp-onboarding
    ```
 
