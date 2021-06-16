@@ -139,6 +139,15 @@ promote_service_account_to_org()
 echo "Loading ZCSPM roles configuration"
 load_roles
 
+# Validate Organization Id
+echo "Validating Organization ID"
+VALID_ORG_ID=$(gcloud organizations list --filter=$ORGANIZATION_ID | awk 'NR > 1 {print $2}')
+if [[ $VALID_ORG_ID != $ORGANIZATION_ID ]]; then
+        echo -e "${RED}Incorrect Organization ID $ORGANIZATION_ID provided${NC}"
+        echo -e "${YELLOW}Please provide the valid Organization ID and Continue..${NC}"
+        exit
+fi
+
 # Check Service Account existence
 echo "Checking existance of service account $SERVICE_ACCOUNT_EMAIL"
 SERVICE_ACCOUNT_EXIST=$(gcloud iam service-accounts list --project $SA_PROJECT_ID --filter $SERVICE_ACCOUNT_EMAIL | awk 'NR>=2 { print $2 }')
