@@ -70,7 +70,7 @@ create_service_account()
 {
     # Check service account existance
     echo "Checking existance of service account $SERVICE_ACCOUNT_NAME in $PROJECT_ID"
-    SERVICE_ACCOUNT_EXIST=$(gcloud iam service-accounts list --project $PROJECT_ID --filter $SERVICE_ACCOUNT_NAME | awk 'NR>=2 { print $2 }')
+    SERVICE_ACCOUNT_EXIST=$(gcloud iam service-accounts list --project $PROJECT_ID --filter $SERVICE_ACCOUNT_NAME@$PROJECT_ID.iam.gserviceaccount.com | awk 'NR>=2 { print $2 }')
     if [[ ! -z "$SERVICE_ACCOUNT_EXIST" ]]; then
         echo -e "${YELLOW}Service account $SERVICE_ACCOUNT_NAME is already present in project $PROJECT_ID.${NC}"
         echo "Use the already generated keys or create service account with new name"
@@ -92,7 +92,7 @@ get_service_account_email()
 {
     # Getting service Account Email
     sleep 5
-    SERVICE_ACCOUNT_EMAIL=$(gcloud iam service-accounts list --filter $SERVICE_ACCOUNT_NAME --project $PROJECT_ID | awk 'NR>=2 { print $2 }')
+    SERVICE_ACCOUNT_EMAIL=$(gcloud iam service-accounts list --filter $SERVICE_ACCOUNT_NAME@$PROJECT_ID.iam.gserviceaccount.com --project $PROJECT_ID | awk 'NR>=2 { print $2 }')
     if [[ ! -z "$SERVICE_ACCOUNT_EMAIL" ]]; then
         echo -e "${GREEN}Successfully got service account email${NC}"
     else
