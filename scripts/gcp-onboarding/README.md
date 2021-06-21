@@ -21,30 +21,31 @@ In order to onboard the GCP projects on the ZCSPM platform customer needs to per
 2. Set GCP Project
    ```bash
    gcloud config set project <Project_ID>
-
-   # make sure you're authenticated to GCP
+   ```
+3. Make sure you're authenticated to GCP
+   ```bash
    gcloud auth list
    ```
-3. Download onboarding prerequisites scripts
+4. Download onboarding prerequisites scripts
    ```bash
    wget -O - https://raw.githubusercontent.com/Cloudneeti/docs_cloudneeti/rahul/gcp-onboarding-scripts/scripts/gcp-onboarding/download-gcp-onboarding-scripts.sh | bash
    ```
-4. Make scripts executable
+5. Make scripts executable
    ```bash
    chmod +x zcspm-gcp-onboarding/*.sh
    ```
-5. Switch working directory
+6. Switch working directory
    ```bash
    cd zcspm-gcp-onboarding
    ```
 
 ## Organization Based Onboarding
 
-### Permissions
+### Roles and Permissions
 
 Make sure you have below permission on GCP projects while executing the below commands.
 
-| Action  | Required Permission | Billing Account |
+| Action  | Required Roles and Permission | Billing Account |
 | ------------- | ------------- | -------------  |
 | Create Service Account & Key  | Project Owner/Editor |  |  |
 | Promote Service account and assign role  | Organization Administrator |  |
@@ -106,10 +107,10 @@ Cloud APIs are also enabled on project in which Service Account is created.
 
 ## Project Based Onboarding
 
-### Permissions
+### Roles and Permissions
 Make sure you have below permission on GCP projects while executing the below commands.
 
-| Action | Required Permission | Billing Account |
+| Action | Required Roles and Permission | Billing Account |
 | - | - | - |
 | Create Service Account & Key | Project Owner |   |
 | Assign roles to Service Account | Project Owner |   |
