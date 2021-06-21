@@ -19,7 +19,7 @@ In order to onboard the GCP projects on the ZCSPM platform customer needs to per
 
 1. Open GCP cloudshell
 2. Set GCP Project
-   ```bash
+   ```
    gcloud config set project <Project_ID>
    ```
 3. Make sure you're authenticated to GCP
