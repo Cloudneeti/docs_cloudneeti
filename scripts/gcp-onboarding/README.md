@@ -12,8 +12,8 @@ ZCSPM supports the following onboarding options,
 In order to onboard the GCP projects on the ZCSPM platform customer needs to perform majorly 3 steps as part of the prerequisites configuration.
 
 1. Creation of Service Account and Key
-2. Assigning roles to Service Principal
-3. Enabling service APIs on GCP projects
+2. Assigning roles to Service Account
+3. Enabling Cloud APIs on GCP projects
 
 ## Prepare workstation
 
@@ -48,7 +48,7 @@ Make sure you have below permission on GCP projects while executing the below co
 | ------------- | ------------- | -------------  |
 | Create Service Account & Key  | Project Owner/Editor |  |  |
 | Promote Service account and assign role  | Organization Administrator |  |
-| Enable Service APIs on GCP project | Project Owner/Editor  | All projects must be linked with Billing Account  |
+| Enable Cloud APIs on GCP project | Project Owner/Editor  | All projects must be linked with Billing Account  |
 
 ### Configure organization onboarding prerequisites
 
@@ -73,20 +73,15 @@ Execute the below command to promote the GCP service account at an organization 
 ./promote-service-account.sh -s <SERVICE_ACCOUNT_EMAIL> -o <GCP_ORGANIZATION_ID>
 ```
 
-**Step 3: Enable Service APIs on GCP project**
+**Step 3: Enable Cloud APIs on GCP project**
 
-Execute the below command to enable ZCSPM required service APIs on all the projects present in the GCP organization
+Execute the below command to enable ZCSPM required Cloud APIs on all the projects present in the GCP organization which are going to onboard on ZCSPM.
 
 ```bash
 ./enable-gcp-api.sh -s <SERVICE_ACCOUNT_PROJECT_ID> -o <GCP_ORGANIZATION_ID> -a
 ```
 
-**Note:**
-If you have more than 400 projects in the GCP organization then try to increase below API limits of GCP project where service account is created by contacting the GCP support team.
-* Service Usage API - Default Request
-* Service Usage API - Mutate Request
-
-[Optional] In case you want to enable ZCSPM required service APIs on single or multiple GCP projects present within the organization then execute the below command
+[Optional] In case you want to enable ZCSPM required Cloud APIs on single or multiple GCP projects present within the organization whoich are going to onboard on ZCSPM then execute the below command
 
 ```bash
 ./enable-gcp-api.sh -s <SERVICE_ACCOUNT_PROJECT_ID> -p <PROJECT_LIST>
@@ -96,15 +91,18 @@ If you have more than 400 projects in the GCP organization then try to increase 
 1. If you are onboarding a certain number of projects then create a .csv file, by running the below command on the cloud shell you can list all the projects in a .csv file.
 
 	```bash
-	gcloud alpha asset list --organization=<GCP_ORGANIZATION_ID> --content-type=resource --asset-types=cloudresourcemanager.googleapis.com/Project --format="csv(resource.data.projectId,resource.data.name)" > projlist.csv
+	gcloud alpha asset list --organization=<GCP_ORGANIZATION_ID> --content-type=resource --asset-types=cloudresourcemanager.googleapis.com/Project --filter=resource.data.lifecycleState=ACTIVE --format="csv(resource.data.projectId,resource.data.name)" > projectlist.csv
 	```
 	Updates CSV file as per requirement.
 
-2. Execute the below commands to enable service APIs for multiple GCP projects present in CSV file
+2. Execute the below commands to enable Cloud APIs for multiple GCP projects present in CSV file
 
 	```bash
 	./enable-gcp-api.sh -s <SERVICE_ACCOUNT_PROJECT_ID> -c <PROJECT_LIST.CSV>
 	```
+
+**Note:**
+Cloud APIs are also enabled on project in which Service Account is created.
 
 ## Project Based Onboarding
 
@@ -115,7 +113,7 @@ Make sure you have below permission on GCP projects while executing the below co
 | - | - | - |
 | Create Service Account & Key | Project Owner |   |
 | Assign roles to Service Account | Project Owner |   |
-| Enable Service APIs on GCP project | Project Owner | All projects must be linked with Billing Account |
+| Enable Cloud APIs on GCP project | Project Owner | All projects must be linked with Billing Account |
 
 ### Configure project onboarding prerequisites
 
@@ -140,7 +138,10 @@ Execute the below commands to configure project onboarding prerequisites for sin
 	```bash
 	./configure-project-onboarding-prerequisites.sh -p <SERVICE_ACCOUNT_PROJECT_ID> -s <SERVICE_ACCOUNT_NAME> -c <PROJECT_LIST.CSV>
 	```
-	
+
+**Note:**
+Cloud APIs are also enabled on project in which Service Account is created.
+
 **Step 2: Download Service Account Key File**
 
 1. Find the summary section in the script output for Service account Email & Key file path
