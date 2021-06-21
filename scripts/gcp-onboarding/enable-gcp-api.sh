@@ -122,7 +122,7 @@ load_all_org_projects()
     echo "Validating Organization ID"
     VALID_ORG_ID=$(gcloud organizations list --filter=$ORGANIZATION_ID | awk 'NR > 1 {print $2}')
     if [[ $VALID_ORG_ID == $ORGANIZATION_ID ]]; then
-        APPS_SCRIPT_FOLDER_ID=$(gcloud alpha asset list --organization=866846951556 --content-type=resource --asset-types=cloudresourcemanager.googleapis.com/Folder --filter="resource.data.lifecycleState=ACTIVE AND resource.data.displayName=apps-script" --format="value(resource.data.name)" | awk -F'[/.]' '{ print $2}')
+        APPS_SCRIPT_FOLDER_ID=$(gcloud alpha asset list --organization=$ORGANIZATION_ID --content-type=resource --asset-types=cloudresourcemanager.googleapis.com/Folder --filter="resource.data.lifecycleState=ACTIVE AND resource.data.displayName=apps-script" --format="value(resource.data.name)" | awk -F'[/.]' '{ print $2}')
         if [[ ! -z $APPS_SCRIPT_FOLDER_ID ]]; then
             # Load all the GCP projects except apps-script projects
             PROJECT_LIST=$(gcloud alpha asset list --organization=$ORGANIZATION_ID --content-type=resource --asset-types=cloudresourcemanager.googleapis.com/Project --filter="resource.data.lifecycleState=ACTIVE AND NOT resource.data.parent.id=$APPS_SCRIPT_FOLDER_ID" --format="value(resource.data.projectId)")
