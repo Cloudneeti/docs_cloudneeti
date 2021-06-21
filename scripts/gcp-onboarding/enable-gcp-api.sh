@@ -2,9 +2,9 @@
 
 : '
 SYNOPSIS
-    Script to enable service APIs on GCP projects.
+    Script to enable Cloud APIs on GCP projects.
 DESCRIPTION
-    This script will enable ZCSPM required service APIs on GCP projects.
+    This script will enable ZCSPM required Cloud APIs on GCP projects.
 NOTES
     Copyright (c) Zscaler. All rights reserved.
     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is  furnished to do so, subject to the following conditions:
@@ -100,7 +100,7 @@ enable_apis()
     do
         {   
             echo "Enabling GCP APIs on $project project"
-            gcloud services enable $PROJECT_APIS --project $project
+            gcloud services enable $PROJECT_APIS --project $project --billing-project $project
             status=$?
             if [[ "$status" -eq 0 ]]; then
                 echo -e "${GREEN}Successfully Enabled APIs on $project project${NC}" #$PROJECT_APIS"
@@ -122,8 +122,14 @@ load_all_org_projects()
     echo "Validating Organization ID"
     VALID_ORG_ID=$(gcloud organizations list --filter=$ORGANIZATION_ID | awk 'NR > 1 {print $2}')
     if [[ $VALID_ORG_ID == $ORGANIZATION_ID ]]; then
-        # Load all the GCP projects
-        PROJECT_LIST="$(gcloud alpha asset list --organization=$ORGANIZATION_ID --content-type=resource --asset-types="cloudresourcemanager.googleapis.com/Project" --filter=resource.data.lifecycleState=ACTIVE --format="value(resource.data.projectId)")"
+        APPS_SCRIPT_FOLDER_ID=$(gcloud alpha asset list --organization=866846951556 --content-type=resource --asset-types=cloudresourcemanager.googleapis.com/Folder --filter="resource.data.lifecycleState=ACTIVE AND resource.data.displayName=apps-script" --format="value(resource.data.name)" | awk -F'[/.]' '{ print $2}')
+        if [[ ! -z $APPS_SCRIPT_FOLDER_ID ]]; then
+            # Load all the GCP projects except apps-script projects
+            PROJECT_LIST=$(gcloud alpha asset list --organization=$ORGANIZATION_ID --content-type=resource --asset-types=cloudresourcemanager.googleapis.com/Project --filter="resource.data.lifecycleState=ACTIVE AND NOT resource.data.parent.id=$APPS_SCRIPT_FOLDER_ID" --format="value(resource.data.projectId)")
+        else
+            # Load all the GCP projects
+            PROJECT_LIST="$(gcloud alpha asset list --organization=$ORGANIZATION_ID --content-type=resource --asset-types="cloudresourcemanager.googleapis.com/Project" --filter=resource.data.lifecycleState=ACTIVE --format="value(resource.data.projectId)")"
+        fi
     else
         echo -e "${RED}Incorrect Organization ID $ORGANIZATION_ID provided${NC}"
         echo -e "${YELLOW}Please provide the valid Organization ID and Continue..${NC}"
