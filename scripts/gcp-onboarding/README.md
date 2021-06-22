@@ -103,7 +103,7 @@ Execute the below command to enable ZCSPM required Cloud APIs on all the project
 	```
 
 **Note:**
-Cloud APIs are also enabled on project in which Service Account is created.
+The above script also enables the required Cloud APIs on the project in which the service account got created during step 1.
 
 ## Project Based Onboarding
 
@@ -141,7 +141,7 @@ Execute the below commands to configure project onboarding prerequisites for sin
 	```
 
 **Note:**
-Cloud APIs are also enabled on project in which Service Account is created.
+The above script also enables the required Cloud APIs on the project in which the service account got created during step 1.
 
 **Step 2: Download Service Account Key File**
 
