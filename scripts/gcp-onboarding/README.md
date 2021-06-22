@@ -49,7 +49,7 @@ Make sure you have below permission on GCP projects while executing the below co
 | ------------- | ------------- | -------------  |
 | Create Service Account & Key  | Project Owner/Editor |  |  |
 | Promote Service account and assign role  | Organization Administrator |  |
-| Enable Cloud APIs on GCP project | Project Owner/Editor  | All projects must be linked with Billing Account  |
+| Enable Cloud APIs on GCP project | Project Owner/Editor, Organization Viewer  | All projects must be linked with Billing Account  |
 
 ### Configure organization onboarding prerequisites
 
