@@ -122,14 +122,10 @@ load_all_org_projects()
     echo "Validating Organization ID"
     VALID_ORG_ID=$(gcloud organizations list --filter=$ORGANIZATION_ID | awk 'NR > 1 {print $2}')
     if [[ $VALID_ORG_ID == $ORGANIZATION_ID ]]; then
-        APPS_SCRIPT_FOLDER_ID=$(gcloud alpha asset list --organization=$ORGANIZATION_ID --content-type=resource --asset-types=cloudresourcemanager.googleapis.com/Folder --filter="resource.data.lifecycleState=ACTIVE AND resource.data.displayName=apps-script" --format="value(resource.data.name)" | awk -F'[/.]' '{ print $2}')
-        if [[ ! -z $APPS_SCRIPT_FOLDER_ID ]]; then
-            # Load all the GCP projects except apps-script projects
-            PROJECT_LIST=$(gcloud alpha asset list --organization=$ORGANIZATION_ID --content-type=resource --asset-types=cloudresourcemanager.googleapis.com/Project --filter="resource.data.lifecycleState=ACTIVE AND NOT resource.data.parent.id=$APPS_SCRIPT_FOLDER_ID" --format="value(resource.data.projectId)")
-        else
-            # Load all the GCP projects
-            PROJECT_LIST="$(gcloud alpha asset list --organization=$ORGANIZATION_ID --content-type=resource --asset-types="cloudresourcemanager.googleapis.com/Project" --filter=resource.data.lifecycleState=ACTIVE --format="value(resource.data.projectId)")"
-        fi
+        FOLDER_ID=$(gcloud alpha asset list --organization=$ORGANIZATION_ID --content-type=resource --asset-types=cloudresourcemanager.googleapis.com/Folder --filter="resource.data.lifecycleState=ACTIVE AND resource.data.displayName=apps-script" --format="value(resource.data.name)" | awk -F'[/.]' '{ print $2}')
+        APPS_SCRIPT_FOLDER_ID=$([[ ! -z "$FOLDER_ID" ]] && echo "$FOLDER_ID" || echo "0")
+        # Load all the GCP projects except apps-script projects
+        PROJECT_LIST=$(gcloud alpha asset list --organization=$ORGANIZATION_ID --content-type=resource --asset-types=cloudresourcemanager.googleapis.com/Project --filter="resource.data.lifecycleState=ACTIVE AND NOT resource.data.parent.id=$APPS_SCRIPT_FOLDER_ID" --format="value(resource.data.projectId)")
     else
         echo -e "${RED}Incorrect Organization ID $ORGANIZATION_ID provided${NC}"
         echo -e "${YELLOW}Please provide the valid Organization ID and Continue..${NC}"
@@ -215,10 +211,10 @@ API_FILE="gcp-apis.json"
 [ ! -f $API_FILE ] && { echo "$API_FILE file not found"; exit 99; }
 
 # Load API lists
-echo "Loading Service API required for ZCSPM to enable on projects"
+echo "Loading Cloud APIs required for ZCSPM to enable on projects"
 SERVICE_ACCOUNT_PROJECT_API=$(load_apis "ServiceAccountProjectAPIs")
 ONBOARDING_PROJECT_API=$(load_apis "OnboardProjectAPIs")
-echo -e "${GREEN}Successfully loaded Service API required for ZCSPM to enable on projects${NC}"
+echo -e "${GREEN}Successfully loaded Cloud APIs required for ZCSPM to enable on projects${NC}"
 echo ""
 
 # Enable GCP API on service account project
