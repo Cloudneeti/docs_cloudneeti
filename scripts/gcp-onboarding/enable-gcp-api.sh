@@ -118,7 +118,7 @@ PROJECT_LIST=()
 load_all_org_projects() 
 {
     ORGANIZATION_ID=$1
-    # validate org id
+    # Validate GCP Organization ID
     echo "Validating Organization ID"
     VALID_ORG_ID=$(gcloud organizations list --filter=$ORGANIZATION_ID | awk 'NR > 1 {print $2}')
     if [[ $VALID_ORG_ID == $ORGANIZATION_ID ]]; then
