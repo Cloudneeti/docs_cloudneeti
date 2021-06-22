@@ -82,7 +82,7 @@ Execute the below command to enable ZCSPM required Cloud APIs on all the project
 ./enable-gcp-api.sh -s <SERVICE_ACCOUNT_PROJECT_ID> -o <GCP_ORGANIZATION_ID> -a
 ```
 
-[Optional] In case you want to enable ZCSPM required Cloud APIs on single or multiple GCP projects present within the organization whoich are going to onboard on ZCSPM then execute the below command
+[Optional] In case you want to enable ZCSPM required Cloud APIs on single or multiple GCP projects present within the organization which are going to onboard on ZCSPM then execute the below command
 
 ```bash
 ./enable-gcp-api.sh -s <SERVICE_ACCOUNT_PROJECT_ID> -p <PROJECT_LIST>
