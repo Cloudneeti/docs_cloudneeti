@@ -26,7 +26,7 @@ EXAMPLE
     2.Get Project level assets count
     ./gcp-resource-count.sh -p ROJECT_ID
 INPUTS
-    (-o)Organization ID
+    (-o)GCP Organization ID
     (-p)Project ID
 OUTPUTS
     Workload and total resources present in GCP Organization and Project.
