@@ -93,20 +93,20 @@ $query_filter = $query_filter.Substring(0,$query_filter.Length-3)
 # Caculating Summary
 # Workloads
 Write-Host "Collecting total workloads count present in $subscriptionId subscription"
-$workloadCount = (az graph query -q "where $query_filter | summarize count()" --subscriptions $subscriptionId | ConvertFrom-Json).count_
+$workloadCount = (az graph query -q "where $query_filter | summarize count()" --subscriptions $subscriptionId --output json | ConvertFrom-Json | Select-Object -Expand data).count_
 
 # All Resources
 Write-Host "Collecting all resources count present in $subscriptionId subscription"
-$resourceCount = (az graph query -q "summarize count()" --subscriptions $subscriptionId | ConvertFrom-Json).count_
+$resourceCount = (az graph query -q "summarize count()" --subscriptions $subscriptionId --output json | ConvertFrom-Json | Select-Object -Expand data).count_
 
 # Processing Workloads
 Write-Host "Collecting workload details present in $subscriptionId subscription"
 $query = "summarize count() by type | where " + $query_filter + "| project resource=type , total=count_ | order by total desc" 
-$workloadDetails = az graph query -q $query --subscriptions $subscriptionId --output Table
+$workloadDetails = az graph query -q $query --subscriptions $subscriptionId --output json | ConvertFrom-Json | Select-Object -Expand data
 
 # Collect Resource Distribution
 Write-Host "Collecting resource details present in $subscriptionId subscription"
-$resourceDetails = az graph query -q "summarize count() by type| project resource=type , total=count_ | order by total desc" --subscriptions $subscriptionId --output Table
+$resourceDetails = az graph query -q "summarize count() by type| project resource=type , total=count_ | order by total desc" --subscriptions $subscriptionId --output json | ConvertFrom-Json | Select-Object -Expand data
 
 Write-Host "`n`nCloudneeti Supported Total Workloads:", $workloadCount -ForegroundColor Green
 Write-Host "All Resources:", $resourceCount -ForegroundColor Green
