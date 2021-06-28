@@ -40,7 +40,7 @@ FILES=(
         "configure-project-onboarding-prerequisites.sh"
     )
 
-SCRIPT_REPO_URL="https://raw.githubusercontent.com/Cloudneeti/docs_cloudneeti/rahul/gcp-onboarding-scripts/scripts/gcp-onboarding/"
+SCRIPT_REPO_URL="https://raw.githubusercontent.com/Cloudneeti/docs_cloudneeti/master/gcp-onboarding-scripts/scripts/gcp-onboarding/"
 
 download_scripts()
 {
