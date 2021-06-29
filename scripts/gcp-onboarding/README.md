@@ -28,7 +28,7 @@ In order to onboard the GCP projects on the ZCSPM platform customer needs to per
    ```
 4. Download onboarding prerequisites scripts
    ```bash
-   wget -O - https://raw.githubusercontent.com/Cloudneeti/docs_cloudneeti/rahul/gcp-onboarding-scripts/scripts/gcp-onboarding/download-gcp-onboarding-scripts.sh | bash
+   wget -O - https://raw.githubusercontent.com/Cloudneeti/docs_cloudneeti/master/scripts/gcp-onboarding/download-gcp-onboarding-scripts.sh | bash
    ```
 5. Make scripts executable
    ```bash
