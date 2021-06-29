@@ -1,0 +1,28 @@
+{
+    "ServiceAccountProjectAPIs": [
+        "cloudresourcemanager.googleapis.com",
+        "sqladmin.googleapis.com",
+        "storage.googleapis.com",
+        "iam.googleapis.com",
+        "logging.googleapis.com",
+        "monitoring.googleapis.com",
+        "cloudasset.googleapis.com",
+        "serviceusage.googleapis.com",
+        "cloudkms.googleapis.com",
+        "spanner.googleapis.com",
+        "bigtableadmin.googleapis.com",
+        "pubsub.googleapis.com"
+    ],
+    "OnboardProjectAPIs": [
+        "compute.googleapis.com",
+        "bigquery.googleapis.com",
+        "dns.googleapis.com",
+        "serviceusage.googleapis.com",
+        "cloudkms.googleapis.com",
+        "spanner.googleapis.com",
+        "datafusion.googleapis.com",
+        "dataproc.googleapis.com",
+        "cloudfunctions.googleapis.com",
+        "run.googleapis.com"
+    ]
+}
