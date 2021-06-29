@@ -114,7 +114,7 @@ validate_parameters()
 ZCSPM_WORKLOADS=()
 load_workloads()
 {    
-    WorkloadMapping="https://raw.githubusercontent.com/Cloudneeti/docs_cloudneeti/amol/gcp-onboarding-scripts/scripts/workloadMapping.json"
+    WorkloadMapping="https://raw.githubusercontent.com/Cloudneeti/docs_cloudneeti/master/scripts/workloadMapping.json"
     # Load zcspm roles into array
     ZCSPM_WORKLOADS=$( curl -s $WorkloadMapping | jq -r .workloadMapping.GCP[] )
     if [[ -z $ZCSPM_WORKLOADS ]]; then

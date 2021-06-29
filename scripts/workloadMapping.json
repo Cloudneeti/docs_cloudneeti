@@ -57,7 +57,7 @@
             "Bigtable Instance": "bigtableadmin.googleapis.com/Instance",
             "App Engine Service": "appengine.googleapis.com/Service",
             "Compute Target Instance": "compute.googleapis.com/TargetInstance",
-            "cloud.google.com/nat": "cloud.google.com/nat"
+            "Cloud NAT": "cloud.google.com/nat"
         }
     }
 }
