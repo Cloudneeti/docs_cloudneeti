@@ -19,6 +19,7 @@
 #     Ensure a log metric filter and alarm exist for VPC changes
 #     Ensure a log metric filter and alarm exist for S3 bucket object read operations
 #     Ensure a log metric filter and alarm exist for S3 bucket object write operations
+#     Ensure a log metric filter and alarm exists for AWS Organizations changes
 #
 # .NOTES
 
@@ -1189,4 +1190,60 @@ Resources:
       EvaluationPeriods: '1'
       Period: '300'
       Statistic: SampleCount
+      Threshold: '1'
+  OrganizationsMetricFilter:
+    Type: AWS::Logs::MetricFilter
+    DependsOn: AlarmSNSTopic
+    Properties:
+      LogGroupName:
+        Fn::Join:
+        - ""
+        - - !Ref env
+          - '-monitoring-log-group'
+      FilterPattern: '{ ($.eventSource ="organizations.amazonaws.com") || ($.eventName ="AcceptHandshake") || ($.eventName ="CreateAccount") || ($.eventName = "CreateOrganization") || ($.eventName = "CreateOrganizationalUnit") || ($.eventName = "DeleteOrganization") || ($.eventName = "DeleteOrganizationalUnit") || ($.eventName = "InviteAccountToOrganization") || ($.eventName = "LeaveOrganization") || ($.eventName = "MoveAccount") || ($.eventName = "RemoveAccountFromOrganization") || ($.eventName = "UpdateOrganizationalUnit") ||}'
+      MetricTransformations:
+      - MetricNamespace: 
+          Fn::Join:
+          - ""
+          - - !Ref env
+            - '-MonitoringAlarmMetrics'
+        MetricName: 
+          Fn::Join:
+          - ""
+          - - !Ref env
+            - '-OrganizationsEvents'
+        MetricValue: '1'
+  OrganizationsEventsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: 
+        Fn::Join:
+        - ""
+        - - !Ref env
+          - '-OrganizationsEvents'
+      AlarmDescription: Alarm for Organizations events
+      AlarmActions:
+        - Fn::Join:
+          - ""
+          - - 'arn:aws:sns:'
+            - !Ref region
+            - ':'
+            - !Ref awsaccountid
+            - ':'
+            - !Ref env
+            - '-monitoring-topic'
+      MetricName: 
+        Fn::Join:
+        - ""
+        - - !Ref env
+          - '-OrganizationsEvents'
+      Namespace: 
+        Fn::Join:
+        - ""
+        - - !Ref env
+          - '-MonitoringAlarmMetrics'
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      EvaluationPeriods: '1'
+      Period: '300'
+      Statistic: Sum
       Threshold: '1'
