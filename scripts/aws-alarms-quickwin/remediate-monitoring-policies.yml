@@ -19,10 +19,11 @@
 #     Ensure a log metric filter and alarm exist for VPC changes
 #     Ensure a log metric filter and alarm exist for S3 bucket object read operations
 #     Ensure a log metric filter and alarm exist for S3 bucket object write operations
+#     Ensure a log metric filter and alarm exists for AWS Organizations changes
 #
 # .NOTES
 
-  #Copyright (c) Cloudneeti. All rights reserved.
+  #Copyright (c) Zscaler. All rights reserved.
   #Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is  furnished to do so, subject to the following conditions:
   #The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
   #THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
@@ -1189,4 +1190,60 @@ Resources:
       EvaluationPeriods: '1'
       Period: '300'
       Statistic: SampleCount
+      Threshold: '1'
+  OrganizationsMetricFilter:
+    Type: AWS::Logs::MetricFilter
+    DependsOn: AlarmSNSTopic
+    Properties:
+      LogGroupName:
+        Fn::Join:
+        - ""
+        - - !Ref env
+          - '-monitoring-log-group'
+      FilterPattern: '{ ($.eventSource ="organizations.amazonaws.com") || ($.eventName ="AcceptHandshake") || ($.eventName ="CreateAccount") || ($.eventName = "CreateOrganization") || ($.eventName = "CreateOrganizationalUnit") || ($.eventName = "DeleteOrganization") || ($.eventName = "DeleteOrganizationalUnit") || ($.eventName = "InviteAccountToOrganization") || ($.eventName = "LeaveOrganization") || ($.eventName = "MoveAccount") || ($.eventName = "RemoveAccountFromOrganization") || ($.eventName = "UpdateOrganizationalUnit") ||}'
+      MetricTransformations:
+      - MetricNamespace: 
+          Fn::Join:
+          - ""
+          - - !Ref env
+            - '-MonitoringAlarmMetrics'
+        MetricName: 
+          Fn::Join:
+          - ""
+          - - !Ref env
+            - '-OrganizationsEvents'
+        MetricValue: '1'
+  OrganizationsEventsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: 
+        Fn::Join:
+        - ""
+        - - !Ref env
+          - '-OrganizationsEvents'
+      AlarmDescription: Alarm for Organizations events
+      AlarmActions:
+        - Fn::Join:
+          - ""
+          - - 'arn:aws:sns:'
+            - !Ref region
+            - ':'
+            - !Ref awsaccountid
+            - ':'
+            - !Ref env
+            - '-monitoring-topic'
+      MetricName: 
+        Fn::Join:
+        - ""
+        - - !Ref env
+          - '-OrganizationsEvents'
+      Namespace: 
+        Fn::Join:
+        - ""
+        - - !Ref env
+          - '-MonitoringAlarmMetrics'
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      EvaluationPeriods: '1'
+      Period: '300'
+      Statistic: Sum
       Threshold: '1'
