@@ -365,6 +365,30 @@
                     },
                     "certificatesValidityPeriodMonitoringEffect": {
                         "value": "audit"
+                    },
+                    "ensureThatPHPVersionIsTheLatestIfUsedAsAPartOfTheApiAppMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "ensureThatPHPVersionIsTheLatestIfUsedAsAPartOfTheWEBAppMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "ensureThatJavaVersionIsTheLatestIfUsedAsAPartOfTheWebAppMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "ensureThatJavaVersionIsTheLatestIfUsedAsAPartOfTheFunctionAppMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "ensureThatJavaVersionIsTheLatestIfUsedAsAPartOfTheApiAppMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "ensureThatPythonVersionIsTheLatestIfUsedAsAPartOfTheWebAppMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "ensureThatPythonVersionIsTheLatestIfUsedAsAPartOfTheFunctionAppMonitoringEffect": {
+                        "value": "AuditIfNotExists"
+                    },
+                    "ensureThatPythonVersionIsTheLatestIfUsedAsAPartOfTheApiAppMonitoringEffect": {
+                        "value": "AuditIfNotExists"
                     }
                 }
             }
@@ -734,6 +758,30 @@
                     },
                     "certificatesValidityPeriodMonitoringEffect": {
                         "value": "disabled"
+                    },
+                    "ensureThatPHPVersionIsTheLatestIfUsedAsAPartOfTheApiAppMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "ensureThatPHPVersionIsTheLatestIfUsedAsAPartOfTheWEBAppMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "ensureThatJavaVersionIsTheLatestIfUsedAsAPartOfTheWebAppMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "ensureThatJavaVersionIsTheLatestIfUsedAsAPartOfTheFunctionAppMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "ensureThatJavaVersionIsTheLatestIfUsedAsAPartOfTheApiAppMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "ensureThatPythonVersionIsTheLatestIfUsedAsAPartOfTheWebAppMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "ensureThatPythonVersionIsTheLatestIfUsedAsAPartOfTheFunctionAppMonitoringEffect": {
+                        "value": "Disabled"
+                    },
+                    "ensureThatPythonVersionIsTheLatestIfUsedAsAPartOfTheApiAppMonitoringEffect": {
+                        "value": "Disabled"
                     }
                 }
             }
