@@ -56,8 +56,7 @@
             "Dataproc Cluster": "dataproc.googleapis.com/Cluster",
             "Bigtable Instance": "bigtableadmin.googleapis.com/Instance",
             "App Engine Service": "appengine.googleapis.com/Service",
-            "Compute Target Instance": "compute.googleapis.com/TargetInstance",
-            "Cloud NAT": "cloud.google.com/nat"
+            "Compute Target Instance": "compute.googleapis.com/TargetInstance"
         }
     }
 }
