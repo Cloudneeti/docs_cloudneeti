@@ -1200,7 +1200,7 @@ Resources:
         - ""
         - - !Ref env
           - '-monitoring-log-group'
-      FilterPattern: '{ ($.eventSource ="organizations.amazonaws.com") || ($.eventName ="AcceptHandshake") || ($.eventName ="CreateAccount") || ($.eventName = "CreateOrganization") || ($.eventName = "CreateOrganizationalUnit") || ($.eventName = "DeleteOrganization") || ($.eventName = "DeleteOrganizationalUnit") || ($.eventName = "InviteAccountToOrganization") || ($.eventName = "LeaveOrganization") || ($.eventName = "MoveAccount") || ($.eventName = "RemoveAccountFromOrganization") || ($.eventName = "UpdateOrganizationalUnit") ||}'
+      FilterPattern: '{ ($.eventSource ="organizations.amazonaws.com") || ($.eventName ="AcceptHandshake") || ($.eventName ="CreateAccount") || ($.eventName = "CreateOrganization") || ($.eventName = "CreateOrganizationalUnit") || ($.eventName = "DeleteOrganization") || ($.eventName = "DeleteOrganizationalUnit") || ($.eventName = "InviteAccountToOrganization") || ($.eventName = "LeaveOrganization") || ($.eventName = "MoveAccount") || ($.eventName = "RemoveAccountFromOrganization") || ($.eventName = "UpdateOrganizationalUnit") }'
       MetricTransformations:
       - MetricNamespace: 
           Fn::Join:
