@@ -270,6 +270,7 @@ $activityAlerts = @(
     [PSCustomObject]@{AlertName="Alert-on-NSG-rule-createorupdate";ResourceType="All";OperationName= "Microsoft.Network/networkSecurityGroups/securityRules/write"}
     [PSCustomObject]@{AlertName="Alert-on-SQL-firewallRule-createorupdate";ResourceType="All";OperationName= "Microsoft.Sql/servers/firewallRules/write"}
     [PSCustomObject]@{AlertName="Alert-on-SQL-delete-createorupdate";ResourceType="All";OperationName= "Microsoft.Sql/servers/firewallRules/delete"}
+    [PSCustomObject]@{AlertName="Alert-on-delete-policy-assignment";ResourceType="All";OperationName= "Microsoft.Authorization/policyAssignments/delete"}
 )
 
 
