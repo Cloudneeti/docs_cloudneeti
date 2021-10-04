@@ -64,7 +64,7 @@
         Specifies the cloud account ID list. Enter 'All' for all accounts or comma-separated account Ids or single account Id.
         Required = False
         Default: All
-        Type = String Array
+        Type = GUID Array
 
 .PARAMETER ZCSPMBenchmarkId
         Specifies the ZCSPM Benchmark Id. Default is "CSBP".
