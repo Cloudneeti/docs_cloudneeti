@@ -218,8 +218,9 @@ function Get-AccountList {
         }
         Method  = 'GET'
     }
-    $accountObj = Invoke-RestMethod @params | Select-Object -Expand result | Select-Object -Expand accounts | Select-Object accountId
-    $apiObj = Invoke-RestMethod @params | Select-Object -Expand result | Select-Object -Expand apis
+    $response = Invoke-RestMethod @params
+    $accountObj = $response | Select-Object -Expand result | Select-Object -Expand accounts | Select-Object accountId
+    $apiObj = $response | Select-Object -Expand result | Select-Object -Expand apis
     if ($apiObj -notcontains "Account.Audit") {
         Write-Host "$(Get-Date -Format "yyyy-MM-dd-HH:mm:ss") ##[Error] Token is not valid for API permission. Update API application permission(Account.Audit) and regenerate token" -ForegroundColor RED
         Exit
