@@ -110,6 +110,11 @@ $EnvironmentData = @{
         "clientid" = "e6e7c8e2-80d6-4053-863b-104e70052988"
         "apiurl"   = "https://api.cloudneeti.com"
     }
+    prod1  = @{
+        "url"      = "https://app1.cloudneeti.com"
+        "clientid" = "e6e7c8e2-80d6-4053-863b-104e70052988"
+        "apiurl"   = "https://api1.cloudneeti.com"
+    }
 }
 
 function Get-TokenWithBrowserLogin {
