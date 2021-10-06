@@ -255,7 +255,8 @@ $ZCSPMAPIEndpoints = @{
     dev   = "https://devapi.cloudneeti-devops.com";
     trial = "https://trialapi.cloudneeti.com";
     qa    = "https://qaapi.cloudneeti-devops.com";
-    prod  = "https://api.cloudneeti.com"
+    prod  = "https://api.cloudneeti.com";
+    prod1 = "https://api1.cloudneeti.com"
 }
 $ZCSPMAPIURL = $ZCSPMAPIEndpoints[$ZCSPMEnvironment.ToLower()]
 
