@@ -50,6 +50,16 @@
         -ZCSPMApplicationSecret "<ZCSPM API application secret>" `
         -ZCSPMAPIKey "<ZCSPM API primary key>"
 
+.EXAMPLE
+    By Default, the script will take CSBP as Benchmark ID unless specified by -ZCSPMBenchmarkId parameter
+    PS> .\Generate-AuditReport.ps1  `
+        -ZCSPMEnvironment "trial" `
+        -ZCSPMLicenseId "<ZCSPM License Id>" `
+        -ZCSPMBenchmarkId "HIPAA" `
+        -ZCSPMApplicationId "<ZCSPM API application Id>" `
+        -ZCSPMApplicationSecret "<ZCSPM API application secret>" `
+        -ZCSPMAPIKey "<ZCSPM API primary key>"
+
 .PARAMETER ZCSPMEnvironment
         Specifies the ZCSPM API domain.
         Required = True
