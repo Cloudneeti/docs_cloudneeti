@@ -316,7 +316,7 @@ $ZCSPMApiDomain = @{
     dev   = "devapi.cloudneeti-devops.com";
     trial = "trialapi.cloudneeti.com";
     qa    = "qaapi.cloudneeti-devops.com";
-    prod  = "api.cloudneeti.com"
+    prod  = "api.cloudneeti.com";
     prod1 = "api1.cloudneeti.com"
 }
 $ApiDomain = $ZCSPMApiDomain[$ZCSPMEnvironment.ToLower()]
