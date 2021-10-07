@@ -41,18 +41,14 @@
         -ZCSPMEnvironment "prod" `
         -ZCSPMLicenseId "<ZCSPM License Id>" `
         -ZCSPMAccountIdList <ZCSPM Account Id>,<ZCSPM Account Id> `
-        -ZCSPMApplicationId "<ZCSPM API application Id>" `
-        -ZCSPMApplicationSecret (ConvertTo-SecureString "<ZCSPM API application secret>" -AsPlainText -Force) `
-        -ZCSPMAPIKey (ConvertTo-SecureString "<ZCSPM API primary key>" -AsPlainText -Force)
+        -ZCSPMApplicationId "<ZCSPM API application Id>"
 
 .EXAMPLE
     By Default, the script will take all accounts unless specified by -ZCSPMAccountIdList parameter
 	PS> .\Generate-AuditReport.ps1  `
         -ZCSPMEnvironment "trial" `
         -ZCSPMLicenseId "<ZCSPM License Id>" `
-        -ZCSPMApplicationId "<ZCSPM API application Id>" `
-        -ZCSPMApplicationSecret (ConvertTo-SecureString "<ZCSPM API application secret>" -AsPlainText -Force) `
-        -ZCSPMAPIKey (ConvertTo-SecureString "<ZCSPM API primary key>" -AsPlainText -Force)
+        -ZCSPMApplicationId "<ZCSPM API application Id>"
 
 .EXAMPLE
     By Default, the script will take CSBP as Benchmark ID unless specified by -ZCSPMBenchmarkId parameter
@@ -60,9 +56,7 @@
         -ZCSPMEnvironment "trial" `
         -ZCSPMLicenseId "<ZCSPM License Id>" `
         -ZCSPMBenchmarkId "HIPAA" `
-        -ZCSPMApplicationId "<ZCSPM API application Id>" `
-        -ZCSPMApplicationSecret (ConvertTo-SecureString "<ZCSPM API application secret>" -AsPlainText -Force) `
-        -ZCSPMAPIKey (ConvertTo-SecureString "<ZCSPM API primary key>" -AsPlainText -Force)
+        -ZCSPMApplicationId "<ZCSPM API application Id>"
 
 .PARAMETER ZCSPMEnvironment
         Specifies the ZCSPM API domain.
