@@ -285,11 +285,11 @@ function Add-Csv {
                     "Category Name"         = $resourceCategories.categoryName
                     "Policy ID"             = $policies.policyId
                     "Policy Name"           = $policies.shortTitle
-                    "Compliance Number"     = $policies.complianceNumber
+                    "Control Number"        = $policies.complianceNumber
                     "Total Resource Count"  = $policies.totalResourceCount
                     "Passed Resource Count" = $policies.passedResourceCount
                     "Failed Resource Count" = ($policies.totalResourceCount - $policies.passedResourceCount)
-                    "Severity"              = $policies.severity
+                    "Risk Impact"           = $policies.severity
                     "Risk Likelihood"       = $policies.riskProbability
                     "Risk Level"            = $policies.riskLevel
                 }
