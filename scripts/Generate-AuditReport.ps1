@@ -19,12 +19,16 @@
     * Windows PowerShell version 5 and above
         1. To check PowerShell version type "$PSVersionTable.PSVersion" in PowerShell and you will find PowerShell version,
         2. To Install powershell follow link https://docs.microsoft.com/en-us/powershell/scripting/setup/installing-windows-powershell?view=powershell-6
+    * ZCSPM API Application with the following APIs to connect
+        1. Account.Audit
+        2. License.GetAPIAccess
 
 .INPUTS
     Below is the list of inputs to the script:-
         - ZCSPM Environment <ZCSPM Environment>
         - ZCSPM License Id <Find in "Manage Licenses" of ZCSPM Settings>
         - ZCSPM Account Id List <Find in "Manage Accounts" of ZCSPM Settings>
+        - ZCSPM Benchmark Id <ZCSPM Supported Benchmark>
         - ZCSPM Application Id
         - ZCSPM Application Secret
         - ZCSPM API Key <Find in "ZCSPM API Management Portal">
@@ -36,10 +40,10 @@
 	PS> .\Generate-AuditReport.ps1  `
         -ZCSPMEnvironment "prod" `
         -ZCSPMLicenseId "<ZCSPM License Id>" `
-        -ZCSPMAccountIdList "<ZCSPM Account Id>, <ZCSPM Account Id>" `
+        -ZCSPMAccountIdList <ZCSPM Account Id>,<ZCSPM Account Id> `
         -ZCSPMApplicationId "<ZCSPM API application Id>" `
-        -ZCSPMApplicationSecret "<ZCSPM API application secret>" `
-        -ZCSPMAPIKey "<ZCSPM API primary key>"
+        -ZCSPMApplicationSecret (ConvertTo-SecureString "<ZCSPM API application secret>" -AsPlainText -Force) `
+        -ZCSPMAPIKey (ConvertTo-SecureString "<ZCSPM API primary key>" -AsPlainText -Force)
 
 .EXAMPLE
     By Default, the script will take all accounts unless specified by -ZCSPMAccountIdList parameter
@@ -47,18 +51,18 @@
         -ZCSPMEnvironment "trial" `
         -ZCSPMLicenseId "<ZCSPM License Id>" `
         -ZCSPMApplicationId "<ZCSPM API application Id>" `
-        -ZCSPMApplicationSecret "<ZCSPM API application secret>" `
-        -ZCSPMAPIKey "<ZCSPM API primary key>"
+        -ZCSPMApplicationSecret (ConvertTo-SecureString "<ZCSPM API application secret>" -AsPlainText -Force) `
+        -ZCSPMAPIKey (ConvertTo-SecureString "<ZCSPM API primary key>" -AsPlainText -Force)
 
 .EXAMPLE
     By Default, the script will take CSBP as Benchmark ID unless specified by -ZCSPMBenchmarkId parameter
-    PS> .\Generate-AuditReport.ps1  `
+	PS> .\Generate-AuditReport.ps1  `
         -ZCSPMEnvironment "trial" `
         -ZCSPMLicenseId "<ZCSPM License Id>" `
         -ZCSPMBenchmarkId "HIPAA" `
         -ZCSPMApplicationId "<ZCSPM API application Id>" `
-        -ZCSPMApplicationSecret "<ZCSPM API application secret>" `
-        -ZCSPMAPIKey "<ZCSPM API primary key>"
+        -ZCSPMApplicationSecret (ConvertTo-SecureString "<ZCSPM API application secret>" -AsPlainText -Force) `
+        -ZCSPMAPIKey (ConvertTo-SecureString "<ZCSPM API primary key>" -AsPlainText -Force)
 
 .PARAMETER ZCSPMEnvironment
         Specifies the ZCSPM API domain.
@@ -106,7 +110,7 @@ param
     # ZCSPM Environment
     [Parameter(Mandatory = $true, HelpMessage = "Enter ZCSPM Environment")]
     [ValidateNotNullOrEmpty()]
-    [ValidateSet("dev", "qa", "trial", "prod")]
+    [ValidateSet("dev", "qa", "trial", "prod", "prod1")]
     [string]
     $ZCSPMEnvironment,
 
@@ -401,6 +405,11 @@ foreach ($accountId in $accountList) {
     }
     $accounts_count += 1
 }
+
+# ------------------------------------------------------------------------------------------------------------------------------ #
+#                                                      Audit Report Summary                                                      #
+# ------------------------------------------------------------------------------------------------------------------------------ #
+
 Write-Host "Audit Report Summary" -ForegroundColor Cyan
 $summaryAccountsList | sort-object Status | Format-Table -AutoSize -Wrap
 Write-Host "Total accounts processed: $total_accounts" -ForegroundColor Cyan
