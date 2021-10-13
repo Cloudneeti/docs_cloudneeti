@@ -318,6 +318,12 @@ $RequiredModules = @"
             "Name": "MSOnline",
             "ContentUrl" : "https://www.powershellgallery.com/api/v2/package/MSOnline",
             "Version" : "1.1.183.57"
+        },
+        {
+            "Product": "MicrosoftTeams",
+            "Name": "MicrosoftTeams",
+            "ContentUrl" : "https://www.powershellgallery.com/api/v2/package/MicrosoftTeams",
+            "Version" : "2.6.0"
         }
     ]
 }
