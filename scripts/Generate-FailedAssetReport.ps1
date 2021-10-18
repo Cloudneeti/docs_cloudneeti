@@ -28,6 +28,7 @@
         - ZCSPM Environment <ZCSPM Environment>
         - ZCSPM License Id <Find in "Manage Licenses" of ZCSPM Settings>
         - ZCSPM Account Id List <Find in "Manage Accounts" of ZCSPM Settings>
+        - ZCSPM Benchmark Id <ZCSPM Supported Benchmark>
         - ZCSPM Application Id
         - ZCSPM Application Secret
         - ZCSPM API Key <Find in "ZCSPM API Management Portal">
@@ -49,6 +50,14 @@
         -ZCSPMLicenseId "<ZCSPM License Id>" `
         -ZCSPMApplicationId "<ZCSPM API application Id>"
 
+.EXAMPLE
+    By Default, the script will take CSBP as Benchmark ID unless specified by -ZCSPMBenchmarkId parameter
+	PS> .\Generate-FailedAssetReport.ps1  `
+        -ZCSPMEnvironment "trial" `
+        -ZCSPMLicenseId "<ZCSPM License Id>" `
+        -ZCSPMBenchmarkId "HIPAA" `
+        -ZCSPMApplicationId "<ZCSPM API application Id>"
+
 .PARAMETER ZCSPMEnvironment
         Specifies the ZCSPM API domain.
         Required = True
@@ -64,6 +73,12 @@
         Required = False
         Default: All
         Type = GUID Array
+
+.PARAMETER ZCSPMBenchmarkId
+        Specifies the ZCSPM Benchmark Id. Default is "CSBP".
+        Required = False
+        Default : CSBP
+        Type = String
 
 .PARAMETER ZCSPMApplicationId
         Specifies the ZCSPM API application Id.
@@ -104,6 +119,12 @@ param
     [ValidateNotNullOrEmpty()]
     [guid[]]
     $ZCSPMAccountIdList,
+
+    # ZCSPM Benchmark Id
+    [Parameter(Mandatory = $false, HelpMessage = "Enter ZCSPM Benchmark Id")]
+    [ValidateNotNullOrEmpty()]
+    [string]
+    $ZCSPMBenchmarkId = "CSBP",
 
     # ZCSPM API application Id
     [Parameter(Mandatory = $true, HelpMessage = "Enter ZCSPM API application Id")]
@@ -255,6 +276,11 @@ function Add-Csv {
     $row_count = 0
     ForEach ($result in $FailedAssetReport.result) {
         ForEach ($failedPolicyAsset in $result.failedPolicyAssetsLists) {
+            $tagValues = [string]$failedPolicyAsset.tags
+            if ($tagValues) {
+                $tagValues = $tagValues.substring(2)
+                $tagValues = $tagValues -replace ".$"
+            }
             $failed_asset_obj = [PSCustomObject]@{
                 "Asset Name"     = $failedPolicyAsset.resourceName
                 "Asset Type"     = $failedPolicyAsset.resourceType
@@ -262,6 +288,7 @@ function Add-Csv {
                 "Policy Id"      = $failedPolicyAsset.policyId
                 "Policy Title"   = $failedPolicyAsset.shortTitle
                 "Region"         = $failedPolicyAsset.resourceRegion
+                "Tags"           = $tagValues
                 "Account Id"     = $result.accountId
                 "Cloud Provider" = $result.connectorType
                 "Benchmark ID"   = $result.benchmarkId
@@ -327,7 +354,7 @@ $fileName = "failed_asset-$(Get-Date -Format "yyyy-MM-dd-HH-mm-ss").csv"
 $summaryAccountsList = @()
 $pageSize = 1000
 foreach ($accountId in $accountList) {
-    $Uri = "https://$ApiDomain/audit/license/$ZCSPMLicenseId/account/$accountId/failedassets?pageNumber=1&pageSize=$pageSize"
+    $Uri = "https://$ApiDomain/audit/license/$ZCSPMLicenseId/account/$accountId/failedassets?benchmarkId=$ZCSPMBenchmarkId&pageNumber=1&pageSize=$pageSize"
     $summaryAccountsStatus = "" | Select-Object "AccountId", "Status", "Details"
     try {
         Write-Host "$(Get-Date -Format "yyyy-MM-dd-HH:mm:ss") [$accounts_count/$total_accounts] Processing account: $accountId" -ForegroundColor Cyan
@@ -346,7 +373,7 @@ foreach ($accountId in $accountList) {
             $row_count = 0
             $row_count += Add-Csv -FailedAssetReport $failed_asset -Filename $fileName
             for ($i = 2; $i -le $page_count; $i++) {
-                $newUri = "https://$ApiDomain/audit/license/$ZCSPMLicenseId/account/$accountId/failedassets?pageNumber=$i&pageSize=$pageSize"
+                $newUri = "https://$ApiDomain/audit/license/$ZCSPMLicenseId/account/$accountId/failedassets?benchmarkId=$ZCSPMBenchmarkId&pageNumber=$i&pageSize=$pageSize"
                 $new_failed_asset = Get-FailedAsset -Uri $newUri -BearerToken $accountToken -OcpApimSubscriptionKey $OcpApimSubscriptionKey
                 $row_count += Add-Csv -FailedAssetReport $new_failed_asset -Filename $fileName
             }
