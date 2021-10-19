@@ -112,34 +112,40 @@ else {
     }
 }
 
-$policyAssignments=@()
+$Path="$PSScriptRoot/defaultPolicyAssignments-$([DateTime]::UtcNow.ToString('yyyy-MM-dd-HH-mm-ss-Z')).json"
 # Get existing security center built in policy definition set
+try {
+    
 if($EnableManagementGroup)
 {
-    Write-Host "Fetching Management Group level Azure Security Center policy initiative" -ForegroundColor Yellow
-    $defaultAssignment = Get-AzPolicyAssignment -Scope "/providers/Microsoft.Management/managementGroups/$ManagementGroupId" -PolicyDefinitionId "/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8"
+        Write-Host "Fetching Management Group level Azure Security Center policy initiative" -ForegroundColor Yellow
+        $defaultAssignment = Get-AzPolicyAssignment -Scope "/providers/Microsoft.Management/managementGroups/$ManagementGroupId" -PolicyDefinitionId "/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8"
 
-    if ($null -ne $defaultAssignment) {
-        $policyAssignments+=$defaultAssignment| ConvertTo-Json
-            
+        if ($null -ne $defaultAssignment) {
+            ($defaultAssignment| ConvertTo-Json )|Out-File -FilePath $Path -Force
+            Write-Host "Extracted Azure Security Center policies and stored at $Path " -ForegroundColor Green
+        }
+        else {
+            Write-Host "Azure Security Center initiative at Management Group $ManagementGroupId not found." -foregroundcolor red
+            break;
+        }
     }
-    else {
-        Write-Host "Azure Security Center initiative at Management Group $ManagementGroupId not found." -foregroundcolor red
-        break;
+    else { 
+        Write-Host "Fetching ASC policies at Subscription level..." -ForegroundColor Yellow
+        $defaultAssignment = Get-AzPolicyAssignment -Scope "/subscriptions/$SubscriptionId" -PolicyDefinitionId "/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8"
+        if ($null -ne $defaultAssignment) {
+            ($defaultAssignment| ConvertTo-Json) |Out-File -FilePath $Path -Force
+            Write-Host "Extracted Azure Security Center policies and stored at $Path " -ForegroundColor Green
+        }
+        else {
+            Write-Host "Azure Security Center initiative at default policy not found." -foregroundcolor red
+            break;
+        }
     }
 }
-else { 
-    Write-Host "Fetching ASC policies at Subscription level..." -ForegroundColor Yellow
-    $defaultAssignment = Get-AzPolicyAssignment -Scope "/subscriptions/$SubscriptionId" -PolicyDefinitionId "/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8"
-    if ($null -ne $defaultAssignment) {
-        $policyAssignments += $defaultAssignment| ConvertTo-Json
-    }
-    else {
-        Write-Host "Azure Security Center initiative at default policy not found." -foregroundcolor red
-        break;
-    }
+catch [Exception] {
+    Write-Host "Error occurred while switching to subscription $subscriptionId. Check subscription Id and try again." -ForegroundColor Red
+    Write-Error $_ -ErrorAction Stop
 }
-
-$policyAssignments |Out-File -FilePath ./defaultPolicyAssignments.json -Force
 
 Write-Host "Script execution completed." -ForegroundColor Yellow
