@@ -307,7 +307,7 @@ function Add-Csv {
 
 # ZCSPM API Domain
 $ZCSPMApiDomain = @{
-    dev   = "dev5-weus2-3-17-0-xojmo-open-api-webapp.azurewebsites.net";
+    dev   = "devapi.cloudneeti-devops.com";
     trial = "trialapi.cloudneeti.com";
     qa    = "qaapi.cloudneeti-devops.com";
     prod  = "api.cloudneeti.com";
