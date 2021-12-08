@@ -1,12 +1,18 @@
 """
 SYNOPSIS
 --------
-    Get the count of resources present across regions in the AWS account
+    Get the count of resources present across regions in the AWS account.
 
 DESCRIPTION
 -----------
     This script provides a detailed overview of the number of resources present in the AWS account. 
 	It provides a service-wise count of resources created in all the regions of the AWS account. 
+
+PREREQUISITES
+-------------
+  - Python [ preferably version 3 and above ] [ https://www.python.org/downloads/ ]
+  - boto3 [ AWS Python based SDK ]
+    - Install using: pip install boto3
 
 EXAMPLE
 -------
@@ -15,14 +21,11 @@ EXAMPLE
     
 NOTES
 -----
-
     Copyright (c) Cloudneeti. All rights reserved.
     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is  furnished to do so, subject to the following conditions:
     The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
     Prerequisites
-
         -   Workstation with Python version 3 and above, with multiprocessing and Boto3 modules installed.
         -   User credentials (Access Key Id and Secret Accces Key) of a user having atleast the Security Audit permission and above on the AWS account
 """
@@ -236,7 +239,7 @@ def dax(function, credentials, resource_count, region_list):
 
     for region in region_list:
         try:
-            dax_client = boto3.resource(service_name='dax', aws_access_key_id=credentials['access_key'], aws_secret_access_key=credentials['secret_key'], region_name=region)
+            dax_client = boto3.client(service_name='dax', aws_access_key_id=credentials['access_key'], aws_secret_access_key=credentials['secret_key'], region_name=region)
             cluster_paginator = dax_client.get_paginator('describe_clusters')
             for clusters in cluster_paginator.paginate():
                 dax_count += len(clusters['Clusters'])
@@ -252,7 +255,7 @@ def ec2_ami(function, credentials, resource_count, region_list):
     for region in region_list:
         try:
             ec2 = boto3.resource('ec2', aws_access_key_id=credentials['access_key'], aws_secret_access_key=credentials['secret_key'], region_name=region)
-            ec2_image_count += len(list(ec2.images.filter(Owners=[params['CustAccID']])))
+            ec2_image_count += len(list(ec2.images.filter(Owners=[credentials['account_id']])))
         except:
             pass
 
@@ -395,7 +398,7 @@ def ebs_snapshots(function, credentials, resource_count, region_list):
     for region in region_list:
         try:
             ec2_client = boto3.resource('ec2', aws_access_key_id=credentials['access_key'], aws_secret_access_key=credentials['secret_key'], region_name=region)
-            snapshot_count += len(list(ec2_client.snapshots.filter(OwnerIds=[params['CustAccID']])))
+            snapshot_count += len(list(ec2_client.snapshots.filter(OwnerIds=[credentials['account_id']])))
         except:
             pass
 
@@ -511,9 +514,8 @@ def elasticsearch(function, credentials, resource_count, region_list):
     for region in region_list:
         try:
             es_client = boto3.client(service_name='es', aws_access_key_id=credentials['access_key'], aws_secret_access_key=credentials['secret_key'], region_name=region)
-            es_paginator = es_client.get_paginator('list_domain_names')            
-            for es in es_paginator.paginate():
-                esdomain_count += len(list(es['DomainNames']))
+            es_list = es_client.list_domain_names()            
+            esdomain_count += len(es_list['DomainNames'])
         except:
             pass
     
