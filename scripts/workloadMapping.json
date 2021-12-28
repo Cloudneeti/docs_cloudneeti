@@ -5,6 +5,7 @@
             "SQL Virtual machine": "microsoft.sqlvirtualmachine/sqlvirtualmachines",
             "Virtual Machine": "microsoft.compute/virtualmachines",
             "App Service": "microsoft.web/sites",
+            "App Service Plan": "microsoft.web/serverfarms",
             "Service Fabric": "microsoft.servicefabric/clusters",
             "Cosmos DB": "microsoft.documentdb/databaseAccounts",
             "Database for Maria DB": "microsoft.dbformariadb/servers",
