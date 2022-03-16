@@ -10,15 +10,23 @@
     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is  furnished to do so, subject to the following conditions:
     The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-    Version:        1.1
+    Version:        1.3
     Author:         Zscaler CSPM
     Creation Date:  01/10/2021
-    Last Modified Date: 07/01/2022
+    Last Modified Date: 08/03/2022
+
+    # RELEASE NOTES
+    * Version 1.3
+        1. Added column "Resource Group Name"
+
+    * Version 1.2
+        1. Prerequisite PowerShell version increased to version 6 or above
+        2. Added logic to handle unexpected response in specific cases
 
     # PREREQUISITE
-    * Windows PowerShell version 5 and above
+    * Windows PowerShell version 6 and above
         1. To check PowerShell version type "$PSVersionTable.PSVersion" in PowerShell and you will find PowerShell version,
-        2. To Install powershell follow link https://docs.microsoft.com/en-us/powershell/scripting/setup/installing-windows-powershell?view=powershell-6
+        2. To Install powershell follow link https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7
     * ZCSPM API Application with the following APIs to connect
         1. Account.Audit
         2. License.GetAPIAccess
@@ -277,24 +285,33 @@ function Add-Csv {
     ForEach ($result in $FailedAssetReport.result) {
         ForEach ($failedPolicyAsset in $result.failedPolicyAssetsLists) {
             $tagValues = [string]$failedPolicyAsset.tags
+            if ($failedPolicyAsset.tags.GetType().Name -eq "Hashtable"){
+                $tagValues = [string]([PSCustomObject]($failedPolicyAsset.tags))
+            }
             if ($tagValues) {
                 $tagValues = $tagValues.substring(2)
                 $tagValues = $tagValues -replace ".$"
             }
+            $resourceGroupName = "NA"
+            if( ($result.connectorType -eq "Azure") -and ($failedPolicyAsset.resourceId -match "resourceGroups/") )
+            {
+                $resourceGroupName = ($failedPolicyAsset.resourceId).Split('/')[4]
+            }
             $failed_asset_obj = [PSCustomObject]@{
-                "Asset Name"     = $failedPolicyAsset.resourceName
-                "Access Level"   = $failedPolicyAsset.accessLevel
-                "Asset Type"     = $failedPolicyAsset.resourceType
-                "Asset Id"       = $failedPolicyAsset.resourceId
-                "Policy Id"      = $failedPolicyAsset.policyId
-                "Policy Title"   = $failedPolicyAsset.shortTitle
-                "Region"         = $failedPolicyAsset.resourceRegion
-                "Tags"           = $tagValues
-                "Account Id"     = $result.accountId
-                "Account Name"   = $result.accountName
-                "Cloud Provider" = $result.connectorType
-                "Benchmark ID"   = $result.benchmarkId
-                "Benchmark Name" = $result.benchMarkName
+                "Asset Name"            = $failedPolicyAsset.resourceName
+                "Access Level"          = $failedPolicyAsset.accessLevel
+                "Asset Type"            = $failedPolicyAsset.resourceType
+                "Resource Group Name"   = $resourceGroupName
+                "Asset Id"              = $failedPolicyAsset.resourceId
+                "Policy Id"             = $failedPolicyAsset.policyId
+                "Policy Title"          = $failedPolicyAsset.shortTitle
+                "Region"                = $failedPolicyAsset.resourceRegion
+                "Tags"                  = $tagValues
+                "Account Id"            = $result.accountId
+                "Account Name"          = $result.accountName
+                "Cloud Provider"        = $result.connectorType
+                "Benchmark ID"          = $result.benchMarkId
+                "Benchmark Name"        = $result.benchMarkName
             }
             $failed_asset_obj | Export-Csv $Filename -NoTypeInformation -Append -Force
             $row_count += 1
@@ -367,6 +384,10 @@ foreach ($accountId in $accountList) {
 
         Write-Host "$(Get-Date -Format "yyyy-MM-dd-HH:mm:ss") Generating failed asset report..."
         $failed_asset = Get-FailedAsset -Uri $Uri -BearerToken $accountToken -OcpApimSubscriptionKey $OcpApimSubscriptionKey
+        
+        if($failed_asset.GetType().Name -eq "String"){
+            $failed_asset = $failed_asset | ConvertFrom-Json -AsHashtable
+        }
 
         $failedAssetObj = $failed_asset | Select-Object -Expand result
         $failedAssetCount = [int]($failedAssetObj.failedAssetCount)
@@ -377,6 +398,9 @@ foreach ($accountId in $accountList) {
             for ($i = 2; $i -le $page_count; $i++) {
                 $newUri = "https://$ApiDomain/audit/license/$ZCSPMLicenseId/account/$accountId/failedassets?benchmarkId=$ZCSPMBenchmarkId&pageNumber=$i&pageSize=$pageSize"
                 $new_failed_asset = Get-FailedAsset -Uri $newUri -BearerToken $accountToken -OcpApimSubscriptionKey $OcpApimSubscriptionKey
+                if($new_failed_asset.GetType().Name -eq "String"){
+                    $new_failed_asset = $new_failed_asset | ConvertFrom-Json -AsHashtable
+                }
                 $row_count += Add-Csv -FailedAssetReport $new_failed_asset -Filename $fileName
             }
         }
