@@ -90,6 +90,11 @@ Resources:
               Status: Enabled
               ExpirationInDays: 1
               NoncurrentVersionExpirationInDays: 1
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true
         Tags: 
           -
             Key: "ServiceName"
@@ -200,9 +205,100 @@ Resources:
                   - !Ref env
                   - "-monitoring-log-group:*"
 
+  KmsKey:
+    Type: AWS::KMS::Key
+    Properties: 
+      Description: "KMS key for Cloudtrail and SNS Topic encryption"
+      KeyPolicy: 
+        Version: '2012-10-17'
+        Id: kms-key-cloudtrail-sns
+        Statement:
+        - Sid: Enable IAM User Permissions
+          Effect: Allow
+          Principal:
+            AWS: !Sub 'arn:aws:iam::${AWS::AccountId}:root'
+          Action: 'kms:*'
+          Resource: '*'
+        - Sid: Allow CloudTrail to encrypt logs
+          Effect: Allow
+          Principal:
+            Service:
+              - cloudtrail.amazonaws.com
+          Action: 'kms:GenerateDataKey*'
+          Resource: '*'
+          Condition:
+            StringLike:
+              'kms:EncryptionContext:aws:cloudtrail:arn': !Sub 'arn:aws:cloudtrail:*:${AWS::AccountId}:trail/*'
+        - Sid: Allow CloudTrail to describe key
+          Effect: Allow
+          Principal:
+            Service:
+              - cloudtrail.amazonaws.com
+          Action: 'kms:DescribeKey'
+          Resource: '*'
+        - Sid: Allow principals in the account to decrypt log files
+          Effect: Allow
+          Principal:
+            AWS: '*'
+          Action:
+            - 'kms:Decrypt'
+            - 'kms:ReEncryptFrom'
+          Resource: '*'
+          Condition:
+            StringEquals:
+              'kms:CallerAccount': !Sub '${AWS::AccountId}'
+            StringLike:
+              'kms:EncryptionContext:aws:cloudtrail:arn': !Sub 'arn:aws:cloudtrail:*:${AWS::AccountId}:trail/*'
+        - Sid: Allow alias creation during setup
+          Effect: Allow
+          Principal:
+            AWS: '*'
+          Action: 'kms:CreateAlias'
+          Resource: '*'
+          Condition:
+            StringEquals:
+              'kms:ViaService': ec2.region.amazonaws.com
+              'kms:CallerAccount': !Sub '${AWS::AccountId}'
+        - Sid: Enable cross account log decryption
+          Effect: Allow
+          Principal:
+            AWS: '*'
+          Action:
+            - 'kms:Decrypt'
+            - 'kms:ReEncryptFrom'
+          Resource: '*'
+          Condition:
+            StringEquals:
+              'kms:CallerAccount': !Sub '${AWS::AccountId}'
+            StringLike:
+              'kms:EncryptionContext:aws:cloudtrail:arn': !Sub 'arn:aws:cloudtrail:*:${AWS::AccountId}:trail/*'
+        - Sid: Allow SNS to use the key
+          Effect: Allow
+          Principal:
+            Service:
+            - 'sns.amazonaws.com'
+          Action:
+            - 'kms:Encrypt'
+            - 'kms:Decrypt'
+            - 'kms:ReEncrypt*'
+            - 'kms:GenerateDataKey*'
+            - 'kms:DescribeKey'
+          Resource: '*'
+      MultiRegion: true
+      PendingWindowInDays: 7
+      Tags: 
+        -
+          Key: "ServiceName"
+          Value: "kms-key-cloudtrail-sns"
+        -
+          Key: "Description"
+          Value: "KMS key for Cloudtrail and SNS Topic encryption"
+
   MonitoringCloudTrail:
     Type: AWS::CloudTrail::Trail
-    DependsOn: CTCloudwatchRole 
+    DependsOn: 
+    - CTCloudwatchRole
+    - KmsKey
     Properties: 
       CloudWatchLogsLogGroupArn:
         Fn::Join:
@@ -226,6 +322,7 @@ Resources:
       IncludeGlobalServiceEvents: true
       IsLogging: true
       IsMultiRegionTrail: true
+      KMSKeyId: !GetAtt KmsKey.Arn
       S3BucketName:
         Fn::Join:
         - ""
@@ -255,7 +352,9 @@ Resources:
 
   AlarmSNSTopic:
     Type: AWS::SNS::Topic
+    DependsOn: KmsKey 
     Properties:
+      KmsMasterKeyId: !GetAtt KmsKey.Arn
       TopicName:
         Fn::Join:
         - ""
