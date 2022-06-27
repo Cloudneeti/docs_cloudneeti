@@ -285,6 +285,7 @@ Resources:
             - 'kms:DescribeKey'
           Resource: '*'
       MultiRegion: true
+      EnableKeyRotation: true
       PendingWindowInDays: 7
       Tags: 
         -
