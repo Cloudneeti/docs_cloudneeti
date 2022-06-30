@@ -29,7 +29,7 @@ NOTES
         -   Workstation with Python version 3 and above, with multiprocessing and Boto3 modules installed.
         -   User credentials (Access Key Id and Secret Accces Key) of a user having atleast the Security Audit permission and above on the AWS account
 """
-
+from asyncore import ExitNow
 import json
 import boto3
 import argparse
@@ -1239,6 +1239,8 @@ def main(arg):
         quit()
 
     iam = session.client('sts')
+    print(iam)
+    print("Testign iam value")
     account_id = iam.get_caller_identity()["Account"]
     print("Successfully connected to AWS account", account_id)
 
