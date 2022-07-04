@@ -1,0 +1,16 @@
+{
+    "workloadMapping": {
+        "Azure": {
+            "Virtual Machine": "microsoft.compute/virtualmachines",
+            "App Service": "microsoft.web/sites"
+        },
+        "AWS": {
+            "EC2 Instances": "AWS::EC2::Instance",
+            "AWS Lambda": "AWS::Lambda"
+        },
+        "GCP": {
+            "Compute Engine Instance": "compute.googleapis.com/Instance",
+            "Cloud Function Service": "cloudfunctions.googleapis.com/CloudFunction"
+        }
+    }
+}
