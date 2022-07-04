@@ -10,15 +10,7 @@
         },
         "GCP": {
             "Compute Engine Instance": "compute.googleapis.com/Instance",
-            "Bigquery Dataset": "bigquery.googleapis.com/Dataset",
-            "SQL Instance": "sqladmin.googleapis.com/Instance",
-            "GKE Cluster": "container.googleapis.com/Cluster",
-            "Spanner Instance": "spanner.googleapis.com/Instance",
-            "Datafusion Instance": "datafusion.googleapis.com/Instance",
-            "Dataproc Cluster": "dataproc.googleapis.com/Cluster",
-            "Bigtable Instance": "bigtableadmin.googleapis.com/Instance",
-            "App Engine Service": "appengine.googleapis.com/Service",
-            "Compute Target Instance": "compute.googleapis.com/TargetInstance"
+            "Cloud Function Service": "cloudfunctions.googleapis.com/CloudFunction"
         }
     }
 }
