@@ -72,7 +72,7 @@ If ($AzureContextSubscriptionId -ne $SubscriptionId) {
 # Read Zscaler CSPM workload Mapping
 Write-host "Fetching Zscaler CSPM workload Mapping"
 try {
-    $workloadMapping = Invoke-WebRequest -uri "https://raw.githubusercontent.com/Avantika-Gupta30/docs_cloudneeti/Avantika/resource-count-script-modification/scripts/ZPC-Scripts/workloadMapping.json" | ConvertFrom-Json
+    $workloadMapping = Invoke-WebRequest -uri "https://raw.githubusercontent.com/Cloudneeti/docs_cloudneeti/master/scripts/ZPC-Scripts/workloadMapping.json" | ConvertFrom-Json
     write-host "Successfully fetched workload mapping" -ForegroundColor Green
 }
 catch [Exception] {
