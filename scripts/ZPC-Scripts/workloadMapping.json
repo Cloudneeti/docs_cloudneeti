@@ -6,7 +6,7 @@
         },
         "AWS": {
             "EC2 Instances": "AWS::EC2::Instance",
-            "AWS Lambda": "AWS::Lambda"
+            "AWS Lambda": "AWS::Lambda::Function"
         },
         "GCP": {
             "Compute Engine Instance": "compute.googleapis.com/Instance",
