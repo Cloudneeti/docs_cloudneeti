@@ -1373,9 +1373,9 @@ def main(arg):
     workload_count = 0
     try:
         print("Fetching workload mapping")
-        workload_mapping_url = "/C:/Users/Amol Patole/AppData/Local/Programs/Python/workloadMapping.json" 
+        workload_mapping_url = "https://raw.githubusercontent.com/Cloudneeti/docs_cloudneeti/master/scripts/ZPC-Scripts/workloadMapping.json" 
 
-        with urlopen("file://" + workload_mapping_url) as url:
+        with urlopen(workload_mapping_url) as url:
             workload_mapping = json.loads(url.read())
 
         print("Successfully fetched workload mapping")
