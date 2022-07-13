@@ -1391,12 +1391,12 @@ def main(arg):
                     if resource_count_details[service_type] in range_1:
                         workload_count = 1
                     else:   
-                        workload_count += int(resource_count_details[service_type])/5
+                        workload_count += round(int(resource_count_details[service_type])/5)
                 
                 if service_type == "AWS::EC2::Instance":
                     print("\t{} : {}".format(service_type, resource_count_details[service_type]))
                 if service_type == "AWS::Lambda::Function":
-                    print("\t{} : {}".format(service_type, int(resource_count_details[service_type])/5))
+                    print("\t{} : {}".format(service_type, round(int(resource_count_details[service_type])/5)))
            
     except:
         print("Error occurred while processing workloads, Please contact cspm support")
