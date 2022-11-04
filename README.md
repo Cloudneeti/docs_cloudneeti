@@ -1,5 +1,5 @@
 ---
-layout: home
+layout: home1
 ---
 
 We use Couscous generates a [GitHub pages](http://pages.github.com/) website from your markdown documentation.
