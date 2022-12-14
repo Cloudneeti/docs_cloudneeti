@@ -1,30 +1,23 @@
 <#
 .SYNOPSIS
     This script configure Azure activity alerts on subscription.
-
 .DESCRIPTION
     This script helps to configure activity alerts on the given Azure subscription.
-
 .NOTES
-
     Copyright (c) Cloudneeti. All rights reserved.
     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is  furnished to do so, subject to the following conditions:
     The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
     Version:        1.0
     Author:         Cloudneeti
     Creation Date:  13/08/2019
-
     Pre-Requisites:
     - This script needs to run inside Azure Cloud Shell.
-
 .EXAMPLE
     1. Configure Activity alerts
        .\configure-ActivityAlerts.ps1 -SubscriptionId <SubscriptionId> `
                                       -ResourceGroupName <Resource Group Name for deployment> `
                                       -ReceiverEmailIds "<emails separated by comma (,)>"
-
     2. Configure Activity alerts along with custom tags
        .\configure-ActivityAlerts.ps1 -SubscriptionId <SubscriptionId> `
                                       -ResourceGroupName <ResourceGroupName> `
@@ -46,7 +39,6 @@
                                       -ReceiverEmailIds <emails separated by comma (,)> `
                                       -Location <location>
                                     
-
 .INPUTS
     SubscriptionId: Subscription id for which ASC policies needs to be configured.
     ResourceGroupName: Resource Group Name where activity alerts will be deployed
@@ -62,10 +54,8 @@
     ProjectNameTag: Project name
     CostCenterTag: Cost center
     DataProfileTag: Data profile 
-
 .OUTPUTS
     Activity alerts deployed on subscriptionId
-
 #>
 
 [CmdletBinding()]
@@ -182,18 +172,20 @@ Function Set-ActivityAlert() {
     $WarningPreference = "SilentlyContinue"
 
     # Creating activity log alert conditions
-    $condition1 = New-AzActivityLogAlertCondition -Field 'category' -Equal $category
-    $condition2 = New-AzActivityLogAlertCondition -Field 'resourceType' -Equal $resourceType
-    $condition3 = New-AzActivityLogAlertCondition -Field 'operationName' -Equal $operationName
+    $condition1 = New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Field 'category' -Equal $category
+    $condition2 = New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Field 'resourceType' -Equal $resourceType
+    $condition3 = New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Field 'operationName' -Equal $operationName
 
     try {
         Write-Host "`n`nSetting $alertName activity log alert..."
-        Set-AzActivityLogAlert -Location $activityLogLocation `
+        New-AzActivityLogAlert -Location $activityLogLocation `
                                -Name $alertName `
                                -ResourceGroupName $ResourceGroupName `
                                -Scope "/subscriptions/$SubscriptionId" `
                                -Action $ActionGroup `
-                               -Condition $condition1, $condition2, $condition3 | Out-Null
+                               -Condition @($condition1,$condition2,$condition3) `
+                               -Enabled $true | Out-Null
+                               
 
         Write-Host "Successfully setup $alertName actvity log alert." -ForegroundColor Green 
     }
@@ -291,7 +283,7 @@ try{
 }
 catch [Exception]{
     Write-Host "Error occurred while creating resource group." -ForegroundColor Red
-	exit
+    exit
 }
 
 try {
@@ -304,7 +296,7 @@ try {
             $option = Read-Host -Prompt "Do you want to subscribes to $ActivityAlertsActionGroupName (yes/no) :"
             switch ($option.ToLower()) {
                 "yes" {
-                    $AllExistingAlertReceiver = $ag.EmailReceivers.EmailAddress
+                    $AllExistingAlertReceiver = @($ag.EmailReceivers.EmailAddress)
                     $EmailReceivers = $AllExistingAlertReceiver + $ReceiverEmailIds.Split(",") | select -uniq
                     ForEach($EmailReceiver in $EmailReceivers){
                         $alertReceiver += New-AzActionGroupReceiver -Name $EmailReceiver -EmailReceiver -EmailAddress $EmailReceiver
@@ -341,17 +333,16 @@ catch [Exception] {
 }
 
 # Creting required object to set activity log
-$agAlertObject = New-Object Microsoft.Azure.Management.Monitor.Management.Models.ActivityLogAlertActionGroup
-$agAlertObject.ActionGroupId = $actionGroup.Id
+$agAlertObject = New-AzActivityLogAlertActionGroupObject -Id $actionGroup.Id
 
 ForEach ($alert in $activityAlerts) {
     try {
         # Creating Activity Alerts
         Set-ActivityAlert -SubscriptionId $SubscriptionId -ResourceGroupName $ResourceGroupName `
-						  -ActionGroup $agAlertObject -AlertName $alert.AlertName `
-						  -category 'Administrative' -resourceType $alert.ResourceType `
-						  -operationName $alert.OperationName -activityLogLocation $activityLogLocation `
-						  -ErrorAction SilentlyContinue
+                          -ActionGroup $agAlertObject -AlertName $alert.AlertName `
+                          -category 'Administrative' -resourceType $alert.ResourceType `
+                          -operationName $alert.OperationName -activityLogLocation $activityLogLocation `
+                          -ErrorAction SilentlyContinue
         try {
             # Getting activity alerts
             $AlertURL = "https://management.azure.com/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroupName/providers/microsoft.insights/activityLogAlerts/$($alert.AlertName)?api-version=2017-04-01"
@@ -372,7 +363,7 @@ ForEach ($alert in $activityAlerts) {
                 
                 $headers.Add('Content-Type','Bearer {0}' -f "application/json")
                 $alertResponse = Invoke-WebRequest -Method Put -Body $AlertResponseBody -Uri $AlertURL -Headers $headers -ContentType "application/json" -UseBasicParsing
-				        Write-Host "Successfully applied tags on $($alert.AlertName) activity alert" -ForegroundColor Green
+                        Write-Host "Successfully applied tags on $($alert.AlertName) activity alert" -ForegroundColor Green
             }
         }
         catch [Exception] {
