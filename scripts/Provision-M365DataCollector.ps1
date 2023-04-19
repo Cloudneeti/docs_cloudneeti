@@ -243,7 +243,8 @@ $ResourceGroupName = "$DataCollectorName-rg"
 $ScriptPrefix = "M365DataCollector"
 $ContianerName = "m365-datacollection-script"
 $RunbookScriptName = "$ScriptPrefix-$DataCollectorVersion.ps1"
-$RunbookName = "$ScriptPrefix-$DataCollectorVersion"
+$RunbookNameSuffix = $DataCollectorVersion.Replace(".","v")
+$RunbookName = "$ScriptPrefix" + "$RunbookNameSuffix"
 $path = "./runbooks"
 $Tags = @{"Service" = "ZCSPM-Office365-Data-Collection"}
 if($SharePointAdminCenterURL -notlike "https://*"){
